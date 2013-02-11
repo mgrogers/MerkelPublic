@@ -3,10 +3,10 @@ Merkel
 
 Team - BossMobileWunderkinds
 ----------------------------
-[Wesley Leung](mailto:wleung1@stanford.edu) ~ [Wesleyleung](https://github.com/Wesleyleung)  
-[Tony Jin](mailto:tonyjin@stanford.edu) ~   
-[Mike Rogers](mailto:mgrogers@stanford.edu) ~   
-[Taylor Savage](mailto:tjsavage@stanford.edu) ~   
+[Wesley Leung](mailto:wleung1@stanford.edu) ~ [wesleyleung](https://github.com/Wesleyleung)  
+[Tony Jin](mailto:tonyjin@stanford.edu) ~ [tonyjin](https://github.com/tonyjin)    
+[Mike Rogers](mailto:mgrogers@stanford.edu) ~  [mgrogers](https://github.com/mgrogers)     
+[Taylor Savage](mailto:tjsavage@stanford.edu) ~ [tjsavage](https://github.com/tjsavage)  
 [Tim Shi](mailto:timshi@stanford.edu) ~ [timgshi](https://github.com/timgshi)
 
 Intro
@@ -53,3 +53,8 @@ git push origin master
 Note: ```no-ff``` is a "no fast forward" tag. Basically it makes sure that we keep all merge data and can see which branches are merging where.
 
 Let's keep the repo clean and well organized!
+
+Useful Links
+---
+
+[PonyDebugger](https://github.com/square/PonyDebugger)
