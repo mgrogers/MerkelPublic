@@ -1,0 +1,33 @@
+<pluginApps>
+    <pluginApp applicationType="Multimedia" applicationWeight="1" text="AppSwitcher">
+        <actions>
+            <hmiAction id="2" target="5" />
+            <raAction id="84" />
+        </actions>
+        <models>
+            <textIdModel id="12" textId="1" speechTextId="18" />
+            <textIdModel id="9" textId="9" />
+            <textIdModel id="3" modelType="Info" />
+            <raListModel id="81" />
+        </models>
+        <hmiStates>
+            <hmiState id="5" text="" textModel="3">
+                <components>
+                    <label id="8" model="3" />
+                    <list id="85" model="81" action="84">
+                        <properties>
+                            <property id="6" value="50,30,420" />
+                            <property id="7" value="true" />
+                        </properties>
+                    </list>
+                </components>
+            </hmiState>
+        </hmiStates>
+        <events />
+        <entryButton id="4" action="2" model="12">
+            <properties>
+                <property id="23" value="1" />
+            </properties>
+        </entryButton>
+    </pluginApp>
+</pluginApps>
