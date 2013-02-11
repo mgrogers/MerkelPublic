@@ -1,0 +1,586 @@
+app  HmiFeatureTour
+
+entry HmiFeatureTour{
+	text "HmiFeatureTour"
+	onPress open AllFeatures
+}
+
+//**********************
+// AllFeatures HMI State
+//**********************
+action ACT_PRESS_POPUP
+
+
+state AllFeatures {
+	title "Features Menu"
+	button widgets {
+		text "Widgets Overview"
+		onPress open WidgetsOverview
+	}
+	button testCommon {
+		text "Test Widget Properties"
+		onPress open AllFeaturesCommonTest
+	}
+	button popUp {
+		text "Pop Up"
+		onPress trigger ACT_PRESS_POPUP
+	}
+}
+
+//**************************
+// WidgetsOverview HMI State
+//**************************
+state WidgetsOverview{
+	title "Widgets"
+	button buttonWidgets {
+		text "Buttons"
+		onPress open ButtonsOverview
+	}
+	button buttonLabels {
+		text "Labels"
+		onPress open LabelsOverview
+	}
+	button buttonImage {
+		text "Image"
+		onPress open ImageOverview
+	}
+	button buttonCheckbox {
+		text "Checkbox"
+		onPress open CheckboxRadioOverview
+	}
+	button buttonGauges {
+		text "Gauges"
+		onPress open GaugeOverview
+	}
+	button buttonSpeller {
+		text "Speller"
+		onPress open InputSpellerOverview
+	}
+	button buttonTables {
+		text "Tables"
+		onPress open TableOverview
+	}
+}
+
+//********************************
+// AllFeaturesCommonTest HMI State
+//********************************
+state AllFeaturesCommonTest {
+	title "Test Common Widget Properties"
+	button buttonWidget {
+		text "Button"
+		onPress open TestButton
+	}
+	button labelWidget {
+		text "Label"
+		onPress open TestLabel
+	}
+	button imageWidget {
+		text "Image"
+		onPress open TestImage
+	}
+}
+
+
+//********************************
+// TestButton HMI State
+//********************************
+action ACT_PRESS_BUTTONONE
+action ACT_PRESS_MAKE_BUTTON_VISIBLE
+action ACT_PRESS_MAKE_BUTTON_SELECTABLE
+action ACT_PRESS_MAKE_BUTTON_ENABLE
+action ACT_PRESS_FOCUS_BUTTON
+action ACT_PRESS_CHANGETITLE_BUTTON
+action ACT_PRESS_CHANGEIMAGE_BUTTON
+
+string buttonOneText
+string buttonVisibleText
+string buttonEnableText
+string buttonSelectableText
+
+state TestButton {
+	title "Test Button Properties"
+	button buttonOne {
+		text [buttonOneText] ? "***** Tested Button *****"
+		image iconLike
+		onPress trigger ACT_PRESS_BUTTONONE
+	}
+	button buttonVisible {
+		text [buttonVisibleText] ? "Toggle Visible"
+		onPress trigger ACT_PRESS_MAKE_BUTTON_VISIBLE
+	}
+		button buttonSelectable {
+		text [buttonSelectableText] ? "Toggle Selectable"
+		onPress trigger ACT_PRESS_MAKE_BUTTON_SELECTABLE
+	}
+	button buttonEnabled {
+		text [buttonEnableText] ? "Toggle Enable"
+		onPress trigger ACT_PRESS_MAKE_BUTTON_ENABLE
+	}
+	button buttonFocus {
+		text "Focus On Button"
+		onPress trigger ACT_PRESS_FOCUS_BUTTON
+	}
+	button buttonChangeTitle {
+		text "Change Title"
+		onPress trigger ACT_PRESS_CHANGETITLE_BUTTON
+	}
+	button buttonChangeImage {
+		text "Change Image"
+		onPress trigger ACT_PRESS_CHANGEIMAGE_BUTTON
+	}
+}
+
+
+//********************************
+// TestLabel HMI State
+//********************************
+action ACT_PRESS_LABELONE
+action ACT_PRESS_MAKE_LABEL_VISIBLE
+action ACT_PRESS_MAKE_LABEL_SELECTABLE
+action ACT_PRESS_MAKE_LABEL_ENABLE
+action ACT_PRESS_FOCUS_LABEL
+action ACT_PRESS_CHANGETITLE_LABEL
+action ACT_PRESS_SETWAITINGIMAGE_LABEL
+action ACT_PRESS_CHANGEPOSITION_LABEL
+
+string labelOneText
+string labelVisibleText
+string labelSelectableText
+string labelEnableText
+string labelChangeWaitingText
+
+
+state TestLabel {
+	title "Test Label Properties"
+	label labelOne {
+		text [labelOneText] ? "            Tested Label"
+	}
+	button buttonVisible {
+		text [labelVisibleText] ? "Toggle Visible"
+		onPress trigger ACT_PRESS_MAKE_LABEL_VISIBLE
+	}
+		button buttonSelectable {
+		text [labelSelectableText] ? "Toggle Selectable"
+		onPress trigger ACT_PRESS_MAKE_LABEL_SELECTABLE
+	}
+	button buttonEnabled {
+		text [labelEnableText] ? "Toggle Enable"
+		onPress trigger ACT_PRESS_MAKE_LABEL_ENABLE
+	}
+	button buttonFocus {
+		text "Focus On Label"
+		onPress trigger ACT_PRESS_FOCUS_LABEL
+	}
+	button buttonChangeTitle {
+		text "Change Title"
+		onPress trigger ACT_PRESS_CHANGETITLE_LABEL
+	}
+	button buttonChangeWaitingImage {
+		text [labelChangeWaitingText] ? "Set Waiting Image"
+		onPress trigger ACT_PRESS_SETWAITINGIMAGE_LABEL
+	}
+	button buttonChangePosition {
+		text "Change Label Position"
+		onPress trigger ACT_PRESS_CHANGEPOSITION_LABEL
+	}
+}
+
+
+
+//********************************
+// TestImage HMI State
+//********************************
+action ACT_PRESS_IMAGEONE
+action ACT_PRESS_MAKE_IMAGE_VISIBLE
+action ACT_PRESS_MAKE_IMAGE_SELECTABLE
+action ACT_PRESS_MAKE_IMAGE_ENABLE
+action ACT_PRESS_FOCUS_IMAGE
+action ACT_PRESS_CHANGE_IMAGE
+action ACT_PRESS_CHANGEDATABASE_IMAGE
+action ACT_PRESS_CHANGEPOSITION_IMAGE
+
+string imageOneText
+string imageVisibleText
+string imageSelectableText
+string imageEnableText
+string imageChangeWaitingText
+
+img MDL_DYNAMIC_IMAGEONE
+
+state TestImage {
+	title "Test Image Properties"
+	image imageOne [MDL_DYNAMIC_IMAGEONE] {
+		positionX 0
+		positionY 1
+		alignment LeftTop
+	}
+	
+	image iconLike
+	
+	button buttonVisible {
+		text [labelVisibleText] ? "Toggle Visible"
+		onPress trigger ACT_PRESS_MAKE_IMAGE_VISIBLE
+	}
+		button buttonSelectable {
+		text [labelSelectableText] ? "Toggle Selectable"
+		onPress trigger ACT_PRESS_MAKE_IMAGE_SELECTABLE
+	}
+	button buttonEnabled {
+		text [labelEnableText] ? "Toggle Enable"
+		onPress trigger ACT_PRESS_MAKE_IMAGE_ENABLE
+	}
+	button buttonFocus {
+		text "Focus On Image"
+		onPress trigger ACT_PRESS_FOCUS_IMAGE
+	}
+	button buttonChangeImage {
+		text "Load Image"
+		onPress trigger ACT_PRESS_CHANGE_IMAGE
+	}
+	button buttonChangeDatabaseImage {
+		text "Switch Database Image"
+		onPress trigger ACT_PRESS_CHANGEDATABASE_IMAGE
+	}
+	button buttonChangePosition {
+		text "Change Image Position"
+		onPress trigger ACT_PRESS_CHANGEPOSITION_IMAGE
+	}
+}
+
+
+
+
+//**************************
+// ButtonsOverview HMI State
+//**************************
+action ACT_PRESS_BUTTON1
+action ACT_PRESS_BUTTON2
+
+string ButtonsOverviewTitle
+string Button1Text
+string Button2Text
+
+state ButtonsOverview{
+	title [ButtonsOverviewTitle] ? "Buttons"
+	button button1{
+		text [Button1Text] ? "Button One"
+		onPress trigger ACT_PRESS_BUTTON1
+	}
+	button button2{
+		text [Button2Text] ? "Button Two"
+		onPress trigger ACT_PRESS_BUTTON2
+	}
+}
+
+
+//**********************************
+// LabelsOverview Overview HMI State
+//**********************************
+action ACT_PRESS_LABEL1
+action ACT_PRESS_LABEL2
+
+string LabelsOverviewTitle
+string Label1Text
+string Label2Text
+string ButtonLabel1Text
+string ButtonLabel2Text
+
+
+state LabelsOverview{
+	title [LabelsOverviewTitle] ? "Labels"
+	label label1{
+		text [Label1Text] ? "First Label"
+		}
+	label label2{
+		text [Label2Text] ? "Second Label"
+		}
+	button buttonChangeLabel1{
+		text [ButtonLabel1Text] ? "Change Label 1 Text"
+		onPress trigger ACT_PRESS_LABEL1
+	}
+	button buttonChangeLabel2{
+		text [ButtonLabel2Text] ? "Change Label 2 Text & Pos"
+		onPress trigger ACT_PRESS_LABEL2
+	}
+}
+
+
+//************************
+// ImageOverview HMI State
+//************************
+string ImageOverviewTitle
+img MDL_DYNAMIC_IMAGE1
+
+state ImageOverview{
+	title [ImageOverviewTitle] ? "Image"
+
+	image photo [MDL_DYNAMIC_IMAGE1] {
+		positionX 0
+		positionY 1
+		alignment LeftTop
+	}
+}
+
+
+
+//********************************
+// CheckboxRadioOverview HMI State
+//********************************
+action ACT_PRESS_CHECKBOX1
+action ACT_PRESS_CHECKBOX2
+action ACT_PRESS_CHECKBOX3
+action ACT_PRESS_CHECKBOX4
+action ACT_PRESS_RADIOBUTTON1
+bool MDL_SIMPLE_CHECKBOX1 = false
+bool MDL_SIMPLE_CHECKBOX2 = false
+bool MDL_SIMPLE_CHECKBOX3 = false
+bool MDL_SIMPLE_CHECKBOX4 = false
+bool MDL_SIMPLE_RADIO = false
+
+state CheckboxRadioOverview{
+	title "Checkbox and Radio Button"
+	
+	radiobutton radioButton1 {
+		text "Radio Button"
+		model MDL_SIMPLE_RADIO
+		onPress trigger ACT_PRESS_RADIOBUTTON1		
+	}
+	
+	checkbox checkbox1 {
+		text "Checkbox1"
+		model MDL_SIMPLE_CHECKBOX1
+		onPress trigger ACT_PRESS_CHECKBOX1
+	}
+	
+	checkbox checkbox2 {
+		text "Non selectable Checkbox"
+		model MDL_SIMPLE_CHECKBOX2
+		onPress trigger ACT_PRESS_CHECKBOX2
+	}
+	
+	checkbox checkbox3 {
+		text "Not enabled Checkbox"
+		model MDL_SIMPLE_CHECKBOX3
+		onPress trigger ACT_PRESS_CHECKBOX3
+	}
+	
+	checkbox checkbox4 {
+		text "Checkbox (with no delegate defined)"
+		model MDL_SIMPLE_CHECKBOX4
+		onPress trigger ACT_PRESS_CHECKBOX4
+	}
+}
+
+//************************
+// GaugeOverview HMI State
+//************************
+gauge MDL_SIMPLE_GAUGE 
+{
+	min 0
+	max 10
+	value 5
+	increment 1
+}
+
+gauge Balance MDL_BALANCE_GAUGE 
+{
+		min 0
+		max 100
+		value 40
+		increment 5
+}
+
+gauge Progress MDL_PROGRESSBAR 
+{
+	min 0
+	max 20
+	value 0
+	increment 1
+}
+
+gauge BigNumber MDL_BIGNUMBER {
+	min 0
+	max 99999
+	value 0
+	increment 1
+}
+
+gauge Date MDL_DATE {
+	min 0
+	max 10
+	value 5
+	increment 1
+}
+
+gauge Time MDL_TIME {
+	min 0
+	max 10
+	value 5
+	increment 1
+}
+
+action ACT_PRESS_BIGNUMBER
+action ACT_PRESS_DATE
+action ACT_PRESS_TIME
+
+string gaugeBigNumberText
+string gaugeDateText
+string gaugeTimeText
+string buttonSetInputGaugesText
+
+action ACT_PRESS_GAUGE1
+action ACT_CHANGE_GAUGE2
+action ACT_PRESS_GAUGE2
+action ACT_CHANGE_GAUGE3
+action ACT_PRESS_GAUGE3
+action ACT_CHANGE_DATE
+action ACT_CHANGE_TIME
+action ACT_CHANGE_BIGNUMBER
+action ACT_PRESS_BUTTON_SET_GAUGE
+	
+state GaugeOverview{
+	title "Gauges"
+	gauge simpleGauge {
+		tooltip "Simple"
+		model MDL_SIMPLE_GAUGE
+	}
+	gauge progressGauge {
+		tooltip "Progress"
+		model MDL_PROGRESSBAR
+	}
+	gauge balanceGauge {
+		tooltip "Balance"
+		model MDL_BALANCE_GAUGE
+		onChange trigger ACT_CHANGE_GAUGE3
+		onPress trigger ACT_PRESS_GAUGE3
+	}
+	gauge gaugeBigNumber {
+		text [gaugeBigNumberText] ? "Big Number"		
+		model MDL_BIGNUMBER
+		onPress trigger ACT_PRESS_BIGNUMBER
+		onChange trigger ACT_CHANGE_BIGNUMBER
+	}
+	gauge gaugeDate {
+		text [gaugeDateText] ? "Date"
+		model MDL_DATE
+		onChange trigger ACT_CHANGE_DATE
+		onPress trigger ACT_PRESS_DATE
+	}
+	gauge gaugeTime {
+		text [gaugeTimeText] ? "Time"
+		model MDL_TIME
+		onChange trigger ACT_CHANGE_TIME
+		onPress trigger ACT_PRESS_TIME
+	}
+	button buttonSetInputGauges{
+		text [buttonSetInputGaugesText] ? "Reset Input Values"
+		onPress trigger ACT_PRESS_BUTTON_SET_GAUGE
+	}
+}
+
+
+//*******************************
+// InputSpellerOverview HMI State
+//*******************************
+string RML_INPUT_SPELLER
+action ACT_INPUT_SPELLER
+table MDL_SUGGEST_SPELLER
+
+action CRA_SUGGEST_SPELLER {
+	action ACT_SUGGEST_SPELLER
+	open ResultsState
+	}
+
+action CRA_INPUT_SPELLER {
+	action RAC_INPUT_SPELLER
+	open ResultsState
+}
+
+state InputSpellerOverview {
+	title "Speller"
+	input inputSpeller {
+		text "Suggested Options"
+		result RML_INPUT_SPELLER
+		suggest MDL_SUGGEST_SPELLER
+		onPress trigger ACT_INPUT_SPELLER
+		onSuggest trigger CRA_SUGGEST_SPELLER
+		onResult trigger CRA_INPUT_SPELLER
+	}
+}
+
+
+//******************
+// Results HMI State
+//******************
+string labelResultText
+
+state ResultsState{
+	title "User Selection Result"
+	label labelResult{
+		text [labelResultText] ? "State called from Speller Result"
+		}	
+}
+
+table MDL_TEXT_TABLE
+table MDL_IMAGE_TABLE
+
+action ACT_PRESS_IMAGE_TABLE
+action ACT_PRESS_TEXT_TABLE {
+	action RA_PRESS_TEXT_TABLE
+	open ResultsState
+}
+
+//************************
+// TableOverview HMI State
+//************************
+string LabelTextTableText
+string LabelImageTableText
+
+img iconDislike
+img iconLike
+img iconFlag
+img iconOpt
+
+state TableOverview{
+	title "Tables Sample"
+	label labelTextTable{
+		text [LabelTextTableText] ? "Table 1 Sample --> 4 Rows 3 Columns"
+		selectable false
+	}	
+	table textTable{
+		model MDL_TEXT_TABLE
+		onPress trigger ACT_PRESS_TEXT_TABLE
+	}
+	label lableImageTable{
+		text [LabelImageTableText] ? "Table 2 Sample --> 4 Rows 2 Columns"
+		selectable false
+	}	
+	table imageTable{
+		model MDL_IMAGE_TABLE
+		onPress trigger ACT_PRESS_IMAGE_TABLE
+	}
+}
+
+//*********************
+// PopupState HMI State
+//*********************
+string LabelPopupText
+string ButtonPopupText
+action ACT_PRESS_BUTTON_POPUP
+
+popup PopupState{
+	title "Pop Up HMI State"
+	label labelPopup{
+		text [LabelPopupText] ? "Pop Up HMI Sample"
+		selectable false
+	}
+	button buttonPopup{
+		text [ButtonPopupText] ? "Press to dismiss"
+		onPress trigger ACT_PRESS_BUTTON_POPUP
+	}
+}
+
+
+
+
