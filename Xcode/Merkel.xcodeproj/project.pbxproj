@@ -39,6 +39,8 @@
 		4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384316D1948700A2CD24 /* Social.framework */; };
 		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
 		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
+		4BA3384B16D195DA00A2CD24 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384916D195DA00A2CD24 /* libTestFlight.a */; };
+		4BA3384C16D195DA00A2CD24 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384916D195DA00A2CD24 /* libTestFlight.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,8 @@
 		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BA3384916D195DA00A2CD24 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		4BA3384A16D195DA00A2CD24 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		8CF2515D55FF42B095C2BE58 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,6 +119,7 @@
 				4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */,
 				4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */,
 				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
+				4BA3384B16D195DA00A2CD24 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +131,7 @@
 				4B77FE2F16C6F2AF00426018 /* UIKit.framework in Frameworks */,
 				4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */,
 				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
+				4BA3384C16D195DA00A2CD24 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +161,8 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BA3384916D195DA00A2CD24 /* libTestFlight.a */,
+				4BA3384A16D195DA00A2CD24 /* TestFlight.h */,
 				4BA3382C16D1942700A2CD24 /* Parse.framework */,
 				4B77FE0916C6F2AF00426018 /* UIKit.framework */,
 				4B77FE0B16C6F2AF00426018 /* Foundation.framework */,
@@ -463,6 +471,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
 				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -479,6 +491,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
 				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -496,6 +512,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
 				INFOPLIST_FILE = "MerkelTests/MerkelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -514,6 +534,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
 				INFOPLIST_FILE = "MerkelTests/MerkelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
