@@ -20,6 +20,7 @@
 {
     [super viewDidLoad];
     self.userLabel.hidden = YES;
+    self.title = @"Merkel";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -41,6 +42,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - User Management
 
 - (void)setupNewUserAccount {
     [[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
@@ -74,7 +77,7 @@
     loginVC.delegate = self;
     loginVC.signUpController.delegate = self;
     loginVC.fields = PFLogInFieldsFacebook;
-    [self presentViewController:loginVC animated:YES completion:nil];
+    [self.navigationController presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)logoutButtonPressed:(id)sender {
@@ -85,21 +88,21 @@
 #pragma mark PFLogInViewControllerDelegate Methods
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark PFSignUpViewControllerDelegate Methods
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
