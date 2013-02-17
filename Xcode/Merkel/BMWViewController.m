@@ -28,6 +28,10 @@
         [self presentLoginView];
     } else {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed:)];
+        // If the user doesn't have a "first_name" key set that means we need to load their Facebook data.
+        if (![[PFUser currentUser] objectForKey:@"first_name"]) {
+            [self setupNewUserAccount];
+        }
         [self setupViewForUser];
     }
 }
@@ -38,8 +42,27 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setupNewUserAccount {
+    [[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            NSDictionary<PF_FBGraphUser> *user = (NSDictionary<PF_FBGraphUser> *)result;
+            PFUser *curUser = [PFUser currentUser];
+            [curUser setObject:user.username forKey:@"username"];
+            [curUser setObject:user.first_name forKey:@"first_name"];
+            [curUser setObject:user.last_name forKey:@"last_name"];
+            [curUser setObject:[user objectForKey:@"email"] forKey:@"email"];
+            [curUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [self setupViewForUser];
+            }];
+        }
+    }];
+}
+
 - (void)setupViewForUser {
     PFUser *curUser = [PFUser currentUser];
+    if (![curUser objectForKey:@"first_name"]) {
+        return;
+    }
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
 }
@@ -62,21 +85,21 @@
 #pragma mark PFLogInViewControllerDelegate Methods
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark PFSignUpViewControllerDelegate Methods
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
