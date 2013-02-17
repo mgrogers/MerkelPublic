@@ -1,0 +1,786 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		333412BB15139036000E8D23 /* BMW_7er.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 333412BA15139036000E8D23 /* BMW_7er.jpg */; };
+		33342E92152DE9460093EE09 /* HFTTestImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33342E91152DE9450093EE09 /* HFTTestImageView.m */; };
+		337F4BE7152357AA00875DA5 /* HFTHmiProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 337F4BE2152357A900875DA5 /* HFTHmiProvider.m */; };
+		339A89D9152C70C80064F820 /* HFTAllFeaturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89C6152C70C80064F820 /* HFTAllFeaturesView.m */; };
+		339A89DA152C70C80064F820 /* HFTButtonsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89C8152C70C80064F820 /* HFTButtonsOverviewView.m */; };
+		339A89DB152C70C80064F820 /* HFTCheckboxRadioOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CA152C70C80064F820 /* HFTCheckboxRadioOverviewView.m */; };
+		339A89DC152C70C80064F820 /* HFTGaugeOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CC152C70C80064F820 /* HFTGaugeOverviewView.m */; };
+		339A89DD152C70C80064F820 /* HFTImageOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CE152C70C80064F820 /* HFTImageOverviewView.m */; };
+		339A89DE152C70C80064F820 /* HFTInputSpellerOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D0152C70C80064F820 /* HFTInputSpellerOverviewView.m */; };
+		339A89DF152C70C80064F820 /* HFTLabelsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D2152C70C80064F820 /* HFTLabelsOverviewView.m */; };
+		339A89E0152C70C80064F820 /* HFTResultsStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D4152C70C80064F820 /* HFTResultsStateView.m */; };
+		339A89E1152C70C80064F820 /* HFTTableOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D6152C70C80064F820 /* HFTTableOverviewView.m */; };
+		339A89E2152C70C80064F820 /* HFTWidgetsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D8152C70C80064F820 /* HFTWidgetsOverviewView.m */; };
+		339A89F4152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89EF152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m */; };
+		339A89FF152CA8090064F820 /* HFTTestButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89FC152CA8080064F820 /* HFTTestButtonView.m */; };
+		339A8A00152CA8090064F820 /* HFTTestLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89FE152CA8080064F820 /* HFTTestLabelView.m */; };
+		33CF730115206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip in Resources */ = {isa = PBXBuildFile; fileRef = 33CF72F415206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip */; };
+		33CF730215206010004ADD5F /* HMIFeatureTour_common_Texts.zip in Resources */ = {isa = PBXBuildFile; fileRef = 33CF72F515206010004ADD5F /* HMIFeatureTour_common_Texts.zip */; };
+		33DBC243150E4E9D00F5A42D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC242150E4E9D00F5A42D /* UIKit.framework */; };
+		33DBC245150E4E9D00F5A42D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC244150E4E9D00F5A42D /* Foundation.framework */; };
+		33DBC247150E4E9D00F5A42D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC246150E4E9D00F5A42D /* CoreGraphics.framework */; };
+		33DBC24F150E4E9D00F5A42D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DBC24E150E4E9D00F5A42D /* main.m */; };
+		33DBC260150E4EB400F5A42D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC25F150E4EB400F5A42D /* CoreTelephony.framework */; };
+		33DBC262150E4EC200F5A42D /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC261150E4EC200F5A42D /* ExternalAccessory.framework */; };
+		33DBC264150E4ECF00F5A42D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC263150E4ECF00F5A42D /* AVFoundation.framework */; };
+		33DBC266150E4EDE00F5A42D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC265150E4EDE00F5A42D /* AudioToolbox.framework */; };
+		33DBC268150E4EF000F5A42D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC267150E4EF000F5A42D /* Security.framework */; };
+		33DBC26A150E4F0400F5A42D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC269150E4F0400F5A42D /* MediaPlayer.framework */; };
+		33FC0BF8152AE1080098C86C /* iconLike.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BF7152AE1080098C86C /* iconLike.png */; };
+		33FC0BFC152AE1DD0098C86C /* iconDislike.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BF9152AE1DD0098C86C /* iconDislike.png */; };
+		33FC0BFD152AE1DD0098C86C /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BFA152AE1DD0098C86C /* iconFlag.png */; };
+		7B1B622715B7638100A2CA32 /* HFTPropertiesTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622615B7638000A2CA32 /* HFTPropertiesTestView.m */; };
+		7B1B622815B7638100A2CA32 /* HFTPropertiesTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622615B7638000A2CA32 /* HFTPropertiesTestView.m */; };
+		7B1B622C15B86CBC00A2CA32 /* HFTStatesOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622B15B86CBB00A2CA32 /* HFTStatesOverviewView.m */; };
+		7B1B622D15B86CBC00A2CA32 /* HFTStatesOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622B15B86CBB00A2CA32 /* HFTStatesOverviewView.m */; };
+		7B1B623415B86DBC00A2CA32 /* HFTTableLayoutStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622F15B86DB500A2CA32 /* HFTTableLayoutStateView.m */; };
+		7B1B623515B86DBC00A2CA32 /* HFTTableLayoutStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B622F15B86DB500A2CA32 /* HFTTableLayoutStateView.m */; };
+		7B1B623615B86DBC00A2CA32 /* HFTPagingStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B623115B86DB800A2CA32 /* HFTPagingStateView.m */; };
+		7B1B623715B86DBC00A2CA32 /* HFTPagingStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B623115B86DB800A2CA32 /* HFTPagingStateView.m */; };
+		7B1B623815B86DBC00A2CA32 /* HFTToolbarStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B623315B86DBA00A2CA32 /* HFTToolbarStateView.m */; };
+		7B1B623915B86DBC00A2CA32 /* HFTToolbarStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1B623315B86DBA00A2CA32 /* HFTToolbarStateView.m */; };
+		7B1B624015B874AE00A2CA32 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623A15B874AE00A2CA32 /* bmwLogo.png */; };
+		7B1B624115B874AE00A2CA32 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623A15B874AE00A2CA32 /* bmwLogo.png */; };
+		7B1B624215B874AE00A2CA32 /* iconAddFav.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623B15B874AE00A2CA32 /* iconAddFav.png */; };
+		7B1B624315B874AE00A2CA32 /* iconAddFav.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623B15B874AE00A2CA32 /* iconAddFav.png */; };
+		7B1B624415B874AE00A2CA32 /* iconDevice.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623C15B874AE00A2CA32 /* iconDevice.png */; };
+		7B1B624515B874AE00A2CA32 /* iconDevice.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623C15B874AE00A2CA32 /* iconDevice.png */; };
+		7B1B624615B874AE00A2CA32 /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623D15B874AE00A2CA32 /* iconMan.png */; };
+		7B1B624715B874AE00A2CA32 /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623D15B874AE00A2CA32 /* iconMan.png */; };
+		7B1B624815B874AE00A2CA32 /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623E15B874AE00A2CA32 /* iconNote.png */; };
+		7B1B624915B874AE00A2CA32 /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623E15B874AE00A2CA32 /* iconNote.png */; };
+		7B1B624A15B874AE00A2CA32 /* iconRemFav.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623F15B874AE00A2CA32 /* iconRemFav.png */; };
+		7B1B624B15B874AE00A2CA32 /* iconRemFav.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B1B623F15B874AE00A2CA32 /* iconRemFav.png */; };
+		7B432B9B15BA08A000869318 /* HFTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9615BA08A000869318 /* HFTAppDelegate.m */; };
+		7B432B9C15BA08A000869318 /* HFTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9615BA08A000869318 /* HFTAppDelegate.m */; };
+		7B432B9D15BA08A000869318 /* HFTBMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9815BA08A000869318 /* HFTBMWManager.m */; };
+		7B432B9E15BA08A000869318 /* HFTBMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9815BA08A000869318 /* HFTBMWManager.m */; };
+		7B432B9F15BA08A000869318 /* HFTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9A15BA08A000869318 /* HFTViewController.m */; };
+		7B432BA015BA08A000869318 /* HFTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432B9A15BA08A000869318 /* HFTViewController.m */; };
+		7B432BA415BA08C700869318 /* HFTResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432BA315BA08C700869318 /* HFTResultsViewController.m */; };
+		7B432BA515BA08C700869318 /* HFTResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B432BA315BA08C700869318 /* HFTResultsViewController.m */; };
+		7B432BAD15BA0CB700869318 /* AppIcon+Frank.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BA815BA0CB700869318 /* AppIcon+Frank.png */; };
+		7B432BAE15BA0CB700869318 /* AppIcon+Frank.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BA815BA0CB700869318 /* AppIcon+Frank.png */; };
+		7B432BAF15BA0CB700869318 /* Dashboard+Frank.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BA915BA0CB700869318 /* Dashboard+Frank.png */; };
+		7B432BB015BA0CB700869318 /* Dashboard+Frank.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BA915BA0CB700869318 /* Dashboard+Frank.png */; };
+		7B432BB115BA0CB700869318 /* frank_static_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAA15BA0CB700869318 /* frank_static_resources.bundle */; };
+		7B432BB215BA0CB700869318 /* frank_static_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAA15BA0CB700869318 /* frank_static_resources.bundle */; };
+		7B432BB315BA0CB700869318 /* HMIFeatureTourFrank-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAB15BA0CB700869318 /* HMIFeatureTourFrank-Info.plist */; };
+		7B432BB415BA0CB700869318 /* HMIFeatureTourFrank-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAB15BA0CB700869318 /* HMIFeatureTourFrank-Info.plist */; };
+		7B432BB515BA0CB700869318 /* MainStoryboard+Frank.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAC15BA0CB700869318 /* MainStoryboard+Frank.storyboard */; };
+		7B432BB615BA0CB700869318 /* MainStoryboard+Frank.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B432BAC15BA0CB700869318 /* MainStoryboard+Frank.storyboard */; };
+		7B485FF315C1F445008191D5 /* iconOpt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B485FF215C1F445008191D5 /* iconOpt.png */; };
+		7BA16851164916D60077DE0B /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7BA1684F164916D60077DE0B /* BMWAppKitResources.bundle */; };
+		7BDD284715BA0D9D00179AD2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BDD284615BA0D9D00179AD2 /* MainStoryboard.storyboard */; };
+		7BDD284815BA0D9D00179AD2 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BDD284615BA0D9D00179AD2 /* MainStoryboard.storyboard */; };
+		7BDD284A15BA0EC200179AD2 /* HmiFeatureTour.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BDD284915BA0EC200179AD2 /* HmiFeatureTour.plist */; };
+		7BDD284B15BA0EC200179AD2 /* HmiFeatureTour.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BDD284915BA0EC200179AD2 /* HmiFeatureTour.plist */; };
+		7BE84862153888E20046BF65 /* m57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE84861153888E20046BF65 /* m57x57.png */; };
+		7BED9E7F1535F36300AA1D0B /* manifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BED9E7E1535F36300AA1D0B /* manifest.plist */; };
+		7BED9E8D1535F7F600AA1D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DBC24E150E4E9D00F5A42D /* main.m */; };
+		7BED9E961535F7F600AA1D0B /* HFTHmiProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 337F4BE2152357A900875DA5 /* HFTHmiProvider.m */; };
+		7BED9E9C1535F7F600AA1D0B /* HFTAllFeaturesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89C6152C70C80064F820 /* HFTAllFeaturesView.m */; };
+		7BED9E9D1535F7F600AA1D0B /* HFTButtonsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89C8152C70C80064F820 /* HFTButtonsOverviewView.m */; };
+		7BED9E9E1535F7F600AA1D0B /* HFTCheckboxRadioOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CA152C70C80064F820 /* HFTCheckboxRadioOverviewView.m */; };
+		7BED9E9F1535F7F600AA1D0B /* HFTGaugeOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CC152C70C80064F820 /* HFTGaugeOverviewView.m */; };
+		7BED9EA01535F7F600AA1D0B /* HFTImageOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89CE152C70C80064F820 /* HFTImageOverviewView.m */; };
+		7BED9EA11535F7F600AA1D0B /* HFTInputSpellerOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D0152C70C80064F820 /* HFTInputSpellerOverviewView.m */; };
+		7BED9EA21535F7F600AA1D0B /* HFTLabelsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D2152C70C80064F820 /* HFTLabelsOverviewView.m */; };
+		7BED9EA31535F7F600AA1D0B /* HFTResultsStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D4152C70C80064F820 /* HFTResultsStateView.m */; };
+		7BED9EA41535F7F600AA1D0B /* HFTTableOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D6152C70C80064F820 /* HFTTableOverviewView.m */; };
+		7BED9EA51535F7F600AA1D0B /* HFTWidgetsOverviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89D8152C70C80064F820 /* HFTWidgetsOverviewView.m */; };
+		7BED9EA71535F7F600AA1D0B /* HFTAllFeaturesCommonTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89EF152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m */; };
+		7BED9EA91535F7F600AA1D0B /* HFTTestButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89FC152CA8080064F820 /* HFTTestButtonView.m */; };
+		7BED9EAA1535F7F600AA1D0B /* HFTTestLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 339A89FE152CA8080064F820 /* HFTTestLabelView.m */; };
+		7BED9EAD1535F7F600AA1D0B /* HFTTestImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33342E91152DE9450093EE09 /* HFTTestImageView.m */; };
+		7BED9EAF1535F7F600AA1D0B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D517DE1524E0D200E2FC60 /* ImageIO.framework */; };
+		7BED9EB01535F7F600AA1D0B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D517DC1524E0CB00E2FC60 /* MobileCoreServices.framework */; };
+		7BED9EB11535F7F600AA1D0B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC269150E4F0400F5A42D /* MediaPlayer.framework */; };
+		7BED9EB21535F7F600AA1D0B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC267150E4EF000F5A42D /* Security.framework */; };
+		7BED9EB31535F7F600AA1D0B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC265150E4EDE00F5A42D /* AudioToolbox.framework */; };
+		7BED9EB41535F7F600AA1D0B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC263150E4ECF00F5A42D /* AVFoundation.framework */; };
+		7BED9EB51535F7F600AA1D0B /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC261150E4EC200F5A42D /* ExternalAccessory.framework */; };
+		7BED9EB61535F7F600AA1D0B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC25F150E4EB400F5A42D /* CoreTelephony.framework */; };
+		7BED9EB71535F7F600AA1D0B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC242150E4E9D00F5A42D /* UIKit.framework */; };
+		7BED9EB81535F7F600AA1D0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC244150E4E9D00F5A42D /* Foundation.framework */; };
+		7BED9EB91535F7F600AA1D0B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DBC246150E4E9D00F5A42D /* CoreGraphics.framework */; };
+		7BED9EBF1535F7F600AA1D0B /* BMW_7er.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 333412BA15139036000E8D23 /* BMW_7er.jpg */; };
+		7BED9EC11535F7F600AA1D0B /* HMIFeatureTour_bmw_Texts.zip in Resources */ = {isa = PBXBuildFile; fileRef = 33CF72F415206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip */; };
+		7BED9EC21535F7F600AA1D0B /* HMIFeatureTour_common_Texts.zip in Resources */ = {isa = PBXBuildFile; fileRef = 33CF72F515206010004ADD5F /* HMIFeatureTour_common_Texts.zip */; };
+		7BED9EC41535F7F600AA1D0B /* iconLike.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BF7152AE1080098C86C /* iconLike.png */; };
+		7BED9EC51535F7F600AA1D0B /* iconDislike.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BF9152AE1DD0098C86C /* iconDislike.png */; };
+		7BED9EC61535F7F600AA1D0B /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 33FC0BFA152AE1DD0098C86C /* iconFlag.png */; };
+		7BED9EC91535F7F600AA1D0B /* manifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BED9E7E1535F36300AA1D0B /* manifest.plist */; };
+		7BED9ED71535F89B00AA1D0B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BED9ED61535F89B00AA1D0B /* CFNetwork.framework */; };
+		7BF5A29216B8474300B97CDE /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF5A29116B8474300B97CDE /* BMWAppKit.framework */; };
+		E5D517DD1524E0CB00E2FC60 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D517DC1524E0CB00E2FC60 /* MobileCoreServices.framework */; };
+		E5D517DF1524E0D200E2FC60 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D517DE1524E0D200E2FC60 /* ImageIO.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		333412BA15139036000E8D23 /* BMW_7er.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BMW_7er.jpg; sourceTree = "<group>"; };
+		33342E90152DE9440093EE09 /* HFTTestImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTTestImageView.h; path = res/target/HFTTestImageView.h; sourceTree = "<group>"; };
+		33342E91152DE9450093EE09 /* HFTTestImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTTestImageView.m; path = res/target/HFTTestImageView.m; sourceTree = "<group>"; };
+		337F4BE1152357A800875DA5 /* HFTHmiProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTHmiProvider.h; path = res/target/HFTHmiProvider.h; sourceTree = "<group>"; };
+		337F4BE2152357A900875DA5 /* HFTHmiProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTHmiProvider.m; path = res/target/HFTHmiProvider.m; sourceTree = "<group>"; };
+		339A89C5152C70C80064F820 /* HFTAllFeaturesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTAllFeaturesView.h; path = res/target/HFTAllFeaturesView.h; sourceTree = "<group>"; };
+		339A89C6152C70C80064F820 /* HFTAllFeaturesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTAllFeaturesView.m; path = res/target/HFTAllFeaturesView.m; sourceTree = "<group>"; };
+		339A89C7152C70C80064F820 /* HFTButtonsOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTButtonsOverviewView.h; path = res/target/HFTButtonsOverviewView.h; sourceTree = "<group>"; };
+		339A89C8152C70C80064F820 /* HFTButtonsOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTButtonsOverviewView.m; path = res/target/HFTButtonsOverviewView.m; sourceTree = "<group>"; };
+		339A89C9152C70C80064F820 /* HFTCheckboxRadioOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTCheckboxRadioOverviewView.h; path = res/target/HFTCheckboxRadioOverviewView.h; sourceTree = "<group>"; };
+		339A89CA152C70C80064F820 /* HFTCheckboxRadioOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTCheckboxRadioOverviewView.m; path = res/target/HFTCheckboxRadioOverviewView.m; sourceTree = "<group>"; };
+		339A89CB152C70C80064F820 /* HFTGaugeOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTGaugeOverviewView.h; path = res/target/HFTGaugeOverviewView.h; sourceTree = "<group>"; };
+		339A89CC152C70C80064F820 /* HFTGaugeOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTGaugeOverviewView.m; path = res/target/HFTGaugeOverviewView.m; sourceTree = "<group>"; };
+		339A89CD152C70C80064F820 /* HFTImageOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTImageOverviewView.h; path = res/target/HFTImageOverviewView.h; sourceTree = "<group>"; };
+		339A89CE152C70C80064F820 /* HFTImageOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTImageOverviewView.m; path = res/target/HFTImageOverviewView.m; sourceTree = "<group>"; };
+		339A89CF152C70C80064F820 /* HFTInputSpellerOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTInputSpellerOverviewView.h; path = res/target/HFTInputSpellerOverviewView.h; sourceTree = "<group>"; };
+		339A89D0152C70C80064F820 /* HFTInputSpellerOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTInputSpellerOverviewView.m; path = res/target/HFTInputSpellerOverviewView.m; sourceTree = "<group>"; };
+		339A89D1152C70C80064F820 /* HFTLabelsOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTLabelsOverviewView.h; path = res/target/HFTLabelsOverviewView.h; sourceTree = "<group>"; };
+		339A89D2152C70C80064F820 /* HFTLabelsOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTLabelsOverviewView.m; path = res/target/HFTLabelsOverviewView.m; sourceTree = "<group>"; };
+		339A89D3152C70C80064F820 /* HFTResultsStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTResultsStateView.h; path = res/target/HFTResultsStateView.h; sourceTree = "<group>"; };
+		339A89D4152C70C80064F820 /* HFTResultsStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTResultsStateView.m; path = res/target/HFTResultsStateView.m; sourceTree = "<group>"; };
+		339A89D5152C70C80064F820 /* HFTTableOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTTableOverviewView.h; path = res/target/HFTTableOverviewView.h; sourceTree = "<group>"; };
+		339A89D6152C70C80064F820 /* HFTTableOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTTableOverviewView.m; path = res/target/HFTTableOverviewView.m; sourceTree = "<group>"; };
+		339A89D7152C70C80064F820 /* HFTWidgetsOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTWidgetsOverviewView.h; path = res/target/HFTWidgetsOverviewView.h; sourceTree = "<group>"; };
+		339A89D8152C70C80064F820 /* HFTWidgetsOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTWidgetsOverviewView.m; path = res/target/HFTWidgetsOverviewView.m; sourceTree = "<group>"; };
+		339A89EE152CA2F10064F820 /* HFTAllFeaturesCommonTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTAllFeaturesCommonTestView.h; path = res/target/HFTAllFeaturesCommonTestView.h; sourceTree = "<group>"; };
+		339A89EF152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTAllFeaturesCommonTestView.m; path = res/target/HFTAllFeaturesCommonTestView.m; sourceTree = "<group>"; };
+		339A89FB152CA8070064F820 /* HFTTestButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTTestButtonView.h; path = res/target/HFTTestButtonView.h; sourceTree = "<group>"; };
+		339A89FC152CA8080064F820 /* HFTTestButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTTestButtonView.m; path = res/target/HFTTestButtonView.m; sourceTree = "<group>"; };
+		339A89FD152CA8080064F820 /* HFTTestLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HFTTestLabelView.h; path = res/target/HFTTestLabelView.h; sourceTree = "<group>"; };
+		339A89FE152CA8080064F820 /* HFTTestLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HFTTestLabelView.m; path = res/target/HFTTestLabelView.m; sourceTree = "<group>"; };
+		33CF72F415206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = HMIFeatureTour_bmw_Texts.zip; path = res/target/HMIFeatureTour_bmw_Texts.zip; sourceTree = "<group>"; };
+		33CF72F515206010004ADD5F /* HMIFeatureTour_common_Texts.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = HMIFeatureTour_common_Texts.zip; path = res/target/HMIFeatureTour_common_Texts.zip; sourceTree = "<group>"; };
+		33DBC23E150E4E9D00F5A42D /* HMIFeatureTour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HMIFeatureTour.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33DBC242150E4E9D00F5A42D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		33DBC244150E4E9D00F5A42D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		33DBC246150E4E9D00F5A42D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		33DBC24A150E4E9D00F5A42D /* HMIFeatureTour-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HMIFeatureTour-Info.plist"; sourceTree = "<group>"; };
+		33DBC24E150E4E9D00F5A42D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		33DBC250150E4E9D00F5A42D /* HMIFeatureTour-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HMIFeatureTour-Prefix.pch"; sourceTree = "<group>"; };
+		33DBC25F150E4EB400F5A42D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		33DBC261150E4EC200F5A42D /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		33DBC263150E4ECF00F5A42D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		33DBC265150E4EDE00F5A42D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		33DBC267150E4EF000F5A42D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		33DBC269150E4F0400F5A42D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		33FC0BF7152AE1080098C86C /* iconLike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconLike.png; sourceTree = "<group>"; };
+		33FC0BF9152AE1DD0098C86C /* iconDislike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconDislike.png; sourceTree = "<group>"; };
+		33FC0BFA152AE1DD0098C86C /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
+		7B1B622515B7637F00A2CA32 /* HFTPropertiesTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTPropertiesTestView.h; sourceTree = "<group>"; };
+		7B1B622615B7638000A2CA32 /* HFTPropertiesTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTPropertiesTestView.m; sourceTree = "<group>"; };
+		7B1B622A15B86CBB00A2CA32 /* HFTStatesOverviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTStatesOverviewView.h; sourceTree = "<group>"; };
+		7B1B622B15B86CBB00A2CA32 /* HFTStatesOverviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTStatesOverviewView.m; sourceTree = "<group>"; };
+		7B1B622E15B86DB500A2CA32 /* HFTTableLayoutStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTTableLayoutStateView.h; sourceTree = "<group>"; };
+		7B1B622F15B86DB500A2CA32 /* HFTTableLayoutStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTTableLayoutStateView.m; sourceTree = "<group>"; };
+		7B1B623015B86DB600A2CA32 /* HFTPagingStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTPagingStateView.h; sourceTree = "<group>"; };
+		7B1B623115B86DB800A2CA32 /* HFTPagingStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTPagingStateView.m; sourceTree = "<group>"; };
+		7B1B623215B86DB800A2CA32 /* HFTToolbarStateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTToolbarStateView.h; sourceTree = "<group>"; };
+		7B1B623315B86DBA00A2CA32 /* HFTToolbarStateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTToolbarStateView.m; sourceTree = "<group>"; };
+		7B1B623A15B874AE00A2CA32 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmwLogo.png; sourceTree = "<group>"; };
+		7B1B623B15B874AE00A2CA32 /* iconAddFav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconAddFav.png; sourceTree = "<group>"; };
+		7B1B623C15B874AE00A2CA32 /* iconDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconDevice.png; sourceTree = "<group>"; };
+		7B1B623D15B874AE00A2CA32 /* iconMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconMan.png; sourceTree = "<group>"; };
+		7B1B623E15B874AE00A2CA32 /* iconNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconNote.png; sourceTree = "<group>"; };
+		7B1B623F15B874AE00A2CA32 /* iconRemFav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconRemFav.png; sourceTree = "<group>"; };
+		7B432B9515BA089F00869318 /* HFTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTAppDelegate.h; sourceTree = "<group>"; };
+		7B432B9615BA08A000869318 /* HFTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTAppDelegate.m; sourceTree = "<group>"; };
+		7B432B9715BA08A000869318 /* HFTBMWManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTBMWManager.h; sourceTree = "<group>"; };
+		7B432B9815BA08A000869318 /* HFTBMWManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTBMWManager.m; sourceTree = "<group>"; };
+		7B432B9915BA08A000869318 /* HFTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTViewController.h; sourceTree = "<group>"; };
+		7B432B9A15BA08A000869318 /* HFTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTViewController.m; sourceTree = "<group>"; };
+		7B432BA215BA08C700869318 /* HFTResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFTResultsViewController.h; sourceTree = "<group>"; };
+		7B432BA315BA08C700869318 /* HFTResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFTResultsViewController.m; sourceTree = "<group>"; };
+		7B432BA815BA0CB700869318 /* AppIcon+Frank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon+Frank.png"; sourceTree = "<group>"; };
+		7B432BA915BA0CB700869318 /* Dashboard+Frank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dashboard+Frank.png"; sourceTree = "<group>"; };
+		7B432BAA15BA0CB700869318 /* frank_static_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = frank_static_resources.bundle; sourceTree = "<group>"; };
+		7B432BAB15BA0CB700869318 /* HMIFeatureTourFrank-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HMIFeatureTourFrank-Info.plist"; sourceTree = "<group>"; };
+		7B432BAC15BA0CB700869318 /* MainStoryboard+Frank.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "MainStoryboard+Frank.storyboard"; sourceTree = "<group>"; };
+		7B485FF215C1F445008191D5 /* iconOpt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconOpt.png; sourceTree = "<group>"; };
+		7BA1684F164916D60077DE0B /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BMWAppKitResources.bundle; sourceTree = "<group>"; };
+		7BDD283F15BA0CF800179AD2 /* libFrank.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFrank.a; sourceTree = "<group>"; };
+		7BDD284015BA0CF800179AD2 /* libShelley.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libShelley.a; sourceTree = "<group>"; };
+		7BDD284615BA0D9D00179AD2 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		7BDD284915BA0EC200179AD2 /* HmiFeatureTour.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HmiFeatureTour.plist; sourceTree = "<group>"; };
+		7BE84861153888E20046BF65 /* m57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = m57x57.png; sourceTree = "<group>"; };
+		7BED9E7E1535F36300AA1D0B /* manifest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = manifest.plist; sourceTree = "<group>"; };
+		7BED9ECD1535F7F600AA1D0B /* HMIFeatureTour Frankified.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HMIFeatureTour Frankified.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BED9ECF1535F7F600AA1D0B /* HMIFeatureTour copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HMIFeatureTour copy-Info.plist"; path = "/Users/philipjohnston/Documents/BMW/Development_SRC/BMWAppKit_New_Git_Server/ExampleApps/HMIFeatureTour/HMIFeatureTour copy-Info.plist"; sourceTree = "<absolute>"; };
+		7BED9ED61535F89B00AA1D0B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		7BF5A29116B8474300B97CDE /* BMWAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BMWAppKit.framework; sourceTree = "<group>"; };
+		E5D517DC1524E0CB00E2FC60 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		E5D517DE1524E0D200E2FC60 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		33DBC23B150E4E9D00F5A42D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5D517DF1524E0D200E2FC60 /* ImageIO.framework in Frameworks */,
+				E5D517DD1524E0CB00E2FC60 /* MobileCoreServices.framework in Frameworks */,
+				33DBC26A150E4F0400F5A42D /* MediaPlayer.framework in Frameworks */,
+				33DBC268150E4EF000F5A42D /* Security.framework in Frameworks */,
+				33DBC266150E4EDE00F5A42D /* AudioToolbox.framework in Frameworks */,
+				33DBC264150E4ECF00F5A42D /* AVFoundation.framework in Frameworks */,
+				33DBC262150E4EC200F5A42D /* ExternalAccessory.framework in Frameworks */,
+				33DBC260150E4EB400F5A42D /* CoreTelephony.framework in Frameworks */,
+				33DBC243150E4E9D00F5A42D /* UIKit.framework in Frameworks */,
+				33DBC245150E4E9D00F5A42D /* Foundation.framework in Frameworks */,
+				33DBC247150E4E9D00F5A42D /* CoreGraphics.framework in Frameworks */,
+				7BF5A29216B8474300B97CDE /* BMWAppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BED9EAE1535F7F600AA1D0B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BED9ED71535F89B00AA1D0B /* CFNetwork.framework in Frameworks */,
+				7BED9EAF1535F7F600AA1D0B /* ImageIO.framework in Frameworks */,
+				7BED9EB01535F7F600AA1D0B /* MobileCoreServices.framework in Frameworks */,
+				7BED9EB11535F7F600AA1D0B /* MediaPlayer.framework in Frameworks */,
+				7BED9EB21535F7F600AA1D0B /* Security.framework in Frameworks */,
+				7BED9EB31535F7F600AA1D0B /* AudioToolbox.framework in Frameworks */,
+				7BED9EB41535F7F600AA1D0B /* AVFoundation.framework in Frameworks */,
+				7BED9EB51535F7F600AA1D0B /* ExternalAccessory.framework in Frameworks */,
+				7BED9EB61535F7F600AA1D0B /* CoreTelephony.framework in Frameworks */,
+				7BED9EB71535F7F600AA1D0B /* UIKit.framework in Frameworks */,
+				7BED9EB81535F7F600AA1D0B /* Foundation.framework in Frameworks */,
+				7BED9EB91535F7F600AA1D0B /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		333412B915138F8B000E8D23 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				33FC0BF9152AE1DD0098C86C /* iconDislike.png */,
+				33FC0BFA152AE1DD0098C86C /* iconFlag.png */,
+				33FC0BF7152AE1080098C86C /* iconLike.png */,
+				7B485FF215C1F445008191D5 /* iconOpt.png */,
+				333412BA15139036000E8D23 /* BMW_7er.jpg */,
+				7B1B623A15B874AE00A2CA32 /* bmwLogo.png */,
+				7B1B623B15B874AE00A2CA32 /* iconAddFav.png */,
+				7B1B623C15B874AE00A2CA32 /* iconDevice.png */,
+				7B1B623D15B874AE00A2CA32 /* iconMan.png */,
+				7B1B623E15B874AE00A2CA32 /* iconNote.png */,
+				7B1B623F15B874AE00A2CA32 /* iconRemFav.png */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		33CD659B150F6545002D73B3 /* rhmi */ = {
+			isa = PBXGroup;
+			children = (
+				33CF72F415206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip */,
+				33CF72F515206010004ADD5F /* HMIFeatureTour_common_Texts.zip */,
+			);
+			name = rhmi;
+			sourceTree = "<group>";
+		};
+		33CD6657150F9C2B002D73B3 /* rhmi */ = {
+			isa = PBXGroup;
+			children = (
+				7B432BA215BA08C700869318 /* HFTResultsViewController.h */,
+				7B432BA315BA08C700869318 /* HFTResultsViewController.m */,
+				7B1B622515B7637F00A2CA32 /* HFTPropertiesTestView.h */,
+				7B1B622615B7638000A2CA32 /* HFTPropertiesTestView.m */,
+				33342E90152DE9440093EE09 /* HFTTestImageView.h */,
+				33342E91152DE9450093EE09 /* HFTTestImageView.m */,
+				339A89FB152CA8070064F820 /* HFTTestButtonView.h */,
+				339A89FC152CA8080064F820 /* HFTTestButtonView.m */,
+				339A89FD152CA8080064F820 /* HFTTestLabelView.h */,
+				339A89FE152CA8080064F820 /* HFTTestLabelView.m */,
+				339A89EE152CA2F10064F820 /* HFTAllFeaturesCommonTestView.h */,
+				339A89EF152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m */,
+				339A89C5152C70C80064F820 /* HFTAllFeaturesView.h */,
+				339A89C6152C70C80064F820 /* HFTAllFeaturesView.m */,
+				7B1B622A15B86CBB00A2CA32 /* HFTStatesOverviewView.h */,
+				7B1B622B15B86CBB00A2CA32 /* HFTStatesOverviewView.m */,
+				339A89C7152C70C80064F820 /* HFTButtonsOverviewView.h */,
+				339A89C8152C70C80064F820 /* HFTButtonsOverviewView.m */,
+				339A89C9152C70C80064F820 /* HFTCheckboxRadioOverviewView.h */,
+				339A89CA152C70C80064F820 /* HFTCheckboxRadioOverviewView.m */,
+				339A89CB152C70C80064F820 /* HFTGaugeOverviewView.h */,
+				339A89CC152C70C80064F820 /* HFTGaugeOverviewView.m */,
+				339A89CD152C70C80064F820 /* HFTImageOverviewView.h */,
+				339A89CE152C70C80064F820 /* HFTImageOverviewView.m */,
+				339A89CF152C70C80064F820 /* HFTInputSpellerOverviewView.h */,
+				339A89D0152C70C80064F820 /* HFTInputSpellerOverviewView.m */,
+				339A89D1152C70C80064F820 /* HFTLabelsOverviewView.h */,
+				339A89D2152C70C80064F820 /* HFTLabelsOverviewView.m */,
+				339A89D3152C70C80064F820 /* HFTResultsStateView.h */,
+				339A89D4152C70C80064F820 /* HFTResultsStateView.m */,
+				339A89D5152C70C80064F820 /* HFTTableOverviewView.h */,
+				339A89D6152C70C80064F820 /* HFTTableOverviewView.m */,
+				339A89D7152C70C80064F820 /* HFTWidgetsOverviewView.h */,
+				339A89D8152C70C80064F820 /* HFTWidgetsOverviewView.m */,
+				7B1B622E15B86DB500A2CA32 /* HFTTableLayoutStateView.h */,
+				7B1B622F15B86DB500A2CA32 /* HFTTableLayoutStateView.m */,
+				7B1B623015B86DB600A2CA32 /* HFTPagingStateView.h */,
+				7B1B623115B86DB800A2CA32 /* HFTPagingStateView.m */,
+				7B1B623215B86DB800A2CA32 /* HFTToolbarStateView.h */,
+				7B1B623315B86DBA00A2CA32 /* HFTToolbarStateView.m */,
+				337F4BE1152357A800875DA5 /* HFTHmiProvider.h */,
+				337F4BE2152357A900875DA5 /* HFTHmiProvider.m */,
+			);
+			name = rhmi;
+			sourceTree = "<group>";
+		};
+		33DBC233150E4E9C00F5A42D = {
+			isa = PBXGroup;
+			children = (
+				7BE84861153888E20046BF65 /* m57x57.png */,
+				33DBC248150E4E9D00F5A42D /* HMIFeatureTour */,
+				33DBC241150E4E9D00F5A42D /* Frameworks */,
+				33DBC23F150E4E9D00F5A42D /* Products */,
+				7BED9ECF1535F7F600AA1D0B /* HMIFeatureTour copy-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		33DBC23F150E4E9D00F5A42D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33DBC23E150E4E9D00F5A42D /* HMIFeatureTour.app */,
+				7BED9ECD1535F7F600AA1D0B /* HMIFeatureTour Frankified.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		33DBC241150E4E9D00F5A42D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BF5A29116B8474300B97CDE /* BMWAppKit.framework */,
+				7BA1684F164916D60077DE0B /* BMWAppKitResources.bundle */,
+				7BED9ED61535F89B00AA1D0B /* CFNetwork.framework */,
+				33DBC269150E4F0400F5A42D /* MediaPlayer.framework */,
+				33DBC267150E4EF000F5A42D /* Security.framework */,
+				33DBC265150E4EDE00F5A42D /* AudioToolbox.framework */,
+				33DBC263150E4ECF00F5A42D /* AVFoundation.framework */,
+				33DBC261150E4EC200F5A42D /* ExternalAccessory.framework */,
+				33DBC25F150E4EB400F5A42D /* CoreTelephony.framework */,
+				33DBC242150E4E9D00F5A42D /* UIKit.framework */,
+				33DBC244150E4E9D00F5A42D /* Foundation.framework */,
+				33DBC246150E4E9D00F5A42D /* CoreGraphics.framework */,
+				E5D517DE1524E0D200E2FC60 /* ImageIO.framework */,
+				E5D517DC1524E0CB00E2FC60 /* MobileCoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		33DBC248150E4E9D00F5A42D /* HMIFeatureTour */ = {
+			isa = PBXGroup;
+			children = (
+				7B432B9515BA089F00869318 /* HFTAppDelegate.h */,
+				7B432B9615BA08A000869318 /* HFTAppDelegate.m */,
+				7B432B9715BA08A000869318 /* HFTBMWManager.h */,
+				7B432B9815BA08A000869318 /* HFTBMWManager.m */,
+				7B432B9915BA08A000869318 /* HFTViewController.h */,
+				7B432B9A15BA08A000869318 /* HFTViewController.m */,
+				7BDD284615BA0D9D00179AD2 /* MainStoryboard.storyboard */,
+				33CD6657150F9C2B002D73B3 /* rhmi */,
+				33DBC249150E4E9D00F5A42D /* Supporting Files */,
+			);
+			path = HMIFeatureTour;
+			sourceTree = "<group>";
+		};
+		33DBC249150E4E9D00F5A42D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7B432BA715BA0CA900869318 /* frank */,
+				333412B915138F8B000E8D23 /* resources */,
+				33CD659B150F6545002D73B3 /* rhmi */,
+				33DBC24A150E4E9D00F5A42D /* HMIFeatureTour-Info.plist */,
+				7BDD284915BA0EC200179AD2 /* HmiFeatureTour.plist */,
+				33DBC24E150E4E9D00F5A42D /* main.m */,
+				33DBC250150E4E9D00F5A42D /* HMIFeatureTour-Prefix.pch */,
+				7BED9E7E1535F36300AA1D0B /* manifest.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7B432BA715BA0CA900869318 /* frank */ = {
+			isa = PBXGroup;
+			children = (
+				7B432BB715BA0CBE00869318 /* libs */,
+				7B432BA815BA0CB700869318 /* AppIcon+Frank.png */,
+				7B432BA915BA0CB700869318 /* Dashboard+Frank.png */,
+				7B432BAA15BA0CB700869318 /* frank_static_resources.bundle */,
+				7B432BAB15BA0CB700869318 /* HMIFeatureTourFrank-Info.plist */,
+				7B432BAC15BA0CB700869318 /* MainStoryboard+Frank.storyboard */,
+			);
+			name = frank;
+			sourceTree = "<group>";
+		};
+		7B432BB715BA0CBE00869318 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				7BDD283F15BA0CF800179AD2 /* libFrank.a */,
+				7BDD284015BA0CF800179AD2 /* libShelley.a */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		33DBC23D150E4E9D00F5A42D /* HMIFeatureTour */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33DBC25C150E4E9D00F5A42D /* Build configuration list for PBXNativeTarget "HMIFeatureTour" */;
+			buildPhases = (
+				33DBC23A150E4E9D00F5A42D /* Sources */,
+				33DBC23B150E4E9D00F5A42D /* Frameworks */,
+				33DBC23C150E4E9D00F5A42D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HMIFeatureTour;
+			productName = HMIFeatureTour;
+			productReference = 33DBC23E150E4E9D00F5A42D /* HMIFeatureTour.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7BED9E8B1535F7F600AA1D0B /* HMIFeatureTour Frankified */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7BED9ECA1535F7F600AA1D0B /* Build configuration list for PBXNativeTarget "HMIFeatureTour Frankified" */;
+			buildPhases = (
+				7BED9E8C1535F7F600AA1D0B /* Sources */,
+				7BED9EAE1535F7F600AA1D0B /* Frameworks */,
+				7BED9EBB1535F7F600AA1D0B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "HMIFeatureTour Frankified";
+			productName = HMIFeatureTour;
+			productReference = 7BED9ECD1535F7F600AA1D0B /* HMIFeatureTour Frankified.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		33DBC235150E4E9C00F5A42D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 33DBC238150E4E9C00F5A42D /* Build configuration list for PBXProject "HMIFeatureTour" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 33DBC233150E4E9C00F5A42D;
+			productRefGroup = 33DBC23F150E4E9D00F5A42D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				33DBC23D150E4E9D00F5A42D /* HMIFeatureTour */,
+				7BED9E8B1535F7F600AA1D0B /* HMIFeatureTour Frankified */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		33DBC23C150E4E9D00F5A42D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				333412BB15139036000E8D23 /* BMW_7er.jpg in Resources */,
+				33CF730115206010004ADD5F /* HMIFeatureTour_bmw_Texts.zip in Resources */,
+				33CF730215206010004ADD5F /* HMIFeatureTour_common_Texts.zip in Resources */,
+				33FC0BF8152AE1080098C86C /* iconLike.png in Resources */,
+				33FC0BFC152AE1DD0098C86C /* iconDislike.png in Resources */,
+				33FC0BFD152AE1DD0098C86C /* iconFlag.png in Resources */,
+				7BED9E7F1535F36300AA1D0B /* manifest.plist in Resources */,
+				7B1B624015B874AE00A2CA32 /* bmwLogo.png in Resources */,
+				7B1B624215B874AE00A2CA32 /* iconAddFav.png in Resources */,
+				7B1B624415B874AE00A2CA32 /* iconDevice.png in Resources */,
+				7B1B624615B874AE00A2CA32 /* iconMan.png in Resources */,
+				7B1B624815B874AE00A2CA32 /* iconNote.png in Resources */,
+				7B1B624A15B874AE00A2CA32 /* iconRemFav.png in Resources */,
+				7B432BAD15BA0CB700869318 /* AppIcon+Frank.png in Resources */,
+				7B432BAF15BA0CB700869318 /* Dashboard+Frank.png in Resources */,
+				7B432BB115BA0CB700869318 /* frank_static_resources.bundle in Resources */,
+				7B432BB315BA0CB700869318 /* HMIFeatureTourFrank-Info.plist in Resources */,
+				7B432BB515BA0CB700869318 /* MainStoryboard+Frank.storyboard in Resources */,
+				7BDD284715BA0D9D00179AD2 /* MainStoryboard.storyboard in Resources */,
+				7BDD284A15BA0EC200179AD2 /* HmiFeatureTour.plist in Resources */,
+				7B485FF315C1F445008191D5 /* iconOpt.png in Resources */,
+				7BA16851164916D60077DE0B /* BMWAppKitResources.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BED9EBB1535F7F600AA1D0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BED9EBF1535F7F600AA1D0B /* BMW_7er.jpg in Resources */,
+				7BED9EC11535F7F600AA1D0B /* HMIFeatureTour_bmw_Texts.zip in Resources */,
+				7BED9EC21535F7F600AA1D0B /* HMIFeatureTour_common_Texts.zip in Resources */,
+				7BED9EC41535F7F600AA1D0B /* iconLike.png in Resources */,
+				7BED9EC51535F7F600AA1D0B /* iconDislike.png in Resources */,
+				7BED9EC61535F7F600AA1D0B /* iconFlag.png in Resources */,
+				7BED9EC91535F7F600AA1D0B /* manifest.plist in Resources */,
+				7BE84862153888E20046BF65 /* m57x57.png in Resources */,
+				7B1B624115B874AE00A2CA32 /* bmwLogo.png in Resources */,
+				7B1B624315B874AE00A2CA32 /* iconAddFav.png in Resources */,
+				7B1B624515B874AE00A2CA32 /* iconDevice.png in Resources */,
+				7B1B624715B874AE00A2CA32 /* iconMan.png in Resources */,
+				7B1B624915B874AE00A2CA32 /* iconNote.png in Resources */,
+				7B1B624B15B874AE00A2CA32 /* iconRemFav.png in Resources */,
+				7B432BAE15BA0CB700869318 /* AppIcon+Frank.png in Resources */,
+				7B432BB015BA0CB700869318 /* Dashboard+Frank.png in Resources */,
+				7B432BB215BA0CB700869318 /* frank_static_resources.bundle in Resources */,
+				7B432BB415BA0CB700869318 /* HMIFeatureTourFrank-Info.plist in Resources */,
+				7B432BB615BA0CB700869318 /* MainStoryboard+Frank.storyboard in Resources */,
+				7BDD284815BA0D9D00179AD2 /* MainStoryboard.storyboard in Resources */,
+				7BDD284B15BA0EC200179AD2 /* HmiFeatureTour.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		33DBC23A150E4E9D00F5A42D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33DBC24F150E4E9D00F5A42D /* main.m in Sources */,
+				337F4BE7152357AA00875DA5 /* HFTHmiProvider.m in Sources */,
+				339A89D9152C70C80064F820 /* HFTAllFeaturesView.m in Sources */,
+				339A89DA152C70C80064F820 /* HFTButtonsOverviewView.m in Sources */,
+				339A89DB152C70C80064F820 /* HFTCheckboxRadioOverviewView.m in Sources */,
+				339A89DC152C70C80064F820 /* HFTGaugeOverviewView.m in Sources */,
+				339A89DD152C70C80064F820 /* HFTImageOverviewView.m in Sources */,
+				339A89DE152C70C80064F820 /* HFTInputSpellerOverviewView.m in Sources */,
+				339A89DF152C70C80064F820 /* HFTLabelsOverviewView.m in Sources */,
+				339A89E0152C70C80064F820 /* HFTResultsStateView.m in Sources */,
+				339A89E1152C70C80064F820 /* HFTTableOverviewView.m in Sources */,
+				339A89E2152C70C80064F820 /* HFTWidgetsOverviewView.m in Sources */,
+				339A89F4152CA2F10064F820 /* HFTAllFeaturesCommonTestView.m in Sources */,
+				339A89FF152CA8090064F820 /* HFTTestButtonView.m in Sources */,
+				339A8A00152CA8090064F820 /* HFTTestLabelView.m in Sources */,
+				33342E92152DE9460093EE09 /* HFTTestImageView.m in Sources */,
+				7B1B622715B7638100A2CA32 /* HFTPropertiesTestView.m in Sources */,
+				7B1B622C15B86CBC00A2CA32 /* HFTStatesOverviewView.m in Sources */,
+				7B1B623415B86DBC00A2CA32 /* HFTTableLayoutStateView.m in Sources */,
+				7B1B623615B86DBC00A2CA32 /* HFTPagingStateView.m in Sources */,
+				7B1B623815B86DBC00A2CA32 /* HFTToolbarStateView.m in Sources */,
+				7B432B9B15BA08A000869318 /* HFTAppDelegate.m in Sources */,
+				7B432B9D15BA08A000869318 /* HFTBMWManager.m in Sources */,
+				7B432B9F15BA08A000869318 /* HFTViewController.m in Sources */,
+				7B432BA415BA08C700869318 /* HFTResultsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BED9E8C1535F7F600AA1D0B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BED9E8D1535F7F600AA1D0B /* main.m in Sources */,
+				7BED9E961535F7F600AA1D0B /* HFTHmiProvider.m in Sources */,
+				7BED9E9C1535F7F600AA1D0B /* HFTAllFeaturesView.m in Sources */,
+				7BED9E9D1535F7F600AA1D0B /* HFTButtonsOverviewView.m in Sources */,
+				7BED9E9E1535F7F600AA1D0B /* HFTCheckboxRadioOverviewView.m in Sources */,
+				7BED9E9F1535F7F600AA1D0B /* HFTGaugeOverviewView.m in Sources */,
+				7BED9EA01535F7F600AA1D0B /* HFTImageOverviewView.m in Sources */,
+				7BED9EA11535F7F600AA1D0B /* HFTInputSpellerOverviewView.m in Sources */,
+				7BED9EA21535F7F600AA1D0B /* HFTLabelsOverviewView.m in Sources */,
+				7BED9EA31535F7F600AA1D0B /* HFTResultsStateView.m in Sources */,
+				7BED9EA41535F7F600AA1D0B /* HFTTableOverviewView.m in Sources */,
+				7BED9EA51535F7F600AA1D0B /* HFTWidgetsOverviewView.m in Sources */,
+				7BED9EA71535F7F600AA1D0B /* HFTAllFeaturesCommonTestView.m in Sources */,
+				7BED9EA91535F7F600AA1D0B /* HFTTestButtonView.m in Sources */,
+				7BED9EAA1535F7F600AA1D0B /* HFTTestLabelView.m in Sources */,
+				7BED9EAD1535F7F600AA1D0B /* HFTTestImageView.m in Sources */,
+				7B1B622815B7638100A2CA32 /* HFTPropertiesTestView.m in Sources */,
+				7B1B622D15B86CBC00A2CA32 /* HFTStatesOverviewView.m in Sources */,
+				7B1B623515B86DBC00A2CA32 /* HFTTableLayoutStateView.m in Sources */,
+				7B1B623715B86DBC00A2CA32 /* HFTPagingStateView.m in Sources */,
+				7B1B623915B86DBC00A2CA32 /* HFTToolbarStateView.m in Sources */,
+				7B432B9C15BA08A000869318 /* HFTAppDelegate.m in Sources */,
+				7B432B9E15BA08A000869318 /* HFTBMWManager.m in Sources */,
+				7B432BA015BA08A000869318 /* HFTViewController.m in Sources */,
+				7B432BA515BA08C700869318 /* HFTResultsViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		33DBC25A150E4E9D00F5A42D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		33DBC25B150E4E9D00F5A42D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		33DBC25D150E4E9D00F5A42D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HMIFeatureTour/HMIFeatureTour-Prefix.pch";
+				INFOPLIST_FILE = "HMIFeatureTour/HMIFeatureTour-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		33DBC25E150E4E9D00F5A42D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HMIFeatureTour/HMIFeatureTour-Prefix.pch";
+				INFOPLIST_FILE = "HMIFeatureTour/HMIFeatureTour-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7BED9ECB1535F7F600AA1D0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/../framework/build/Release-universal\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HMIFeatureTour/HMIFeatureTour-Prefix.pch";
+				INFOPLIST_FILE = "HMIFeatureTour copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frank\"",
+					"\"$(SRCROOT)/HMIFeatureTour\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "HMIFeatureTour Frankified";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7BED9ECC1535F7F600AA1D0B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+					"\"$(SRCROOT)/../framework/build/Release-universal\"",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HMIFeatureTour/HMIFeatureTour-Prefix.pch";
+				INFOPLIST_FILE = "HMIFeatureTour copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frank\"",
+					"\"$(SRCROOT)/HMIFeatureTour\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "HMIFeatureTour Frankified";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33DBC238150E4E9C00F5A42D /* Build configuration list for PBXProject "HMIFeatureTour" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33DBC25A150E4E9D00F5A42D /* Debug */,
+				33DBC25B150E4E9D00F5A42D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33DBC25C150E4E9D00F5A42D /* Build configuration list for PBXNativeTarget "HMIFeatureTour" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33DBC25D150E4E9D00F5A42D /* Debug */,
+				33DBC25E150E4E9D00F5A42D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7BED9ECA1535F7F600AA1D0B /* Build configuration list for PBXNativeTarget "HMIFeatureTour Frankified" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BED9ECB1535F7F600AA1D0B /* Debug */,
+				7BED9ECC1535F7F600AA1D0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 33DBC235150E4E9C00F5A42D /* Project object */;
+}
