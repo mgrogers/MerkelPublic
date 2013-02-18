@@ -51,10 +51,14 @@
         if ([result isKindOfClass:[NSDictionary class]]) {
             NSDictionary<PF_FBGraphUser> *user = (NSDictionary<PF_FBGraphUser> *)result;
             PFUser *curUser = [PFUser currentUser];
-            [curUser setObject:user.username forKey:@"username"];
-            [curUser setObject:user.first_name forKey:@"first_name"];
-            [curUser setObject:user.last_name forKey:@"last_name"];
-            [curUser setObject:[user objectForKey:@"email"] forKey:@"email"];
+            id username = (user.username) ? user.username : [NSNull null];
+            id first_name = (user.first_name) ? user.first_name : [NSNull null];
+            id last_name = (user.last_name) ? user.last_name : [NSNull null];
+            id email = ([user objectForKey:@"email"]) ? [user objectForKey:@"email"] : [NSNull null];
+            [curUser setObject:username forKey:@"username"];
+            [curUser setObject:first_name forKey:@"first_name"];
+            [curUser setObject:last_name forKey:@"last_name"];
+            [curUser setObject:email forKey:@"email"];
             [curUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self setupViewForUser];
             }];
