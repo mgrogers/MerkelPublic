@@ -10,12 +10,36 @@
 
 @implementation BMWAppDelegate
 
+static NSString * const kMerkelParseAppId = @"ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
+static NSString * const KMerkelParseClientKey = @"lH8IHu99HYIF0nMiSd3KIdXe6fs0rnih2UEbHVYq";
+static NSString * const kMerkelFacebookAppId = @"258693340932079";
+static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d_MTg4MjE4MjAxMy0wMi0xNyAxNzo0ODoxMS43OTQzOTA";
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [Parse setApplicationId:kMerkelParseAppId
+                  clientKey:KMerkelParseClientKey];
+    [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
+    [TestFlight takeOff:kMerkelTestFlightId];
+    NSDictionary *appInfo = [[NSBundle mainBundle] infoDictionary];
+    NSString *versionStr = [NSString stringWithFormat:@"%@ (%@)",
+                            [appInfo objectForKey:@"CFBundleShortVersionString"],
+                            [appInfo objectForKey:@"CFBundleVersion"]];
+    NSLog(@"Version String: %@", versionStr);
     return YES;
 }
-							
+
+#pragma mark - URL Handling
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
