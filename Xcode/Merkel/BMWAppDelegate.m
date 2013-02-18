@@ -21,6 +21,11 @@ static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
     [TestFlight takeOff:kMerkelTestFlightId];
+    NSDictionary *appInfo = [[NSBundle mainBundle] infoDictionary];
+    NSString *versionStr = [NSString stringWithFormat:@"%@ (%@)",
+                            [appInfo objectForKey:@"CFBundleShortVersionString"],
+                            [appInfo objectForKey:@"CFBundleVersion"]];
+    NSLog(@"Version String: %@", versionStr);
     return YES;
 }
 

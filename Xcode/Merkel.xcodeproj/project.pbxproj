@@ -241,6 +241,7 @@
 			buildPhases = (
 				4B77FE0116C6F2AF00426018 /* Sources */,
 				4B77FE0216C6F2AF00426018 /* Frameworks */,
+				4BA3384D16D1A7AE00A2CD24 /* ShellScript */,
 				4B77FE0316C6F2AF00426018 /* Resources */,
 				939CA24B6D584BABAD99711C /* Copy Pods Resources */,
 			);
@@ -336,6 +337,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		4BA3384D16D1A7AE00A2CD24 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo ${SRCROOT}/version.sh\n${SRCROOT}/version.sh --set --plist-path \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\" --quiet";
 		};
 		939CA24B6D584BABAD99711C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
