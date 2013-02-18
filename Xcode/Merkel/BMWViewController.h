@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BMWViewController : UIViewController
+@interface BMWViewController : GAITrackedViewController
 
 @end
