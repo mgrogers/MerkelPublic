@@ -24,9 +24,6 @@
 		4B77FE1416C6F2AF00426018 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE1216C6F2AF00426018 /* InfoPlist.strings */; };
 		4B77FE1616C6F2AF00426018 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE1516C6F2AF00426018 /* main.m */; };
 		4B77FE1A16C6F2AF00426018 /* BMWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4B77FE1C16C6F2AF00426018 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE1B16C6F2AF00426018 /* Default.png */; };
-		4B77FE1E16C6F2AF00426018 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE1D16C6F2AF00426018 /* Default@2x.png */; };
-		4B77FE2016C6F2AF00426018 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE1F16C6F2AF00426018 /* Default-568h@2x.png */; };
 		4B77FE2316C6F2AF00426018 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */; };
 		4B77FE2616C6F2AF00426018 /* BMWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE2516C6F2AF00426018 /* BMWViewController.m */; };
 		4B77FE2E16C6F2AF00426018 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE2D16C6F2AF00426018 /* SenTestingKit.framework */; };
@@ -591,7 +588,7 @@
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -606,6 +603,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -616,7 +614,7 @@
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -631,6 +629,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
