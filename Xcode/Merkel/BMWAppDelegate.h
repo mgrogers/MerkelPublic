@@ -14,6 +14,5 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) BMWManager *manager;
-@property (strong, nonatomic) UIViewController *BMWViewController;
 
 @end
