@@ -15,8 +15,10 @@ Intro
 This repo is to be used for all code related to BossMobileWunderkinds (BMW) project to create the _Ultimate Living Machine_.  
 Team wiki [here](http://cs210net.stanford.edu/pmwiki/pmwiki.php/BMW2013/BMW2013).
 
-Xcode ![Merkel Build Status](https://www.cisimple.com/jobs/66mrn2152hgg386qv/build_status.png)
------
+iOS
+---
+
+ ![Merkel Build Status](https://www.cisimple.com/jobs/66mrn2152hgg386qv/build_status.png)
 
 The iOS project is set up under the Xcode folder. We will be using [Cocoapods](http://cocoapods.org/) to manage dependencies. Make sure to always open ```Merkel.xcworkspace```.
 
