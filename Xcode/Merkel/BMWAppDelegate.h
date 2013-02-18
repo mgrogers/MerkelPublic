@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class BMWManager;
+
 @interface BMWAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, retain) BMWManager *manager;
+@property (strong, nonatomic) UIViewController *BMWViewController;
 
 @end
