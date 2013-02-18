@@ -21,6 +21,7 @@
     [super viewDidLoad];
     self.userLabel.hidden = YES;
     self.title = @"Merkel";
+    self.trackedViewName = @"Home Screen";
 }
 
 - (void)viewDidAppear:(BOOL)animated {

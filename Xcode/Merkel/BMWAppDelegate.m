@@ -14,6 +14,7 @@ static NSString * const kMerkelParseAppId = @"ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4
 static NSString * const KMerkelParseClientKey = @"lH8IHu99HYIF0nMiSd3KIdXe6fs0rnih2UEbHVYq";
 static NSString * const kMerkelFacebookAppId = @"258693340932079";
 static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d_MTg4MjE4MjAxMy0wMi0xNyAxNzo0ODoxMS43OTQzOTA";
+static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -22,6 +23,7 @@ static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
     [TestFlight takeOff:kMerkelTestFlightId];
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
     return YES;
 }
 
