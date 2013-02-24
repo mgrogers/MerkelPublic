@@ -5,5 +5,16 @@
  */
 
 exports.list = function(req, res){
-  res.send("respond with a resource");
+  res.send(json_response);
 };
+
+
+var json_response = {
+	  "name": "Merkel",
+	  "version": "0.0.1",
+	  "data": {
+	    "name": "BMW",
+	    "packet": "calendar",
+	    "private": true
+	  }
+	};
