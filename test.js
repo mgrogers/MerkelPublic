@@ -27,7 +27,7 @@ var google_calendar = new GoogleCalendar.GoogleCalendar(
 //The redirect URL must be matched!!
 app.all('/authentication', function(req, res){
 
-  if(!req.query.code){
+  if(!req.session.access_token && !req.query.code){
 
     //Redirect the user to Authentication From
     google_calendar.getGoogleAuthorizeTokenURL(function(err, redirecUrl) {
