@@ -12,10 +12,15 @@
 
 @interface BMWGCalenderDataSource : NSObject
 
-typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewController, BOOL success);
+typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewController, NSError *error);
 
 + (instancetype)sharedDataSource;
 
 - (BOOL)canAuthorize;
+
+- (GTMOAuth2ViewControllerTouch *)authViewControllerWithCompletionHandler:(BMWGCalendarAuthCompletion)handler;
+
+- (void)authorizeRequest:(NSMutableURLRequest *)request
+       completionHandler:(void (^)(NSError *error))handler;
 
 @end

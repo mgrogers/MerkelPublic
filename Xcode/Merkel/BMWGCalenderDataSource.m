@@ -52,14 +52,26 @@ static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/user
                                                 clientSecret:kBMWGoogleClientSecret
                                             keychainItemName:kBMWGoogleAuthKeychain
                                            completionHandler:^(GTMOAuth2ViewControllerTouch *viewController, GTMOAuth2Authentication *auth, NSError *error) {
+                                               [self authController:viewController
+                                               didAuthorizeWithAuth:auth
+                                                              error:error
+                                                            handler:handler];
                                                         
     }];
 }
 
 - (void)authController:(GTMOAuth2ViewControllerTouch *)viewController
   didAuthorizeWithAuth:(GTMOAuth2Authentication *)auth
-                 error:(NSError *)error {
+                 error:(NSError *)error
+               handler:(BMWGCalendarAuthCompletion)handler {
     self.googleAuth = auth;
+    handler(viewController, error);
+}
+
+- (void)authorizeRequest:(NSMutableURLRequest *)request
+       completionHandler:(void (^)(NSError *error))handler {
+    [self.googleAuth authorizeRequest:request
+                    completionHandler:handler];
 }
 
 @end
