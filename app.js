@@ -34,6 +34,7 @@ app.configure('development', function(){
 //Define API URLS and destinations here.
 app.get('/', routes.index);
 app.get('/calendar', calendar.list);
+app.get('/authentication', calendar.authentication);
 app.get('/twilio', twilio.twilio);
 
 http.createServer(app).listen(app.get('port'), function(){
