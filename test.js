@@ -22,14 +22,14 @@ app.listen(app.get('port'));
 
 //Create OAuth Instance
 var google_calendar = new GoogleCalendar.GoogleCalendar(
-  "992955494422.apps.googleusercontent.com", 
-  "owOZqTGiK2e59tT9OqRHs5Xt",
+  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com", 
+  "rLkby14J_c-YkVA96KCqeajC",
   'http://safe-mountain-5325.herokuapp.com/authentication'); 
 
 //The redirect URL must be matched!!
 app.all('/authentication', function(req, res){
 
-  if(!req.session.access_token && !req.query.code){
+  if(!req.query.code){
 
     //Redirect the user to Authentication From
     google_calendar.getGoogleAuthorizeTokenURL(function(err, redirecUrl) {
