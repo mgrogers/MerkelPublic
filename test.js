@@ -12,17 +12,19 @@ var express  = require('express');
 var GoogleCalendar = require('google-calendar');
 
 var app = express();
+app.set('port', process.env.PORT || 3000);
 app.use(express.cookieParser());
 app.use(express.session({
   secret: "skjghskdjfhbqigohqdiouk"
 }));
-app.listen(8082);
+app.listen(app.get('port'));
+
 
 //Create OAuth Instance
 var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422.apps.googleusercontent.com", 
   "owOZqTGiK2e59tT9OqRHs5Xt",
-  'http://localhost:8082/authentication'); 
+  'http://safe-mountain-5325.herokuapp.com/authentication'); 
 
 //The redirect URL must be matched!!
 app.all('/authentication', function(req, res){
