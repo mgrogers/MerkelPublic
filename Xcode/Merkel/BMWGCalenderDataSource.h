@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class GTMOAuth2ViewControllerTouch;
+
 @interface BMWGCalenderDataSource : NSObject
 
+typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewController, BOOL success);
+
 + (instancetype)sharedDataSource;
+
+- (BOOL)canAuthorize;
 
 @end
