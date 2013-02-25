@@ -1,10 +1,8 @@
 /*
-
   This example is showing how to access google calendar with OAuth (version 2).
   After successfully login, the example generate a simple webpage that list all of your calendars' name. 
   
   require - express (http://expressjs.com)
-  
 */
 
 var util = require('util');
@@ -54,9 +52,9 @@ app.all('/', function(req, res){
   
   var access_token = req.session.access_token;
   
-  var output = '<html><head></head><body>';
-  var outputEnd = '</body></html>';
-  var waiting = 0;
+  var output = {};
+  output.name = "";
+  output.events = [];
   
   if(!access_token)return res.redirect('/authentication');
   
@@ -64,39 +62,29 @@ app.all('/', function(req, res){
     
     if(err) return res.send(500,err);
     
-    
-    data.items.forEach(function(calendar) {
-      
-      waiting++;
+    // Get only first calendar
+    var calendar = data.items[0];
+    if(calendar) {
+      output.name = calendar.summary;
+
+      // Asynchronously access events
       google_calendar.listEvent(access_token, calendar.id, function(err, events) {
-        
         if(err || !events || !events.items) {
-          console.log(err)
-          return returnRespond();
+          console.log(err);
+          return;
         }
-        
-        output += '<h2>Calendar : '+calendar.summary+ ' ('+ calendar.id + ')</h2>';
-        
+
+        // Populate events
         events.items.forEach(function(event) {
-          output += '<p><b>'+event.summary+ '</b> '+ event.start.date +' - '+ event.end.date+ '</p>';
+          output.events.push(event);
         })
-        
-        return returnRespond();
+
+        // Return JSON object
+        return res.send(output);
       })
-    })
-    
-    return returnRespond();
+    }
+
+    return;
   });
-  
-  function returnRespond(){
-    
-    if(waiting != 0){
-      waiting--;
-      return;
-    } 
-    
-    output += outputEnd;
-    return res.send(output);
-  }
   
 });
