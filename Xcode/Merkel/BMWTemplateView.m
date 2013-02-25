@@ -41,19 +41,27 @@ static int counter = 0;
 
 
 -(void)fetchLatestCalendarEvent {
-//    [PFCloud callFunctionInBackground:@"latest_calendar_event" withParameters:@{} block:^(id object, NSError *error) {
-//        
-//        NSString *response = (NSString*)object;
-//        [self.widgets lastObject].text = response;
-//        
-//    }];
+    NSString *urlString = @"http://localhost:8082";
+
+    NSMutableURLRequest *request = [NSURLRequest requestWithURL: [NSURL URLWithString:urlString]];
     
-    
-    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:@"2/16 5pm Dinner", @"response",
-        nil];
-    [[self.widgets lastObject] setText:[response objectForKey:@"response"]];
-    
+    //add credentials here.
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if (responseData) {
+        NSError *error;
+        NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        NSLog(@"Response string %@", responseString);
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        NSArray *eventsFromJSON = [json objectForKey:@"events"];
+
+        NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
+        [[self.widgets lastObject] setText: output];
+         
+    } else {
+        [[self.widgets lastObject] setText: @"Connection to calendar failed."];
+    }
 }
+
 - (void)buttonPressed
 {
             

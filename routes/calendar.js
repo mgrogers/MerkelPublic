@@ -10,11 +10,19 @@ exports.list = function(req, res){
 
 
 var json_response = {
-	  "name": "Merkel",
-	  "version": "0.0.1",
-	  "data": {
-	    "name": "BMW",
-	    "packet": "calendar",
-	    "private": true
-	  }
-	};
+    
+    "name": "Merkel",
+    "version": "0.0.1",
+    "events": [
+        {
+            "name": "Wesley calendar",
+            "date": "1/2/10"
+        },
+        {
+            "name": "School calendar",
+            "date": "1/5/10"
+        }
+    ]
+};
+
+
