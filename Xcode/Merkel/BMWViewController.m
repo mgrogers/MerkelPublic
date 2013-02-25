@@ -7,6 +7,8 @@
 //
 
 #import "BMWViewController.h"
+#import "GTMOAuth2Authentication.h"
+#import "GTMOAuth2ViewControllerTouch.h"
 
 @interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -16,6 +18,11 @@
 
 @implementation BMWViewController
 
+#define GoogleClientID    @"992955494422.apps.googleusercontent.com"
+#define GoogleClientSecret @"owOZqTGiK2e59tT9OqRHs5Xt"
+#define KeychainItemName @"GoogleKeychainName"
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,6 +30,7 @@
     self.title = @"Merkel";
     self.trackedViewName = @"Home Screen";
 }
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -34,6 +42,18 @@
         if (![[PFUser currentUser] objectForKey:@"first_name"]) {
             [self setupNewUserAccount];
         }
+
+        
+        //grab Google auth from keychain. Will move this to grabbing Parse when we add a column for it.
+        
+        GTMOAuth2Authentication *auth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:KeychainItemName
+                                                                     clientID:GoogleClientID
+                                                                 clientSecret:GoogleClientSecret];
+        if(![auth canAuthorize]) {
+            [self setupNewGoogleAccount];
+            
+        }
+
         [self setupViewForUser];
     }
 }
@@ -45,6 +65,44 @@
 }
 
 #pragma mark - User Management
+
+- (void)setupNewGoogleAccount {
+
+    NSString *scope = @"https://www.googleapis.com/auth/userinfo.profile";
+    GTMOAuth2ViewControllerTouch *viewController = [[GTMOAuth2ViewControllerTouch alloc] initWithScope:scope
+                                                                 clientID:GoogleClientID
+                                                             clientSecret:GoogleClientSecret
+                                                         keychainItemName:@"GoogleKeychainName"
+                                                                 delegate:self
+                                                         finishedSelector:@selector(viewController:finishedWithAuth:error:)];
+    
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void)viewController:(GTMOAuth2ViewControllerTouch *)viewController
+      finishedWithAuth:(GTMOAuth2Authentication *)auth
+                 error:(NSError *)error {
+    if (error != nil) {
+        // Authentication failed
+    } else {
+        //Should make a request to Google api to get username, then save to Parse in background. Alternatively, we can just save the auth token
+        
+    
+        PFUser *curUser = [PFUser currentUser];
+        NSLog("success");
+        NSURL *google_user_api = [[NSURL alloc] initWithString:@"https://www.googleapis.com/oauth2/v1/userinfo"];
+
+        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:google_user_api];
+        
+        [auth authorizeRequest:urlRequest
+             completionHandler:^(NSError *error) {
+                 if (error == nil) {
+                     // the request has been authorized
+                 }
+             }];
+    }
+}
+
 
 - (void)setupNewUserAccount {
     [[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
