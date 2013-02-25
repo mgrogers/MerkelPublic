@@ -228,13 +228,6 @@
 				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
 				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
 				2B1A358216D1B5B000A3B339 /* bmwLogo.png */,
-				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
-				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
-				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
-				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
-				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
-				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
-				2B1A358916D1B5B000A3B339 /* manifest.plist */,
 				4B77FE0F16C6F2AF00426018 /* Merkel */,
 				4B77FE3316C6F2AF00426018 /* MerkelTests */,
 				4B77FE0816C6F2AF00426018 /* Frameworks */,
@@ -295,6 +288,7 @@
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
+				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 			);
 			path = Merkel;
@@ -355,6 +349,21 @@
 				4BA3384916D195DA00A2CD24 /* libTestFlight.a */,
 			);
 			name = "Google Analytics";
+			sourceTree = "<group>";
+		};
+		4BEED18316DC14500019312B /* ConnectedDrive */ = {
+			isa = PBXGroup;
+			children = (
+				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
+				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
+				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
+				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
+				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
+				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
+				2B1A358916D1B5B000A3B339 /* manifest.plist */,
+			);
+			name = ConnectedDrive;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
