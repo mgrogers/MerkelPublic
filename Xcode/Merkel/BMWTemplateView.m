@@ -41,12 +41,12 @@ static int counter = 0;
 
 
 -(void)fetchLatestCalendarEvent {
-    NSString *urlString = @"http://localhost:3000/calendar";
+    NSString *urlString = @"http://localhost:8082";
 
     NSMutableURLRequest *request = [NSURLRequest requestWithURL: [NSURL URLWithString:urlString]];
-
+    
+    //add credentials here.
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-                                    
     if (responseData) {
         NSError *error;
         NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
@@ -54,7 +54,7 @@ static int counter = 0;
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
         NSArray *eventsFromJSON = [json objectForKey:@"events"];
 
-        NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[0] objectForKey:@"name"], [eventsFromJSON[0] objectForKey:@"date"]];        
+        NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
         [[self.widgets lastObject] setText: output];
          
     } else {
