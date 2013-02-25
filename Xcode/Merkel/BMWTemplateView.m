@@ -8,15 +8,9 @@
 
 #import "BMWTemplateView.h"
 #import "BMWViewProvider.h"
-#import "GTMOAuth2Authentication.h"
-#import "GTMOAuth2ViewControllerTouch.h"
+#import "BMWGCalenderDataSource.h"
 
 @implementation BMWTemplateView
-
-#define GoogleClientID    @"992955494422.apps.googleusercontent.com"
-#define GoogleClientSecret @"owOZqTGiK2e59tT9OqRHs5Xt"
-#define KeychainItemName @"GoogleKeychainName"
-
 
 - (void)viewWillLoad:(IDView *)view
 {
@@ -49,38 +43,32 @@ static int counter = 0;
 
 -(void)fetchLatestCalendarEvent {
     NSString *urlString = @"https://safe-mountain-5325.herokuapp.com/";
-    
-    GTMOAuth2Authentication *auth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:KeychainItemName
-                                                                                          clientID:GoogleClientID
-                                                                                      clientSecret:GoogleClientSecret];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
 
-    //not sure how to add Google auth info to url request.
-    [auth authorizeRequest:request
-         completionHandler:^(NSError *error) {
-             if (error == nil) {
-                //change this to async?
-                NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-                 if(responseData) {
-                     NSError *error;
-                     NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                     NSLog(@"Response string %@", responseString);
-                     
-                     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-                     NSArray *eventsFromJSON = [json objectForKey:@"events"];
-                     NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
-                     [[self.widgets lastObject] setText: output];
-                 } else {
-                     [[self.widgets lastObject] setText: @"Connection to calendar failed."];
-
-                     
-                 }
-                 
-             } else {
-                 NSLog("failed");
-             }
-         }];
-
+    [[BMWGCalenderDataSource sharedDataSource] authorizeRequest:request
+                                              completionHandler:^(NSError *error) {
+          if (error == nil) {
+              //change this to async?
+              NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+              if(responseData) {
+                  NSError *error;
+                  NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                  NSLog(@"Response string %@", responseString);
+                  
+                  NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+                  NSArray *eventsFromJSON = [json objectForKey:@"events"];
+                  NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
+                  [[self.widgets lastObject] setText: output];
+              } else {
+                  [[self.widgets lastObject] setText: @"Connection to calendar failed."];
+                  
+                  
+              }
+              
+          } else {
+              NSLog("failed");
+          }
+    }];
 }
 
 - (void)buttonPressed
