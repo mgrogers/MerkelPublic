@@ -25,6 +25,11 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  // Express session
+  app.use(express.cookieParser());
+  app.use(express.session({
+    secret: "skjghskdjfhbqigohqdiouk"
+  }));
 });
 
 app.configure('development', function(){
