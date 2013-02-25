@@ -12,7 +12,7 @@ var google_calendar = new GoogleCalendar.GoogleCalendar(
  * GET calendar list
  */
 
-exports.list = function(req, res){
+exports.list = function(req, res) {
   var access_token = req.session.access_token;
   
   var output = {};
@@ -40,11 +40,11 @@ exports.list = function(req, res){
         // Populate events
         events.items.forEach(function(event) {
           output.events.push(event);
-        })
+        });
 
         // Return JSON object
         return res.send(output);
-      })
+      });
     }
 
     return;
