@@ -9,6 +9,7 @@
 var express = require('express')
   , routes = require('./routes')
   , calendar = require('./routes/calendar')
+  , twilio = require('./routes/twilio')
   , http = require('http')
   , path = require('path');
 
@@ -33,6 +34,7 @@ app.configure('development', function(){
 //Define API URLS and destinations here.
 app.get('/', routes.index);
 app.get('/calendar', calendar.list);
+app.get('/twilio', twilio.twilio);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
