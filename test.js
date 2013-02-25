@@ -24,11 +24,14 @@ app.listen(app.get('port'));
 var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com", 
   "rLkby14J_c-YkVA96KCqeajC",
-  'http://safe-mountain-5325.herokuapp.com/authentication'); 
+  'http://localhost:' + app.get('port') + '/authentication');
+  // 'http://safe-mountain-5325.herokuapp.com/authentication'); 
 
 //The redirect URL must be matched!!
 app.all('/authentication', function(req, res){
-
+  console.log("REQUEST" + req);
+  console.log("REQUEST" + req.query);
+  console.log("REQUEST" + req.query.code);
   if(!req.query.code){
 
     //Redirect the user to Authentication From
