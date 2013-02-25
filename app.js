@@ -6,12 +6,12 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , calendar = require('./routes/calendar')
-  , twilio = require('./routes/twilio')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'),
+  routes = require('./routes'),
+  calendar = require('./routes/calendar'),
+  twilio = require('./routes/twilio'),
+  http = require('http'),
+  path = require('path');
 
 var app = express();
 
@@ -23,13 +23,13 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
   // Express session
   app.use(express.cookieParser());
   app.use(express.session({
-    secret: "skjghskdjfhbqigohqdiouk"
+    secret: "merkelmerkelmerkel"
   }));
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){

@@ -22,9 +22,9 @@ app.listen(app.get('port'));
 
 //Create OAuth Instance
 var google_calendar = new GoogleCalendar.GoogleCalendar(
-  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com", 
+  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
   "rLkby14J_c-YkVA96KCqeajC",
-  'http://safe-mountain-5325.herokuapp.com/authentication'); 
+  'http://safe-mountain-5325.herokuapp.com/authentication');
 
 //The redirect URL must be matched!!
 app.all('/authentication', function(req, res){
@@ -79,11 +79,11 @@ app.all('/', function(req, res){
         // Populate events
         events.items.forEach(function(event) {
           output.events.push(event);
-        })
+        });
 
         // Return JSON object
         return res.send(output);
-      })
+      });
     }
 
     return;
