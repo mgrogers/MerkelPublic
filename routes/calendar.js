@@ -5,7 +5,7 @@ var GoogleCalendar = require('google-calendar');
 var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com", 
   "rLkby14J_c-YkVA96KCqeajC",
-  'http://safe-mountain-5325.herokuapp.com/authentication'); 
+  'http://localhost:3000/authentication'); 
 
 /*
  * Define behavior of this API here
@@ -67,8 +67,35 @@ exports.authentication = function(req, res) {
       if(err) return res.send(500,err);
       
       req.session.access_token = access_token;
+
+      // Grab auth token in log
+      console.log("This is my auth token: " + access_token);
+
       req.session.refresh_token = refresh_token;
       return res.redirect('/calendar');
     });
   }
 };
+
+exports.eventsDay = function(req, res) {
+  console.log("This is a request for today's event for userID: " + req.params.userId);
+
+  var access_token = "ya29.AHES6ZQMREvGK27phlZrKTcLTbXFWxH25oB4cesbcyRgiOdKrsJx-A";
+  var output = {};
+  output.name = "";
+
+  google_calendar.listCalendarList(access_token, function(err, data) {
+    
+    if(err) return res.send(500,err);
+    
+    // Get only first calendar
+    var calendar = data.items[0];
+    if(calendar) {
+      output.name = calendar.summary;
+
+      return res.send('Calendar name: ' + output.name);
+    }
+
+    return;
+  });
+}

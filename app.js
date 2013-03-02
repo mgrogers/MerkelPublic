@@ -13,6 +13,9 @@ var express = require('express'),
   http = require('http'),
   path = require('path');
 
+// Async stack traces
+require('longjohn');
+
 var app = express();
 
 app.configure(function(){
@@ -41,6 +44,7 @@ app.get('/', routes.index);
 app.get('/calendar', calendar.list);
 app.get('/authentication', calendar.authentication);
 app.get('/twilio', twilio.twilio);
+app.get('/api/:userId/events/day', calendar.eventsDay);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
