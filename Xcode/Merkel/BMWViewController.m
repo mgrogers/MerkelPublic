@@ -104,6 +104,7 @@
 
 - (void)logoutButtonPressed:(id)sender {
     [PFUser logOut];
+    [[BMWGCalenderDataSource sharedDataSource] logOut];
     [self presentLoginView];
 }
 
