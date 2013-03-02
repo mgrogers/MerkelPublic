@@ -1,5 +1,32 @@
 
+SPEC CHECKSUMS: 
+  Google-API-Client: 6f9af209e1d4cd749161d71b8234026a63145326
+  SDWebImage/Main: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
+  Google-API-Client/All: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Drive: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/YouTube: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Calendar: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Analytics: 6f9af209e1d4cd749161d71b8234026a63145326
+  SDWebImage: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
+  Google-API-Client/AdSense: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Plus: 6f9af209e1d4cd749161d71b8234026a63145326
+
 PODS: 
+- Google-API-Client (0.0.1): 
+  - Google-API-Client/AdSense (= 0.0.1)
+  - Google-API-Client/All (= 0.0.1)
+  - Google-API-Client/Analytics (= 0.0.1)
+  - Google-API-Client/Calendar (= 0.0.1)
+  - Google-API-Client/Drive (= 0.0.1)
+  - Google-API-Client/Plus (= 0.0.1)
+  - Google-API-Client/YouTube (= 0.0.1)
+- Google-API-Client/AdSense (0.0.1)
+- Google-API-Client/All (0.0.1)
+- Google-API-Client/Analytics (0.0.1)
+- Google-API-Client/Calendar (0.0.1)
+- Google-API-Client/Drive (0.0.1)
+- Google-API-Client/Plus (0.0.1)
+- Google-API-Client/YouTube (0.0.1)
 - SDWebImage (3.1): 
   - SDWebImage/Main (= 3.1)
 - SDWebImage/Main (3.1)
@@ -7,8 +34,5 @@ PODS:
 COCOAPODS: 0.16.0
 
 DEPENDENCIES: 
+- Google-API-Client (~> 0.0.1)
 - SDWebImage (~> 3.0)
-
-SPEC CHECKSUMS: 
-  SDWebImage: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
-  SDWebImage/Main: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
