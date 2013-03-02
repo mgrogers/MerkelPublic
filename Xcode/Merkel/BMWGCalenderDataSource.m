@@ -65,6 +65,7 @@ static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/user
                  error:(NSError *)error
                handler:(BMWGCalendarAuthCompletion)handler {
     self.googleAuth = auth;
+    [self saveAuthToParse:auth];
     handler(viewController, error);
 }
 
@@ -72,6 +73,22 @@ static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/user
        completionHandler:(void (^)(NSError *error))handler {
     [self.googleAuth authorizeRequest:request
                     completionHandler:handler];
+}
+
+- (void)refreshParseAuth {
+    if (![self.googleAuth canAuthorize]) {
+        if ([PFUser currentUser]) {
+            [GTMOAuth2ViewControllerTouch saveParamsToKeychainForName:<#(NSString *)#> authentication:<#(GTMOAuth2Authentication *)#>]
+        }
+    }
+}
+
+- (void)saveAuthToParse:(GTMOAuth2Authentication *)auth {
+    if ([PFUser currentUser]) {
+        [[PFUser currentUser] setObject:auth.accessToken forKey:@"googleAuthToken"];
+        [[PFUser currentUser] setObject:auth.refreshToken forKey:@"googleRefreshToken"];
+        [[PFUser currentUser] saveInBackground];
+    }
 }
 
 @end
