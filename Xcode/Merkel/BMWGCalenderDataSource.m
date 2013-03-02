@@ -10,6 +10,27 @@
 #import "GTMOAuth2Authentication.h"
 #import "GTMOAuth2ViewControllerTouch.h"
 
+@interface NSURL (additions)
+
+- (NSURL *)URLByAppendingQueryString:(NSString *)queryString;
+
+@end
+
+@implementation NSURL (additions)
+
+- (NSURL *)URLByAppendingQueryString:(NSString *)queryString {
+    if (![queryString length]) {
+        return self;
+    }
+    
+    NSString *URLString = [[NSString alloc] initWithFormat:@"%@%@%@", [self absoluteString],
+                           [self query] ? @"&" : @"?", queryString];
+    NSURL *theURL = [NSURL URLWithString:URLString];
+    return theURL;
+}
+
+@end
+
 @interface BMWGCalenderDataSource ()
 
 @property (nonatomic, strong) GTMOAuth2Authentication *googleAuth;
@@ -96,6 +117,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
        completionHandler:(void (^)(NSError *error))handler {
     [self.googleAuth authorizeRequest:request
                     completionHandler:handler];
+    request.URL = [request.URL URLByAppendingQueryString:[NSString stringWithFormat:@"key=%@", kBMWGoogleClientId]];
 }
 
 - (void)logOut {
