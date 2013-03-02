@@ -11,6 +11,7 @@
 #import "BMWGCalenderDataSource.h"
 #import "GTMOAuth2Authentication.h"
 #import "GTMOAuth2ViewControllerTouch.h"
+#import <Google-API-Client/GTLCalendar.h>
 
 @interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -39,12 +40,11 @@
         if (![[PFUser currentUser] objectForKey:@"first_name"]) {
             [self setupNewUserAccount];
         }
-
         if (![[BMWGCalenderDataSource sharedDataSource] canAuthorize]) {
             [self setupNewGoogleAccount];
+            
         }
         [self setupViewForUser];
-        [self fetchLatestCalendarEvent];
     }
 }
 
@@ -156,6 +156,32 @@
                                                       NSLog("failed");
                                                   }
                                               }];
+}
+
+- (void)fetchCalendarList {
+//    self.calendarList = nil;
+//    self.calendarListFetchError = nil;
+    
+    GTLServiceCalendar *service = [[GTLServiceCalendar alloc] init];
+    service.authorizer = [BMWGCalenderDataSource sharedDataSource].googleAuth;
+    
+    GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
+    
+//    BOOL shouldFetchedOwned = ([calendarSegmentedControl_ selectedSegment] == 1);
+//    if (shouldFetchedOwned) {
+//        query.minAccessRole = kGTLCalendarMinAccessRoleOwner;
+//    }
+    
+    GTLServiceTicket *calendarListTicket = [service executeQuery:query
+                                  completionHandler:^(GTLServiceTicket *ticket,
+                                                      id calendarList, NSError *error) {
+                                      NSLog(@"%@", calendarList);
+                                      // Callback
+//                                      self.calendarList = calendarList;
+//                                      self.calendarListFetchError = error;
+//                                      self.calendarListTicket = nil;
+                                      
+                                  }];
 }
 
 @end
