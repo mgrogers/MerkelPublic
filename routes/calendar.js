@@ -3,9 +3,9 @@ var url  = require('url');
 var express  = require('express');
 var GoogleCalendar = require('google-calendar');
 var google_calendar = new GoogleCalendar.GoogleCalendar(
-  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com", 
+  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
   "rLkby14J_c-YkVA96KCqeajC",
-  'http://localhost:3000/authentication'); 
+  'http://localhost:3000/authentication');
 
 /*
  * Define behavior of this API here
