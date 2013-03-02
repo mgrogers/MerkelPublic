@@ -23,4 +23,6 @@ typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewCon
 - (void)authorizeRequest:(NSMutableURLRequest *)request
        completionHandler:(void (^)(NSError *error))handler;
 
+- (void)logOut;
+
 @end
