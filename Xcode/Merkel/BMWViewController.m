@@ -113,6 +113,7 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [[BMWGCalenderDataSource sharedDataSource] refreshParseAuth];
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
@@ -127,6 +128,7 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [[BMWGCalenderDataSource sharedDataSource] refreshParseAuth];
 }
 
 -(void)fetchLatestCalendarEvent {

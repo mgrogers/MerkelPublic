@@ -28,4 +28,6 @@ typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewCon
 
 - (void)logOut;
 
+- (BOOL)refreshParseAuth;
+
 @end
