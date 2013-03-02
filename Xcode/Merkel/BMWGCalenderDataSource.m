@@ -99,7 +99,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (void)logOut {
-    [GTMOAuth2ViewControllerTouch removeAuthFromKeychainForName:kBMWGoogleAuthKeychain];
+    self.googleAuth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kBMWGoogleAuthKeychain
+                                                                            clientID:kBMWGoogleClientId
+                                                                        clientSecret:kBMWGoogleClientSecret];
 }
 
 - (BOOL)refreshParseAuth {

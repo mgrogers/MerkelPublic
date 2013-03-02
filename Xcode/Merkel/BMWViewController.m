@@ -44,6 +44,7 @@
             [self setupNewGoogleAccount];
         }
         [self setupViewForUser];
+        [self fetchLatestCalendarEvent];
     }
 }
 
@@ -126,6 +127,35 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)fetchLatestCalendarEvent {
+    NSString *urlString = @"https://www.googleapis.com/calendar/v3/users/me/calendarList";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
+    [[BMWGCalenderDataSource sharedDataSource] authorizeRequest:request
+                                              completionHandler:^(NSError *error) {
+                                                  if (error == nil) {
+                                                      //change this to async?
+                                                      NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+                                                      if(responseData) {
+                                                          NSError *error;
+                                                          NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+                                                          NSLog(@"Response string %@", responseString);
+                                                          
+                                                          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+                                                          NSArray *eventsFromJSON = [json objectForKey:@"events"];
+//                                                          NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
+//                                                          [[self.widgets lastObject] setText: output];
+                                                      } else {
+//                                                          [[self.widgets lastObject] setText: @"Connection to calendar failed."];
+                                                          
+                                                          
+                                                      }
+                                                      
+                                                  } else {
+                                                      NSLog("failed");
+                                                  }
+                                              }];
 }
 
 @end
