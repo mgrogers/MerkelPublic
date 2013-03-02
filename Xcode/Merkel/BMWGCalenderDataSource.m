@@ -7,8 +7,10 @@
 //
 
 #import "BMWGCalenderDataSource.h"
-#import "GTMOAuth2Authentication.h"
-#import "GTMOAuth2ViewControllerTouch.h"
+#import <Google-API-Client/GTMOAuth2Authentication.h>
+#import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
+//#import "GTMOAuth2Authentication.h"
+//#import "GTMOAuth2ViewControllerTouch.h"
 
 @interface NSURL (additions)
 
