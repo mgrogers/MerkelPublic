@@ -82,6 +82,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
         self.googleAuth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kBMWGoogleAuthKeychain
                                                                                 clientID:kBMWGoogleClientId
                                                                             clientSecret:kBMWGoogleClientSecret];
+        [self refreshParseAuth];
     }
     return self;
 }
@@ -121,6 +122,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (void)logOut {
+    [GTMOAuth2ViewControllerTouch removeAuthFromKeychainForName:kBMWGoogleAuthKeychain];
     self.googleAuth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kBMWGoogleAuthKeychain
                                                                             clientID:kBMWGoogleClientId
                                                                         clientSecret:kBMWGoogleClientSecret];
@@ -156,8 +158,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 
 - (void)saveAuthToParse:(GTMOAuth2Authentication *)auth {
     if ([PFUser currentUser]) {
-        [[PFUser currentUser] setObject:auth.accessToken forKey:@"googleAuthToken"];
-        [[PFUser currentUser] setObject:auth.refreshToken forKey:@"googleRefreshToken"];
+        [[PFUser currentUser] setObject:auth.accessToken forKey:@"google_access_token"];
+        [[PFUser currentUser] setObject:auth.refreshToken forKey:@"google_refresh_token"];
+        [[PFUser currentUser] setObject:auth.userID forKey:@"google_user_id"];
         [self savePersistenceResponseString];
         [[PFUser currentUser] saveInBackground];
     }

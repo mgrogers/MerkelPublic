@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class GTMOAuth2Authentication;
 @class GTMOAuth2ViewControllerTouch;
 
 @interface BMWGCalenderDataSource : NSObject
+
+@property (readonly) GTMOAuth2Authentication *googleAuth;
 
 typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewController, NSError *error);
 
