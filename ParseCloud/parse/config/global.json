@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Merkel": {
+            "applicationId": "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj", 
+            "masterKey": "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO"
+        }, 
+        "_default": {
+            "link": "Merkel"
+        }
+    }
+}
