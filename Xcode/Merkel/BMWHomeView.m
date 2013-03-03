@@ -22,6 +22,7 @@
     provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplay];
     [button  setTargetView:provider.calendarListView];
 
+    //Added to test. Link to profile should appear when user view's his next event.
     IDButton *linkedinButton = [IDButton button];
     linkedinButton.text = @"LinkedIn Profile";
     provider.linkedinView.linkedInProfile = [[BMWGCalendarDataSource sharedDataSource] linkedinToDisplayFromEvent];
