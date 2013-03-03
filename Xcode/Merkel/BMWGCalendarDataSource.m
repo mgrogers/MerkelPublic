@@ -7,6 +7,7 @@
 //
 
 #import "BMWGCalendarDataSource.h"
+#import "BMWGCalendarEvent.h"
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 //#import "GTMOAuth2Authentication.h"
@@ -221,6 +222,14 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     }
     NSString *result = [[self class] encodedQueryParametersForDictionary:persistenceDict];
     return result;
+}
+
+- (NSArray *)eventsToDisplay {
+    NSDictionary *events = @{@"events": @[@{@"name": @"Test Event",
+                                            @"description": @"This is the greatest event",
+                                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
+                                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}}]};
+    return [BMWGCalendarEvent eventsFromJSONDict:events];
 }
 
 @end

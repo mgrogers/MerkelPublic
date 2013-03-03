@@ -165,7 +165,7 @@
 //    self.calendarListFetchError = nil;
     
     GTLServiceCalendar *service = [[GTLServiceCalendar alloc] init];
-    service.authorizer = [BMWGCalenderDataSource sharedDataSource].googleAuth;
+    service.authorizer = [BMWGCalendarDataSource sharedDataSource].googleAuth;
     
     GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
     
