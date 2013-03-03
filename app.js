@@ -12,9 +12,6 @@ var express = require('express'),
   http = require('http');
   path = require('path');
 
-// Async stack traces
-require('longjohn');
-
 var app = express();
 
 app.configure(function(){
@@ -43,6 +40,8 @@ app.get('/', routes.index);
 app.get('/calendar', calendar.list);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
+app.get('/api/events/:userId/week', calendar.eventsWeek);
+app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

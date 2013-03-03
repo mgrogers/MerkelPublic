@@ -80,7 +80,7 @@ exports.authentication = function(req, res) {
 /*
  API Call: /api/events/:userId/day/:date - Grabs [userId]'s events on [date]
  [userId] should be whatever their Parse userId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
   */
 exports.eventsDay = function(req, res) {
   console.log("This is a request for the events for userID: " + req.params.userId +
@@ -124,6 +124,85 @@ exports.eventsDay = function(req, res) {
           // Only consider events happening on req.params.date
           if(eventStartDate.getTime() <= requestedDate.getTime() &&
               requestedDate.getTime() <= eventEndDate.getTime()) {
+            var calEvent = {};
+            calEvent.id = event.id;
+            calEvent.name = event.summary;
+            calEvent.description = event.description;
+            calEvent.location = event.location;
+            calEvent.start = event.start;
+            calEvent.end = event.end;
+            calEvent.creator = event.creator;
+            calEvent.attendees = event.attendees;
+            calEvent.created = event.created;
+            calEvent.updated = event.updated;
+
+            // Add event to calendar object
+            calendar.events.push(calEvent);
+          }
+        });
+
+        // Return JSON object
+        return res.send(calendar);
+      });
+    }
+  });
+}
+
+/*
+ API Call: /api/events/:userId/week/:date - Grabs [userId]'s events during the week including [date]
+ WARNING: not 100% accurate
+ [userId] should be whatever their Parse userId is
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+  */
+exports.eventsWeek = function(req, res) {
+  console.log("This is a request for the events for userID: " + req.params.userId +
+    " during week with day: " + req.params.date);
+
+  // TODO: Grab access token from parse from user with userId: req.params.userId
+  var access_token = "ya29.AHES6ZTa-dfF2xkRt-Q82Uervgcaie_ByQzaq8gbA1A1Ug";
+  var calendar = {};
+  calendar.name = "";
+  calendar.events = [];
+
+  // Default to current date if none provided
+  var requestedDate = "";
+  if(req.params.date) {
+    requestedDate = new Date(req.params.date);
+  } else {
+    requestedDate = new Date();
+  }
+
+  google_calendar.listCalendarList(access_token, function(err, data) {
+    
+    if(err) return res.send(500,err);
+    
+    // Get only first calendar, TODO: grab all calendars
+    var tempCal = data.items[0];
+    if(tempCal) {
+      calendar.name = tempCal.summary;
+
+      // Asynchronously access events
+      google_calendar.listEvent(access_token, tempCal.id, function(err, events) {
+        if(err || !events || !events.items) {
+          console.log(err);
+          return res.send(err);
+        }
+
+        // Populate relevant fields for events
+        events.items.forEach(function(event) {
+          var eventStartDate = new Date(event.start.date);
+          var eventEndDate = new Date(event.end.date);
+
+          var MILLISEC_IN_DAY = 86400000;
+          var weekStartTime = requestedDate.getTime() - requestedDate.getDay() * MILLISEC_IN_DAY;
+          var weekEndTime = requestedDate.getTime() + (7-requestedDate.getDay()) * MILLISEC_IN_DAY;
+          requestedDate.getDay();
+
+          // Only consider events happening on same week as req.params.date
+          if((eventStartDate <= weekStartTime && eventEndDate >= weekStartTime) ||
+              (eventStartDate <= weekEndTime && eventEndDate >= weekEndTime) ||
+              (eventStartDate <= weekStartTime && eventEndDate >= weekEndTime) ||
+              (eventStartDate >= weekStartTime && eventEndDate <= weekEndTime)) {
             var calEvent = {};
             calEvent.id = event.id;
             calEvent.name = event.summary;
