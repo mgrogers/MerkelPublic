@@ -232,4 +232,11 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return [BMWGCalendarEvent eventsFromJSONDict:events];
 }
 
+-(NSURL *)linkedinToDisplayFromEvent {
+    //get email address of attendee from event
+    //request to server to find linkedinprofile based on email address
+    NSDictionary *response = @{@"profileURL":@"http://screener.brachium-system.net/shots/71617ba71b83719ac73674b3754b434fbf16b18c.png"};
+    return [NSURL URLWithString:response[@"profileURL"]];
+}
+
 @end
