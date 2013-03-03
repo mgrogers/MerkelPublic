@@ -11,7 +11,7 @@
 @class GTMOAuth2Authentication;
 @class GTMOAuth2ViewControllerTouch;
 
-@interface BMWGCalenderDataSource : NSObject
+@interface BMWGCalendarDataSource : NSObject
 
 @property (readonly) GTMOAuth2Authentication *googleAuth;
 
@@ -29,5 +29,7 @@ typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewCon
 - (void)logOut;
 
 - (BOOL)refreshParseAuth;
+
+- (NSArray *)eventsToDisplay;
 
 @end
