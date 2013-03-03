@@ -1,0 +1,1 @@
+../../Google-API-Client/Source/Services/Latitude/Generated/GTLLatitudeLocationFeed.h
