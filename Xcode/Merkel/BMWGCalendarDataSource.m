@@ -225,11 +225,15 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (NSArray *)eventsToDisplay {
-    NSDictionary *events = @{@"events": @[@{@"name": @"Test Event",
+    NSDictionary *event = @{@"name": @"Test Event",
                                             @"description": @"This is the greatest event",
                                             @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
-                                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}}]};
-    return [BMWGCalendarEvent eventsFromJSONDict:events];
+                                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
+    NSMutableArray *events = [NSMutableArray array];
+    for (int i = 0; i < 20; i++) {
+        [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
+    }
+    return events;
 }
 
 @end
