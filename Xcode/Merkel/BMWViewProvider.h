@@ -10,16 +10,18 @@
 #import <BMWAppKit/BMWAppKit.h>
 #import "BMWTemplateView.h"
 #import "BMWCalendarListView.h"
+#import "BMWCalendarEventView.h"
 #import "BMWHomeView.h"
 
 @interface BMWViewProvider : NSObject <IDHmiProvider>
-@property(nonatomic, retain) IDMultimediaInfo* multimediaInfo;
-@property(nonatomic, retain) IDStatusBar* statusBar;
+@property(nonatomic, strong) IDMultimediaInfo* multimediaInfo;
+@property(nonatomic, strong) IDStatusBar* statusBar;
 
 
-@property (nonatomic, retain) BMWTemplateView *templateView;
-@property (nonatomic, retain) BMWCalendarListView *calendarListView;
-@property (nonatomic, retain) BMWHomeView *homeView;
+@property (nonatomic, strong) BMWTemplateView *templateView;
+@property (nonatomic, strong) BMWCalendarListView *calendarListView;
+@property (nonatomic, strong) BMWCalendarEventView *calendarEventView;
+@property (nonatomic, strong) BMWHomeView *homeView;
 
 
 @end

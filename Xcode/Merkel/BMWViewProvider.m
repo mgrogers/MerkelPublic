@@ -28,21 +28,13 @@
     {        
 //        _templateView = [[BMWTemplateView view] retain];
         self.calendarListView = [BMWCalendarListView view];
+        self.calendarEventView = [BMWCalendarEventView view];
         self.homeView = [BMWHomeView view];
-        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, nil];
+        self.viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, nil];
         
-        _mainView = _homeView;
+        self.mainView = _homeView;
     }
     return self;
-}
-
--(void)dealloc
-{
-    [_viewArray release];
-    [_templateView release];
-    [_statusBar release];
-    [_multimediaInfo release];
-    [super dealloc];
 }
 
 #pragma mark - useless methods
@@ -54,7 +46,7 @@
  */
 - (NSArray *)allViews
 {
-    return [NSArray arrayWithArray:_viewArray];
+    return [NSArray arrayWithArray:self.viewArray];
 }
 
 /*!

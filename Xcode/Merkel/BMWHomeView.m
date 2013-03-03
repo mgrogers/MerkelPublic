@@ -20,7 +20,7 @@
     IDButton *button = [IDButton button];
     button.text = @"Today's Events";
     provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplay];
-    [button  setTargetView:provider.calendarListView];
+    [button setTargetView:provider.calendarListView];
     self.widgets = @[button];
 }
 
