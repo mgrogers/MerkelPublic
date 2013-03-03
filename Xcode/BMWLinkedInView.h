@@ -10,6 +10,6 @@
 
 @interface BMWLinkedInView : IDView
 
-@property (nonatomic, strong) NSURL *linkedInProfileURL;
+@property (nonatomic, strong) NSDictionary *linkedInProfile;
 
 @end
