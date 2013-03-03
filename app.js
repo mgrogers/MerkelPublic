@@ -9,7 +9,6 @@
 var express = require('express'),
   routes = require('./routes'),
   calendar = require('./routes/calendar'),
-  parseTest = require('./routes/parse'),
   http = require('http');
   path = require('path');
 
