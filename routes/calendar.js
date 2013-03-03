@@ -96,8 +96,8 @@ exports.eventsDay = function(req, res) {
   var waiting = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
-    //var access_token = response.google_access_token;
-    var access_token = 'ya29.AHES6ZSM4ul0XjHqhb7VSDw_IxTc8tMdjqREwB2xY9bOdUQ';
+    var access_token = response.google_access_token;
+    //var access_token = 'ya29.AHES6ZSM4ul0XjHqhb7VSDw_IxTc8tMdjqREwB2xY9bOdUQ';
 
     console.log("This is the access token: " + access_token);
 
@@ -131,14 +131,6 @@ exports.eventsDay = function(req, res) {
 
             if(err || !events || !events.items) {
               console.log(err);
-              if(!events) {
-                console.log("No events");
-              } else if(!events.items) {
-                console.log(calendar.summary + " doesn't have events.items");
-                console.log("This is events.items: " + events.items);
-                console.log(typeof events);
-                return res.send(events);
-              }
               return returnResponse();
             }
 
