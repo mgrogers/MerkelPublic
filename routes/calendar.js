@@ -6,6 +6,12 @@ var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
   "rLkby14J_c-YkVA96KCqeajC",
   'http://localhost:3000/authentication');
+var CALENDARS_TO_SKIP = ['en.usa#holiday@group.v.calendar.google.com'];
+var parse = require('node-parse-api').Parse;
+
+var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
+var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
+var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
 /*
  * Define behavior of this API here
@@ -66,12 +72,12 @@ exports.authentication = function(req, res) {
 
       if(err) return res.send(500,err);
       
-      req.session.access_token = access_token;
+      //req.session.access_token = access_token;
 
       // Grab auth token in log
       console.log("This is my auth token: " + access_token);
 
-      req.session.refresh_token = refresh_token;
+      //req.session.refresh_token = refresh_token;
       return res.redirect('/calendar');
     });
   }
@@ -86,67 +92,113 @@ exports.eventsDay = function(req, res) {
   console.log("This is a request for the events for userID: " + req.params.userId +
     " on date: " + req.params.date);
 
-  // TODO: Grab access token from parse from user with userId: req.params.userId
-  var access_token = "ya29.AHES6ZQLyn3BF7FEXRIBFsDIzVb8WB-I_imawZjHk956Zg";
-  var calendar = {};
-  calendar.name = "";
-  calendar.events = [];
+  var calendars = [];
+  var waiting = 0;
 
-  // Default to current date if none provided
-  var requestedDate = "";
-  if(req.params.date) {
-    requestedDate = new Date(req.params.date);
-  } else {
-    requestedDate = new Date();
-  }
+  parseApp.find('', req.params.userId, function (err, response) {
+    //var access_token = response.google_access_token;
+    var access_token = 'ya29.AHES6ZSM4ul0XjHqhb7VSDw_IxTc8tMdjqREwB2xY9bOdUQ';
 
-  google_calendar.listCalendarList(access_token, function(err, data) {
-    
-    if(err) return res.send(500,err);
-    
-    // Get only first calendar, TODO: grab all calendars
-    var tempCal = data.items[0];
-    if(tempCal) {
-      calendar.name = tempCal.summary;
+    console.log("This is the access token: " + access_token);
 
-      // Asynchronously access events
-      google_calendar.listEvent(access_token, tempCal.id, function(err, events) {
-        if(err || !events || !events.items) {
-          console.log(err);
-          return res.send(err);
+    // Default to current date if none provided
+    var requestedDate = "";
+    if(req.params.date) {
+      requestedDate = new Date(req.params.date);
+    } else {
+      requestedDate = new Date();
+    }
+
+    google_calendar.listCalendarList(access_token, function(err, data) {
+      if(err) return res.send(500,err);
+
+      data.items.forEach(function(calendar) {
+        //if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+        waiting++;
+        console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
+        var tempCalendar = {};
+        tempCalendar.name = "";
+        tempCalendar.events = [];
+
+        if(calendar) {
+          tempCalendar.name = calendar.summary;
+
+          // Asynchronously access events
+          google_calendar.listEvent(access_token, calendar.id, function(err, events) {
+            if(!events.items) {
+              events = JSON.parse(events);
+            }
+
+            if(err || !events || !events.items) {
+              console.log(err);
+              if(!events) {
+                console.log("No events");
+              } else if(!events.items) {
+                console.log(calendar.summary + " doesn't have events.items");
+                console.log("This is events.items: " + events.items);
+                console.log(typeof events);
+                return res.send(events);
+              }
+              return returnResponse();
+            }
+
+            // Populate relevant fields for events
+            events.items.forEach(function(event) {
+              var eventStartDate;
+              var eventEndDate;
+
+              if(event.start && event.end) {
+                if(event.start.date) eventStartDate = new Date(event.start.date);
+                else eventStartDate = new Date(event.start.dateTime);
+
+                if(event.end.date) eventEndDate = new Date(event.end.date);
+                else eventEndDate = new Date(event.end.dateTime);
+
+                // Only consider events happening on req.params.date
+                //if(eventStartDate.getTime() <= requestedDate.getTime() &&
+                //   requestedDate.getTime() <= eventEndDate.getTime()) {
+                  var calEvent = {};
+                  calEvent.id = event.id;
+                  calEvent.name = event.summary;
+                  calEvent.description = event.description;
+                  calEvent.location = event.location;
+                  calEvent.start = event.start;
+                  calEvent.end = event.end;
+                  calEvent.creator = event.creator;
+                  calEvent.attendees = event.attendees;
+                  calEvent.created = event.created;
+                  calEvent.updated = event.updated;
+
+                  // Add event to calendar object
+                  tempCalendar.events.push(calEvent);
+                //}
+              }
+            });
+            console.log("Adding calendar: " + tempCalendar.name);
+
+            calendars.push(tempCalendar);
+
+            // Return JSON object
+            return returnResponse();
+          });
         }
 
-        // Populate relevant fields for events
-        events.items.forEach(function(event) {
-          var eventStartDate = new Date(event.start.date);
-          var eventEndDate = new Date(event.end.date);
-
-          // Only consider events happening on req.params.date
-          if(eventStartDate.getTime() <= requestedDate.getTime() &&
-              requestedDate.getTime() <= eventEndDate.getTime()) {
-            var calEvent = {};
-            calEvent.id = event.id;
-            calEvent.name = event.summary;
-            calEvent.description = event.description;
-            calEvent.location = event.location;
-            calEvent.start = event.start;
-            calEvent.end = event.end;
-            calEvent.creator = event.creator;
-            calEvent.attendees = event.attendees;
-            calEvent.created = event.created;
-            calEvent.updated = event.updated;
-
-            // Add event to calendar object
-            calendar.events.push(calEvent);
-          }
-        });
-
-        // Return JSON object
-        return res.send(calendar);
       });
-    }
+
+      return returnResponse();
+    });
   });
-}
+
+  function returnResponse() {
+    if(waiting != 0) {
+      waiting--;
+      //console.log("Decrementing waiting: " + waiting);
+      return;
+    }
+
+    return res.send(calendars);
+  }
+};
 
 /*
  API Call: /api/events/:userId/week/:date - Grabs [userId]'s events during the week including [date]
@@ -159,7 +211,7 @@ exports.eventsWeek = function(req, res) {
     " during week with day: " + req.params.date);
 
   // TODO: Grab access token from parse from user with userId: req.params.userId
-  var access_token = "ya29.AHES6ZTa-dfF2xkRt-Q82Uervgcaie_ByQzaq8gbA1A1Ug";
+  var access_token = "ya29.AHES6ZRliNz4V2nOdgjyMeyq9U_jEvfFUnHDiOGTNo9MLQ";
   var calendar = {};
   calendar.name = "";
   calendar.events = [];
@@ -177,7 +229,7 @@ exports.eventsWeek = function(req, res) {
     if(err) return res.send(500,err);
     
     // Get only first calendar, TODO: grab all calendars
-    var tempCal = data.items[0];
+    //var tempCal = data.items[4];
     if(tempCal) {
       calendar.name = tempCal.summary;
 
@@ -225,4 +277,14 @@ exports.eventsWeek = function(req, res) {
       });
     }
   });
+};
+
+function contains(a, obj) {
+    var i = a.length;
+    while (i--) {
+       if (a[i] == obj) {
+           return true;
+       }
+    }
+    return false;
 }
