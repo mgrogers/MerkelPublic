@@ -13,9 +13,6 @@ var express = require('express'),
   http = require('http'),
   path = require('path');
 
-// Async stack traces
-require('longjohn');
-
 var app = express();
 
 app.configure(function(){
