@@ -26,11 +26,12 @@
 {
     if (self = [super init]) 
     {        
-        _templateView = [[BMWTemplateView view] retain];
+//        _templateView = [[BMWTemplateView view] retain];
+        self.calendarListView = [BMWCalendarListView view];
+        self.homeView = [BMWHomeView view];
+        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, nil];
         
-        _viewArray = [[NSArray alloc] initWithObjects:_templateView, nil];
-        
-        _mainView = _templateView;
+        _mainView = _homeView;
     }
     return self;
 }

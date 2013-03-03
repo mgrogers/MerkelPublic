@@ -33,6 +33,12 @@
 		4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE3A16C6F2AF00426018 /* MerkelTests.m */; };
 		4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
 		4B80DF3516E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
+		4B80DF3816E2F79400676BC9 /* BMWCalendarListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3716E2F79400676BC9 /* BMWCalendarListView.m */; };
+		4B80DF3916E2F79400676BC9 /* BMWCalendarListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3716E2F79400676BC9 /* BMWCalendarListView.m */; };
+		4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */; };
+		4B80DF4116E2FDBA00676BC9 /* BMWHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */; };
+		4B80DF4416E3018B00676BC9 /* BMWCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */; };
+		4B80DF4516E3018B00676BC9 /* BMWCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */; };
 		4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
 		4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
 		4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */; };
@@ -115,6 +121,12 @@
 		4B77FE3A16C6F2AF00426018 /* MerkelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MerkelTests.m; sourceTree = "<group>"; };
 		4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarEvent.h; sourceTree = "<group>"; };
 		4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarEvent.m; sourceTree = "<group>"; };
+		4B80DF3616E2F79300676BC9 /* BMWCalendarListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWCalendarListView.h; sourceTree = "<group>"; };
+		4B80DF3716E2F79400676BC9 /* BMWCalendarListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWCalendarListView.m; sourceTree = "<group>"; };
+		4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWHomeView.h; path = Merkel/BMWHomeView.h; sourceTree = "<group>"; };
+		4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWHomeView.m; path = Merkel/BMWHomeView.m; sourceTree = "<group>"; };
+		4B80DF4216E3018A00676BC9 /* BMWCalendarEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWCalendarEventView.h; path = Merkel/BMWCalendarEventView.h; sourceTree = "<group>"; };
+		4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWCalendarEventView.m; path = Merkel/BMWCalendarEventView.m; sourceTree = "<group>"; };
 		4BA3382C16D1942700A2CD24 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4BA3383116D1945100A2CD24 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -349,6 +361,12 @@
 				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
 				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
 				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
+				4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */,
+				4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */,
+				4B80DF3616E2F79300676BC9 /* BMWCalendarListView.h */,
+				4B80DF3716E2F79400676BC9 /* BMWCalendarListView.m */,
+				4B80DF4216E3018A00676BC9 /* BMWCalendarEventView.h */,
+				4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */,
 				2B1A358916D1B5B000A3B339 /* manifest.plist */,
 			);
 			name = ConnectedDrive;
@@ -516,6 +534,9 @@
 				2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */,
 				4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */,
 				4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */,
+				4B80DF3816E2F79400676BC9 /* BMWCalendarListView.m in Sources */,
+				4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */,
+				4B80DF4416E3018B00676BC9 /* BMWCalendarEventView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +547,9 @@
 				4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */,
 				4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */,
 				4B80DF3516E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */,
+				4B80DF3916E2F79400676BC9 /* BMWCalendarListView.m in Sources */,
+				4B80DF4116E2FDBA00676BC9 /* BMWHomeView.m in Sources */,
+				4B80DF4516E3018B00676BC9 /* BMWCalendarEventView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
