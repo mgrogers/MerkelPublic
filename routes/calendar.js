@@ -96,8 +96,8 @@ exports.eventsDay = function(req, res) {
   var waiting = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
-    var access_token = response.google_access_token;
-    //var access_token = 'ya29.AHES6ZSM4ul0XjHqhb7VSDw_IxTc8tMdjqREwB2xY9bOdUQ';
+    //var access_token = response.google_access_token;
+    var access_token = 'ya29.AHES6ZTYhmAWD6XSnPHj_ejytGiwmiFr4Tw22RRSmhKtG6nSneYI';
 
     console.log("This is the access token: " + access_token);
 
@@ -113,7 +113,8 @@ exports.eventsDay = function(req, res) {
       if(err) return res.send(500,err);
 
       data.items.forEach(function(calendar) {
-        //if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+        if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+        
         waiting++;
         console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
         var tempCalendar = {};
