@@ -63,6 +63,8 @@
 		4BBEF1BA16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */; };
 		4BBEF1BB16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */; };
 		4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */; };
+		4BEED18616DC14C40019312B /* BMWGCalenderDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalenderDataSource.m */; };
+		4BEED18716DC14C40019312B /* BMWGCalenderDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalenderDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +141,8 @@
 		4BBEF1B516D1BD720080F6E5 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
 		4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4BEED18416DC14C40019312B /* BMWGCalenderDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalenderDataSource.h; sourceTree = "<group>"; };
+		4BEED18516DC14C40019312B /* BMWGCalenderDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalenderDataSource.m; sourceTree = "<group>"; };
 		8CF2515D55FF42B095C2BE58 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -190,6 +194,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B606F2516DB7BF800CBACDC /* Google Apps */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Google Apps";
+			path = Merkel;
+			sourceTree = "<group>";
+		};
 		4B77FDFA16C6F2AF00426018 = {
 			isa = PBXGroup;
 			children = (
@@ -197,13 +209,6 @@
 				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
 				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
 				2B1A358216D1B5B000A3B339 /* bmwLogo.png */,
-				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
-				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
-				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
-				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
-				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
-				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
-				2B1A358916D1B5B000A3B339 /* manifest.plist */,
 				4B77FE0F16C6F2AF00426018 /* Merkel */,
 				4B77FE3316C6F2AF00426018 /* MerkelTests */,
 				4B77FE0816C6F2AF00426018 /* Frameworks */,
@@ -224,6 +229,7 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B606F2516DB7BF800CBACDC /* Google Apps */,
 				4BBEF1BC16D1BD760080F6E5 /* Google Analytics */,
 				2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */,
 				2B1A359E16D1B67D00A3B339 /* ImageIO.framework */,
@@ -258,11 +264,14 @@
 		4B77FE0F16C6F2AF00426018 /* Merkel */ = {
 			isa = PBXGroup;
 			children = (
+				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
-				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
+				4BEED18416DC14C40019312B /* BMWGCalenderDataSource.h */,
+				4BEED18516DC14C40019312B /* BMWGCalenderDataSource.m */,
+				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 			);
 			path = Merkel;
@@ -323,6 +332,21 @@
 				4BA3384916D195DA00A2CD24 /* libTestFlight.a */,
 			);
 			name = "Google Analytics";
+			sourceTree = "<group>";
+		};
+		4BEED18316DC14500019312B /* ConnectedDrive */ = {
+			isa = PBXGroup;
+			children = (
+				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
+				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
+				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
+				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
+				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
+				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
+				2B1A358916D1B5B000A3B339 /* manifest.plist */,
+			);
+			name = ConnectedDrive;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,6 +508,7 @@
 				2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */,
 				2B1A358D16D1B5B000A3B339 /* BMWTemplateView.m in Sources */,
 				2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */,
+				4BEED18616DC14C40019312B /* BMWGCalenderDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */,
+				4BEED18716DC14C40019312B /* BMWGCalenderDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,7 +614,7 @@
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -614,7 +640,7 @@
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
