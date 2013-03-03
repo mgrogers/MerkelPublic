@@ -21,24 +21,9 @@ static NSString * const kMerkelFacebookAppId = @"258693340932079";
 static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d_MTg4MjE4MjAxMy0wMi0xNyAxNzo0ODoxMS43OTQzOTA";
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 
-//@synthesize window = _window;
-//@synthesize BMWViewController = _BMWViewController;
-//@synthesize manager = _manager;
-//
-//
-//
-//- (void)dealloc
-//{
-//    [_window release];
-//    [_BMWViewController release];
-//    [_manager release];
-//    [super dealloc];
-//}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-    
     [[IDLogger defaultLogger] addAppender:self];
     
     self.manager = [[BMWManager alloc] init];
@@ -47,7 +32,12 @@ static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
     [TestFlight takeOff:kMerkelTestFlightId];
+#ifndef RELEASE
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+#pragma clang diagnostic pop
+#endif
     [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
     return YES;
 }
