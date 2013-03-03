@@ -28,6 +28,7 @@
     provider.linkedinView.linkedInProfile = [[BMWGCalendarDataSource sharedDataSource] linkedinToDisplayFromEvent];
     [linkedinButton setTargetView:provider.linkedinView];
     self.widgets = @[button, linkedinButton];
+
 }
 
 @end

@@ -11,7 +11,7 @@
 		2B1A358B16D1B5B000A3B339 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358216D1B5B000A3B339 /* bmwLogo.png */; };
 		2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358416D1B5B000A3B339 /* BMWManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2B1A358D16D1B5B000A3B339 /* BMWTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */; };
 		2B1A358F16D1B5B000A3B339 /* manifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358916D1B5B000A3B339 /* manifest.plist */; };
 		2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };

@@ -8,6 +8,19 @@
 
 #import <BMWAppKit/BMWAppKit.h>
 
-@interface BMWCalendarEventView : IDView
+@class BMWCalendarEventView;
+@class BMWGCalendarEvent;
+
+@protocol BMWCalendarEventViewDelegate
+
+- (BMWGCalendarEvent *)eventForEventView:(BMWCalendarEventView *)eventView;
+
+@end
+
+@interface BMWCalendarEventView : IDTableLayoutView
+
+@property (nonatomic, weak) id <BMWCalendarEventViewDelegate> eventDelegate;
+
+@property (nonatomic, strong) BMWGCalendarEvent *event;
 
 @end
