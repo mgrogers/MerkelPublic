@@ -8,7 +8,7 @@
 
 #import "BMWTemplateView.h"
 #import "BMWViewProvider.h"
-#import "BMWGCalenderDataSource.h"
+#import "BMWGCalendarDataSource.h"
 
 @implementation BMWTemplateView
 
@@ -45,7 +45,7 @@ static int counter = 0;
     NSString *urlString = @"https://safe-mountain-5325.herokuapp.com/";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
 
-    [[BMWGCalenderDataSource sharedDataSource] authorizeRequest:request
+    [[BMWGCalendarDataSource sharedDataSource] authorizeRequest:request
                                               completionHandler:^(NSError *error) {
           if (error == nil) {
               //change this to async?

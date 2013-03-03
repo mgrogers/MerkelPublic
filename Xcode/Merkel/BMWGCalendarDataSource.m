@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "BMWGCalenderDataSource.h"
+#import "BMWGCalendarDataSource.h"
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 //#import "GTMOAuth2Authentication.h"
@@ -33,13 +33,13 @@
 
 @end
 
-@interface BMWGCalenderDataSource ()
+@interface BMWGCalendarDataSource ()
 
 @property (nonatomic, strong) GTMOAuth2Authentication *googleAuth;
 
 @end
 
-@implementation BMWGCalenderDataSource
+@implementation BMWGCalendarDataSource
 
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
@@ -71,7 +71,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 
 + (instancetype)sharedDataSource {
     static dispatch_once_t onceToken;
-    static BMWGCalenderDataSource *sharedDataSource = nil;
+    static BMWGCalendarDataSource *sharedDataSource = nil;
     dispatch_once(&onceToken, ^{
         sharedDataSource = [[self alloc] init];
     });
