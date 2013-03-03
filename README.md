@@ -22,6 +22,17 @@ iOS
 
 The iOS project is set up under the Xcode folder. We will be using [Cocoapods](http://cocoapods.org/) to manage dependencies. Make sure to always open ```Merkel.xcworkspace```.
 
+###Build Versioning
+Follow these steps to bump the build version (in your branch):
+```
+cd Xcode
+./version.sh bump
+git commit -am "MESSAGE HERE"
+git tag -a 'MARKETING VERSION NUMBER HERE'
+git checkout develop
+git merge --no-ff feature/YOUR-FEATURE-HERE
+```
+
 Git
 ---
 We're going to follow the branching model described [here](http://nvie.com/posts/a-successful-git-branching-model/).
