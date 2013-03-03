@@ -11,6 +11,7 @@
 #import "BMWTemplateView.h"
 #import "BMWCalendarListView.h"
 #import "BMWHomeView.h"
+#import "BMWLinkedInView.h"
 
 @interface BMWViewProvider : NSObject <IDHmiProvider>
 @property(nonatomic, retain) IDMultimediaInfo* multimediaInfo;
@@ -20,6 +21,6 @@
 @property (nonatomic, retain) BMWTemplateView *templateView;
 @property (nonatomic, retain) BMWCalendarListView *calendarListView;
 @property (nonatomic, retain) BMWHomeView *homeView;
-
+@property (nonatomic, retain) BMWLinkedInView *linkedinView;
 
 @end
