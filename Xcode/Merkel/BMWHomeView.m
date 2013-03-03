@@ -24,9 +24,9 @@
 
     IDButton *linkedinButton = [IDButton button];
     linkedinButton.text = @"LinkedIn Profile";
-    provider.linkedinView.linkedInProfileURL = [[BMWGCalendarDataSource sharedDataSource] linkedinToDisplayFromEvent];
+    provider.linkedinView.linkedInProfile = [[BMWGCalendarDataSource sharedDataSource] linkedinToDisplayFromEvent];
     [linkedinButton setTargetView:provider.linkedinView];
-    self.widgets = @[button, linkedinButton, nil];
+    self.widgets = @[button, linkedinButton];
 }
 
 @end
