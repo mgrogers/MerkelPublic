@@ -29,7 +29,9 @@
 //        _templateView = [[BMWTemplateView view] retain];
         self.calendarListView = [BMWCalendarListView view];
         self.homeView = [BMWHomeView view];
-        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, nil];
+        self.linkedinView = [BMWLinkedInView view];
+        
+        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _linkedinView, nil];
         
         _mainView = _homeView;
     }
