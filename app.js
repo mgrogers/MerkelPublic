@@ -46,6 +46,8 @@ app.get('/authentication', calendar.authentication);
 app.get('/twilio', twilio.twilio);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
+app.get('/api/events/:userId/week', calendar.eventsWeek);
+app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
