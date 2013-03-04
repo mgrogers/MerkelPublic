@@ -37,7 +37,7 @@
 + (NSDate *)dateFromEventObject:(NSDictionary *)dict {
     if (dict[@"date"]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"@yyyy-MM-dd"];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         return [formatter dateFromString:dict[@"date"]];
     } else {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -50,7 +50,7 @@
 }
 
 - (NSString *)description {
-    return self.JSON.description;
+    return [NSString stringWithFormat:@"title: %@\ndescription: %@\nstart: %@\nend: %@", self.title, self.eventDescription, self.startDate, self.endDate];
 }
 
 @end
