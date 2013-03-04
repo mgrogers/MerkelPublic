@@ -72,7 +72,7 @@ exports.authentication = function(req, res) {
 
       if(err) return res.send(500,err);
       
-      //req.session.access_token = access_token;
+      // req.session.access_token = access_token;
 
       // Grab auth token in log
       console.log("This is my auth token: " + access_token);
@@ -96,8 +96,8 @@ exports.eventsDay = function(req, res) {
   var waiting = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
-    //var access_token = response.google_access_token;
-    var access_token = 'ya29.AHES6ZTYhmAWD6XSnPHj_ejytGiwmiFr4Tw22RRSmhKtG6nSneYI';
+    var access_token = response.google_access_token;
+    // var access_token = 'ya29.AHES6ZTYhmAWD6XSnPHj_ejytGiwmiFr4Tw22RRSmhKtG6nSneYI';
 
     console.log("This is the access token: " + access_token);
 
@@ -113,9 +113,9 @@ exports.eventsDay = function(req, res) {
       if(err) return res.send(500,err);
 
       data.items.forEach(function(calendar) {
-        if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+        // if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
         
-        waiting++;
+        // waiting++;
         console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
         var tempCalendar = {};
         tempCalendar.name = "";
@@ -132,7 +132,8 @@ exports.eventsDay = function(req, res) {
 
             if(err || !events || !events.items) {
               console.log(err);
-              return returnResponse();
+              return res.send(500,err);
+              // return returnResponse();
             }
 
             // Populate relevant fields for events
@@ -161,7 +162,7 @@ exports.eventsDay = function(req, res) {
                   calEvent.attendees = event.attendees;
                   calEvent.created = event.created;
                   calEvent.updated = event.updated;
-
+                  console.log(calEvent);
                   // Add event to calendar object
                   tempCalendar.events.push(calEvent);
                 //}
@@ -170,15 +171,16 @@ exports.eventsDay = function(req, res) {
             console.log("Adding calendar: " + tempCalendar.name);
 
             calendars.push(tempCalendar);
+            console.log(calendars);
+            return res.send(calendars);
 
             // Return JSON object
-            return returnResponse();
+            // return returnResponse();
           });
         }
 
       });
-
-      return returnResponse();
+      // return returnResponse();
     });
   });
 

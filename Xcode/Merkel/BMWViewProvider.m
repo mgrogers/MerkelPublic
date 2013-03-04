@@ -26,22 +26,18 @@
 {
     if (self = [super init]) 
     {        
-        _templateView = [[BMWTemplateView view] retain];
+//        _templateView = [[BMWTemplateView view] retain];
+        self.calendarListView = [BMWCalendarListView view];
+        self.calendarEventView = [BMWCalendarEventView view];
+        self.homeView = [BMWHomeView view];
+        self.linkedinView = [BMWLinkedInView view];
         
-        _viewArray = [[NSArray alloc] initWithObjects:_templateView, nil];
+        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, _linkedinView, nil];
+
         
-        _mainView = _templateView;
+        self.mainView = _homeView;
     }
     return self;
-}
-
--(void)dealloc
-{
-    [_viewArray release];
-    [_templateView release];
-    [_statusBar release];
-    [_multimediaInfo release];
-    [super dealloc];
 }
 
 #pragma mark - useless methods
@@ -53,7 +49,7 @@
  */
 - (NSArray *)allViews
 {
-    return [NSArray arrayWithArray:_viewArray];
+    return [NSArray arrayWithArray:self.viewArray];
 }
 
 /*!
