@@ -172,14 +172,7 @@ exports.eventsDay = function(req, res) {
 
             calendars.push(tempCalendar);
             // console.log(calendars);
-<<<<<<< HEAD
-            var responseJSON = {"type" : "calendar/day",
-                                "userID" : req.params.userId,
-                                "data" : calendars};
-            return res.send(responseJSON);
-=======
             return res.send(calendars);
->>>>>>> hotfix/node-response-crash
 
             // Return JSON object
             // return returnResponse();
