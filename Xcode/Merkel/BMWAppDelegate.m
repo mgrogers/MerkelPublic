@@ -18,7 +18,7 @@
 static NSString * const kMerkelParseAppId = @"ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 static NSString * const KMerkelParseClientKey = @"lH8IHu99HYIF0nMiSd3KIdXe6fs0rnih2UEbHVYq";
 static NSString * const kMerkelFacebookAppId = @"258693340932079";
-static NSString * const kMerkelTestFlightId = @"88aa09c0e7c7f6e45ac504c0b996d08d_MTg4MjE4MjAxMy0wMi0xNyAxNzo0ODoxMS43OTQzOTA";
+static NSString * const kMerkelTestFlightId = @"f36a8dc5-1f19-49ad-86e7-d2613ce46b03";
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -33,6 +33,7 @@ static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
     [TestFlight takeOff:kMerkelTestFlightId];
 #ifndef RELEASE
+    [GAI sharedInstance].debug = YES;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];

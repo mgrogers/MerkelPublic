@@ -19,7 +19,9 @@
     self.title = @"Merkel";
     IDButton *button = [IDButton button];
     button.text = @"Today's Events";
-    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplay];
+    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
+        provider.calendarListView.events = events;
+    }];
     [button  setTargetView:provider.calendarListView];
 
     //Added to test. Link to profile should appear when user view's his next event.
@@ -29,6 +31,13 @@
     [linkedinButton setTargetView:provider.linkedinView];
     self.widgets = @[button, linkedinButton];
 
+}
+
+- (void)viewDidBecomeFocused:(IDView *)view {
+    BMWViewProvider *provider = self.application.hmiProvider;
+    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
+        provider.calendarListView.events = events;
+    }];
 }
 
 @end

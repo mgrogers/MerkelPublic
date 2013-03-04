@@ -37,6 +37,7 @@
 @interface BMWGCalendarDataSource ()
 
 @property (nonatomic, strong) GTMOAuth2Authentication *googleAuth;
+@property (nonatomic, strong) NSCache *dataCache;
 
 @end
 
@@ -82,6 +83,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 - (id)init {
     self = [super init];
     if (self) {
+        self.dataCache = [[NSCache alloc] init];
         self.googleAuth = [GTMOAuth2ViewControllerTouch authForGoogleFromKeychainForName:kBMWGoogleAuthKeychain
                                                                                 clientID:kBMWGoogleClientId
                                                                             clientSecret:kBMWGoogleClientSecret];
@@ -181,9 +183,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
                                                              leaveUnescaped,
                                                              forceEscaped,
                                                              kCFStringEncodingUTF8);
-        CFBridgingRelease(escapedStr);
+//        CFBridgingRelease(escapedStr);
     }
-    
+    CFBridgingRelease(originalString);
     return (NSString *)CFBridgingRelease(escapedStr);
 }
 
@@ -224,7 +226,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return result;
 }
 
-- (NSArray *)eventsToDisplay {
+- (NSArray *)eventsToDisplayTest {
     NSDictionary *event = @{@"name": @"Test Event",
                                             @"description": @"This is the greatest event",
                                             @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
@@ -234,6 +236,44 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
         [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
     }
     return events;
+}
+
+- (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSError *error;
+        NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
+        if (events) {
+            [self.dataCache setObject:events forKey:@"events/day"];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(events, error);
+        });
+    });
+    return [self.dataCache objectForKey:@"events/day"];
+}
+
+- (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache {
+    if (fromCache) {
+        return [self.dataCache objectForKey:@"events/day"];
+    } else {
+        NSError *error;
+        return  [self eventRequestWithMethod:@"day" error:&error];
+    }
+}
+
+- (NSArray *)eventRequestWithMethod:(NSString *)method error:(NSError **)error {
+    NSString * const kBaseURL = @"http://bossmobilewunderkinds.herokuapp.com/api/events/";
+    NSString *urlString = [NSString stringWithFormat:@"%@%@/%@", kBaseURL, [[PFUser currentUser] objectId], method];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSData *response = [NSData dataWithContentsOfURL:url];
+    if (!response) return nil;
+    id json = [NSJSONSerialization JSONObjectWithData:response options:0 error:error];
+    if ([json isKindOfClass:[NSArray class]]) {
+        NSDictionary *dict = ((NSArray *)json)[0];
+        NSArray *events = [BMWGCalendarEvent eventsFromJSONDict:dict];
+        return events;
+    }
+    return nil;
 }
 
 -(NSDictionary *)linkedinToDisplayFromEvent {

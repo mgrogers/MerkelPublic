@@ -28,14 +28,31 @@
     provider.calendarEventView.eventDelegate = self;
     self.title = @"Today's Events";
     NSMutableArray *eventButtons = [NSMutableArray array];
-    for (BMWGCalendarEvent *event in self.events) {
+    const NSInteger kButtonLimit = 50;
+    for (int i = 0; i < kButtonLimit; i++) {
         IDButton *button = [IDButton button];
         [button setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
         [button setTargetView:provider.calendarEventView];
-        button.text = event.title;
+        button.visible = NO;
         [eventButtons addObject:button];
     }
     self.widgets = eventButtons;
+}
+
+- (void)viewDidBecomeFocused:(IDView *)view {
+    NSInteger index = 0;
+    for (BMWGCalendarEvent *event in self.events) {
+        IDButton *button = [self.widgets objectAtIndex:index];
+        button.text = event.title;
+        button.visible = YES;
+        index++;
+    }
+}
+
+- (void)viewDidLoseFocus:(IDView *)view {
+    for (IDButton *button in self.widgets) {
+        button.visible = NO;
+    }
 }
 
 - (void)buttonFocused:(IDButton *)button {
