@@ -8,7 +8,7 @@
 
 #import "BMWViewController.h"
 
-#import "BMWGCalenderDataSource.h"
+#import "BMWGCalendarDataSource.h"
 #import "GTMOAuth2Authentication.h"
 #import "GTMOAuth2ViewControllerTouch.h"
 #import <Google-API-Client/GTLCalendar.h>
@@ -40,7 +40,7 @@
         if (![[PFUser currentUser] objectForKey:@"first_name"]) {
             [self setupNewUserAccount];
         }
-        if (![[BMWGCalenderDataSource sharedDataSource] canAuthorize]) {
+        if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
             [self setupNewGoogleAccount];
             
         }
@@ -57,7 +57,7 @@
 #pragma mark - User Management
 
 - (void)setupNewGoogleAccount {
-    GTMOAuth2ViewControllerTouch *viewController = [[BMWGCalenderDataSource sharedDataSource] authViewControllerWithCompletionHandler:^(GTMOAuth2ViewControllerTouch *viewController, NSError *error) {
+    GTMOAuth2ViewControllerTouch *viewController = [[BMWGCalendarDataSource sharedDataSource] authViewControllerWithCompletionHandler:^(GTMOAuth2ViewControllerTouch *viewController, NSError *error) {
         [viewController.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
     }];
     [self presentViewController:viewController animated:YES completion:NULL];
@@ -105,7 +105,7 @@
 
 - (void)logoutButtonPressed:(id)sender {
     [PFUser logOut];
-    [[BMWGCalenderDataSource sharedDataSource] logOut];
+    [[BMWGCalendarDataSource sharedDataSource] logOut];
     [self presentLoginView];
 }
 
@@ -113,7 +113,7 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [[BMWGCalenderDataSource sharedDataSource] refreshParseAuth];
+    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
@@ -128,13 +128,13 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [[BMWGCalenderDataSource sharedDataSource] refreshParseAuth];
+    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
 
 -(void)fetchLatestCalendarEvent {
     NSString *urlString = @"https://www.googleapis.com/calendar/v3/users/me/calendarList";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
-    [[BMWGCalenderDataSource sharedDataSource] authorizeRequest:request
+    [[BMWGCalendarDataSource sharedDataSource] authorizeRequest:request
                                               completionHandler:^(NSError *error) {
                                                   if (error == nil) {
                                                       //change this to async?
@@ -165,7 +165,7 @@
 //    self.calendarListFetchError = nil;
     
     GTLServiceCalendar *service = [[GTLServiceCalendar alloc] init];
-    service.authorizer = [BMWGCalenderDataSource sharedDataSource].googleAuth;
+    service.authorizer = [BMWGCalendarDataSource sharedDataSource].googleAuth;
     
     GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
     

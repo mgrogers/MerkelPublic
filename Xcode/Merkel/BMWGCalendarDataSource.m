@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "BMWGCalenderDataSource.h"
+#import "BMWGCalendarDataSource.h"
+#import "BMWGCalendarEvent.h"
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 //#import "GTMOAuth2Authentication.h"
@@ -33,18 +34,18 @@
 
 @end
 
-@interface BMWGCalenderDataSource ()
+@interface BMWGCalendarDataSource ()
 
 @property (nonatomic, strong) GTMOAuth2Authentication *googleAuth;
 
 @end
 
-@implementation BMWGCalenderDataSource
+@implementation BMWGCalendarDataSource
 
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
 static NSString * const kBMWGoogleAuthKeychain = @"kBMWGoogleAuthKeychain";
-static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile";
+static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive";
 
 // standard OAuth keys
 static NSString *const kOAuth2AccessTokenKey       = @"access_token";
@@ -71,7 +72,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 
 + (instancetype)sharedDataSource {
     static dispatch_once_t onceToken;
-    static BMWGCalenderDataSource *sharedDataSource = nil;
+    static BMWGCalendarDataSource *sharedDataSource = nil;
     dispatch_once(&onceToken, ^{
         sharedDataSource = [[self alloc] init];
     });
@@ -221,6 +222,25 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     }
     NSString *result = [[self class] encodedQueryParametersForDictionary:persistenceDict];
     return result;
+}
+
+- (NSArray *)eventsToDisplay {
+    NSDictionary *event = @{@"name": @"Test Event",
+                                            @"description": @"This is the greatest event",
+                                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
+                                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
+    NSMutableArray *events = [NSMutableArray array];
+    for (int i = 0; i < 20; i++) {
+        [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
+    }
+    return events;
+}
+
+-(NSDictionary *)linkedinToDisplayFromEvent {
+    //Request to get event attendee linkedin profile object
+
+    NSDictionary *response = @{@"profileURL":@"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",@"name":@"Wesley"};
+    return response;
 }
 
 @end
