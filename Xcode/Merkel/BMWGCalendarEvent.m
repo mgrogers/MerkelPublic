@@ -50,10 +50,7 @@
 }
 
 - (NSString *)description {
-    return [@{@"title": self.title,
-              @"description": self.eventDescription,
-              @"start": self.startDate,
-              @"end": self.endDate} description];
+    return [NSString stringWithFormat:@"title: %@\ndescription: %@\nstart: %@\nend: %@", self.title, self.eventDescription, self.startDate, self.endDate];
 }
 
 @end
