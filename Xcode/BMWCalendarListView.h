@@ -9,7 +9,7 @@
 #import <BMWAppKit/BMWAppKit.h>
 #import "BMWCalendarEventView.h"
 
-@interface BMWCalendarListView : IDView <BMWCalendarEventViewDelegate>
+@interface BMWCalendarListView : IDView <BMWCalendarEventViewDelegate, IDViewDelegate>
 
 @property (nonatomic, strong) NSArray *events;
 

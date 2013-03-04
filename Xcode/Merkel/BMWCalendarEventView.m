@@ -26,7 +26,7 @@
 - (void)viewWillLoad:(IDView *)view {
     self.titleLabel = [IDLabel label];
     self.titleLabel.selectable = NO;
-    self.titleLabel.position = CGPointMake(80, 8);
+    self.titleLabel.position = CGPointMake(0, 8);
     self.startRow = 2;
     self.descriptionLabel = [IDLabel label];
     self.startLabel = [IDLabel label];

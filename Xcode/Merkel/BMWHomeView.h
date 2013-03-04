@@ -8,6 +8,6 @@
 
 #import <BMWAppKit/BMWAppKit.h>
 
-@interface BMWHomeView : IDView
+@interface BMWHomeView : IDView <IDViewDelegate>
 
 @end
