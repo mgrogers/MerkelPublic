@@ -16,6 +16,7 @@
 @property (readonly) GTMOAuth2Authentication *googleAuth;
 
 typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewController, NSError *error);
+typedef void (^BMWGCalendarEventRequestCompletion)(NSArray *events, NSError *error);
 
 + (instancetype)sharedDataSource;
 
@@ -30,7 +31,8 @@ typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewCon
 
 - (BOOL)refreshParseAuth;
 
-- (NSArray *)eventsToDisplay;
+- (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache;
+- (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion;
 - (NSDictionary *)linkedinToDisplayFromEvent;
 
 @end
