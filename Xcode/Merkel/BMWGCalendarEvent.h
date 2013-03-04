@@ -10,7 +10,7 @@
 
 @interface BMWGCalendarEvent : NSObject
 
-@property (nonatomic, copy) NSString *title, *description;
+@property (nonatomic, copy) NSString *title, *eventDescription;
 @property (nonatomic, strong) NSDictionary *location, *JSON;
 @property (nonatomic, strong) NSDate *startDate, *endDate;
 
