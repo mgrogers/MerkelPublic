@@ -13,7 +13,7 @@
 
 @interface BMWCalendarEventView ()
 
-@property (nonatomic, strong) IDLabel *titleLabel;
+@property (nonatomic, strong) IDLabel *titleLabel, *descriptionLabel, *startLabel, *endLabel;
 
 @end
 
@@ -27,7 +27,11 @@
     self.titleLabel = [IDLabel label];
     self.titleLabel.selectable = NO;
     self.titleLabel.position = CGPointMake(80, 8);
-    self.widgets = @[self.titleLabel];
+    self.startRow = 2;
+    self.descriptionLabel = [IDLabel label];
+    self.startLabel = [IDLabel label];
+    self.endLabel = [IDLabel label];
+    self.widgets = @[self.titleLabel, self.descriptionLabel, self.startLabel, self.endLabel];
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
@@ -35,6 +39,12 @@
     if (self.event) {
         self.title = self.event.title;
         self.titleLabel.text = self.event.title;
+        self.descriptionLabel.text = self.event.eventDescription;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterMediumStyle];
+        self.startLabel.text = [formatter stringFromDate:self.event.startDate];
+        self.endLabel.text = [formatter stringFromDate:self.event.endDate];
     }
 }
 

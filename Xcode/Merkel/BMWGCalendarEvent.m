@@ -20,7 +20,7 @@
     BMWGCalendarEvent *event = [[self alloc] init];
     event.JSON = dict;
     event.title = dict[@"name"];
-    event.description = dict[@"description"];
+    event.eventDescription = dict[@"description"];
     event.startDate = [self dateFromEventObject:dict[@"start"]];
     event.endDate = [self dateFromEventObject:dict[@"end"]];
     return event;
