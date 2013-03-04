@@ -19,7 +19,7 @@
     self.title = @"Merkel";
     IDButton *button = [IDButton button];
     button.text = @"Today's Events";
-    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplay];
+    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayFromCache:NO];
     [button  setTargetView:provider.calendarListView];
 
     //Added to test. Link to profile should appear when user view's his next event.

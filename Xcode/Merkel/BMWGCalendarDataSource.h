@@ -30,7 +30,7 @@ typedef void (^BMWGCalendarAuthCompletion)(GTMOAuth2ViewControllerTouch *viewCon
 
 - (BOOL)refreshParseAuth;
 
-- (NSArray *)eventsToDisplay;
+- (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache;
 - (NSDictionary *)linkedinToDisplayFromEvent;
 
 @end
