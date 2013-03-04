@@ -162,7 +162,7 @@ exports.eventsDay = function(req, res) {
                   calEvent.attendees = event.attendees;
                   calEvent.created = event.created;
                   calEvent.updated = event.updated;
-                  console.log(calEvent);
+                  // console.log(calEvent);
                   // Add event to calendar object
                   tempCalendar.events.push(calEvent);
                 //}
@@ -171,8 +171,11 @@ exports.eventsDay = function(req, res) {
             console.log("Adding calendar: " + tempCalendar.name);
 
             calendars.push(tempCalendar);
-            console.log(calendars);
-            return res.send(calendars);
+            // console.log(calendars);
+            var responseJSON = {"type" : "calendar/day",
+                                "userID" : req.params.userId,
+                                "data" : calendars};
+            return res.send(responseJSON);
 
             // Return JSON object
             // return returnResponse();
