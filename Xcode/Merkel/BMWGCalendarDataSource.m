@@ -238,6 +238,18 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return events;
 }
 
+- (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSError *error;
+        NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
+        [self.dataCache setObject:events forKey:@"events/day"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(events, error);
+        });
+    });
+    return [self.dataCache objectForKey:@"events/day"];
+}
+
 - (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache {
     if (fromCache) {
         return [self.dataCache objectForKey:@"events/day"];
