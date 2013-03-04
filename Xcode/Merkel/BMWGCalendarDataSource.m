@@ -236,4 +236,11 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return events;
 }
 
+-(NSDictionary *)linkedinToDisplayFromEvent {
+    //Request to get event attendee linkedin profile object
+
+    NSDictionary *response = @{@"profileURL":@"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",@"name":@"Wesley"};
+    return response;
+}
+
 @end
