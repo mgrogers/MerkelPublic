@@ -45,7 +45,7 @@
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
 static NSString * const kBMWGoogleAuthKeychain = @"kBMWGoogleAuthKeychain";
-static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile";
+static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive";
 
 // standard OAuth keys
 static NSString *const kOAuth2AccessTokenKey       = @"access_token";
@@ -234,6 +234,13 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
         [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
     }
     return events;
+}
+
+-(NSDictionary *)linkedinToDisplayFromEvent {
+    //Request to get event attendee linkedin profile object
+
+    NSDictionary *response = @{@"profileURL":@"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",@"name":@"Wesley"};
+    return response;
 }
 
 @end
