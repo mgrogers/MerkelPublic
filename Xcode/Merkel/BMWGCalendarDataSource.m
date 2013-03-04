@@ -183,9 +183,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
                                                              leaveUnescaped,
                                                              forceEscaped,
                                                              kCFStringEncodingUTF8);
-        CFBridgingRelease(escapedStr);
+//        CFBridgingRelease(escapedStr);
     }
-    
+    CFBridgingRelease(originalString);
     return (NSString *)CFBridgingRelease(escapedStr);
 }
 
@@ -242,7 +242,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSError *error;
         NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
-        [self.dataCache setObject:events forKey:@"events/day"];
+        if (events) {
+            [self.dataCache setObject:events forKey:@"events/day"];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(events, error);
         });
@@ -264,6 +266,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     NSString *urlString = [NSString stringWithFormat:@"%@%@/%@", kBaseURL, [[PFUser currentUser] objectId], method];
     NSURL *url = [NSURL URLWithString:urlString];
     NSData *response = [NSData dataWithContentsOfURL:url];
+    if (!response) return nil;
     id json = [NSJSONSerialization JSONObjectWithData:response options:0 error:error];
     if ([json isKindOfClass:[NSArray class]]) {
         NSDictionary *dict = ((NSArray *)json)[0];
