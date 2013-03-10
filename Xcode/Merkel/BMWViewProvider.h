@@ -13,6 +13,7 @@
 #import "BMWCalendarEventView.h"
 #import "BMWHomeView.h"
 #import "BMWLinkedInView.h"
+#import "BMWAttendeeListViewDetail.h"
 
 @interface BMWViewProvider : NSObject <IDHmiProvider>
 @property(nonatomic, strong) IDMultimediaInfo* multimediaInfo;

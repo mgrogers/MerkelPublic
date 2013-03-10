@@ -8,12 +8,27 @@
 
 #import <BMWAppKit/BMWAppKit.h>
 
-@interface BMWLinkedInView : IDTableLayoutView
 
-@property (nonatomic, strong) NSDictionary *linkedInProfile;
-@property (nonatomic, weak) id <BMWCalendarEventViewDelegate> eventDelegate;
+@class BMWLinkedInProfile;
+@class BMWLinkedInView;
 
-@property (nonatomic, strong) BMWGCalendarEvent *event;
+@protocol BMWLinkedInViewDelegate
+
+- (BMWLinkedInProfile *)attendeeforAttendeeView:(BMWLinkedInView *)profileView;
 
 @end
+
+@interface BMWLinkedInView : IDTableLayoutView
+
+//@property (nonatomic, strong) NSDictionary *linkedInProfile;
+
+@property (nonatomic, weak) id <BMWLinkedInViewDelegate> linkedInDelegate;
+@property (nonatomic, strong) BMWLinkedInProfile *profile;
+
+
+
+
+@end
+
+
 

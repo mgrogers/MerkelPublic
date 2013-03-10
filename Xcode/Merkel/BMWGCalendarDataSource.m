@@ -8,6 +8,8 @@
 
 #import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
+#import "BMWLinkedInProfile.h"
+
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 //#import "GTMOAuth2Authentication.h"
@@ -275,6 +277,24 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     }
     return nil;
 }
+
+- (NSArray *)attendeesToDisplayTest {
+    
+    
+    NSDictionary *attendee = @{@"name": @"Wesley Leung",
+                            @"jobTitle": @"CS Student",
+                            @"imageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",
+                            @"summary": @"I am a cs student",
+                            @"emails": @[@"email 1", @"email2"]};
+    NSMutableArray *attendees = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        [attendees addObject:[BMWLinkedInProfile profileFromJSONDict:attendee]];
+
+    }
+    return attendees;
+}
+
+
 
 -(NSDictionary *)linkedinToDisplayFromEvent {
     //Request to get event attendee linkedin profile object
