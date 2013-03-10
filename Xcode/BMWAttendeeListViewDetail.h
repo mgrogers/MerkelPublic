@@ -7,9 +7,10 @@
 //
 
 #import <BMWAppKit/BMWAppKit.h>
-#import "BMWCalendarEventView.h"
+#import "BMWLinkedInProfile.h"
+#import "BMWLinkedInView.h"
 
-@interface BMWAttendeeListViewDetail : IDView <BMWCalendarEventViewDelegate, IDViewDelegate>
+@interface BMWAttendeeListViewDetail : IDView <BMWLinkedInViewDelegate, IDViewDelegate>
 
 @property (nonatomic, strong) NSArray *attendees;
 

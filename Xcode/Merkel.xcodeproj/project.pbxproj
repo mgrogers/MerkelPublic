@@ -19,6 +19,7 @@
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
 		2B8FB3E716ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3E616ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m */; };
 		2B8FB3EA16ED2DFC00AC5A95 /* BMWEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3E916ED2DFC00AC5A95 /* BMWEmailView.m */; };
+		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
 		2BCD052616E342F200FEE799 /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCD052516E342F200FEE799 /* BMWLinkedInView.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
@@ -104,6 +105,8 @@
 		2B8FB3E616ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeListViewDetail.m; sourceTree = "<group>"; };
 		2B8FB3E816ED2DFC00AC5A95 /* BMWEmailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWEmailView.h; sourceTree = "<group>"; };
 		2B8FB3E916ED2DFC00AC5A95 /* BMWEmailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWEmailView.m; sourceTree = "<group>"; };
+		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
+		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
 		2BCD052416E342F100FEE799 /* BMWLinkedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInView.h; sourceTree = "<group>"; };
 		2BCD052516E342F200FEE799 /* BMWLinkedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInView.m; sourceTree = "<group>"; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +307,8 @@
 				4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */,
 				4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */,
 				4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */,
+				2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */,
+				2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */,
 				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 			);
@@ -554,6 +559,7 @@
 				2BCD052616E342F200FEE799 /* BMWLinkedInView.m in Sources */,
 				2B8FB3E716ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m in Sources */,
 				2B8FB3EA16ED2DFC00AC5A95 /* BMWEmailView.m in Sources */,
+				2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
