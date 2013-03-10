@@ -22,14 +22,6 @@
 @implementation BMWCalendarEventView
 
 - (void)viewWillLoad:(IDView *)view {
-//    self.titleLabel = [IDLabel label];
-//    self.titleLabel.selectable = NO;
-//    self.titleLabel.position = CGPointMake(0, 8);
-//    self.startRow = 2;
-//    self.descriptionLabel = [IDLabel label];
-//    self.startLabel = [IDLabel label];
-//    self.endLabel = [IDLabel label];
-//    self.widgets = @[self.titleLabel, self.descriptionLabel, self.startLabel, self.endLabel];
     self.toolbarWidgets = [self createToolbarButtons];
     [self createAllViews];
     self.widgets = self.allWidgets;
@@ -39,14 +31,7 @@
 //    self.event = [self.eventDelegate eventForEventView:self];
     self.event = [BMWGCalendarEvent testEvent];
     if (self.event) {
-        self.title = self.event.title;
-        self.titleLabel.text = self.event.title;
-        self.descriptionLabel.text = self.event.eventDescription;
-//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//        [formatter setDateStyle:NSDateFormatterMediumStyle];
-//        [formatter setTimeStyle:NSDateFormatterMediumStyle];
-//        self.startLabel.text = [formatter stringFromDate:self.event.startDate];
-//        self.endLabel.text = [formatter stringFromDate:self.event.endDate];
+        [self updateDisplayForEvent:self.event];
     }
 }
 
@@ -104,14 +89,18 @@
 - (NSArray *)createDetailViews {
     self.titleLabel = [IDLabel label];
     self.titleLabel.selectable = NO;
-//    self.titleLabel.position = CGPointMake(0, 8);
     self.titleLabel.isInfoLabel = YES;
     self.titleLabel.visible = NO;
     self.descriptionLabel = [IDLabel label];
     self.descriptionLabel.selectable = NO;
-//    self.descriptionLabel.position = CGPointMake(0, 20);
     self.descriptionLabel.visible = NO;
-    self.detailViews = @[self.titleLabel, self.descriptionLabel];
+    self.startLabel = [IDLabel label];
+    self.startLabel.selectable = NO;
+    self.startLabel.visible = NO;
+    self.endLabel = [IDLabel label];
+    self.endLabel.selectable = NO;
+    self.endLabel.visible = NO;
+    self.detailViews = @[self.titleLabel, self.descriptionLabel, self.startLabel, self.endLabel];
     [self.allWidgets addObjectsFromArray:self.detailViews];
     return self.detailViews;
 }
@@ -151,6 +140,17 @@
     for (IDWidget *widget in curView) {
         widget.visible = YES;
     }
+}
+
+- (void)updateDisplayForEvent:(BMWGCalendarEvent *)event {
+    self.title = event.title;
+    self.titleLabel.text = event.title;
+    self.descriptionLabel.text = event.eventDescription;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
+    self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
 }
 
 @end
