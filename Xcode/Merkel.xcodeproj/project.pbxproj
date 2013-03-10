@@ -17,6 +17,9 @@
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
+		2B8FB3E416ED2DB100AC5A95 /* BMWAttendeeListViewSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3E316ED2DB100AC5A95 /* BMWAttendeeListViewSummary.m */; };
+		2B8FB3E716ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3E616ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m */; };
+		2B8FB3EA16ED2DFC00AC5A95 /* BMWEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3E916ED2DFC00AC5A95 /* BMWEmailView.m */; };
 		2BCD052616E342F200FEE799 /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCD052516E342F200FEE799 /* BMWLinkedInView.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
@@ -98,6 +101,12 @@
 		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
 		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		2B8FB3E216ED2DB100AC5A95 /* BMWAttendeeListViewSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeListViewSummary.h; sourceTree = "<group>"; };
+		2B8FB3E316ED2DB100AC5A95 /* BMWAttendeeListViewSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeListViewSummary.m; sourceTree = "<group>"; };
+		2B8FB3E516ED2DD500AC5A95 /* BMWAttendeeListViewDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeListViewDetail.h; sourceTree = "<group>"; };
+		2B8FB3E616ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeListViewDetail.m; sourceTree = "<group>"; };
+		2B8FB3E816ED2DFC00AC5A95 /* BMWEmailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWEmailView.h; sourceTree = "<group>"; };
+		2B8FB3E916ED2DFC00AC5A95 /* BMWEmailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWEmailView.m; sourceTree = "<group>"; };
 		2BCD052416E342F100FEE799 /* BMWLinkedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInView.h; sourceTree = "<group>"; };
 		2BCD052516E342F200FEE799 /* BMWLinkedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInView.m; sourceTree = "<group>"; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +223,21 @@
 			);
 			name = "Google Apps";
 			path = Merkel;
+			sourceTree = "<group>";
+		};
+		2B8FB3E116ED2D9000AC5A95 /* AttendeeSection */ = {
+			isa = PBXGroup;
+			children = (
+				2BCD052416E342F100FEE799 /* BMWLinkedInView.h */,
+				2BCD052516E342F200FEE799 /* BMWLinkedInView.m */,
+				2B8FB3E216ED2DB100AC5A95 /* BMWAttendeeListViewSummary.h */,
+				2B8FB3E316ED2DB100AC5A95 /* BMWAttendeeListViewSummary.m */,
+				2B8FB3E516ED2DD500AC5A95 /* BMWAttendeeListViewDetail.h */,
+				2B8FB3E616ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m */,
+				2B8FB3E816ED2DFC00AC5A95 /* BMWEmailView.h */,
+				2B8FB3E916ED2DFC00AC5A95 /* BMWEmailView.m */,
+			);
+			name = AttendeeSection;
 			sourceTree = "<group>";
 		};
 		4B77FDFA16C6F2AF00426018 = {
@@ -355,8 +379,7 @@
 				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
 				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
 				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
-				2BCD052416E342F100FEE799 /* BMWLinkedInView.h */,
-				2BCD052516E342F200FEE799 /* BMWLinkedInView.m */,
+				2B8FB3E116ED2D9000AC5A95 /* AttendeeSection */,
 				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
 				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
 				4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */,
@@ -534,6 +557,9 @@
 				4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */,
 				4B80DF4416E3018B00676BC9 /* BMWCalendarEventView.m in Sources */,
 				2BCD052616E342F200FEE799 /* BMWLinkedInView.m in Sources */,
+				2B8FB3E416ED2DB100AC5A95 /* BMWAttendeeListViewSummary.m in Sources */,
+				2B8FB3E716ED2DD500AC5A95 /* BMWAttendeeListViewDetail.m in Sources */,
+				2B8FB3EA16ED2DFC00AC5A95 /* BMWEmailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
