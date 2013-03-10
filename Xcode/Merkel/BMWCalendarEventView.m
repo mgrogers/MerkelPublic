@@ -8,6 +8,7 @@
 
 #import "BMWCalendarEventView.h"
 
+#import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
 #import "BMWViewProvider.h"
 
@@ -16,6 +17,7 @@
 @property (nonatomic, strong) IDLabel *titleLabel, *descriptionLabel, *startLabel, *endLabel;
 @property (nonatomic, strong) NSArray *allViews, *detailViews, *placeViews, *peopleViews;
 @property (nonatomic, strong) NSMutableArray *allWidgets;
+@property (nonatomic, strong) NSArray *attendees;
 
 @end
 
@@ -30,6 +32,7 @@
 - (void)viewDidBecomeFocused:(IDView *)view {
 //    self.event = [self.eventDelegate eventForEventView:self];
     self.event = [BMWGCalendarEvent testEvent];
+    self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
     if (self.event) {
         [self updateDisplayForEvent:self.event];
     }
@@ -112,7 +115,29 @@
 }
 
 - (NSArray *)createPeopleViews {
-    self.peopleViews = @[];
+    const NSInteger kAttendeesToDisplay = 3;
+    NSMutableArray *tempViews = [NSMutableArray array];
+    for (int i = 0; i < kAttendeesToDisplay; i++) {
+        IDLabel *nameLabel = [IDLabel label];
+        nameLabel.isInfoLabel = YES;
+        nameLabel.selectable = NO;
+        nameLabel.visible = NO;
+        nameLabel.text = @"Test";
+        IDLabel *titleLabel = [IDLabel label];
+        titleLabel.isInfoLabel = NO;
+        titleLabel.selectable = NO;
+        titleLabel.visible = NO;
+        titleLabel.text = @"Bitch";
+        [tempViews addObject:nameLabel];
+        [tempViews addObject:titleLabel];
+    }
+    IDLabel *moreLabel = [IDLabel label];
+    moreLabel.selectable = NO;
+    moreLabel.visible = NO;
+    moreLabel.isInfoLabel = YES;
+    moreLabel.text = @"Click for more details";
+    [tempViews addObject:moreLabel];
+    self.peopleViews = [NSArray arrayWithArray:tempViews];
     [self.allWidgets addObjectsFromArray:self.peopleViews];
     return self.peopleViews;
 }

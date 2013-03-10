@@ -24,7 +24,7 @@
 
 - (void)viewWillLoad:(IDView *)view {
     BMWViewProvider *provider = self.application.hmiProvider;
-    provider.linkedinView.linkedInDelegate = self;
+//    provider.linkedinView.linkedInDelegate = self;
     
     self.title = @"Event Attendees";
     NSMutableArray *attendeeButtons = [NSMutableArray array];
