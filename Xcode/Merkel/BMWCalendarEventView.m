@@ -10,6 +10,7 @@
 
 #import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
+#import "BMWLinkedInProfile.h"
 #import "BMWViewProvider.h"
 
 @interface BMWCalendarEventView ()
@@ -22,6 +23,8 @@
 @end
 
 @implementation BMWCalendarEventView
+
+static const NSInteger kAttendeesToDisplay = 3;
 
 - (void)viewWillLoad:(IDView *)view {
     self.toolbarWidgets = [self createToolbarButtons];
@@ -115,19 +118,16 @@
 }
 
 - (NSArray *)createPeopleViews {
-    const NSInteger kAttendeesToDisplay = 3;
     NSMutableArray *tempViews = [NSMutableArray array];
     for (int i = 0; i < kAttendeesToDisplay; i++) {
         IDLabel *nameLabel = [IDLabel label];
         nameLabel.isInfoLabel = YES;
         nameLabel.selectable = NO;
         nameLabel.visible = NO;
-        nameLabel.text = @"Test";
         IDLabel *titleLabel = [IDLabel label];
         titleLabel.isInfoLabel = NO;
         titleLabel.selectable = NO;
         titleLabel.visible = NO;
-        titleLabel.text = @"Bitch";
         [tempViews addObject:nameLabel];
         [tempViews addObject:titleLabel];
     }
@@ -176,6 +176,17 @@
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
     self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
+    [self updateDisplayForAttendees:self.attendees];
+}
+
+- (void)updateDisplayForAttendees:(NSArray *)attendees {
+    for (int i = 0; i < kAttendeesToDisplay; i++) {
+        BMWLinkedInProfile *profile = [attendees objectAtIndex:i];
+        IDLabel *nameLabel = [self.peopleViews objectAtIndex:i*2];
+        IDLabel *titleLabel = [self.peopleViews objectAtIndex:i*2 + 1];
+        nameLabel.text = profile.name;
+        titleLabel.text = profile.jobTitle;
+    }
 }
 
 @end
