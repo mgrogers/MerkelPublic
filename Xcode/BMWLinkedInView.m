@@ -34,7 +34,7 @@
         dispatch_queue_t imageFetchQ = dispatch_queue_create("image fetcher", NULL);
         dispatch_async(imageFetchQ, ^{
             NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
-            self.photo.imageData = [self.application.imageBundle imageWithData:imageData];
+//            self.photo.imageData = [self.application.imageBundle imageWithData:imageData];
             self.photo.position = CGPointMake(0, 0);
         });
     }
