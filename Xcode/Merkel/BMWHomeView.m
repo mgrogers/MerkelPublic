@@ -15,8 +15,10 @@
 
 - (void)viewWillLoad:(IDView *)view {
     BMWViewProvider *provider = self.application.hmiProvider;
-    
     self.title = @"Merkel";
+    IDButton *nextButton = [IDButton button];
+    nextButton.text = @"Next Event";
+    [nextButton setTargetView:provider.calendarEventView];
     IDButton *todayButton = [IDButton button];
     todayButton.text = @"Today's Events";
     provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
@@ -29,7 +31,7 @@
     linkedinButton.text = @"LinkedIn Profile";
     provider.linkedinView.linkedInProfile = [[BMWGCalendarDataSource sharedDataSource] linkedinToDisplayFromEvent];
     [linkedinButton setTargetView:provider.linkedinView];
-    self.widgets = @[todayButton, linkedinButton];
+    self.widgets = @[nextButton, todayButton, linkedinButton];
 
 }
 
