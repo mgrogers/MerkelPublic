@@ -17,7 +17,7 @@
 
 @end
 
-@interface BMWCalendarEventView : IDTableLayoutView
+@interface BMWCalendarEventView : IDToolbarView
 
 @property (nonatomic, weak) id <BMWCalendarEventViewDelegate> eventDelegate;
 

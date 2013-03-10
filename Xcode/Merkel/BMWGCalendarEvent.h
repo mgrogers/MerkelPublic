@@ -16,5 +16,6 @@
 
 + (instancetype)eventFromJSONDict:(NSDictionary *)dict;
 + (NSArray *)eventsFromJSONDict:(NSDictionary *)dict;
++ (instancetype)testEvent;
 
 @end

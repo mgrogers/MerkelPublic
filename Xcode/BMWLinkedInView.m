@@ -25,7 +25,6 @@
 
 
 - (void)viewWillLoad:(IDView *)view {
-
         
     self.photo = [IDImage image];
     IDLabel *jobTitleLabel = [IDLabel label];
@@ -42,6 +41,7 @@
     self.widgets = [NSArray arrayWithObjects:
                     self.photo, jobTitleLabel, summaryLabel,
                     nil];
+
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
