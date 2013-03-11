@@ -30,13 +30,19 @@ static const CGFloat kImageWidth = 200.0;
 
 - (void)viewWillLoad:(IDView *)view {
     self.photo = [IDImage image];
-    self.photo.position = CGPointMake(0, 0);
+    self.photo.position = CGPointMake(5, 5);
     self.nameLabel = [IDLabel label];
-    self.jobTitleLabel = [IDLabel label];
-    self.summaryLabel = [IDLabel label];
     self.nameLabel.selectable = NO;
+    self.jobTitleLabel = [IDLabel label];
     self.jobTitleLabel.selectable = NO;
+    self.summaryLabel = [IDLabel label];
     self.summaryLabel.selectable = NO;
+    
+    self.nameLabel.position = CGPointMake(230, 5);
+    self.jobTitleLabel.position = CGPointMake(230, 45);
+    self.summaryLabel.position = CGPointMake(230, 85);
+  
+    
     self.widgets = @[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel];
     self.startRow = 4;
 }
