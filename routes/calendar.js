@@ -8,23 +8,13 @@ var GoogleCalendar = require('google-calendar');
 // Constants
 var CALENDARS_TO_SKIP = ['en.usa#holiday@group.v.calendar.google.com'];
 var GOOGLE_CONSUMER_KEY = "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com";
+var GOOGLE_CONSUMER_SECRET = "rLkby14J_c-YkVA96KCqeajC";
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var MILLISEC_IN_DAY = 86400000;
 var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg";
 
 // Initializing variables
-var appUrl;
-if(process.env && process.env.URL) {
-  appUrl = process.env.URL;
-} else {
-  appUrl = 'http://localhost:3000'
-}
-
-var google_calendar = new GoogleCalendar.GoogleCalendar(
-  "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
-  "rLkby14J_c-YkVA96KCqeajC",
-  appUrl + '/authentication');
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
 
@@ -59,6 +49,9 @@ exports.eventsMonth = function(req, res) {
 
 /* Testing function, authenticates with Google, stores auth token in express session */
 exports.authentication = function(req, res) {
+  var appUrl = req.protocol + "://" + req.get('host');
+  var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+
   if(!req.query.code){
 
     //Redirect the user to Authentication From
@@ -84,6 +77,8 @@ exports.authentication = function(req, res) {
 /* ----------- HELPER FUNCTIONS -----------*/
 /* Get calendar events based on time constraints of 'type' - day, week, or month */
 function getCalendarEvents(req, res, type) {
+  var appUrl = req.protocol + "://" + req.get('host');
+  var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
   var calendars = [];
   var waiting = 0;
 
