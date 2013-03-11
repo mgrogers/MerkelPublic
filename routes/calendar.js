@@ -15,11 +15,15 @@ var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5
 
 // Initializing variables
 var appUrl;
+/*
 if(ENV && ENV['URL']) {
   appUrl = ENV['URL'];
 } else {
   appUrl = 'http://localhost:3000'
-}
+}*/
+
+appUrl = 'http://localhost:3000'
+
 var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
   "rLkby14J_c-YkVA96KCqeajC",
