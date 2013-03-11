@@ -14,10 +14,16 @@ var MILLISEC_IN_DAY = 86400000;
 var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg";
 
 // Initializing variables
+var appUrl;
+if(ENV && ENV['URL']) {
+  appUrl = ENV['URL'];
+} else {
+  appUrl = 'http://localhost:3000'
+}
 var google_calendar = new GoogleCalendar.GoogleCalendar(
   "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.googleusercontent.com",
   "rLkby14J_c-YkVA96KCqeajC",
-  'http://localhost:3000/authentication');
+  appUrl + '/authentication');
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
 
@@ -152,13 +158,8 @@ function getCalendarEvents(req, res, type) {
             // Populate relevant fields for events
             events.items.forEach(function(event) {
 
+              // Generate clean JSON calendar object
               if(event.id && event.summary) {
-              /*
-              if(tempCalendar.name == "LFE") {
-                console.log("This is the event: " + event.summary + " this is eventStartDate: " + eventStartDate.getTime() + " this is eventEndDate: " +  eventEndDate.getTime() + " this is requestedDate: " + requestedDate.getTime());
-              } */
-
-                // Generate clean JSON calendar object
                 var calEvent = {};
                 calEvent.id = event.id;
                 calEvent.name = event.summary;
@@ -175,7 +176,6 @@ function getCalendarEvents(req, res, type) {
                 tempCalendar.events.push(calEvent);
               }
             });
-            // console.log("Adding calendar: " + tempCalendar.name);
 
             calendars.push(tempCalendar);
 
