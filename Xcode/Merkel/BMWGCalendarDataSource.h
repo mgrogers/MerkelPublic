@@ -35,4 +35,5 @@ typedef void (^BMWGCalendarEventRequestCompletion)(NSArray *events, NSError *err
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion;
 - (NSDictionary *)linkedinToDisplayFromEvent;
 - (NSArray *)attendeesToDisplayTest;
+
 @end
