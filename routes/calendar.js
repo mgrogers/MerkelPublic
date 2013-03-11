@@ -125,6 +125,7 @@ function getCalendarEvents(req, res, type) {
         var option = {};
         option.access_token = access_token;
         option.key = GOOGLE_CONSUMER_KEY;
+        option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
         // Set end time to search based on type of request - day, week, month
