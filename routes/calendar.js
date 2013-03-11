@@ -102,7 +102,6 @@ function getCalendarEvents(req, res, type) {
       // Need to convert date manually since new Date() internationalizes
       var requestedDateArray = req.params.date.split('-');
       requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
-      console.log("requested date: " + req.params.date + " converted date: " + requestedDate);
     } else {
       var today = new Date();
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -114,10 +113,8 @@ function getCalendarEvents(req, res, type) {
       if(err) return res.send(500,err);
 
       calendarCount = data.items.length;
-      //console.log("Calendar count: " + calendarCount);
 
       data.items.forEach(function(calendar) {
-        //console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
 
         // Skip unnecessary calendars
         if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
@@ -146,7 +143,6 @@ function getCalendarEvents(req, res, type) {
           }
           // No matching items in this calendar
           if(!events.items) {
-            //console.log("Not adding calendar: " + calendar.summary + " to response due to no matching items.");
             return returnResponse();
           }
 
@@ -176,7 +172,6 @@ function getCalendarEvents(req, res, type) {
             }
           });
 
-          //console.log("Adding calendar: " + tempCalendar.name + " to response.");
           calendars.push(tempCalendar);
 
           // Return JSON object after all calendars are accessed
@@ -188,12 +183,10 @@ function getCalendarEvents(req, res, type) {
 
   function returnResponse() {
     if(calendarCount != 0) {
-      //console.log("Decrementing calendarCount from: " + calendarCount + " to: " + (calendarCount-1));
       calendarCount--;
     }
 
     if(calendarCount == 0) {
-      //console.log("These are final calendars: " + calendars);
       return res.send(calendars);
     } else {
       return;
