@@ -23,6 +23,7 @@
 @property (nonatomic, retain) BMWCalendarListView *calendarListView;
 @property (nonatomic, strong) BMWCalendarEventView *calendarEventView;
 @property (nonatomic, retain) BMWHomeView *homeView;
-@property (nonatomic, retain) BMWLinkedInView *linkedinView;
+@property (nonatomic, retain) BMWAttendeeListViewDetail *attendeeListView;
+@property (nonatomic, retain) BMWLinkedInView *profileView;
 
 @end

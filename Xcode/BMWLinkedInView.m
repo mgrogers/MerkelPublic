@@ -27,8 +27,11 @@
 - (void)viewWillLoad:(IDView *)view {
         
     self.photo = [IDImage image];
-    IDLabel *jobTitleLabel = [IDLabel label];
-    IDLabel *summaryLabel = [IDLabel label];
+    self.jobTitleLabel = [IDLabel label];
+    self.summaryLabel = [IDLabel label];
+    self.jobTitleLabel.selectable = NO;
+    self.summaryLabel.selectable = NO;
+    
 
 //    if(imageURL) {
 //        dispatch_queue_t imageFetchQ = dispatch_queue_create("image fetcher", NULL);
@@ -39,7 +42,7 @@
 //        });
 //    }
     self.widgets = [NSArray arrayWithObjects:
-                    self.photo, jobTitleLabel, summaryLabel,
+                    self.photo, self.jobTitleLabel, self.summaryLabel,
                     nil];
 
 }
@@ -47,7 +50,7 @@
 - (void)viewDidBecomeFocused:(IDView *)view {
 //    
 //    self.profile = [self.linkedInDelegate attendeeforAttendeeView:self];
-    
+
 //    self.profile = [self profil]
 //    
 //    

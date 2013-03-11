@@ -30,10 +30,11 @@
         self.calendarListView = [BMWCalendarListView view];
         self.calendarEventView = [BMWCalendarEventView view];
         self.homeView = [BMWHomeView view];
-        self.linkedinView = [BMWAttendeeListViewDetail view];
+        self.attendeeListView = [BMWAttendeeListViewDetail view];
+        self.profileView = [BMWLinkedInView view];
     
         
-        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, _linkedinView, nil];
+        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, _attendeeListView, _profileView, nil];
 
         
         self.mainView = _homeView;

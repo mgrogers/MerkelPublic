@@ -40,6 +40,8 @@
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
+    
+    
     NSInteger index = 0;
     for (BMWGCalendarEvent *event in self.events) {
         IDButton *button = [self.widgets objectAtIndex:index];
