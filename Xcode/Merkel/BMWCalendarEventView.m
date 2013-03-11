@@ -33,15 +33,22 @@ static const NSInteger kAttendeesToDisplay = 3;
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-//    self.event = [self.eventDelegate eventForEventView:self];
+    BMWViewProvider *provider = self.application.hmiProvider;
     self.event = [BMWGCalendarEvent testEvent];
     self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
+    provider.attendeeListView.attendees = self.attendees;
     if (self.event) {
         [self updateDisplayForEvent:self.event];
     }
 }
 
+- (void)viewDidLoseFocus:(IDView *)view {
+    BMWViewProvider *provider = self.application.hmiProvider;
+    provider.attendeeListView.attendees = nil;
+}
+
 - (NSArray *)createToolbarButtons {
+    BMWViewProvider *provider = self.application.hmiProvider;
     const NSInteger kNumToolbarButtons = 3;
     NSMutableArray *buttons = [NSMutableArray array];
     for (int i = 0; i < kNumToolbarButtons; i++) {
@@ -55,6 +62,7 @@ static const NSInteger kAttendeesToDisplay = 3;
         [toolbarButton setTarget:self selector:@selector(toolbarButtonFocused:) forActionEvent:IDActionEventFocus];
         [buttons addObject:toolbarButton];
     }
+    [buttons[2] setTargetView:provider.attendeeListView];
     return buttons;
 }
 

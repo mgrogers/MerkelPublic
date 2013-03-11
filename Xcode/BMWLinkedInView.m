@@ -42,8 +42,7 @@
 //            self.photo.position = CGPointMake(0, 0);
 //        });
 //    }
-    self.widgets = [NSArray arrayWithObjects:
-                    self.photo, self.jobTitleLabel, self.summaryLabel,
+    self.widgets = [NSArray arrayWithObjects:self.jobTitleLabel, self.summaryLabel,
                     nil];
 
 }
