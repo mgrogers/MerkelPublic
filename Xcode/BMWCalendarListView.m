@@ -19,10 +19,6 @@
 
 @implementation BMWCalendarListView
 
-+ (IDView *)view {
-    return [super view];
-}
-
 - (void)viewWillLoad:(IDView *)view {
     BMWViewProvider *provider = self.application.hmiProvider;
     self.title = @"Today's Events";
@@ -39,7 +35,6 @@
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-    
     
     NSInteger index = 0;
     for (BMWGCalendarEvent *event in self.events) {
@@ -62,10 +57,4 @@
     provider.calendarEventView.event = self.events[_selectedIndex];
 }
 
-#pragma mark - BMWCalendarEventViewDelegate
-
-- (BMWGCalendarEvent *)eventForEventView:(BMWCalendarEventView *)eventView {
-    return self.events[self.selectedIndex];
-}
 @end
-
