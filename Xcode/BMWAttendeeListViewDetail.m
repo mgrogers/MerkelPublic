@@ -1,45 +1,47 @@
 //
-//  BMWCalendarListView.m
+//  BMWAttendeeListViewDetail.m
 //  Merkel
 //
-//  Created by Tim Shi on 3/2/13.
+//  Created by Wesley Leung on 3/10/13.
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "BMWCalendarListView.h"
-
-#import "BMWGCalendarEvent.h"
+#import "BMWAttendeeListViewDetail.h"
+#import "BMWLinkedInProfile.h"
 #import "BMWViewProvider.h"
+#import "BMWGCalendarDataSource.h"
 
-@interface BMWCalendarListView ()
+@interface BMWAttendeeListViewDetail ()
 
 @property NSInteger selectedIndex;
 
 @end
 
-@implementation BMWCalendarListView
+@implementation BMWAttendeeListViewDetail
 
 - (void)viewWillLoad:(IDView *)view {
     BMWViewProvider *provider = self.application.hmiProvider;
-    self.title = @"Today's Events";
-    NSMutableArray *eventButtons = [NSMutableArray array];
-    const NSInteger kButtonLimit = 50;
+    self.title = @"Event Attendees";
+    NSMutableArray *attendeeButtons = [NSMutableArray array];
+    const NSInteger kButtonLimit = 10;
     for (int i = 0; i < kButtonLimit; i++) {
         IDButton *button = [IDButton button];
         [button setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
-        [button setTargetView:provider.calendarEventView];
+        [button setTargetView:provider.profileView];
         button.visible = NO;
-        [eventButtons addObject:button];
+        [attendeeButtons addObject:button];
     }
-    self.widgets = eventButtons;
+    self.widgets = attendeeButtons;
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-    
+    if (!self.attendees) {
+        self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
+    }
     NSInteger index = 0;
-    for (BMWGCalendarEvent *event in self.events) {
+    for (BMWLinkedInProfile *profile in self.attendees) {
         IDButton *button = [self.widgets objectAtIndex:index];
-        button.text = event.title;
+        button.text = profile.name;
         button.visible = YES;
         index++;
     }
@@ -54,7 +56,8 @@
 - (void)buttonFocused:(IDButton *)button {
     _selectedIndex = [self.widgets indexOfObject:button];
     BMWViewProvider *provider = self.application.hmiProvider;
-    provider.calendarEventView.event = self.events[_selectedIndex];
+    provider.profileView.profile = self.attendees[_selectedIndex];
+    
 }
 
 @end
