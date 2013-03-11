@@ -232,7 +232,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     NSDictionary *event = @{@"name": @"Test Event",
                             @"description": @"This is the greatest event",
                             @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
-                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
+                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"},
+                            @"attendees":[self attendeesToDisplayTest ]
+                            };
     NSMutableArray *events = [NSMutableArray array];
     for (int i = 0; i < 20; i++) {
         [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
@@ -241,6 +243,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion {
+
 //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 //        NSError *error;
 //        NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
@@ -252,7 +255,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 //        });
 //    });
 //    return [self.dataCache objectForKey:@"events/day"];
+
     return [self eventsToDisplayTest];
+
 }
 
 - (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache {
@@ -302,13 +307,5 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return attendees;
 }
 
-
-
--(NSDictionary *)linkedinToDisplayFromEvent {
-    //Request to get event attendee linkedin profile object
-
-    NSDictionary *response = @{@"profileURL":@"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",@"name":@"Wesley"};
-    return response;
-}
 
 @end
