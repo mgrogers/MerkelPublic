@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Define API URLS and destinations here.
 app.get('/', routes.index);
-app.get('/calendar', calendar.list);
 app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
