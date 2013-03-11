@@ -33,7 +33,6 @@ static const NSInteger kAttendeesToDisplay = 3;
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-//    self.event = [self.eventDelegate eventForEventView:self];
     self.event = [BMWGCalendarEvent testEvent];
     self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
     if (self.event) {
