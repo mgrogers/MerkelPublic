@@ -11,6 +11,7 @@ var GOOGLE_CONSUMER_KEY = "992955494422-u92pvkijf7ll2vmd7qjf2hali813q7pv.apps.go
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var MILLISEC_IN_DAY = 86400000;
+var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg";
 
 // Initializing variables
 var google_calendar = new GoogleCalendar.GoogleCalendar(
@@ -30,8 +31,14 @@ exports.eventsDay = function(req, res) {
   var waiting = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
-    //var access_token = response.google_access_token;
-    var access_token = 'ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg';
+    var access_token;
+    if(response.google_access_token) {
+      access_token = response.google_access_token;
+    } else if() {
+      access_token = "";
+    } else {
+      access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
+    }
 
     // Default to beginning of current date if none provided
     var requestedDate = "";
