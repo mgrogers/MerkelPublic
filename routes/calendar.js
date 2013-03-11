@@ -19,31 +19,6 @@ var google_calendar = new GoogleCalendar.GoogleCalendar(
   'http://localhost:3000/authentication');
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
-/* Testing authentication data */
-exports.authentication = function(req, res) {
-  if(!req.query.code){
-
-    //Redirect the user to Authentication From
-    google_calendar.getGoogleAuthorizeTokenURL(function(err, redirecUrl) {
-      if(err) return res.send(500,err);
-      return res.redirect(redirecUrl);
-    });
-  } else{
-    //Get access_token from the code
-    google_calendar.getGoogleAccessToken(req.query, function(err, access_token, refresh_token) {
-
-      if(err) return res.send(500,err);
-
-      //req.session.access_token = access_token;
-
-      // Grab auth token in log
-      console.log("This is my auth token: " + access_token);
-
-      //req.session.refresh_token = refresh_token;
-      return res.redirect('/calendar');
-    });
-  }
-};
 
 /*
  API Call: /api/events/:userId/day/:date - Grabs [userId]'s events on [date]
@@ -105,55 +80,30 @@ exports.eventsDay = function(req, res) {
 
             // Populate relevant fields for events
             events.items.forEach(function(event) {
-              //var eventStartDate;
-              //var eventEndDate;
 
               if(event.id && event.summary) {
-                /*
-                if(event.start.dateTime) {
-                  eventStartDate = new Date(event.start.dateTime);
-                  console.log(event.start.dateTime);
-                } else {
-                  eventStartDate = new Date(event.start.date);
-                }
 
-                if(event.end.dateTime) {
-                  eventEndDate = new Date(event.end.dateTime);
-                } else {
-                  eventEndDate = new Date(event.end.date);
-                } */
+              /*
+              if(tempCalendar.name == "LFE") {
+                console.log("This is the event: " + event.summary + " this is eventStartDate: " + eventStartDate.getTime() + " this is eventEndDate: " +  eventEndDate.getTime() + " this is requestedDate: " + requestedDate.getTime());
+              } */
 
-                /*
-                if(tempCalendar.name == "LFE") {
-                  console.log("This is the event: " + event.summary + " this is eventStartDate: " + eventStartDate.getTime() + " this is eventEndDate: " +  eventEndDate.getTime() + " this is requestedDate: " + requestedDate.getTime());
-                } */
+                // Generate clean JSON calendar object
+                var calEvent = {};
+                calEvent.id = event.id;
+                calEvent.name = event.summary;
+                if(event.description) calEvent.description = event.description;
+                if(event.location) calEvent.location = event.location;
+                if(event.start) calEvent.start = event.start;
+                if(event.end) calEvent.end = event.end;
+                if(event.creator) calEvent.creator = event.creator;
+                if(event.attendees) calEvent.attendees = event.attendees;
+                if(event.created) calEvent.created = event.created;
+                if(event.updated) calEvent.updated = event.updated;
 
-                // Only consider events happening on req.params.date
-                /*
-                if((eventStartDate.getTime() <= requestedDate.getTime() &&
-                   requestedDate.getTime() <= eventEndDate.getTime()) // event occurs through start of day 0:00
-                || (eventStartDate.getTime() >= requestedDate.getTime() &&
-                    eventEndDate.getTime() <= requestedDate.getTime() + MILLISEC_IN_DAY) // event occurs between 0:00 and 24:00
-                || (eventStartDate.getTime() <= requestedDate.getTime() + MILLISEC_IN_DAY &&
-                    eventEndDate.getTime() >= requestedDate.getTime() + MILLISEC_IN_DAY)) { // event occurs through end of day 24:00 */
-
-                  // Generate clean JSON calendar object
-                  var calEvent = {};
-                  calEvent.id = event.id;
-                  calEvent.name = event.summary;
-                  if(event.description) calEvent.description = event.description;
-                  if(event.location) calEvent.location = event.location;
-                  if(event.start) calEvent.start = event.start;
-                  if(event.end) calEvent.end = event.end;
-                  if(event.creator) calEvent.creator = event.creator;
-                  if(event.attendees) calEvent.attendees = event.attendees;
-                  if(event.created) calEvent.created = event.created;
-                  if(event.updated) calEvent.updated = event.updated;
-
-                  // Add event to calendar object
-                  tempCalendar.events.push(calEvent);
-                }
-              //}
+                // Add event to calendar object
+                tempCalendar.events.push(calEvent);
+              }
             });
             console.log("Adding calendar: " + tempCalendar.name);
 
@@ -171,7 +121,6 @@ exports.eventsDay = function(req, res) {
   function returnResponse() {
     if(waiting != 0) {
       waiting--;
-      //console.log("Decrementing waiting: " + waiting);
       return;
     }
 
