@@ -12,9 +12,7 @@
 
 @implementation BMWLinkedInProfile
 
-- (BMWLinkedInProfile*)testProfile {
-    
-}
+
 + (instancetype)profileFromJSONDict:(NSDictionary *)dict {
     BMWLinkedInProfile *profile = [[self alloc] init];
     profile.JSON = dict;
@@ -22,6 +20,7 @@
     profile.jobTitle = dict[@"jobTitle"];
     profile.summary = dict[@"summary"];
     profile.emails = dict[@"emails"];
+    profile.profileImageURL = [NSURL URLWithString:dict[@"profileImageURl"]];
     return profile;
 }
 

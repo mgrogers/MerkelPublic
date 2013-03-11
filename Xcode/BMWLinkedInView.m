@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) IDImage *photo;
 @property (nonatomic, strong) IDLabel *jobTitleLabel, *summaryLabel;
+@property (nonatomic, strong) NSURL *profileImageURL;
 
 
 @end
@@ -62,14 +63,14 @@
         self.summaryLabel.text = self.profile.summary;
         
         
-//        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+//        id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadWithURL:self.profileImageURL options:optind progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
 //                                             {
-//                                                 __strong UIImageView *sself = wself;
-//                                                 if (!sself) return;
+//////                                                 __strong UIImageView *sself = wself;
+////                                                 if (!sself) return;
 //                                                 if (image)
 //                                                 {
-//                                                     sself.image = image;
-//                                                     [sself setNeedsLayout];
+//                                                     self.photo = image;
+////                                                     [sself setNeedsLayout];
 //                                                 }
 //                                                 if (completedBlock && finished)
 //                                                 {

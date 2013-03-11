@@ -283,7 +283,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     
     NSDictionary *attendee = @{@"name": @"Wesley Leung",
                                @"jobTitle": @"CS Student",
-                               @"imageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",
+                               @"profileImageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",
                                @"summary": @"I am a cs student",
                                @"emails": @[@"email 1", @"email2"]};
     NSMutableArray *attendees = [NSMutableArray array];
