@@ -15,7 +15,7 @@
 @interface BMWLinkedInView()
 
 @property (nonatomic, retain) IDImage *photo;
-@property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel;
+@property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel, *emailHeaderLabel;
 @property (nonatomic, strong) NSArray *emails;
 @property (nonatomic, strong) NSURL *profileImageURL;
 @property NSInteger selectedIndex;
@@ -28,15 +28,13 @@
 
 static const CGFloat kImageHeight = 200.0;
 static const CGFloat kImageWidth = 200.0;
-static const NSInteger kIndexofEmail = 4;
+static const NSInteger kIndexofEmail = 5;
 
 
 - (void)viewWillLoad:(IDView *)view {
     
     BMWViewProvider *provider = self.application.hmiProvider;
-
-    
-    
+        
     self.photo = [IDImage image];
     self.photo.position = CGPointMake(5, 5);
     self.nameLabel = [IDLabel label];
@@ -50,18 +48,22 @@ static const NSInteger kIndexofEmail = 4;
     self.jobTitleLabel.position = CGPointMake(230, 45);
     self.summaryLabel.position = CGPointMake(230, 85);
     
-    NSMutableArray *mutableWidgets = [NSMutableArray array];
+    self.emailHeaderLabel = [IDLabel label];
+    self.emailHeaderLabel.isInfoLabel = YES;
+    self.emailHeaderLabel.selectable = NO;
     
-    const NSInteger kButtonLimit = 5;
+    NSMutableArray *mutableEmailWidgets = [NSMutableArray array];
+    
+    const NSInteger kButtonLimit = 3;
     for (int i = 0; i < kButtonLimit; i++) {
         IDButton *button = [IDButton button];
         [button setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
         [button setTargetView:provider.emailView];
         button.visible = NO;
-        [mutableWidgets addObject:button];
+        [mutableEmailWidgets addObject:button];
     }
     
-    self.widgets = [[@[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel] arrayByAddingObjectsFromArray:mutableWidgets] mutableCopy];
+    self.widgets = [[@[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel, self.emailHeaderLabel] arrayByAddingObjectsFromArray:mutableEmailWidgets] mutableCopy];
     
     self.startRow = 4;
 }
@@ -73,6 +75,7 @@ static const NSInteger kIndexofEmail = 4;
         self.jobTitleLabel.text = self.profile.jobTitle;
         self.summaryLabel.text = self.profile.summary;
         self.profileImageURL = self.profile.profileImageURL;
+        self.emails = self.profile.emails;
         [SDWebImageManager.sharedManager downloadWithURL:self.profileImageURL
                                                  options:optind
                                                 progress:NULL
@@ -81,10 +84,11 @@ static const NSInteger kIndexofEmail = 4;
                                          [self setProfileImageWithImage:image];
                                      }];
         
+        self.emailHeaderLabel.text = @"Recent Emails";
         NSInteger index = kIndexofEmail;
-        for (NSDictionary *email in self.emails) {
+        for (NSDictionary *emails in self.emails) {
             IDButton *button = [self.widgets objectAtIndex:index];
-            button.text = email[@"subject"];
+            button.text = emails[@"subject"];
             button.visible = YES;
             index++;
         }
