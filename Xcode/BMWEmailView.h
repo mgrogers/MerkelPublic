@@ -10,4 +10,5 @@
 
 @interface BMWEmailView : IDView
 
+@property (nonatomic, strong) NSDictionary *email;
 @end
