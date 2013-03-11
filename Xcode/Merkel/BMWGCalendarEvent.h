@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *title, *eventDescription;
 @property (nonatomic, strong) NSDictionary *location, *JSON;
 @property (nonatomic, strong) NSDate *startDate, *endDate;
+@property (nonatomic, strong) NSArray *attendees;
 
 + (instancetype)eventFromJSONDict:(NSDictionary *)dict;
 + (NSArray *)eventsFromJSONDict:(NSDictionary *)dict;
