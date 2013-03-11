@@ -29,10 +29,10 @@
     //Added to test. Link to profile should appear when user view's his next event.
     IDButton *linkedinButton = [IDButton button];
     linkedinButton.text = @"LinkedIn Profile";
-    provider.attendeeListView.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
-    
 
+    provider.attendeeListView.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
     [linkedinButton setTargetView:provider.attendeeListView];
+
     self.widgets = @[nextButton, todayButton, linkedinButton];
 
 }

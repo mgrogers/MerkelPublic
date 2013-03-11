@@ -8,7 +8,9 @@
 
 #import "BMWCalendarEventView.h"
 
+#import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
+#import "BMWLinkedInProfile.h"
 #import "BMWViewProvider.h"
 
 @interface BMWCalendarEventView ()
@@ -16,10 +18,13 @@
 @property (nonatomic, strong) IDLabel *titleLabel, *descriptionLabel, *startLabel, *endLabel;
 @property (nonatomic, strong) NSArray *allViews, *detailViews, *placeViews, *peopleViews;
 @property (nonatomic, strong) NSMutableArray *allWidgets;
+@property (nonatomic, strong) NSArray *attendees;
 
 @end
 
 @implementation BMWCalendarEventView
+
+static const NSInteger kAttendeesToDisplay = 3;
 
 - (void)viewWillLoad:(IDView *)view {
     self.toolbarWidgets = [self createToolbarButtons];
@@ -30,6 +35,7 @@
 - (void)viewDidBecomeFocused:(IDView *)view {
 //    self.event = [self.eventDelegate eventForEventView:self];
     self.event = [BMWGCalendarEvent testEvent];
+    self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
     if (self.event) {
         [self updateDisplayForEvent:self.event];
     }
@@ -112,7 +118,26 @@
 }
 
 - (NSArray *)createPeopleViews {
-    self.peopleViews = @[];
+    NSMutableArray *tempViews = [NSMutableArray array];
+    for (int i = 0; i < kAttendeesToDisplay; i++) {
+        IDLabel *nameLabel = [IDLabel label];
+        nameLabel.isInfoLabel = YES;
+        nameLabel.selectable = NO;
+        nameLabel.visible = NO;
+        IDLabel *titleLabel = [IDLabel label];
+        titleLabel.isInfoLabel = NO;
+        titleLabel.selectable = NO;
+        titleLabel.visible = NO;
+        [tempViews addObject:nameLabel];
+        [tempViews addObject:titleLabel];
+    }
+    IDLabel *moreLabel = [IDLabel label];
+    moreLabel.selectable = NO;
+    moreLabel.visible = NO;
+    moreLabel.isInfoLabel = YES;
+    moreLabel.text = @"Click for more details";
+    [tempViews addObject:moreLabel];
+    self.peopleViews = [NSArray arrayWithArray:tempViews];
     [self.allWidgets addObjectsFromArray:self.peopleViews];
     return self.peopleViews;
 }
@@ -151,6 +176,17 @@
     [formatter setTimeStyle:NSDateFormatterMediumStyle];
     self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
     self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
+    [self updateDisplayForAttendees:self.attendees];
+}
+
+- (void)updateDisplayForAttendees:(NSArray *)attendees {
+    for (int i = 0; i < kAttendeesToDisplay; i++) {
+        BMWLinkedInProfile *profile = [attendees objectAtIndex:i];
+        IDLabel *nameLabel = [self.peopleViews objectAtIndex:i*2];
+        IDLabel *titleLabel = [self.peopleViews objectAtIndex:i*2 + 1];
+        nameLabel.text = profile.name;
+        titleLabel.text = profile.jobTitle;
+    }
 }
 
 @end
