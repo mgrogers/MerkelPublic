@@ -152,13 +152,8 @@ function getCalendarEvents(req, res, type) {
             // Populate relevant fields for events
             events.items.forEach(function(event) {
 
+              // Generate clean JSON calendar object
               if(event.id && event.summary) {
-              /*
-              if(tempCalendar.name == "LFE") {
-                console.log("This is the event: " + event.summary + " this is eventStartDate: " + eventStartDate.getTime() + " this is eventEndDate: " +  eventEndDate.getTime() + " this is requestedDate: " + requestedDate.getTime());
-              } */
-
-                // Generate clean JSON calendar object
                 var calEvent = {};
                 calEvent.id = event.id;
                 calEvent.name = event.summary;
@@ -175,7 +170,6 @@ function getCalendarEvents(req, res, type) {
                 tempCalendar.events.push(calEvent);
               }
             });
-            // console.log("Adding calendar: " + tempCalendar.name);
 
             calendars.push(tempCalendar);
 
