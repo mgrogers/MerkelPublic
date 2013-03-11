@@ -22,7 +22,7 @@ var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 /*
  API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening on [date]
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day IMPORTANT: this time is in UTC time. E.g. if you want 2013-03-10-00 PST, you must put 2013-03-10-08
   */
 exports.eventsDay = function(req, res) {
   return getCalendarEvents(req, res, "day");
@@ -31,7 +31,7 @@ exports.eventsDay = function(req, res) {
 /*
  API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +7 days
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day IMPORTANT: this time is in UTC time. E.g. if you want 2013-03-10-00 PST, you must put 2013-03-10-08
   */
 exports.eventsWeek = function(req, res) {
   return getCalendarEvents(req, res, "week");
@@ -40,7 +40,7 @@ exports.eventsWeek = function(req, res) {
 /*
  API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +30 days
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day IMPORTANT: this time is in UTC time. E.g. if you want 2013-03-10-00 PST, you must put 2013-03-10-08
   */
 exports.eventsMonth = function(req, res) {
   return getCalendarEvents(req, res, "month");
@@ -101,7 +101,7 @@ function getCalendarEvents(req, res, type) {
 
       // Need to convert date manually since new Date() internationalizes
       var requestedDateArray = req.params.date.split('-');
-      requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+      requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]), parseInt(requestedDateArray[3]));
     } else {
       var today = new Date();
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
