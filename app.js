@@ -56,6 +56,7 @@ var jobs = kue.createQueue();
 
 // wire up Kue (see /active for queue interface)
 app.use(kue.app);
+kue.app.listen(3000);
 
 app.listen(app.get('port'));
 console.log("Express server listening on port " + app.get('port'));
