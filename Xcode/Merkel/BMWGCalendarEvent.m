@@ -8,6 +8,8 @@
 
 #import "BMWGCalendarEvent.h"
 
+#import "BMWLinkedInProfile.h"
+
 @interface BMWGCalendarEvent ()
 
 
@@ -23,7 +25,12 @@
     event.eventDescription = dict[@"description"];
     event.startDate = [self dateFromEventObject:dict[@"start"]];
     event.endDate = [self dateFromEventObject:dict[@"end"]];
-    event.attendees = dict[@"attendees"];
+    id attendees = dict[@"attendees"];
+    if ([attendees isKindOfClass:[NSArray class]]) {
+        event.attendees = [BMWLinkedInProfile profilesFromEmails:attendees];
+    } else if ([attendees isKindOfClass:[NSDictionary class]]) {
+        event.attendees = [BMWLinkedInProfile profilesFromJSONDict:attendees];
+    }
     return event;
 }
 
@@ -50,13 +57,13 @@
     }
 }
 
-//+ (instancetype)testEvent {
-//    NSDictionary *event = @{@"name": @"Test Event",
-//                            @"description": @"This is the greatest event",
-//                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
-//                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
-//    return [self eventFromJSONDict:event];
-//}
++ (instancetype)testEvent {
+    NSDictionary *event = @{@"name": @"Test Event",
+                            @"description": @"This is the greatest event",
+                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
+                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
+    return [self eventFromJSONDict:event];
+}
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"title: %@\ndescription: %@\nstart: %@\nend: %@", self.title, self.eventDescription, self.startDate, self.endDate];
