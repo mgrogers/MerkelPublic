@@ -65,7 +65,7 @@ exports.authentication = function(req, res) {
     google_calendar.getGoogleAccessToken(req.query, function(err, access_token, refresh_token) {
 
       if(err) return res.send(500,err);
-      
+    
       req.session.access_token = access_token;
       req.session.refresh_token = refresh_token;
       return res.send('<html><body><h1>Google Auth Token stored in Express session.</h1><p>Access Token: "' + access_token + '"</p><p>Refresh Token: "' + refresh_token + '"</p></body></html>');
@@ -109,10 +109,12 @@ function getCalendarEvents(req, res, type) {
       if(err) return res.send(500,err);
 
       data.items.forEach(function(calendar) {
+
         // Skip unnecessary calendars
         if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
 
         waiting++;
+
         console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
         var tempCalendar = {};
         tempCalendar.name = "";
@@ -143,7 +145,8 @@ function getCalendarEvents(req, res, type) {
 
             if(err || !events || !events.items) {
               console.log(err);
-              return returnResponse();
+              return res.send(500,err);
+              // return returnResponse();
             }
 
             // Populate relevant fields for events
