@@ -12,7 +12,7 @@ var GOOGLE_CONSUMER_SECRET = "rLkby14J_c-YkVA96KCqeajC";
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var MILLISEC_IN_DAY = 86400000;
-var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg";
+var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRSFcbXi84GG2DOclSPoInvNVM6YpVqMBhi89oJnRE";
 
 // Initializing variables
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
@@ -80,7 +80,7 @@ function getCalendarEvents(req, res, type) {
   var appUrl = req.protocol + "://" + req.get('host');
   var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
   var calendars = [];
-  var waiting = 0;
+  var calendarCount = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
     var access_token;
@@ -98,99 +98,106 @@ function getCalendarEvents(req, res, type) {
     // Default to beginning of current date if none provided
     var requestedDate = "";
     if(req.params.date) {
-      requestedDate = new Date(req.params.date);
+
+      // Need to convert date manually since new Date() internationalizes
+      var requestedDateArray = req.params.date.split('-');
+      requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+      console.log("requested date: " + req.params.date + " converted date: " + requestedDate);
     } else {
       var today = new Date();
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     }
 
-    console.log("This is a request for the events for userID: '" + req.params.userId +
-    "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
+    console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
     google_calendar.listCalendarList(access_token, function(err, data) {
       if(err) return res.send(500,err);
 
+      calendarCount = data.items.length;
+      //console.log("Calendar count: " + calendarCount);
+
       data.items.forEach(function(calendar) {
+        //console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
 
         // Skip unnecessary calendars
         if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
 
-        waiting++;
+        var option = {};
+        option.access_token = access_token;
+        option.key = GOOGLE_CONSUMER_KEY;
+        option.timeMin = requestedDate.toISOString();
 
-        console.log("Looping to calendar: " + calendar.summary + ", " + calendar.id);
-        var tempCalendar = {};
-        tempCalendar.name = "";
-        tempCalendar.events = [];
+        // Set end time to search based on type of request - day, week, month
+        var searchTimeEnd = requestedDate.getTime();
+        if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
+        else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
+        else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
+        else searchTimeEnd += MILLISEC_IN_DAY;
 
-        if(calendar) {
-          tempCalendar.name = calendar.summary;
+        option.timeMax = new Date(searchTimeEnd).toISOString();
 
-          var option = {};
-          option.access_token = access_token;
-          option.key = GOOGLE_CONSUMER_KEY;
-          option.timeMin = requestedDate.toISOString();
+        // Asynchronously access events
+        google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
 
-          // Set end time to search based on type of request - day, week, month
-          var searchTimeEnd = requestedDate.getTime();
-          if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
-          else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
-          else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
-          else searchTimeEnd += MILLISEC_IN_DAY;
-
-          option.timeMax = new Date(searchTimeEnd).toISOString();
-
-          // Asynchronously access events
-          google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
-            if(!events.items) {
-              events = JSON.parse(events);
-            }
-
-            if(err || !events || !events.items) {
-              console.log(err);
-              return res.send(500,err);
-              // return returnResponse();
-            }
-
-            // Populate relevant fields for events
-            events.items.forEach(function(event) {
-
-              // Generate clean JSON calendar object
-              if(event.id && event.summary) {
-                var calEvent = {};
-                calEvent.id = event.id;
-                calEvent.name = event.summary;
-                if(event.description) calEvent.description = event.description;
-                if(event.location) calEvent.location = event.location;
-                if(event.start) calEvent.start = event.start;
-                if(event.end) calEvent.end = event.end;
-                if(event.creator) calEvent.creator = event.creator;
-                if(event.attendees) calEvent.attendees = event.attendees;
-                if(event.created) calEvent.created = event.created;
-                if(event.updated) calEvent.updated = event.updated;
-
-                // Add event to calendar object
-                tempCalendar.events.push(calEvent);
-              }
-            });
-
-            calendars.push(tempCalendar);
-
-            // Return JSON object after all calendars are accessed
+          // Error
+          if(err || !events) {
+            console.log(err);
+            return res.send(500,err);
+          }
+          // No matching items in this calendar
+          if(!events.items) {
+            //console.log("Not adding calendar: " + calendar.summary + " to response due to no matching items.");
             return returnResponse();
-          });
-        }
+          }
 
+          var tempCalendar = {};
+          tempCalendar.name = calendar.summary;
+          tempCalendar.events = [];
+
+          // Populate relevant fields for events
+          events.items.forEach(function(event) {
+
+            // Generate clean JSON calendar object
+            if(event.id && event.summary) {
+              var calEvent = {};
+              calEvent.id = event.id;
+              calEvent.name = event.summary;
+              if(event.description) calEvent.description = event.description;
+              if(event.location) calEvent.location = event.location;
+              if(event.start) calEvent.start = event.start;
+              if(event.end) calEvent.end = event.end;
+              if(event.creator) calEvent.creator = event.creator;
+              if(event.attendees) calEvent.attendees = event.attendees;
+              if(event.created) calEvent.created = event.created;
+              if(event.updated) calEvent.updated = event.updated;
+
+              // Add event to calendar object
+              tempCalendar.events.push(calEvent);
+            }
+          });
+
+          //console.log("Adding calendar: " + tempCalendar.name + " to response.");
+          calendars.push(tempCalendar);
+
+          // Return JSON object after all calendars are accessed
+          return returnResponse();
+        });
       });
     });
   });
 
   function returnResponse() {
-    if(waiting != 0) {
-      waiting--;
-      return;
+    if(calendarCount != 0) {
+      //console.log("Decrementing calendarCount from: " + calendarCount + " to: " + (calendarCount-1));
+      calendarCount--;
     }
 
-    return res.send(calendars);
+    if(calendarCount == 0) {
+      //console.log("These are final calendars: " + calendars);
+      return res.send(calendars);
+    } else {
+      return;
+    }
   }
 }
 
