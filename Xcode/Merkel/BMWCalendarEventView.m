@@ -36,7 +36,7 @@ static const NSInteger kAttendeesToDisplay = 3;
     BMWViewProvider *provider = self.application.hmiProvider;
     
     //Grabs first event from eventsToDisplay
-    self.event = [provider.calendarListView.events objectAtIndex:0];
+//    self.event = [provider.calendarListView.events objectAtIndex:0];
     self.attendees = self.event.attendees;
     
     provider.attendeeListView.attendees = self.attendees;
