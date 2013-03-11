@@ -10,7 +10,7 @@
 #import "BMWLinkedInProfile.h"
 #import "BMWLinkedInView.h"
 
-@interface BMWAttendeeListViewDetail : IDView <BMWLinkedInViewDelegate, IDViewDelegate>
+@interface BMWAttendeeListViewDetail : IDView <IDViewDelegate>
 
 @property (nonatomic, strong) NSArray *attendees;
 
