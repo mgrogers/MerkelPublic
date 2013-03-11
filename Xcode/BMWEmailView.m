@@ -16,11 +16,14 @@
 @end
 @implementation BMWEmailView
 
+static const NSString *kSubjectKey = @"subject";
+static const NSString *kDateKey = @"date";
+static const NSString *kContentKey = @"content";
+
+
 
 
 - (void)viewWillLoad:(IDView *)view {
-    
-
     self.title = @"Email View";
     self.subjectLabel = [IDLabel label];
     self.subjectLabel.selectable = NO;
@@ -28,9 +31,6 @@
     self.dateLabel.selectable = NO;
     self.contentLabel = [IDLabel label];
     self.contentLabel.selectable = NO;
-    
-    
-    
     self.widgets = @[self.subjectLabel, self.dateLabel, self.contentLabel];
     
 }
@@ -54,16 +54,16 @@
 
 - (void)viewDidBecomeFocused:(IDView *)view {
     if (self.email) {
-        self.subjectLabel.text = self.email[@"subject"];
+        self.subjectLabel.text = self.email[kSubjectKey];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setTimeStyle:NSDateFormatterMediumStyle];
         
-        self.date = [self dateFromEventObject:self.email[@"date"]];
-        self.dateLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:self.date]];
+        self.date = [self dateFromEventObject:self.email[kDateKey]];
+        self.dateLabel.text = [NSString stringWithFormat:@"Date: %@", [formatter stringFromDate:self.date]];
         
-        self.contentLabel.text = self.email[@"content"];
+        self.contentLabel.text = self.email[kContentKey];
     }
 }
 @end
