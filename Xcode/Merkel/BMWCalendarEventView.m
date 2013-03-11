@@ -34,8 +34,8 @@ static const NSInteger kAttendeesToDisplay = 3;
 
 - (void)viewDidBecomeFocused:(IDView *)view {
     BMWViewProvider *provider = self.application.hmiProvider;
-    self.event = [BMWGCalendarEvent testEvent];
-    self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
+    self.attendees = self.event.attendees;
+    
     provider.attendeeListView.attendees = self.attendees;
     if (self.event) {
         [self updateDisplayForEvent:self.event];
