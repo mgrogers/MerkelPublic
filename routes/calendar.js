@@ -21,22 +21,75 @@ var google_calendar = new GoogleCalendar.GoogleCalendar(
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
 
+/* ----------- API FUNCTIONS -----------*/
 /*
- API Call: /api/events/:userId/day/:date - Grabs [userId]'s events on [date]
- [userId] should be whatever their Parse userId is
+ API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening on [date]
+ [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
   */
 exports.eventsDay = function(req, res) {
+  return getCalendarEvents(req, res, "day");
+};
+
+/*
+ API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +7 days
+ [userId] should be whatever their Parse objectId is
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+  */
+exports.eventsWeek = function(req, res) {
+  return getCalendarEvents(req, res, "week");
+};
+
+/*
+ API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +30 days
+ [userId] should be whatever their Parse objectId is
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+  */
+exports.eventsMonth = function(req, res) {
+  return getCalendarEvents(req, res, "month");
+}
+
+
+/* Testing function, authenticates with Google, stores auth token in express session */
+exports.authentication = function(req, res) {
+  if(!req.query.code){
+
+    //Redirect the user to Authentication From
+    google_calendar.getGoogleAuthorizeTokenURL(function(err, redirecUrl) {
+      if(err) return res.send(500,err);
+      return res.redirect(redirecUrl);
+    });
+    
+  }else{
+    //Get access_token from the code
+    google_calendar.getGoogleAccessToken(req.query, function(err, access_token, refresh_token) {
+
+      if(err) return res.send(500,err);
+      
+      req.session.access_token = access_token;
+      req.session.refresh_token = refresh_token;
+      return res.send('<html><body><h1>Google Auth Token stored in Express session.</h1><p>Access Token: "' + access_token + '"</p><p>Refresh Token: "' + refresh_token + '"</p></body></html>');
+    });
+  }
+};
+
+
+/* ----------- HELPER FUNCTIONS -----------*/
+/* Get calendar events based on time constraints of 'type' - day, week, or month */
+function getCalendarEvents(req, res, type) {
   var calendars = [];
   var waiting = 0;
 
   parseApp.find('', req.params.userId, function (err, response) {
     var access_token;
-    if(response.google_access_token) {
+    if(response && response.google_access_token) {
+      console.log("Using Parse auth token.");
       access_token = response.google_access_token;
-    } else if() {
-      access_token = "";
+    } else if(req.session.access_token) {
+      console.log("Using Express session auth token.");
+      access_token = req.session.access_token;
     } else {
+      console.log("Using hard-coded auth token.");
       access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
     }
 
@@ -72,7 +125,15 @@ exports.eventsDay = function(req, res) {
           option.access_token = access_token;
           option.key = GOOGLE_CONSUMER_KEY;
           option.timeMin = requestedDate.toISOString();
-          option.timeMax = new Date(requestedDate.getTime() + MILLISEC_IN_DAY).toISOString();
+
+          // Set end time to search based on type of request - day, week, month
+          var searchTimeEnd = requestedDate.getTime();
+          if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
+          else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
+          else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
+          else searchTimeEnd += MILLISEC_IN_DAY;
+
+          option.timeMax = new Date(searchTimeEnd).toISOString();
 
           // Asynchronously access events
           google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
@@ -89,7 +150,6 @@ exports.eventsDay = function(req, res) {
             events.items.forEach(function(event) {
 
               if(event.id && event.summary) {
-
               /*
               if(tempCalendar.name == "LFE") {
                 console.log("This is the event: " + event.summary + " this is eventStartDate: " + eventStartDate.getTime() + " this is eventEndDate: " +  eventEndDate.getTime() + " this is requestedDate: " + requestedDate.getTime());
@@ -112,11 +172,11 @@ exports.eventsDay = function(req, res) {
                 tempCalendar.events.push(calEvent);
               }
             });
-            console.log("Adding calendar: " + tempCalendar.name);
+            // console.log("Adding calendar: " + tempCalendar.name);
 
             calendars.push(tempCalendar);
 
-            // Return JSON object
+            // Return JSON object after all calendars are accessed
             return returnResponse();
           });
         }
@@ -133,86 +193,9 @@ exports.eventsDay = function(req, res) {
 
     return res.send(calendars);
   }
-};
+}
 
-/*
- API Call: /api/events/:userId/week/:date - Grabs [userId]'s events during the week including [date]
- WARNING: not 100% accurate
- [userId] should be whatever their Parse userId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
-  */
-exports.eventsWeek = function(req, res) {
-  console.log("This is a request for the events for userID: " + req.params.userId +
-    " during week with day: " + req.params.date);
-
-  // TODO: Grab access token from parse from user with userId: req.params.userId
-  var access_token = "ya29.AHES6ZQEHyo6csgLyOtA5RgBOglxKzGIy3BQwB5iNiu29qTg";
-  var calendar = {};
-  calendar.name = "";
-  calendar.events = [];
-
-  // Default to current date if none provided
-  var requestedDate = "";
-  if(req.params.date) {
-    requestedDate = new Date(req.params.date);
-  } else {
-    requestedDate = new Date();
-  }
-
-  google_calendar.listCalendarList(access_token, function(err, data) {
-    
-    if(err) return res.send(500,err);
-    
-    // Get only first calendar, TODO: grab all calendars
-    //var tempCal = data.items[4];
-    if(tempCal) {
-      calendar.name = tempCal.summary;
-
-      // Asynchronously access events
-      google_calendar.listEvent(access_token, tempCal.id, function(err, events) {
-        if(err || !events || !events.items) {
-          console.log(err);
-          return res.send(err);
-        }
-
-        // Populate relevant fields for events
-        events.items.forEach(function(event) {
-          var eventStartDate = new Date(event.start.date);
-          var eventEndDate = new Date(event.end.date);
-
-          var weekStartTime = requestedDate.getTime() - requestedDate.getDay() * MILLISEC_IN_DAY;
-          var weekEndTime = requestedDate.getTime() + (7-requestedDate.getDay()) * MILLISEC_IN_DAY;
-          requestedDate.getDay();
-
-          // Only consider events happening on same week as req.params.date
-          if((eventStartDate <= weekStartTime && eventEndDate >= weekStartTime) ||
-              (eventStartDate <= weekEndTime && eventEndDate >= weekEndTime) ||
-              (eventStartDate <= weekStartTime && eventEndDate >= weekEndTime) ||
-              (eventStartDate >= weekStartTime && eventEndDate <= weekEndTime)) {
-            var calEvent = {};
-            calEvent.id = event.id;
-            calEvent.name = event.summary;
-            calEvent.description = event.description;
-            calEvent.location = event.location;
-            calEvent.start = event.start;
-            calEvent.end = event.end;
-            calEvent.creator = event.creator;
-            calEvent.attendees = event.attendees;
-            calEvent.created = event.created;
-            calEvent.updated = event.updated;
-
-            // Add event to calendar object
-            calendar.events.push(calEvent);
-          }
-        });
-
-        // Return JSON object
-        return res.send(calendar);
-      });
-    }
-  });
-};
-
+/* Check if object contains a */
 function contains(a, obj) {
     var i = a.length;
     while (i--) {
