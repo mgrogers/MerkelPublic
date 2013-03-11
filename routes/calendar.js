@@ -107,6 +107,9 @@ function getCalendarEvents(req, res, type) {
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     }
 
+    // Convert to UTC
+    requestedDate = convertDateToUTC(requestedDate);
+
     console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
     google_calendar.listCalendarList(access_token, function(err, data) {
@@ -203,4 +206,9 @@ function contains(a, obj) {
        }
     }
     return false;
+}
+
+/* Convert date to UTC a */
+function convertDateToUTC(date) { 
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
 }
