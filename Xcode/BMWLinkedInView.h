@@ -8,8 +8,27 @@
 
 #import <BMWAppKit/BMWAppKit.h>
 
-@interface BMWLinkedInView : IDView
 
-@property (nonatomic, strong) NSDictionary *linkedInProfile;
+@class BMWLinkedInProfile;
+@class BMWLinkedInView;
+
+@protocol BMWLinkedInViewDelegate
+
+- (BMWLinkedInProfile *)attendeeforAttendeeView:(BMWLinkedInView *)profileView;
 
 @end
+
+@interface BMWLinkedInView : IDTableLayoutView
+
+//@property (nonatomic, strong) NSDictionary *linkedInProfile;
+
+@property (nonatomic, weak) id <BMWLinkedInViewDelegate> linkedInDelegate;
+@property (nonatomic, strong) BMWLinkedInProfile *profile;
+
+
+
+
+@end
+
+
+
