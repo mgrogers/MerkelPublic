@@ -7,10 +7,17 @@
 //
 
 #import "BMWLinkedInView.h"
+#import "BMWLinkedInProfile.h"
+#import "BMWViewProvider.h"
+#import <SDWebImage/SDWebImageManager.h>
+#import <BMWAppKit/UIImage+BMWAppKit.h>
 
 @interface BMWLinkedInView()
 
 @property (nonatomic, retain) IDImage *photo;
+@property (nonatomic, strong) IDLabel *jobTitleLabel, *summaryLabel;
+@property (nonatomic, strong) NSURL *profileImageURL;
+
 
 @end
 
@@ -20,28 +27,36 @@
 
 
 - (void)viewWillLoad:(IDView *)view {
-//    NSString *name = self.linkedInProfile[@"name"];
-//    self.title =[NSString stringWithFormat:@"%@'s Profile", name];
-//    
-//    self.photo = [IDImage image];
-//    IDLabel *jobTitleLabel = [IDLabel label];
-//    IDLabel *previousJobTitleLabel = [IDLabel label];
-//    IDLabel *educationTitleLabel = [IDLabel label];
-//    
-//    NSURL *imageURL = [NSURL URLWithString:self.linkedInProfile[@"profileURL"]];
-//
-//    if(imageURL) {
-//        dispatch_queue_t imageFetchQ = dispatch_queue_create("image fetcher", NULL);
-//        dispatch_async(imageFetchQ, ^{
-////            NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
-////            self.photo.imageData = [self.application.imageBundle imageWithData:imageData];
-//            self.photo.position = CGPointMake(0, 0);
-//        });
-//    }
-//    self.widgets = [NSArray arrayWithObjects:
-//                    self.photo, jobTitleLabel, previousJobTitleLabel, educationTitleLabel,
-//                    nil];
+    self.photo = [IDImage image];
+    self.jobTitleLabel = [IDLabel label];
+    self.summaryLabel = [IDLabel label];
+    self.jobTitleLabel.selectable = NO;
+    self.summaryLabel.selectable = NO;
+    self.widgets = @[self.photo, self.jobTitleLabel, self.summaryLabel];
 }
 
+- (void)viewDidBecomeFocused:(IDView *)view {
+    if (self.profile) {
+        self.title = self.profile.name;
+        self.jobTitleLabel.text = self.profile.jobTitle;
+        self.summaryLabel.text = self.profile.summary;
+        self.profileImageURL = self.profile.profileImageURL;
+        [SDWebImageManager.sharedManager downloadWithURL:self.profileImageURL
+                                                 options:optind
+                                                progress:NULL
+                                               completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+                                     {
+                                         [self setProfileImageWithImage:image];
+                                     }];
+
+    }
+}
+
+- (void)setProfileImageWithImage:(UIImage *)image {
+    if (!image) return;
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    [self.photo setImageData:[self.application.imageBundle imageWithData:imageData] clearWhileSending:YES];
+    self.photo.position = CGPointMake(0, 0);
+}
 
 @end
