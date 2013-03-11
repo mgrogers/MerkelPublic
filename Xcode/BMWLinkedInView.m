@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) IDImage *photo;
 @property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel;
+@property (nonatomic, strong) NSArray *emails;
 @property (nonatomic, strong) NSURL *profileImageURL;
 
 @end
@@ -29,6 +30,11 @@ static const CGFloat kImageWidth = 200.0;
 
 
 - (void)viewWillLoad:(IDView *)view {
+    
+    BMWViewProvider *provider = self.application.hmiProvider;
+
+    
+    
     self.photo = [IDImage image];
     self.photo.position = CGPointMake(5, 5);
     self.nameLabel = [IDLabel label];
@@ -41,9 +47,20 @@ static const CGFloat kImageWidth = 200.0;
     self.nameLabel.position = CGPointMake(230, 5);
     self.jobTitleLabel.position = CGPointMake(230, 45);
     self.summaryLabel.position = CGPointMake(230, 85);
-  
     
-    self.widgets = @[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel];
+    NSMutableArray *mutableWidgets = [NSMutableArray array];
+    
+    const NSInteger kButtonLimit = 5;
+    for (int i = 0; i < kButtonLimit; i++) {
+        IDButton *button = [IDButton button];
+        [button setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
+        [button setTargetView:provider.emailView];
+        button.visible = NO;
+        [mutableWidgets addObject:button];
+    }
+    
+    self.widgets = [[@[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel] arrayByAddingObjectsFromArray:mutableWidgets] mutableCopy];
+    
     self.startRow = 4;
 }
 
