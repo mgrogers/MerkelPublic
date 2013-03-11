@@ -8,6 +8,8 @@
 
 #import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
+#import "BMWLinkedInProfile.h"
+
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 //#import "GTMOAuth2Authentication.h"
@@ -205,7 +207,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (void)savePersistenceResponseString {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:4];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     // Any nil values will not set a dictionary entry
     [dict setValue:self.googleAuth.refreshToken forKey:kOAuth2RefreshTokenKey];
     [dict setValue:self.googleAuth.accessToken forKey:kOAuth2AccessTokenKey];
@@ -228,9 +230,9 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 
 - (NSArray *)eventsToDisplayTest {
     NSDictionary *event = @{@"name": @"Test Event",
-                                            @"description": @"This is the greatest event",
-                                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
-                                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
+                            @"description": @"This is the greatest event",
+                            @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
+                            @"end": @{@"dateTime": @"2013-01-08T12:00:00-08:00"}};
     NSMutableArray *events = [NSMutableArray array];
     for (int i = 0; i < 20; i++) {
         [events addObject:[BMWGCalendarEvent eventFromJSONDict:event]];
@@ -239,17 +241,18 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
 }
 
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        NSError *error;
-        NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
-        if (events) {
-            [self.dataCache setObject:events forKey:@"events/day"];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(events, error);
-        });
-    });
-    return [self.dataCache objectForKey:@"events/day"];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//        NSError *error;
+//        NSArray *events = [self eventRequestWithMethod:@"day" error:&error];
+//        if (events) {
+//            [self.dataCache setObject:events forKey:@"events/day"];
+//        }
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            completion(events, error);
+//        });
+//    });
+//    return [self.dataCache objectForKey:@"events/day"];
+    return [self eventsToDisplayTest];
 }
 
 - (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache {
@@ -275,6 +278,24 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     }
     return nil;
 }
+
+- (NSArray *)attendeesToDisplayTest {
+    
+    
+    NSDictionary *attendee = @{@"name": @"Wesley Leung",
+                               @"jobTitle": @"CS Student",
+                               @"profileImageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",
+                               @"summary": @"I am a cs student",
+                               @"emails": @[@"email 1", @"email2"]};
+    NSMutableArray *attendees = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        [attendees addObject:[BMWLinkedInProfile profileFromJSONDict:attendee]];
+
+    }
+    return attendees;
+}
+
+
 
 -(NSDictionary *)linkedinToDisplayFromEvent {
     //Request to get event attendee linkedin profile object
