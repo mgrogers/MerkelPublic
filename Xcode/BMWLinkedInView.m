@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel;
 @property (nonatomic, strong) NSArray *emails;
 @property (nonatomic, strong) NSURL *profileImageURL;
+@property NSInteger selectedIndex;
 
 @end
 
@@ -27,6 +28,7 @@
 
 static const CGFloat kImageHeight = 200.0;
 static const CGFloat kImageWidth = 200.0;
+static const NSInteger kIndexofEmail = 4;
 
 
 - (void)viewWillLoad:(IDView *)view {
@@ -78,7 +80,14 @@ static const CGFloat kImageWidth = 200.0;
                                      {
                                          [self setProfileImageWithImage:image];
                                      }];
-
+        
+        NSInteger index = kIndexofEmail;
+        for (NSDictionary *email in self.emails) {
+            IDButton *button = [self.widgets objectAtIndex:index];
+            button.text = email[@"subject"];
+            button.visible = YES;
+            index++;
+        }
     }
 }
 
@@ -86,6 +95,12 @@ static const CGFloat kImageWidth = 200.0;
     if (!image) return;
     UIImage *resized_image = [image idResizedImage:CGSizeMake(kImageWidth, kImageHeight) interpolationQuality:1.0];
     [self.photo setImageData: [resized_image idPNGImageData]];
+}
+
+- (void)buttonFocused:(IDButton *)button {
+    _selectedIndex = [self.widgets indexOfObject:button];
+    BMWViewProvider *provider = self.application.hmiProvider;
+    provider.emailView.email = self.emails[_selectedIndex - kIndexofEmail];
     
 }
 
