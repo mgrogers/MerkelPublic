@@ -12,6 +12,7 @@ var GOOGLE_CONSUMER_SECRET = "rLkby14J_c-YkVA96KCqeajC";
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var MILLISEC_IN_DAY = 86400000;
+var MILLISEC_IN_HOUR = 3600000;
 var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRSFcbXi84GG2DOclSPoInvNVM6YpVqMBhi89oJnRE";
 
 // Initializing variables
@@ -23,6 +24,7 @@ var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
  API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening on [date]
  [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
   */
 exports.eventsDay = function(req, res) {
   return getCalendarEvents(req, res, "day");
@@ -31,7 +33,8 @@ exports.eventsDay = function(req, res) {
 /*
  API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +7 days
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day
+ [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
   */
 exports.eventsWeek = function(req, res) {
   return getCalendarEvents(req, res, "week");
@@ -40,7 +43,8 @@ exports.eventsWeek = function(req, res) {
 /*
  API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +30 days
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day
+ [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
   */
 exports.eventsMonth = function(req, res) {
   return getCalendarEvents(req, res, "month");
@@ -102,6 +106,14 @@ function getCalendarEvents(req, res, type) {
       // Need to convert date manually since new Date() internationalizes
       var requestedDateArray = req.params.date.split('-');
       requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+      if(req.params.tz) {
+        if(req.params.tz.charAt(0) == '+') {
+          requestedDate = new Date(requestedDate.getTime() + MILLISEC_IN_HOUR * parseInt(req.params.tz.substring(1)));
+        } else if(req.params.tz.charAt(0) == '-') {
+          requestedDate = new Date(requestedDate.getTime() - MILLISEC_IN_HOUR * parseInt(req.params.tz.substring(1)));
+        } 
+        // if TZ is improperly formatted or not provided, use UTC
+      }
     } else {
       var today = new Date();
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
