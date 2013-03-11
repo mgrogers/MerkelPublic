@@ -10,6 +10,7 @@
 #import "BMWLinkedInProfile.h"
 #import "BMWViewProvider.h"
 #import <SDWebImage/SDWebImageManager.h>
+#import <BMWAppKit/UIImage+BMWAppKit.h>
 
 @interface BMWLinkedInView()
 
