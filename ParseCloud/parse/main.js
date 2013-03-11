@@ -20,6 +20,28 @@ Parse.Cloud.define("inviteWithTwilio", function(request, response) {
 	});
 });
 
+Parse.Cloud.define("send-sms", function(request, response) {
+	var to = null,
+		from = null,
+		body = null;
+	if (to == null || from == null || body == null) {
+		response.error("Incomplete parameters");
+	} else {
+		twilio.sendSMS({
+			From: from,
+			To: to,
+			Body: body
+		}, {
+			success: function(httpResponse) {
+				response.success(httpResponse);
+			},
+			error: function(httpResponse) {
+				response.error(httpResponse);
+			}
+		});
+	}
+});
+
 //call function with the following script in terminal:
 /*
 curl -X POST \
