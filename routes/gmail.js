@@ -10,7 +10,7 @@ var inspect = require('util').inspect;
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
-var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQb8hnA8RdLag_JzKkMFNZfhECQ23QlAMHlPOJoPcsiSXcg"
+var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZQBBEo1xM2JAGyMerJObShg-n95IU6MjiiQoluAfA"
 var HARD_CODED_TEST_ATTENDEE = "notifications@github.com";
 var HARD_CODED_TEST_EMAIL = "wes.k.leung@gmail.com";
 
