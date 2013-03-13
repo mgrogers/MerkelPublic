@@ -59,7 +59,7 @@ var jobs = kue.createQueue();
 
 // wire up Kue (see /active for queue interface)
 app.use(kue.app);
-kue.app.listen(8888);
+if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
 
 app.listen(app.get('port'));
 console.log("Express server listening on port " + app.get('port'));
