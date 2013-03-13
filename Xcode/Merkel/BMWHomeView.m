@@ -41,6 +41,7 @@
     IDButton *nextButton = [IDButton button];
     nextButton.text = @"Next Event";
     [nextButton setTargetView:provider.calendarEventView];
+    [nextButton setTarget:self selector:@selector(buttonPressed:) forActionEvent:IDActionEventSelect];
     [nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     
     
@@ -63,6 +64,10 @@
     if (selectedIndex == 0) {
         provider.calendarEventView.event = [provider.calendarListView.events objectAtIndex:0];
     }
+}
+
+- (void)buttonPressed:(IDButton *)button {
+    
 }
 
 @end
