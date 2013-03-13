@@ -1,6 +1,13 @@
 var kue = require('kue')
  , jobs = kue.createQueue();
 
+/* ----------- API FUNCTIONS -----------*/
+/*
+ API Call: /api/sms/send - Sends an SMS using query params
+ [to] a 10 digit string of the destination number
+ [body] the SMS message body
+ [delay] (optional) delay sending by [delay] milliseconds
+ */
 exports.sendsms = function (req, res) {
     var data = req.query;
     data.title = "SMS to: " + data.to;
@@ -53,6 +60,10 @@ exports.sendsms = function (req, res) {
     job.save();
 }
 
+/* ----------- HELPER FUNCTIONS -----------*/
+/* Similar to above sendsms, but can be called without req & res.
+ * Pass the same parameters as above in the data object.
+ */
 exports.sendsms_helper = function (data) {
     data.title = "SMS to: " + data.to;
     console.log(data);
