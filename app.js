@@ -46,18 +46,18 @@ app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 
-kue.redis.createClient = function() {
-    var redisUrl = url.parse("redis://redistogo:8b3171477ccaa37c8ee4e988b9c99fb2@viperfish.redistogo.com:9462/")
-      , client = redis.createClient(redisUrl.port, redisUrl.hostname);
-	// if (process.env.REDISTOGO_URL == null) {
-	// 	redisUrl = url.parse("redis://localhost:6379");
-	// }
-	console.log("redis url: " + redisUrl);
-    if (redisUrl.auth) {
-        client.auth(redisUrl.auth.split(":")[1]);
-    }
-    return client;
-};
+// kue.redis.createClient = function() {
+//     var redisUrl = url.parse("redis://redistogo:8b3171477ccaa37c8ee4e988b9c99fb2@viperfish.redistogo.com:9462/")
+//       , client = redis.createClient(redisUrl.port, redisUrl.hostname);
+// 	// if (process.env.REDISTOGO_URL == null) {
+// 	// 	redisUrl = url.parse("redis://localhost:6379");
+// 	// }
+// 	console.log("redis url: " + redisUrl);
+//     if (redisUrl.auth) {
+//         client.auth(redisUrl.auth.split(":")[1]);
+//     }
+//     return client;
+// };
 
 var jobs = kue.createQueue();
 
