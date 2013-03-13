@@ -1,5 +1,3 @@
-var kue = require('kue')
- , jobs = kue.createQueue();
 
 /* ----------- API FUNCTIONS -----------*/
 /*
@@ -9,6 +7,8 @@ var kue = require('kue')
  [delay] (optional) delay sending by [delay] milliseconds
  */
 exports.sendsms = function (req, res) {
+    var kue = require('kue')
+     , jobs = kue.createQueue();
     var data = req.query;
     data.title = "SMS to: " + data.to;
     console.log(data);
@@ -65,6 +65,8 @@ exports.sendsms = function (req, res) {
  * Pass the same parameters as above in the data object.
  */
 exports.sendsms_helper = function (data) {
+    var kue = require('kue')
+     , jobs = kue.createQueue();
     data.title = "SMS to: " + data.to;
     console.log(data);
     var timedelay = parseInt(data.delay);
