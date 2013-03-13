@@ -4,6 +4,7 @@ var url  = require('url');
 var express  = require('express');
 var parse = require('node-parse-api').Parse;
 var GoogleCalendar = require('google-calendar');
+var time = require('time');
 
 // Constants
 var CALENDARS_TO_SKIP = ['en.usa#holiday@group.v.calendar.google.com'];
@@ -13,7 +14,7 @@ var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
 var PARSE_MASTER_KEY = "AAOYtk81wI3iRJiXxgRfwblt1EUHVBlyvpS9m3QO";
 var MILLISEC_IN_DAY = 86400000;
 var MILLISEC_IN_HOUR = 3600000;
-var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRSFcbXi84GG2DOclSPoInvNVM6YpVqMBhi89oJnRE";
+var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRYphizlByPNZxKxwes30IISt81sJd6QrjxAzhMEt0";
 
 // Initializing variables
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
@@ -105,22 +106,18 @@ function getCalendarEvents(req, res, type) {
 
       // Need to convert date manually since new Date() internationalizes
       var requestedDateArray = req.params.date.split('-');
-      requestedDate = new Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
-      if(req.params.tz) {
-        if(req.params.tz.charAt(0) == '+') {
-          requestedDate = new Date(requestedDate.getTime() + MILLISEC_IN_HOUR * parseInt(req.params.tz.substring(1)));
-        } else if(req.params.tz.charAt(0) == '-') {
-          requestedDate = new Date(requestedDate.getTime() - MILLISEC_IN_HOUR * parseInt(req.params.tz.substring(1)));
-        } 
-        // if TZ is improperly formatted or not provided, use UTC
-      }
+      requestedDate = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
     } else {
-      var today = new Date();
+      var today = new time.Date();
       requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     }
 
-    // Convert to UTC
-    requestedDate = convertDateToUTC(requestedDate);
+    if(req.params.date && req.params.tz) {
+      requestedDate.setTimezone(decodeURIComponent(req.params.tz));
+      // if TZ is improperly formatted or not provided, use UTC
+    } else {
+      requestedDate.setTimezone('UTC');
+    }
 
     console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
