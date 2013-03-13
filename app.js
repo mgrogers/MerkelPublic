@@ -47,7 +47,7 @@ app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 
 kue.redis.createClient = function() {
-    var redisUrl = url.parse(process.env.REDISTOGO_URL)
+    var redisUrl = url.parse("redis://redistogo:8b3171477ccaa37c8ee4e988b9c99fb2@viperfish.redistogo.com:9462/")
       , client = redis.createClient(redisUrl.port, redisUrl.hostname);
 	// if (process.env.REDISTOGO_URL == null) {
 	// 	redisUrl = url.parse("redis://localhost:6379");
