@@ -280,8 +280,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     if (!response) return nil;
     id json = [NSJSONSerialization JSONObjectWithData:response options:0 error:error];
     if ([json isKindOfClass:[NSArray class]]) {
-        NSDictionary *dict = ((NSArray *)json)[0];
-        NSArray *events = [BMWGCalendarEvent eventsFromJSONDict:dict];
+        NSArray *events = [BMWGCalendarEvent eventsFromJSONCalendars:json sorted:YES];
         return events;
     }
     return nil;

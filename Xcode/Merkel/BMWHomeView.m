@@ -9,10 +9,16 @@
 #import "BMWHomeView.h"
 
 #import "BMWGCalendarDataSource.h"
+#import "BMWGCalendarEvent.h"
 #import "BMWViewProvider.h"
 
-@implementation BMWHomeView
+@interface BMWHomeView ()
 
+@property (nonatomic, strong) IDButton *nextButton;
+
+@end
+
+@implementation BMWHomeView
 
 - (void)viewWillLoad:(IDView *)view {
     [self createAllViews];
@@ -38,22 +44,23 @@
 - (void)createAllViews {
     BMWViewProvider *provider = self.application.hmiProvider;
     self.title = @"Merkel";
-    IDButton *nextButton = [IDButton button];
-    nextButton.text = @"Next Event";
-    [nextButton setTargetView:provider.calendarEventView];
-    [nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
+    self.nextButton = [IDButton button];
+    self.nextButton.text = @"Next Event";
+    [self.nextButton setTargetView:provider.calendarEventView];
+    [self.nextButton setTarget:self selector:@selector(buttonPressed:) forActionEvent:IDActionEventSelect];
+    [self.nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     
     
     IDButton *todayButton = [IDButton button];
     todayButton.text = @"Today's Events";
     IDLabel *spinner = [IDLabel label];
     spinner.waitingAnimation = YES;
-    nextButton.visible = NO;
+    self.nextButton.visible = NO;
     todayButton.visible = NO;
     [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     [todayButton  setTargetView:provider.calendarListView];
     
-    self.widgets = @[nextButton, todayButton, spinner];
+    self.widgets = @[self.nextButton, todayButton, spinner];
     
 }
 
@@ -62,6 +69,28 @@
     BMWViewProvider *provider = self.application.hmiProvider;
     if (selectedIndex == 0) {
         provider.calendarEventView.event = [provider.calendarListView.events objectAtIndex:0];
+    }
+}
+
+- (void)buttonPressed:(IDButton *)button {
+    if (button == self.nextButton) {
+        BMWViewProvider *provider = self.application.hmiProvider;
+        BMWGCalendarEvent *nextEvent = [provider.calendarListView.events objectAtIndex:0];
+        NSString *phoneNumber = [[PFUser currentUser] objectForKey:@"phone_number"];
+        if (!phoneNumber) {
+            return;
+        }
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        NSString *message = [NSString stringWithFormat:@"Your event: %@\r\n is at: %@", nextEvent.title, [formatter stringFromDate:nextEvent.startDate]];
+        NSString *requestString = [NSString stringWithFormat:@"http://bossmobilewunderkinds.herokuapp.com/api/sms/send?to=%@&body=%@", phoneNumber, message];
+        requestString  = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *requestURL = [NSURL URLWithString:requestString];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSData *response = [NSData dataWithContentsOfURL:requestURL];
+            NSLog(@"%@", response);
+        });
     }
 }
 

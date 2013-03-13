@@ -17,6 +17,9 @@
 
 + (instancetype)eventFromJSONDict:(NSDictionary *)dict;
 + (NSArray *)eventsFromJSONDict:(NSDictionary *)dict;
++ (NSArray *)eventsFromJSONCalendars:(NSArray *)calendars sorted:(BOOL)sorted;
 + (instancetype)testEvent;
+
+- (NSComparisonResult)compare:(BMWGCalendarEvent *)event;
 
 @end
