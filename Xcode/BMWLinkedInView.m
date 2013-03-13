@@ -15,7 +15,7 @@
 @interface BMWLinkedInView()
 
 @property (nonatomic, retain) IDImage *photo;
-@property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel, *emailHeaderLabel;
+@property (nonatomic, strong) IDLabel *nameLabel, *jobTitleLabel, *summaryLabel, *emailHeaderLabel, *spinner;
 @property (nonatomic, strong) NSArray *emails;
 @property (nonatomic, strong) NSURL *profileImageURL;
 @property NSInteger selectedIndex;
@@ -28,13 +28,17 @@
 
 static const CGFloat kImageHeight = 200.0;
 static const CGFloat kImageWidth = 200.0;
-static const NSInteger kIndexofEmail = 5;
+static const NSInteger kIndexofEmail = 6;
 
 
 - (void)viewWillLoad:(IDView *)view {
-    
+    [self createAllAssets];
+    self.startRow = 4;
+}
+
+- (void)createAllAssets {
     BMWViewProvider *provider = self.application.hmiProvider;
-        
+    
     self.photo = [IDImage image];
     self.photo.position = CGPointMake(5, 5);
     self.nameLabel = [IDLabel label];
@@ -52,6 +56,9 @@ static const NSInteger kIndexofEmail = 5;
     self.emailHeaderLabel.isInfoLabel = YES;
     self.emailHeaderLabel.selectable = NO;
     
+    self.spinner = [IDLabel label];
+    self.spinner.selectable = NO;
+    
     NSMutableArray *mutableEmailWidgets = [NSMutableArray array];
     
     const NSInteger kButtonLimit = 3;
@@ -62,37 +69,64 @@ static const NSInteger kIndexofEmail = 5;
         button.visible = NO;
         [mutableEmailWidgets addObject:button];
     }
+
+    self.widgets = [[@[self.spinner, self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel, self.emailHeaderLabel] arrayByAddingObjectsFromArray:mutableEmailWidgets] mutableCopy];
+    [self hideAllAssets];
+}
+
+- (void)hideAllAssets {
+    self.nameLabel.visible = NO;
+    self.jobTitleLabel.visible = NO;
+    self.summaryLabel.visible = NO;
+    self.emailHeaderLabel.visible = NO;
+    self.spinner.waitingAnimation = YES;
+    self.spinner.selectable = NO;
     
-    self.widgets = [[@[self.photo, self.nameLabel, self.jobTitleLabel, self.summaryLabel, self.emailHeaderLabel] arrayByAddingObjectsFromArray:mutableEmailWidgets] mutableCopy];
+}
+
+- (void)showAllAssets {
+    self.nameLabel.visible = YES;
+    self.jobTitleLabel.visible = YES;
+    self.summaryLabel.visible = YES;
+    self.emailHeaderLabel.visible = YES;
+    self.spinner.waitingAnimation = NO;
+    self.spinner.visible = NO;
     
-    self.startRow = 4;
+    NSInteger index = kIndexofEmail;
+    for (NSDictionary *emails in self.emails) {
+        IDButton *button = [self.widgets objectAtIndex:index];
+        button.text = emails[@"subject"];
+        button.visible = YES;
+        index++;
+    }
+
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
     if (self.profile) {
         self.title = self.profile.name;
+    
+        
         self.nameLabel.text = self.profile.name;
         self.jobTitleLabel.text = self.profile.jobTitle;
         self.summaryLabel.text = self.profile.summary;
         self.profileImageURL = self.profile.profileImageURL;
         self.emails = self.profile.emails;
+        self.emailHeaderLabel.text = @"Recent Emails";
+
+        
         [SDWebImageManager.sharedManager downloadWithURL:self.profileImageURL
                                                  options:optind
                                                 progress:NULL
                                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
                                      {
-                                         [self setProfileImageWithImage:image];
+                                    
+                                        [self setProfileImageWithImage:image];
+                                        [self showAllAssets];
+
                                      }];
         
-        self.emailHeaderLabel.text = @"Recent Emails";
-        NSInteger index = kIndexofEmail;
-        for (NSDictionary *emails in self.emails) {
-            IDButton *button = [self.widgets objectAtIndex:index];
-            button.text = emails[@"subject"];
-            button.visible = YES;
-            index++;
         }
-    }
 }
 
 - (void)setProfileImageWithImage:(UIImage *)image {
