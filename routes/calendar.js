@@ -101,7 +101,7 @@ function getCalendarEvents(req, res, type) {
     }
 
     // Default to beginning of current date if none provided
-    var requestedDate = "";
+    var requestedDate;
     if(req.params.date) {
 
       // Need to convert date manually since new Date() internationalizes
@@ -109,7 +109,7 @@ function getCalendarEvents(req, res, type) {
       requestedDate = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
     } else {
       var today = new time.Date();
-      requestedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      requestedDate = new time.Date(today.getFullYear(), today.getMonth(), today.getDate());
     }
 
     if(req.params.date && req.params.tz) {
@@ -144,7 +144,7 @@ function getCalendarEvents(req, res, type) {
         else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
         else searchTimeEnd += MILLISEC_IN_DAY;
 
-        option.timeMax = new Date(searchTimeEnd).toISOString();
+        option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
         // Asynchronously access events
         google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
