@@ -49,6 +49,9 @@ app.get('/api/sms/send', sms.sendsms);
 kue.redis.createClient = function() {
     var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379")
       , client = redis.createClient(redisUrl.port, redisUrl.hostname);
+	if (process.env.REDISTOGO_URL == null) {
+		redisUrl = url.parse("redis://localhost:6379");
+	}
     if (redisUrl.auth) {
         client.auth(redisUrl.auth.split(":")[1]);
     }
