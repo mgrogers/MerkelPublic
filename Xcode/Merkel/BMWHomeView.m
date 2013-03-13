@@ -11,8 +11,13 @@
 #import "BMWGCalendarDataSource.h"
 #import "BMWViewProvider.h"
 
-@implementation BMWHomeView
+@interface BMWHomeView ()
 
+@property (nonatomic, strong) IDButton *nextButton;
+
+@end
+
+@implementation BMWHomeView
 
 - (void)viewWillLoad:(IDView *)view {
     [self createAllViews];
@@ -38,23 +43,23 @@
 - (void)createAllViews {
     BMWViewProvider *provider = self.application.hmiProvider;
     self.title = @"Merkel";
-    IDButton *nextButton = [IDButton button];
-    nextButton.text = @"Next Event";
-    [nextButton setTargetView:provider.calendarEventView];
-    [nextButton setTarget:self selector:@selector(buttonPressed:) forActionEvent:IDActionEventSelect];
-    [nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
+    self.nextButton = [IDButton button];
+    self.nextButton.text = @"Next Event";
+    [self.nextButton setTargetView:provider.calendarEventView];
+    [self.nextButton setTarget:self selector:@selector(buttonPressed:) forActionEvent:IDActionEventSelect];
+    [self.nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     
     
     IDButton *todayButton = [IDButton button];
     todayButton.text = @"Today's Events";
     IDLabel *spinner = [IDLabel label];
     spinner.waitingAnimation = YES;
-    nextButton.visible = NO;
+    self.nextButton.visible = NO;
     todayButton.visible = NO;
     [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     [todayButton  setTargetView:provider.calendarListView];
     
-    self.widgets = @[nextButton, todayButton, spinner];
+    self.widgets = @[self.nextButton, todayButton, spinner];
     
 }
 
@@ -67,7 +72,11 @@
 }
 
 - (void)buttonPressed:(IDButton *)button {
-    
+    if (button == self.nextButton) {
+        BMWViewProvider *provider = self.application.hmiProvider;
+        BMWGCalendarEvent *nextEvent = [provider.calendarListView.events objectAtIndex:0];
+        NSString *requestString = [NSString stringWithFormat:@"http://bossmobilewunderkinds.herokuapp.com/api/sms/send?to=%@&body=%@"]
+    }
 }
 
 @end
