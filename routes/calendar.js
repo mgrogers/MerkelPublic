@@ -22,30 +22,30 @@ var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 
 /* ----------- API FUNCTIONS -----------*/
 /*
- API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening on [date]
+ API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date], in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
- [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
+ [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
   */
 exports.eventsDay = function(req, res) {
   return getCalendarEvents(req, res, "day");
 };
 
 /*
- API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +7 days
+ API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date] +7 days, in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day
- [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
   */
 exports.eventsWeek = function(req, res) {
   return getCalendarEvents(req, res, "week");
 };
 
 /*
- API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening on [date] +30 days
+ API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date] +30 days, in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
- [date] should be in the format "yyyy-mm-dd-hh", if empty defaults to current day
- [tz] should be in the format "[+/-]HH", e.g. +08 for PST, if empty defaults to +00 UTC
+ [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
+ [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
   */
 exports.eventsMonth = function(req, res) {
   return getCalendarEvents(req, res, "month");
@@ -100,24 +100,27 @@ function getCalendarEvents(req, res, type) {
       access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
     }
 
+    var requestedDateRaw;
+    var requestedDate = new time.Date();
+    var timezone;
+
     // Default to beginning of current date if none provided
-    var requestedDate;
     if(req.params.date) {
-
-      // Need to convert date manually since new Date() internationalizes
       var requestedDateArray = req.params.date.split('-');
-      requestedDate = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+      requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
     } else {
-      var today = new time.Date();
-      requestedDate = new time.Date(today.getFullYear(), today.getMonth(), today.getDate());
+      requestedDateRaw = new time.Date();
     }
 
+    // Default to UTC if timezone not provided or improperly formatted
     if(req.params.date && req.params.tz) {
-      requestedDate.setTimezone(decodeURIComponent(req.params.tz));
-      // if TZ is improperly formatted or not provided, use UTC
+      timezone = decodeURIComponent(req.params.tz);
     } else {
-      requestedDate.setTimezone('UTC');
+      timezone = 'UTC';
     }
+
+    // Change requested date to correct date request based on provided timezone
+    requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
     console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
