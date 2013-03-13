@@ -12,8 +12,6 @@
 
 @interface BMWGCalendarEvent ()
 
-
-
 @end
 
 @implementation BMWGCalendarEvent
@@ -42,6 +40,21 @@
     return returnArray;
 }
 
++ (NSArray *)eventsFromJSONCalendars:(NSArray *)calendars sorted:(BOOL)sorted {
+    NSMutableArray *events = [NSMutableArray array];
+    for (NSDictionary *dict in calendars) {
+        [events addObjectsFromArray:[BMWGCalendarEvent eventsFromJSONDict:dict]];
+    }
+    if (sorted) {
+        [events sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            BMWGCalendarEvent *e1 = (BMWGCalendarEvent *)obj1;
+            BMWGCalendarEvent *e2 = (BMWGCalendarEvent *)obj2;
+            return [e1 compare:e2];
+        }];
+    }
+    return events;
+}
+
 + (NSDate *)dateFromEventObject:(NSDictionary *)dict {
     if (dict[@"date"]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -67,6 +80,10 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"title: %@\ndescription: %@\nstart: %@\nend: %@", self.title, self.eventDescription, self.startDate, self.endDate];
+}
+
+- (NSComparisonResult)compare:(BMWGCalendarEvent *)event {
+    return [self.startDate compare:event.startDate];
 }
 
 @end
