@@ -35,9 +35,9 @@
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-    if (!self.attendees) {
+//    if (!self.attendees) {
         self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
-    }
+//    }
     NSInteger index = 0;
     for (BMWLinkedInProfile *profile in self.attendees) {
         IDButton *button = [self.widgets objectAtIndex:index];

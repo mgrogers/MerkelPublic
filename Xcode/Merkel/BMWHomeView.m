@@ -37,4 +37,13 @@
     }];
 }
 
+- (void)buttonFocused:(IDButton *)button {
+    NSInteger selectedIndex = [self.widgets indexOfObject:button];
+    BMWViewProvider *provider = self.application.hmiProvider;
+    if (selectedIndex == 0) {
+        provider.calendarEventView.event = [provider.calendarListView.events objectAtIndex:0];
+    }
+//    provider.calendarEventView.event = self.events[_selectedIndex];
+}
+
 @end
