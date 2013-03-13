@@ -48,7 +48,7 @@
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
 static NSString * const kBMWGoogleAuthKeychain = @"kBMWGoogleAuthKeychain";
-static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive";
+static NSString * const kBMWGoogleScope = @"https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://mail.google.com";
 
 // standard OAuth keys
 static NSString *const kOAuth2AccessTokenKey       = @"access_token";
@@ -168,6 +168,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
         [[PFUser currentUser] setObject:auth.accessToken forKey:@"google_access_token"];
         [[PFUser currentUser] setObject:auth.refreshToken forKey:@"google_refresh_token"];
         [[PFUser currentUser] setObject:auth.userID forKey:@"google_user_id"];
+        [[PFUser currentUser] setObject:auth.userEmail forKey:kUserEmailKey];
         [self savePersistenceResponseString];
         [[PFUser currentUser] saveInBackground];
     }
