@@ -24,6 +24,8 @@
     self.title = @"Event Attendees";
     NSMutableArray *attendeeButtons = [NSMutableArray array];
     const NSInteger kButtonLimit = 10;
+
+    
     for (int i = 0; i < kButtonLimit; i++) {
         IDButton *button = [IDButton button];
         [button setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
@@ -36,7 +38,7 @@
 
 - (void)viewDidBecomeFocused:(IDView *)view {
 //    if (!self.attendees) {
-        self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
+    self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
 //    }
     NSInteger index = 0;
     for (BMWLinkedInProfile *profile in self.attendees) {
@@ -56,6 +58,7 @@
 - (void)buttonFocused:(IDButton *)button {
     _selectedIndex = [self.widgets indexOfObject:button];
     BMWViewProvider *provider = self.application.hmiProvider;
+    self.attendees = [[BMWGCalendarDataSource sharedDataSource] attendeesToDisplayTest];
     provider.profileView.profile = self.attendees[_selectedIndex];
     
 }
