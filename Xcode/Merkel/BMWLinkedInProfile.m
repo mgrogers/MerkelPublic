@@ -32,6 +32,21 @@
     return returnArray;
 }
 
++ (instancetype)profileFromEmail:(NSDictionary *)email {
+    BMWLinkedInProfile *profile = [[self alloc] init];
+    profile.name = email[@"email"];
+    profile.responseStatus = email[@"responseStatus"];
+    return profile;
+}
+
++ (NSArray *)profilesFromEmails:(NSArray *)emails {
+    NSMutableArray *returnArray = [NSMutableArray array];
+    for (NSDictionary *email in emails) {
+        [returnArray addObject:[self profileFromEmail:email]];
+    }
+    return returnArray;
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"Name: %@\nTitle: %@\nsummary: %@\nnumber of Emails: %d@", self.name, self.jobTitle, self.summary, [self.emails count]];
 }

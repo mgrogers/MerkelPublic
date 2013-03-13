@@ -36,19 +36,18 @@ static const NSInteger kAttendeesToDisplay = 3;
     BMWViewProvider *provider = self.application.hmiProvider;
     
     //Grabs first event from eventsToDisplay
-    self.event = [provider.calendarListView.events objectAtIndex:0];
+//    self.event = [provider.calendarListView.events objectAtIndex:0];
     self.attendees = self.event.attendees;
-    
     provider.attendeeListView.attendees = self.attendees;
     if (self.event) {
         [self updateDisplayForEvent:self.event];
     }
 }
 
-- (void)viewDidLoseFocus:(IDView *)view {
-    BMWViewProvider *provider = self.application.hmiProvider;
-    provider.attendeeListView.attendees = nil;
-}
+//- (void)viewDidLoseFocus:(IDView *)view {
+//    BMWViewProvider *provider = self.application.hmiProvider;
+//    provider.attendeeListView.attendees = nil;
+//}
 
 - (NSArray *)createToolbarButtons {
     BMWViewProvider *provider = self.application.hmiProvider;
@@ -163,6 +162,8 @@ static const NSInteger kAttendeesToDisplay = 3;
 - (void)toolbarButtonFocused:(IDButton *)button
 {
     NSInteger index = [self.toolbarWidgets indexOfObject:button];
+    BMWViewProvider *provider = self.application.hmiProvider;
+    provider.attendeeListView.attendees = self.attendees;
     [self updateDisplayForIndex:index];
 }
 
