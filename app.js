@@ -10,6 +10,7 @@ var express = require('express'),
   	routes = require('./routes'),
   	calendar = require('./routes/calendar'),
   	sms = require('./routes/sms'),
+    gmail = require('./routes/gmail'),
   	http = require('http'),
   	path = require('path'),
   	kue = require('kue'),
@@ -45,6 +46,7 @@ app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
+app.get('/api/mail', gmail.mail);
 
 kue.redis.createClient = function() {
     var redisUrl = url.parse("redis://redistogo:8b3171477ccaa37c8ee4e988b9c99fb2@viperfish.redistogo.com:9462/");
