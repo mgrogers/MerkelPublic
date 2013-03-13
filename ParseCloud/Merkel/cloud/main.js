@@ -27,6 +27,7 @@ Parse.Cloud.define("sendsms", function(request, response) {
 	from = "6503535255";
 	body = request.params.body;
 	if (to == null || from == null || body == null) {
+		console.log(to + " " + from + " " + body);
 		response.error("Incomplete parameters");
 	} else {
 		twilio.sendSMS({
