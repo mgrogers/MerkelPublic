@@ -7,10 +7,14 @@
  */
 
 var express = require('express'),
-  routes = require('./routes'),
-  calendar = require('./routes/calendar'),
-  http = require('http');
-  path = require('path');
+  	routes = require('./routes'),
+  	calendar = require('./routes/calendar'),
+  	sms = require('./routes/sms'),
+  	http = require('http'),
+  	path = require('path'),
+  	kue = require('kue'),
+  	url = require('url'),
+  	redis = require('kue/node_modules/redis');
 
 var app = express();
 
@@ -40,6 +44,22 @@ app.get('/api/events/:userId/week/:date/:tz', calendar.eventsWeek);
 app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
+app.get('/api/sms/send', sms.sendsms);
+
+kue.redis.createClient = function() {
+    var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379")
+      , client = redis.createClient(redisUrl.port, redisUrl.hostname);
+    if (redisUrl.auth) {
+        client.auth(redisUrl.auth.split(":")[1]);
+    }
+    return client;
+};
+
+var jobs = kue.createQueue();
+
+// wire up Kue (see /active for queue interface)
+app.use(kue.app);
+kue.app.listen(8888);
 
 app.listen(app.get('port'));
 console.log("Express server listening on port " + app.get('port'));
