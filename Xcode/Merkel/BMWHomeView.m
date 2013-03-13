@@ -13,30 +13,9 @@
 
 @implementation BMWHomeView
 
-- (void)setupButton {
-
-}
 
 - (void)viewWillLoad:(IDView *)view {
-    BMWViewProvider *provider = self.application.hmiProvider;
-    self.title = @"Merkel";
-    IDButton *nextButton = [IDButton button];
-    nextButton.text = @"Next Event";
-    [nextButton setTargetView:provider.calendarEventView];
-    [nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
-    
-    
-    IDButton *todayButton = [IDButton button];
-    todayButton.text = @"Today's Events";
-    IDLabel *spinner = [IDLabel label];
-    spinner.waitingAnimation = YES;
-    nextButton.visible = NO;
-    todayButton.visible = NO;
-    [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
-    [todayButton  setTargetView:provider.calendarListView];
-
-    self.widgets = @[nextButton, todayButton, spinner];
-
+    [self createAllViews];
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
@@ -54,6 +33,28 @@
         nextButton.visible = YES;
         todayButton.visible = YES;
     }];
+}
+
+- (void)createAllViews {
+    BMWViewProvider *provider = self.application.hmiProvider;
+    self.title = @"Merkel";
+    IDButton *nextButton = [IDButton button];
+    nextButton.text = @"Next Event";
+    [nextButton setTargetView:provider.calendarEventView];
+    [nextButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
+    
+    
+    IDButton *todayButton = [IDButton button];
+    todayButton.text = @"Today's Events";
+    IDLabel *spinner = [IDLabel label];
+    spinner.waitingAnimation = YES;
+    nextButton.visible = NO;
+    todayButton.visible = NO;
+    [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
+    [todayButton  setTargetView:provider.calendarListView];
+    
+    self.widgets = @[nextButton, todayButton, spinner];
+    
 }
 
 - (void)buttonFocused:(IDButton *)button {
