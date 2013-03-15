@@ -49,4 +49,49 @@ describe('GoogleParseAuth', function() {
 			});
 		});
 	});
+
+	describe("makeAuthenticatedCall", function() {
+		var parseAPI;
+		var find_stub;
+
+		beforeEach(function() {
+			parseAPI = {
+				find: function(){},
+				update: function(callback){callback()}
+			};
+
+			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+				console.log("(*) Called find on parse");
+				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'authtoken'});
+			});
+		});
+
+		it("should be able to make a call using the access token it gets from parse", function(done) {
+			var test_module = {
+					test_method: function(token, arg2, callback) {
+				}
+			}
+
+			var method_stub = sinon.stub(test_module, "test_method", function(token, arg2, callback) {
+					assert.equal("authtoken", token);
+					assert.equal(2, arg2);
+					callback("err", "events");
+				});
+
+			var google_parse_auth = new GoogleParseAuth(parseAPI, 
+														GOOGLE_CONSUMER_KEY, 
+														GOOGLE_CONSUMER_SECRET);
+
+			google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 1, 2, function(err, data) {
+				assert(data);
+				assert(method_stub.called);
+				done();
+			});
+
+		}); 
+
+		it("should be able to successfully retrieve a refresh token if the access token is bad", function(done) {
+			done();
+		});
+	});
 });
