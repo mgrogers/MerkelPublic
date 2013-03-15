@@ -84,23 +84,11 @@ exports.authentication = function(req, res) {
 /* ----------- HELPER FUNCTIONS -----------*/
 /* Get calendar events based on time constraints of 'type' - day, week, or month */
 function getCalendarEvents(req, res, type) {
-  var appUrl = req.protocol + "://" + req.get('host');
-  var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-  var calendars = [];
-  var calendarCount = 0;
-
-  parseApp.find('', req.params.userId, function (err, response) {
-    var access_token;
-    if(response && response.google_access_token) {
-      console.log("Using Parse auth token.");
-      access_token = response.google_access_token;
-    } else if(req.session.access_token) {
-      console.log("Using Express session auth token.");
-      access_token = req.session.access_token;
-    } else {
-      console.log("Using hard-coded auth token.");
-      access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
-    }
+	var appUrl = req.protocol + "://" + req.get('host');
+	var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+	var calendars = [];
+	var calendarCount = 0;
+    var userId = req.params.userId;
 
     var requestedDateRaw;
     var requestedDate = new time.Date();
@@ -108,17 +96,17 @@ function getCalendarEvents(req, res, type) {
 
     // Default to beginning of current date if none provided
     if(req.params.date) {
-      var requestedDateArray = req.params.date.split('-');
-      requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+        var requestedDateArray = req.params.date.split('-');
+        requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
     } else {
-      requestedDateRaw = new time.Date();
+        requestedDateRaw = new time.Date();
     }
 
     // Default to UTC if timezone not provided or improperly formatted
     if(req.params.date && req.params.tz) {
-      timezone = decodeURIComponent(req.params.tz);
+        timezone = decodeURIComponent(req.params.tz);
     } else {
-      timezone = 'UTC';
+        timezone = 'UTC';
     }
 
     // Change requested date to correct date request based on provided timezone
@@ -126,90 +114,89 @@ function getCalendarEvents(req, res, type) {
 
     console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
-    google_calendar.listCalendarList(access_token, function(err, data) {
-      if(err) return res.send(500,err);
+    googleParseAuth.makeAuthenticatedRequest(userId, google_calendar.listCalendarList, function(err, data) {
+        if(err) return res.send(500,err);
 
-      calendarCount = data.items.length;
+        calendarCount = data.items.length;
 
-      data.items.forEach(function(calendar) {
+        data.items.forEach(function(calendar) {
 
-        // Skip unnecessary calendars
-        if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+            // Skip unnecessary calendars
+            if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
 
-        var option = {};
-        option.access_token = access_token;
-        option.key = GOOGLE_CONSUMER_KEY;
-        option.timeZone = "UTC";
-        option.timeMin = requestedDate.toISOString();
+            var option = {};
+            option.access_token = access_token;
+            option.key = GOOGLE_CONSUMER_KEY;
+            option.timeZone = "UTC";
+            option.timeMin = requestedDate.toISOString();
 
-        // Set end time to search based on type of request - day, week, month
-        var searchTimeEnd = requestedDate.getTime();
-        if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
-        else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
-        else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
-        else searchTimeEnd += MILLISEC_IN_DAY;
+            // Set end time to search based on type of request - day, week, month
+            var searchTimeEnd = requestedDate.getTime();
+            if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
+            else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
+            else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
+            else searchTimeEnd += MILLISEC_IN_DAY;
 
-        option.timeMax = new time.Date(searchTimeEnd).toISOString();
+            option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
-        // Asynchronously access events
-        google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
+            // Asynchronously access events
+            googleParseAuth.makeAuthenticatedRequest(userId, google_calendar.listEvent, calendar.id, option, function(err, events) {
 
-          // Error
-          if(err || !events) {
-            console.log(err);
-            return res.send(500,err);
-          }
-          // No matching items in this calendar
-          if(!events.items) {
+                // Error
+                if(err || !events) {
+                    console.log(err);
+                    return res.send(500,err);
+                }
+                // No matching items in this calendar
+                if(!events.items) {
+                    return returnResponse();
+                }
+
+                var tempCalendar = {};
+                tempCalendar.name = calendar.summary;
+                tempCalendar.events = [];
+
+                // Populate relevant fields for events
+                events.items.forEach(function(event) {
+
+                // Generate clean JSON calendar object
+                if(event.id && event.summary) {
+                    var calEvent = {};
+                    calEvent.id = event.id;
+                    calEvent.name = event.summary;
+                    if(event.description) calEvent.description = event.description;
+                    if(event.location) calEvent.location = event.location;
+                    if(event.start) calEvent.start = event.start;
+                    if(event.end) calEvent.end = event.end;
+                    if(event.creator) calEvent.creator = event.creator;
+                    if(event.attendees) calEvent.attendees = event.attendees;
+                    if(event.created) calEvent.created = event.created;
+                    if(event.updated) calEvent.updated = event.updated;
+
+                    // Add event to calendar object
+                    tempCalendar.events.push(calEvent);
+                }
+            });
+
+            calendars.push(tempCalendar);
+
+            // Return JSON object after all calendars are accessed
             return returnResponse();
-          }
-
-          var tempCalendar = {};
-          tempCalendar.name = calendar.summary;
-          tempCalendar.events = [];
-
-          // Populate relevant fields for events
-          events.items.forEach(function(event) {
-
-            // Generate clean JSON calendar object
-            if(event.id && event.summary) {
-              var calEvent = {};
-              calEvent.id = event.id;
-              calEvent.name = event.summary;
-              if(event.description) calEvent.description = event.description;
-              if(event.location) calEvent.location = event.location;
-              if(event.start) calEvent.start = event.start;
-              if(event.end) calEvent.end = event.end;
-              if(event.creator) calEvent.creator = event.creator;
-              if(event.attendees) calEvent.attendees = event.attendees;
-              if(event.created) calEvent.created = event.created;
-              if(event.updated) calEvent.updated = event.updated;
-
-              // Add event to calendar object
-              tempCalendar.events.push(calEvent);
-            }
-          });
-
-          calendars.push(tempCalendar);
-
-          // Return JSON object after all calendars are accessed
-          return returnResponse();
         });
-      });
     });
-  });
+});
 
-  function returnResponse() {
+function returnResponse() {
     if(calendarCount != 0) {
       calendarCount--;
-    }
-
-    if(calendarCount == 0) {
-      return res.send(calendars);
-    } else {
-      return;
-    }
   }
+
+  if(calendarCount == 0) {
+      return res.send(calendars);
+  } else {
+      return;
+  }
+}
 }
 
 /* Check if object contains a */
