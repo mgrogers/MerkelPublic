@@ -116,14 +116,16 @@ describe('GoogleParseAuth', function() {
 		}); 
 
 		it("should be able to successfully retrieve a refresh token if the access token is bad", function(done) {
-			var test_module = {
-					test_method: function(token, arg2, callback) {
-						if (token == "authtoken") {
-							callback(false, "events");
-						} else {
-							callback(true, "error, old token");
-						}
+			function api_method(token, arg2, callback) {
+				if (token == "authtoken") {
+					callback(false, "events");
+				} else {
+					callback(true, "error, old token");
 				}
+			}
+
+			var test_module = {
+				test_method: api_method
 			}
 
 			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
@@ -135,7 +137,7 @@ describe('GoogleParseAuth', function() {
 					callback(null, {});
 				});
 
-			var response = {access_token: "newtoken",
+			var response = {access_token: "authtoken",
 	            			expires_in:3920,
 	            			token_type:"Bearer"
 	            			};
@@ -151,10 +153,58 @@ describe('GoogleParseAuth', function() {
 														GOOGLE_CONSUMER_KEY, 
 														GOOGLE_CONSUMER_SECRET);
 
-	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, function(err, data) {
-				assert.equal(data, "events");
+	        function finalCallback(err, data) {
+	        	assert.equal(data, "events");
 				done();
+	        }
+
+	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, finalCallback);
+		});
+
+		it("should just return an error if it can't get a good token", function(done) {
+			function api_method(token, arg2, callback) {
+				if (token == "authtoken") {
+					callback(false, "events");
+				} else {
+					callback(true, "error, old token");
+				}
+			}
+
+			var test_module = {
+				test_method: api_method
+			}
+
+			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+				console.log("(*) Called find on parse");
+				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'oldtoken'});
 			});
+			var update_stub = sinon.stub(parseAPI, "update", function(clazz, id, data, callback) {
+					console.log("(*) called update on parse");
+					callback(null, {});
+				});
+
+			var response = {access_token: "nope, sorry",
+	            			expires_in:3920,
+	            			token_type:"Bearer"
+	            			};
+			var google = nock('https://accounts.google.com')
+					.log(console.log)
+	                .post('/o/oauth2/token', "refresh_token=refreshtoken" +
+	            							"&client_id=" + GOOGLE_CONSUMER_KEY +
+	            							"&client_secret=" + GOOGLE_CONSUMER_SECRET +
+	            							"&grant_type=refresh_token")
+	                .reply(200, response, {'Content-Type': 'application/json'});
+
+	        var google_parse_auth = new GoogleParseAuth(parseAPI, 
+														GOOGLE_CONSUMER_KEY, 
+														GOOGLE_CONSUMER_SECRET);
+
+	        function finalCallback(err, data) {
+	        	assert(err);
+				done();
+	        }
+
+	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, finalCallback);
 		});
 	});
 });
