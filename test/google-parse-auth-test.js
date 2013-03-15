@@ -50,6 +50,30 @@ describe('GoogleParseAuth', function() {
 		});
 	});
 
+	describe("retrieveAccessToken", function() {
+		it("should retrieve an access token from parse and then call the callback", function(done) {
+			var parseAPI = {
+				find: function(){},
+				update: function(callback){callback()}
+			};
+
+			var find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+					console.log("(*) Called find on parse");
+					assert.equal(id, "userId");
+					callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'authtoken'});
+				});
+
+			var google_parse_auth = new GoogleParseAuth(parseAPI, 
+															GOOGLE_CONSUMER_KEY, 
+															GOOGLE_CONSUMER_SECRET);
+
+			google_parse_auth.retrieveAccessToken("userId", function(err, token) {
+				assert.equal("authtoken", token);
+				done();
+			});
+		});
+	});
+
 	describe("makeAuthenticatedCall", function() {
 		var parseAPI;
 		var find_stub;
@@ -58,12 +82,7 @@ describe('GoogleParseAuth', function() {
 			parseAPI = {
 				find: function(){},
 				update: function(callback){callback()}
-			};
-
-			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
-				console.log("(*) Called find on parse");
-				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'authtoken'});
-			});
+			}
 		});
 
 		it("should be able to make a call using the access token it gets from parse", function(done) {
@@ -72,18 +91,24 @@ describe('GoogleParseAuth', function() {
 				}
 			}
 
+			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+				console.log("(*) Called find on parse");
+				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'authtoken'});
+			});
+
 			var method_stub = sinon.stub(test_module, "test_method", function(token, arg2, callback) {
+					console.log("Args length: ", arguments.length);
 					assert.equal("authtoken", token);
 					assert.equal(2, arg2);
-					callback("err", "events");
+					callback(false, "events");
 				});
 
 			var google_parse_auth = new GoogleParseAuth(parseAPI, 
 														GOOGLE_CONSUMER_KEY, 
 														GOOGLE_CONSUMER_SECRET);
 
-			google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 1, 2, function(err, data) {
-				assert(data);
+			google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, function(err, data) {
+				assert.equal(data, "events");
 				assert(method_stub.called);
 				done();
 			});
@@ -91,7 +116,45 @@ describe('GoogleParseAuth', function() {
 		}); 
 
 		it("should be able to successfully retrieve a refresh token if the access token is bad", function(done) {
-			done();
+			var test_module = {
+					test_method: function(token, arg2, callback) {
+						if (token == "authtoken") {
+							callback(false, "events");
+						} else {
+							callback(true, "error, old token");
+						}
+				}
+			}
+
+			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+				console.log("(*) Called find on parse");
+				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'oldtoken'});
+			});
+			var update_stub = sinon.stub(parseAPI, "update", function(clazz, id, data, callback) {
+					console.log("(*) called update on parse");
+					callback(null, {});
+				});
+
+			var response = {access_token: "newtoken",
+	            			expires_in:3920,
+	            			token_type:"Bearer"
+	            			};
+			var google = nock('https://accounts.google.com')
+					.log(console.log)
+	                .post('/o/oauth2/token', "refresh_token=refreshtoken" +
+	            							"&client_id=" + GOOGLE_CONSUMER_KEY +
+	            							"&client_secret=" + GOOGLE_CONSUMER_SECRET +
+	            							"&grant_type=refresh_token")
+	                .reply(200, response, {'Content-Type': 'application/json'});
+
+	        var google_parse_auth = new GoogleParseAuth(parseAPI, 
+														GOOGLE_CONSUMER_KEY, 
+														GOOGLE_CONSUMER_SECRET);
+
+	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, function(err, data) {
+				assert.equal(data, "events");
+				done();
+			});
 		});
 	});
 });
