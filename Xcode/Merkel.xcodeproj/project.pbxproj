@@ -80,6 +80,10 @@
 		4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */; };
 		4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
 		4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
+		4BF95F5E16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F5D16F518AC0058F182 /* NewRelicAgent.framework */; };
+		4BF95F5F16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F5D16F518AC0058F182 /* NewRelicAgent.framework */; };
+		4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6016F518C60058F182 /* CoreTelephony.framework */; };
+		4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6216F518CB0058F182 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +180,9 @@
 		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarDataSource.h; sourceTree = "<group>"; };
 		4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarDataSource.m; sourceTree = "<group>"; };
+		4BF95F5D16F518AC0058F182 /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
+		4BF95F6016F518C60058F182 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4BF95F6216F518CB0058F182 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		8CF2515D55FF42B095C2BE58 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -184,6 +191,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */,
+				4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */,
 				4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */,
 				4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */,
 				2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */,
@@ -207,6 +216,7 @@
 				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
 				4BBEF1BA16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */,
 				2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */,
+				4BF95F5E16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +230,7 @@
 				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
 				4BBEF1BB16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */,
 				4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */,
+				4BF95F5F16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +285,9 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BF95F6216F518CB0058F182 /* libz.dylib */,
+				4BF95F6016F518C60058F182 /* CoreTelephony.framework */,
+				4BF95F5D16F518AC0058F182 /* NewRelicAgent.framework */,
 				2B606F2516DB7BF800CBACDC /* Google Apps */,
 				4BBEF1BC16D1BD760080F6E5 /* Google Analytics */,
 				2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */,
