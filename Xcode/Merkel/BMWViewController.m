@@ -121,6 +121,7 @@
     } else {
         self.phoneNumberValidator.hidden = YES;
     }
+     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed:)];
     [self.phoneNumberField resignFirstResponder];
 }
 
