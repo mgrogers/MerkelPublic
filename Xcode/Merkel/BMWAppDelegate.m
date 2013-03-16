@@ -11,7 +11,10 @@
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
 
-@interface BMWAppDelegate () <IDLogAppender>
+@interface BMWAppDelegate () <IDLogAppender, CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @end
 
 @implementation BMWAppDelegate
@@ -61,6 +64,24 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [PFFacebookUtils handleOpenURL:url];
 }
+
+#pragma mark - Location Handling
+
+- (void)startSignificantChangeUpdates{
+    if (self.locationManager == nil &&
+        [CLLocationManager locationServicesEnabled] &&
+        [CLLocationManager significantLocationChangeMonitoringAvailable])
+        self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager startMonitoringSignificantLocationChanges];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    [NewRelicAgent setDeviceLocation:location];
+}
+
+#pragma mark - Application Status Handling
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
