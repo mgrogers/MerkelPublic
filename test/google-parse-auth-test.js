@@ -107,7 +107,7 @@ describe('GoogleParseAuth', function() {
 														GOOGLE_CONSUMER_KEY, 
 														GOOGLE_CONSUMER_SECRET);
 
-			google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, function(err, data) {
+			google_parse_auth.makeAuthenticatedCall("userId", test_module, test_module.test_method, 2, function(err, data) {
 				assert.equal(data, "events");
 				assert(method_stub.called);
 				done();
@@ -115,11 +115,41 @@ describe('GoogleParseAuth', function() {
 
 		}); 
 
+		it("should work on a function with no extra arguments", function(done) {
+			var test_module = {
+					test_method: function(token, callback) {
+				}
+			}
+
+			find_stub = sinon.stub(parseAPI, "find", function(clazz, id, callback) {
+				console.log("(*) Called find on parse");
+				callback(null, {google_refresh_token: 'refreshtoken', google_access_token: 'authtoken'});
+			});
+
+			var method_stub = sinon.stub(test_module, "test_method", function(token, callback) {
+					console.log("Args length: ", arguments.length);
+					assert.equal("authtoken", token);
+					callback(false, "events");
+				});
+
+			var google_parse_auth = new GoogleParseAuth(parseAPI, 
+														GOOGLE_CONSUMER_KEY, 
+														GOOGLE_CONSUMER_SECRET);
+
+			google_parse_auth.makeAuthenticatedCall("userId", test_module, test_module.test_method, function(err, data) {
+				assert.equal(data, "events");
+				assert(method_stub.called);
+				done();
+			});
+
+		});
+
 		it("should be able to successfully retrieve a refresh token if the access token is bad", function(done) {
 			function api_method(token, arg2, callback) {
 				if (token == "authtoken") {
 					callback(false, "events");
 				} else {
+					console.log("Oops, old token");
 					callback(true, "error, old token");
 				}
 			}
@@ -158,7 +188,7 @@ describe('GoogleParseAuth', function() {
 				done();
 	        }
 
-	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, finalCallback);
+	        google_parse_auth.makeAuthenticatedCall("userId", test_module, test_module.test_method, 2, finalCallback);
 		});
 
 		it("should just return an error if it can't get a good token", function(done) {
@@ -204,7 +234,7 @@ describe('GoogleParseAuth', function() {
 				done();
 	        }
 
-	        google_parse_auth.makeAuthenticatedCall("userId", test_module.test_method, 2, finalCallback);
+	        google_parse_auth.makeAuthenticatedCall("userId", test_module, test_module.test_method, 2, finalCallback);
 		});
 	});
 });
