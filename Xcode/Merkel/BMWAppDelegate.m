@@ -26,27 +26,31 @@ static NSString * const kMerkelTestFlightId = @"f36a8dc5-1f19-49ad-86e7-d2613ce4
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cdfb7f3b65";
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-
-    [[IDLogger defaultLogger] addAppender:self];
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.manager = [[BMWManager alloc] init];
     
     [Parse setApplicationId:kMerkelParseAppId
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
-    [TestFlight takeOff:kMerkelTestFlightId];
+    [self startExternalServices];
+    return YES;
+}
+
+- (void)startExternalServices {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[IDLogger defaultLogger] addAppender:self];
+        [TestFlight takeOff:kMerkelTestFlightId];
 #ifndef RELEASE
-    [GAI sharedInstance].debug = YES;
+        [GAI sharedInstance].debug = YES;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+        [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
 #pragma clang diagnostic pop
 #endif
-    [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
-    [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
-    return YES;
+        [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
+        [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
+        [self startSignificantChangeUpdates];
+    });
 }
 
 - (void)appendLoggerEvent:(IDLoggerEvent *)event
