@@ -13,9 +13,10 @@
 #import "GTMOAuth2ViewControllerTouch.h"
 #import <Google-API-Client/GTLCalendar.h>
 
-@interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumberField;
 
 @end
 
@@ -27,6 +28,7 @@
     self.userLabel.hidden = YES;
     self.title = @"Merkel";
     self.trackedViewName = @"Home Screen";
+    self.phoneNumberField.delegate = self;
 }
 
 
@@ -93,9 +95,31 @@
         return;
     }
     
-    
+        
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
+}
+
+- (void)setupPhoneNumberField {
+    self.phoneNumberField.keyboardType = UIKeyboardTypePhonePad;
+    
+}
+
+
+#pragma mark UITextFieldDelegate Methods
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    if([self isValidPhoneNumber:textField.text]) {
+        PFUser *curUser = [PFUser currentUser];
+        [curUser setObject:textField.text forKey:@"phone_number"];
+        [curUser saveInBackground];
+    }
+    return YES;
+}
+
+-(BOOL)isValidPhoneNumber:(NSString*)phoneNumber {
+    return YES;
 }
 
 #pragma mark - User Login
