@@ -5,6 +5,7 @@ var express  = require('express');
 var parse = require('node-parse-api').Parse;
 var GoogleCalendar = require('google-calendar');
 var time = require('time');
+var mongoose = require('mongoose');
 
 // Constants
 var CALENDARS_TO_SKIP = ['en.usa#holiday@group.v.calendar.google.com'];
@@ -18,6 +19,10 @@ var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRYphizlByPNZxKxwes30IISt81sJd6Qrj
 
 // Initializing variables
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
+var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210'}
+mongoose.connect('ds033877.mongolab.com:33877/merkel');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 
 /* ----------- API FUNCTIONS -----------*/
