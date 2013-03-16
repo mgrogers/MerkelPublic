@@ -52,12 +52,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="✓" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ui-eg-5WP">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" red="0.14287310819999999" green="0.68539826770000001" blue="0.15925277560000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aYX-Wp-ASb" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="1wo-68-f1O"/>
+                            <constraint firstAttribute="trailing" secondItem="3Ui-eg-5WP" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="2sM-7r-GBc"/>
                             <constraint firstItem="Cgx-XO-5t3" firstAttribute="top" secondItem="3" secondAttribute="top" constant="197" id="863-Et-1Do"/>
                             <constraint firstItem="aYX-Wp-ASb" firstAttribute="bottom" secondItem="mrQ-aw-gf4" secondAttribute="bottom" type="default" id="Bto-F4-E3o"/>
+                            <constraint firstItem="3Ui-eg-5WP" firstAttribute="baseline" secondItem="S7U-MO-CaY" secondAttribute="baseline" type="default" id="HO0-pp-FYm"/>
                             <constraint firstItem="mrQ-aw-gf4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="TPZ-BI-k3a"/>
                             <constraint firstItem="S7U-MO-CaY" firstAttribute="bottom" secondItem="Cgx-XO-5t3" secondAttribute="bottom" type="default" id="VWN-pa-Xuh"/>
                             <constraint firstItem="aYX-Wp-ASb" firstAttribute="top" secondItem="3" secondAttribute="top" constant="134" id="ZiG-iR-vVy"/>
@@ -72,6 +79,7 @@
                     <navigationItem key="navigationItem" id="dfQ-mf-XrR"/>
                     <connections>
                         <outlet property="phoneNumberField" destination="Cgx-XO-5t3" id="nfT-kG-tre"/>
+                        <outlet property="phoneNumberValidator" destination="3Ui-eg-5WP" id="SLj-eD-ktN"/>
                         <outlet property="userLabel" destination="aYX-Wp-ASb" id="hJi-42-dk0"/>
                     </connections>
                 </viewController>
@@ -80,6 +88,22 @@
             <point key="canvasLocation" x="632" y="-273"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="BMWViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

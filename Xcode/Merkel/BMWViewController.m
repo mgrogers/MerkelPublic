@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *userLabel;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberField;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumberValidator;
 
 @end
 
@@ -111,15 +112,22 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     if([self isValidPhoneNumber:textField.text]) {
+        self.phoneNumberValidator.hidden = NO;
         PFUser *curUser = [PFUser currentUser];
         [curUser setObject:textField.text forKey:@"phone_number"];
         [curUser saveInBackground];
+    } else {
+        self.phoneNumberValidator.hidden = YES;
     }
     return YES;
 }
 
 -(BOOL)isValidPhoneNumber:(NSString*)phoneNumber {
-    return YES;
+    if(phoneNumber.length == 10) {
+        return YES;
+    } else {
+        return false;
+    }
 }
 
 #pragma mark - User Login
