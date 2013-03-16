@@ -9,8 +9,12 @@
 #import "BMWAppDelegate.h"
 #import "BMWManager.h"
 #import "BMWViewController.h"
+#import <NewRelicAgent/NewRelicAgent.h>
 
-@interface BMWAppDelegate () <IDLogAppender>
+@interface BMWAppDelegate () <IDLogAppender, CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @end
 
 @implementation BMWAppDelegate
@@ -20,6 +24,7 @@ static NSString * const KMerkelParseClientKey = @"lH8IHu99HYIF0nMiSd3KIdXe6fs0rn
 static NSString * const kMerkelFacebookAppId = @"258693340932079";
 static NSString * const kMerkelTestFlightId = @"f36a8dc5-1f19-49ad-86e7-d2613ce46b03";
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
+static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cdfb7f3b65";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -40,6 +45,7 @@ static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 #pragma clang diagnostic pop
 #endif
     [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
+    [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
     return YES;
 }
 
@@ -58,6 +64,24 @@ static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [PFFacebookUtils handleOpenURL:url];
 }
+
+#pragma mark - Location Handling
+
+- (void)startSignificantChangeUpdates{
+    if (self.locationManager == nil &&
+        [CLLocationManager locationServicesEnabled] &&
+        [CLLocationManager significantLocationChangeMonitoringAvailable])
+        self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager startMonitoringSignificantLocationChanges];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    [NewRelicAgent setDeviceLocation:location];
+}
+
+#pragma mark - Application Status Handling
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
