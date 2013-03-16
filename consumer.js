@@ -1,6 +1,7 @@
 var kue = require('kue')
   , url = require('url')
-  , redis = require('kue/node_modules/redis');
+  , redis = require('kue/node_modules/redis')
+  , newrelic = require('newrelic');
 
 var Parse = require('parse').Parse;
 var PARSE_APP_ID = "ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
