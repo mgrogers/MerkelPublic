@@ -97,6 +97,12 @@
     }
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
+    if([curUser objectForKey:@"phone_number"]) {
+        NSString *numberString = [[curUser objectForKey:@"phone_number"] stringValue];
+        self.phoneNumberField.text = numberString;
+        self.phoneNumberValidator.hidden = NO;
+    }
+    
 }
 
 #pragma mark UITextFieldDelegate Methods
