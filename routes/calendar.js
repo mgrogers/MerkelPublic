@@ -112,9 +112,7 @@ function getCalendarEvents(req, res, type) {
     // Change requested date to correct date request based on provided timezone
     requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
-    console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
-
-    googleParseAuth.makeAuthenticatedRequest(userId, google_calendar.listCalendarList, function(err, data) {
+    googleParseAuth.makeAuthenticatedCall(userId, google_calendar.listCalendarList, function(err, data) {
         if(err) return res.send(500,err);
 
         calendarCount = data.items.length;
@@ -140,7 +138,7 @@ function getCalendarEvents(req, res, type) {
             option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
             // Asynchronously access events
-            googleParseAuth.makeAuthenticatedRequest(userId, google_calendar.listEvent, calendar.id, option, function(err, events) {
+            googleParseAuth.makeAuthenticatedCall(userId, google_calendar.listEvent, calendar.id, option, function(err, events) {
 
                 // Error
                 if(err || !events) {

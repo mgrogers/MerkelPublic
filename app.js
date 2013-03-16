@@ -11,6 +11,7 @@ var express = require('express'),
   	calendar = require('./routes/calendar'),
   	sms = require('./routes/sms'),
     gmail = require('./routes/gmail'),
+    auth = require('./routes/auth'),
   	http = require('http'),
   	path = require('path'),
   	kue = require('kue'),
@@ -35,6 +36,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Define API URLS and destinations here.
 app.get('/', routes.index);
+app.get('/home/', routes.home);
+app.get('/auth/', auth.index);
+app.get('/login/', auth.login);
+app.get('/google_auth/', auth.google_auth);
+app.get('/google_auth/token/', auth.google_auth_token);
+
 app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
