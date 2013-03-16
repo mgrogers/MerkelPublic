@@ -95,27 +95,34 @@
     if (![curUser objectForKey:@"first_name"]) {
         return;
     }
-    
-        
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
 }
 
-- (void)setupPhoneNumberField {
-    self.phoneNumberField.keyboardType = UIKeyboardTypePhonePad;
-    
-}
-
-
 #pragma mark UITextFieldDelegate Methods
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    if([self isValidPhoneNumber:textField.text]) {
+-(void)doneEditingTextField:(id)sender {
+
+    if([self isValidPhoneNumber:self.phoneNumberField.text]) {
         self.phoneNumberValidator.hidden = NO;
         PFUser *curUser = [PFUser currentUser];
-        [curUser setObject:textField.text forKey:@"phone_number"];
+        
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterNoStyle];
+        NSNumber *phoneNumber = [formatter numberFromString:self.phoneNumberField.text];
+        [curUser setObject:phoneNumber forKey:@"phone_number"];
         [curUser saveInBackground];
+    } else {
+        self.phoneNumberValidator.hidden = YES;
+    }
+    [self.phoneNumberField resignFirstResponder];
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    if([self isValidPhoneNumber:textField.text]) {
+        self.phoneNumberValidator.hidden = NO;
     } else {
         self.phoneNumberValidator.hidden = YES;
     }
