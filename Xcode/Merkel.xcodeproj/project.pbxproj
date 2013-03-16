@@ -94,8 +94,8 @@
 
 /* Begin PBXFileReference section */
 		299F765672A2407E8FF33FE1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		2B1A358116D1B5B000A3B339 /* bmw.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bmw.jpg; path = Merkel/bmw.jpg; sourceTree = "<group>"; };
-		2B1A358216D1B5B000A3B339 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bmwLogo.png; path = Merkel/bmwLogo.png; sourceTree = "<group>"; };
+		2B1A358116D1B5B000A3B339 /* bmw.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bmw.jpg; sourceTree = "<group>"; };
+		2B1A358216D1B5B000A3B339 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmwLogo.png; sourceTree = "<group>"; };
 		2B1A358316D1B5B000A3B339 /* BMWManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWManager.h; path = Merkel/BMWManager.h; sourceTree = "<group>"; };
 		2B1A358416D1B5B000A3B339 /* BMWManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWManager.m; path = Merkel/BMWManager.m; sourceTree = "<group>"; };
 		2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWTemplateView.h; path = Merkel/BMWTemplateView.h; sourceTree = "<group>"; };
@@ -163,8 +163,8 @@
 		4BBEF19D16D1B82B0080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "Resources/app-icon.png"; sourceTree = "<group>"; };
 		4BBEF19E16D1B82B0080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "Resources/app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF19F16D1B82B0080F6E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
-		4BBEF1A716D1B8880080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon.png"; sourceTree = "<group>"; };
-		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
+		4BBEF1A716D1B8880080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "../app-icon.png"; sourceTree = "<group>"; };
+		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "../app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF1AB16D1BBBF0080F6E5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		4BBEF1AC16D1BBBF0080F6E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		4BBEF1B116D1BD720080F6E5 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
@@ -250,10 +250,6 @@
 		4B77FDFA16C6F2AF00426018 = {
 			isa = PBXGroup;
 			children = (
-				4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */,
-				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
-				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
-				2B1A358216D1B5B000A3B339 /* bmwLogo.png */,
 				4B77FE0F16C6F2AF00426018 /* Merkel */,
 				4B77FE3316C6F2AF00426018 /* MerkelTests */,
 				4B77FE0816C6F2AF00426018 /* Frameworks */,
@@ -327,6 +323,10 @@
 		4B77FE1016C6F2AF00426018 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */,
+				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
+				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
+				2B1A358216D1B5B000A3B339 /* bmwLogo.png */,
 				4BBEF1A616D1B82F0080F6E5 /* Icons */,
 				4B77FE1116C6F2AF00426018 /* Merkel-Info.plist */,
 				4B77FE1216C6F2AF00426018 /* InfoPlist.strings */,

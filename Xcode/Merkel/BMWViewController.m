@@ -84,11 +84,16 @@
     }];
 }
 
+
 - (void)setupViewForUser {
     PFUser *curUser = [PFUser currentUser];
+    
+    
     if (![curUser objectForKey:@"first_name"]) {
         return;
     }
+    
+    
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
 }
