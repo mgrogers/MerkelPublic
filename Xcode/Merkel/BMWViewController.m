@@ -125,14 +125,25 @@
     [self.phoneNumberField resignFirstResponder];
 }
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
-    self.navigationItem.rightBarButtonItem = doneButton;
-    if([self isValidPhoneNumber:textField.text]) {
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *combinedString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
+    if([self isValidPhoneNumber: combinedString]) {
         self.phoneNumberValidator.hidden = NO;
+
     } else {
         self.phoneNumberValidator.hidden = YES;
     }
+    return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+//    if([self isValidPhoneNumber:textField.text]) {
+//        self.phoneNumberValidator.hidden = NO;
+//    } else {
+//        self.phoneNumberValidator.hidden = YES;
+//    }
     return YES;
 }
 
