@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import <BMWAppKit/BMWAppKit.h>
+// Detail view of a LinkedIn profile. Displays user's basic info,
+// profile picture, and access to recent emails.
 
+#import <BMWAppKit/BMWAppKit.h>
 
 @class BMWLinkedInProfile;
 @class BMWLinkedInView;
@@ -19,8 +21,6 @@
 @end
 
 @interface BMWLinkedInView : IDTableLayoutView
-
-//@property (nonatomic, strong) NSDictionary *linkedInProfile;
 
 @property (nonatomic, weak) id <BMWLinkedInViewDelegate> linkedInDelegate;
 @property (nonatomic, strong) BMWLinkedInProfile *profile;

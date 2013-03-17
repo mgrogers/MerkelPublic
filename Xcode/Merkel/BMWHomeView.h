@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// First screen seen by users entering Merkel on the HMI.
+// Provides access to the calendar list and next event.
+
 #import <BMWAppKit/BMWAppKit.h>
 
 @interface BMWHomeView : IDView <IDViewDelegate>
