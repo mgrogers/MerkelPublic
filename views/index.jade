@@ -1,10 +1,13 @@
 extends layout
 
+block head-js
+    script(type="text/javascript", src="http://www.parsecdn.com/js/parse-1.2.1.min.js")
+
 block content
-  h1= "Merkel"
-  p Welcome to Merkel
-  ul
-          li 
-            a(href="/") Home
-          li 
-            a(href="/authentication") Authenticate with Google
+    div.container
+        div.row
+            div.span8.offset2
+                h1= "Merkel"
+                div#main-selection.text-center
+                    a(href="javascript:logIn()").btn.btn-success Log In
+    script(type="text/javascript", src="/js/facebook-login.js")
