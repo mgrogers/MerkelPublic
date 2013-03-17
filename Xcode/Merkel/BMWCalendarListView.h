@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// Lists the user's events as returned by eventsToDisplay:. Clicking on
+// an event brings the user to a BMWCalendarEventView.
+
 #import <BMWAppKit/BMWAppKit.h>
 #import "BMWCalendarEventView.h"
 

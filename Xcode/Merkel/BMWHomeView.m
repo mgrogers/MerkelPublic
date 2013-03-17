@@ -61,7 +61,6 @@
     [todayButton  setTargetView:provider.calendarListView];
     
     self.widgets = @[self.nextButton, todayButton, spinner];
-    
 }
 
 - (void)buttonFocused:(IDButton *)button {

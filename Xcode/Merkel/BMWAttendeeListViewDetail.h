@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// Lists all attendees for a given event. Clicking on an attendee
+// loads a BMWLinkedInView.
+
 #import <BMWAppKit/BMWAppKit.h>
 #import "BMWLinkedInProfile.h"
 #import "BMWLinkedInView.h"

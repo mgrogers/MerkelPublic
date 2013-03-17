@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// Displays a selected email, providing access to basic body and header info.
+
 #import <BMWAppKit/BMWAppKit.h>
 
 @interface BMWEmailView : IDView

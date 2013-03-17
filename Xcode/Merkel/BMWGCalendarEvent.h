@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// Object model class for Google Calendar events. Provides class methods
+// to create objects from JSON responses and mock data.
+
 #import <Foundation/Foundation.h>
 
 @interface BMWGCalendarEvent : NSObject
@@ -20,6 +23,7 @@
 + (NSArray *)eventsFromJSONCalendars:(NSArray *)calendars sorted:(BOOL)sorted;
 + (instancetype)testEvent;
 
+// Compares events based on start date.
 - (NSComparisonResult)compare:(BMWGCalendarEvent *)event;
 
 @end
