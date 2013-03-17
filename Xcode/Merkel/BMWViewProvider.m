@@ -18,15 +18,13 @@
 
 @synthesize mainView = _mainView;
 @synthesize viewArray = _viewArray;
-@synthesize templateView = _templateView;
 @synthesize multimediaInfo = _multimediaInfo;
 @synthesize statusBar = _statusBar;
 
 -(id)init
 {
     if (self = [super init]) 
-    {        
-//        _templateView = [[BMWTemplateView view] retain];
+    {
         self.calendarListView = [BMWCalendarListView view];
         self.calendarEventView = [BMWCalendarEventView view];
         self.homeView = [BMWHomeView view];

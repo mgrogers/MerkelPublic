@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <BMWAppKit/BMWAppKit.h>
-#import "BMWTemplateView.h"
 #import "BMWCalendarListView.h"
 #import "BMWCalendarEventView.h"
 #import "BMWHomeView.h"
@@ -20,7 +19,6 @@
 @property(nonatomic, strong) IDMultimediaInfo* multimediaInfo;
 @property(nonatomic, strong) IDStatusBar* statusBar;
 
-@property (nonatomic, retain) BMWTemplateView *templateView;
 @property (nonatomic, retain) BMWCalendarListView *calendarListView;
 @property (nonatomic, strong) BMWCalendarEventView *calendarEventView;
 @property (nonatomic, retain) BMWHomeView *homeView;

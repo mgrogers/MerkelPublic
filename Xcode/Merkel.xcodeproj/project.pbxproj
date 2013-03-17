@@ -10,7 +10,6 @@
 		2B1A358A16D1B5B000A3B339 /* bmw.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358116D1B5B000A3B339 /* bmw.jpg */; };
 		2B1A358B16D1B5B000A3B339 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358216D1B5B000A3B339 /* bmwLogo.png */; };
 		2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358416D1B5B000A3B339 /* BMWManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2B1A358D16D1B5B000A3B339 /* BMWTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */; };
 		2B1A358F16D1B5B000A3B339 /* manifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358916D1B5B000A3B339 /* manifest.plist */; };
 		2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
@@ -102,8 +101,6 @@
 		2B1A358216D1B5B000A3B339 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bmwLogo.png; path = Merkel/bmwLogo.png; sourceTree = "<group>"; };
 		2B1A358316D1B5B000A3B339 /* BMWManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWManager.h; path = Merkel/BMWManager.h; sourceTree = "<group>"; };
 		2B1A358416D1B5B000A3B339 /* BMWManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWManager.m; path = Merkel/BMWManager.m; sourceTree = "<group>"; };
-		2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWTemplateView.h; path = Merkel/BMWTemplateView.h; sourceTree = "<group>"; };
-		2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWTemplateView.m; path = Merkel/BMWTemplateView.m; sourceTree = "<group>"; };
 		2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWViewProvider.h; path = Merkel/BMWViewProvider.h; sourceTree = "<group>"; };
 		2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWViewProvider.m; path = Merkel/BMWViewProvider.m; sourceTree = "<group>"; };
 		2B1A358916D1B5B000A3B339 /* manifest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = manifest.plist; path = Merkel/manifest.plist; sourceTree = "<group>"; };
@@ -403,8 +400,6 @@
 			children = (
 				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
 				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
-				2B1A358516D1B5B000A3B339 /* BMWTemplateView.h */,
-				2B1A358616D1B5B000A3B339 /* BMWTemplateView.m */,
 				2B8FB3E116ED2D9000AC5A95 /* AttendeeSection */,
 				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
 				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
@@ -581,7 +576,6 @@
 				4B77FE1A16C6F2AF00426018 /* BMWAppDelegate.m in Sources */,
 				4B77FE2616C6F2AF00426018 /* BMWViewController.m in Sources */,
 				2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */,
-				2B1A358D16D1B5B000A3B339 /* BMWTemplateView.m in Sources */,
 				2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */,
 				4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */,
 				4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */,
