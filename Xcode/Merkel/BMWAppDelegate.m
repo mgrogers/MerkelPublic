@@ -36,6 +36,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     return YES;
 }
 
+// Delayed start of external services to speed up app launch.
 - (void)startExternalServices {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[IDLogger defaultLogger] addAppender:self];
@@ -80,6 +81,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     [self.locationManager startMonitoringSignificantLocationChanges];
 }
 
+#pragma mark CLLocationManagerDelegate Methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations lastObject];
     [NewRelicAgent setDeviceLocation:location];

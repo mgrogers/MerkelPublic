@@ -18,15 +18,13 @@
 
 @synthesize mainView = _mainView;
 @synthesize viewArray = _viewArray;
-@synthesize templateView = _templateView;
 @synthesize multimediaInfo = _multimediaInfo;
 @synthesize statusBar = _statusBar;
 
 -(id)init
 {
     if (self = [super init]) 
-    {        
-//        _templateView = [[BMWTemplateView view] retain];
+    {
         self.calendarListView = [BMWCalendarListView view];
         self.calendarEventView = [BMWCalendarEventView view];
         self.homeView = [BMWHomeView view];
@@ -34,9 +32,9 @@
         self.profileView = [BMWLinkedInView view];
         self.emailView = [BMWEmailView view];
         
-        _viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, _attendeeListView, _profileView, _emailView, nil];
+        self.viewArray = [[NSArray alloc] initWithObjects:_homeView, _calendarListView, _calendarEventView, _attendeeListView, _profileView, _emailView, nil];
         
-        self.mainView = _homeView;
+        self.mainView = self.homeView;
     }
     return self;
 }

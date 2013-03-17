@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
+// Object model class for LinkedIn user profiles. Provides class
+// methods to create objects from JSON reponses.
+
 #import <Foundation/Foundation.h>
 
 @interface BMWLinkedInProfile : NSObject

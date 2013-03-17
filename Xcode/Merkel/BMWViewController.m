@@ -42,7 +42,6 @@
         }
         if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
             [self setupNewGoogleAccount];
-            
         }
         [self setupViewForUser];
     }
@@ -129,61 +128,6 @@
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
-}
-
--(void)fetchLatestCalendarEvent {
-    NSString *urlString = @"https://www.googleapis.com/calendar/v3/users/me/calendarList";
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
-    [[BMWGCalendarDataSource sharedDataSource] authorizeRequest:request
-                                              completionHandler:^(NSError *error) {
-                                                  if (error == nil) {
-                                                      //change this to async?
-                                                      NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-                                                      if(responseData) {
-                                                          NSError *error;
-                                                          NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                                                          NSLog(@"Response string %@", responseString);
-                                                          
-                                                          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-                                                          NSArray *eventsFromJSON = [json objectForKey:@"events"];
-//                                                          NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
-//                                                          [[self.widgets lastObject] setText: output];
-                                                      } else {
-//                                                          [[self.widgets lastObject] setText: @"Connection to calendar failed."];
-                                                          
-                                                          
-                                                      }
-                                                      
-                                                  } else {
-                                                      NSLog("failed");
-                                                  }
-                                              }];
-}
-
-- (void)fetchCalendarList {
-//    self.calendarList = nil;
-//    self.calendarListFetchError = nil;
-    
-    GTLServiceCalendar *service = [[GTLServiceCalendar alloc] init];
-    service.authorizer = [BMWGCalendarDataSource sharedDataSource].googleAuth;
-    
-    GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
-    
-//    BOOL shouldFetchedOwned = ([calendarSegmentedControl_ selectedSegment] == 1);
-//    if (shouldFetchedOwned) {
-//        query.minAccessRole = kGTLCalendarMinAccessRoleOwner;
-//    }
-    
-    GTLServiceTicket *calendarListTicket = [service executeQuery:query
-                                  completionHandler:^(GTLServiceTicket *ticket,
-                                                      id calendarList, NSError *error) {
-                                      NSLog(@"%@", calendarList);
-                                      // Callback
-//                                      self.calendarList = calendarList;
-//                                      self.calendarListFetchError = error;
-//                                      self.calendarListTicket = nil;
-                                      
-                                  }];
 }
 
 @end
