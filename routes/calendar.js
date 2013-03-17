@@ -112,12 +112,14 @@ function getCalendarEvents(req, res, type) {
     // Change requested date to correct date request based on provided timezone
     requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
-    googleParseAuth.makeAuthenticatedCall(userId, google_calendar.listCalendarList, function(err, data) {
+    googleParseAuth.makeAuthenticatedCall(userId, google_calendar, google_calendar.listCalendarList, function(err, data) {
         if(err) return res.send(500,err);
+        console.log("Got calendar list");
 
         calendarCount = data.items.length;
 
         data.items.forEach(function(calendar) {
+        	console.log("First trying to get events from calendar: ", calendar);
 
             // Skip unnecessary calendars
             if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
@@ -136,10 +138,10 @@ function getCalendarEvents(req, res, type) {
             else searchTimeEnd += MILLISEC_IN_DAY;
 
             option.timeMax = new time.Date(searchTimeEnd).toISOString();
-
+            console.log("Trying to get events for calendar: ", calendar);
             // Asynchronously access events
-            googleParseAuth.makeAuthenticatedCall(userId, google_calendar.listEvent, calendar.id, option, function(err, events) {
-
+            googleParseAuth.makeAuthenticatedCall(userId, google_calendar, google_calendar.listEvent, calendar.id, option, function(err, events) {
+            	console.log("Got events: ", events);
                 // Error
                 if(err || !events) {
                     console.log(err);

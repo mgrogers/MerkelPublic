@@ -150,7 +150,7 @@ describe('GoogleParseAuth', function() {
 					callback(false, "events");
 				} else {
 					console.log("Oops, old token");
-					callback(true, "error, old token");
+					callback(new Error(), "error, old token");
 				}
 			}
 
@@ -194,9 +194,9 @@ describe('GoogleParseAuth', function() {
 		it("should just return an error if it can't get a good token", function(done) {
 			function api_method(token, arg2, callback) {
 				if (token == "authtoken") {
-					callback(false, "events");
+					callback(null, "events");
 				} else {
-					callback(true, "error, old token");
+					callback(new Error(), "error, old token");
 				}
 			}
 
