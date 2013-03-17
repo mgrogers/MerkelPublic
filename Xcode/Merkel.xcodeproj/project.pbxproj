@@ -69,8 +69,6 @@
 		4BBEF1AE16D1BBBF0080F6E5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1AB16D1BBBF0080F6E5 /* Default-568h@2x.png */; };
 		4BBEF1AF16D1BBBF0080F6E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1AC16D1BBBF0080F6E5 /* Default.png */; };
 		4BBEF1B016D1BBBF0080F6E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1AC16D1BBBF0080F6E5 /* Default.png */; };
-		4BBEF1BA16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */; };
-		4BBEF1BB16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */; };
 		4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */; };
 		4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
 		4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
@@ -86,6 +84,8 @@
 		4BFB653A16F66010009E199D /* BMWCalendarListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653816F66010009E199D /* BMWCalendarListView.m */; };
 		4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653D16F66038009E199D /* BMWLinkedInView.m */; };
 		4BFB653F16F66038009E199D /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653D16F66038009E199D /* BMWLinkedInView.m */; };
+		4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFB654516F660A5009E199D /* libGoogleAnalytics.a */; };
+		4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFB654516F660A5009E199D /* libGoogleAnalytics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,7 +155,6 @@
 		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		4BA3384916D195DA00A2CD24 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = /Users/timshi/Developer/Merkel/Xcode/libTestFlight.a; sourceTree = "<absolute>"; };
 		4BBEF19D16D1B82B0080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "Resources/app-icon.png"; sourceTree = "<group>"; };
 		4BBEF19E16D1B82B0080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "Resources/app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF19F16D1B82B0080F6E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
@@ -163,12 +162,6 @@
 		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF1AB16D1BBBF0080F6E5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		4BBEF1AC16D1BBBF0080F6E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
-		4BBEF1B116D1BD720080F6E5 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		4BBEF1B216D1BD720080F6E5 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		4BBEF1B316D1BD720080F6E5 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		4BBEF1B416D1BD720080F6E5 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		4BBEF1B516D1BD720080F6E5 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarDataSource.h; sourceTree = "<group>"; };
 		4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarDataSource.m; sourceTree = "<group>"; };
@@ -183,6 +176,12 @@
 		4BFB653816F66010009E199D /* BMWCalendarListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWCalendarListView.m; path = Merkel/BMWCalendarListView.m; sourceTree = "<group>"; };
 		4BFB653C16F66038009E199D /* BMWLinkedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWLinkedInView.h; path = Merkel/BMWLinkedInView.h; sourceTree = "<group>"; };
 		4BFB653D16F66038009E199D /* BMWLinkedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWLinkedInView.m; path = Merkel/BMWLinkedInView.m; sourceTree = "<group>"; };
+		4BFB654016F660A5009E199D /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Frameworks/GoogleAnalytics/GAI.h; sourceTree = "<group>"; };
+		4BFB654116F660A5009E199D /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Frameworks/GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
+		4BFB654216F660A5009E199D /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Frameworks/GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
+		4BFB654316F660A5009E199D /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = Frameworks/GoogleAnalytics/GAITransaction.h; sourceTree = "<group>"; };
+		4BFB654416F660A5009E199D /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = Frameworks/GoogleAnalytics/GAITransactionItem.h; sourceTree = "<group>"; };
+		4BFB654516F660A5009E199D /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = Frameworks/GoogleAnalytics/libGoogleAnalytics.a; sourceTree = "<group>"; };
 		8CF2515D55FF42B095C2BE58 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -214,9 +213,9 @@
 				4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */,
 				4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */,
 				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
-				4BBEF1BA16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */,
 				2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */,
 				4BF95F5E16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */,
+				4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,9 +227,9 @@
 				4B77FE2F16C6F2AF00426018 /* UIKit.framework in Frameworks */,
 				4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */,
 				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
-				4BBEF1BB16D1BD720080F6E5 /* libGoogleAnalytics.a in Frameworks */,
 				4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */,
 				4BF95F5F16F518AC0058F182 /* NewRelicAgent.framework in Frameworks */,
+				4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,13 +386,12 @@
 		4BBEF1BC16D1BD760080F6E5 /* Google Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				4BBEF1B116D1BD720080F6E5 /* GAI.h */,
-				4BBEF1B216D1BD720080F6E5 /* GAITrackedViewController.h */,
-				4BBEF1B316D1BD720080F6E5 /* GAITracker.h */,
-				4BBEF1B416D1BD720080F6E5 /* GAITransaction.h */,
-				4BBEF1B516D1BD720080F6E5 /* GAITransactionItem.h */,
-				4BBEF1B716D1BD720080F6E5 /* libGoogleAnalytics.a */,
-				4BA3384916D195DA00A2CD24 /* libTestFlight.a */,
+				4BFB654016F660A5009E199D /* GAI.h */,
+				4BFB654116F660A5009E199D /* GAITrackedViewController.h */,
+				4BFB654216F660A5009E199D /* GAITracker.h */,
+				4BFB654316F660A5009E199D /* GAITransaction.h */,
+				4BFB654416F660A5009E199D /* GAITransactionItem.h */,
+				4BFB654516F660A5009E199D /* libGoogleAnalytics.a */,
 			);
 			name = "Google Analytics";
 			sourceTree = "<group>";
@@ -724,6 +722,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "76A9B8EF-AEEA-4A6E-AE1B-321C81401564";
@@ -753,6 +752,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -779,6 +779,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -802,6 +803,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
