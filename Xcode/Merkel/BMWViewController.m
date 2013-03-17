@@ -42,7 +42,6 @@
         }
         if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
             [self setupNewGoogleAccount];
-            
         }
         [self setupViewForUser];
     }
