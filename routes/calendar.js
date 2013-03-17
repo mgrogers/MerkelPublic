@@ -27,30 +27,33 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 /* ----------- API FUNCTIONS -----------*/
 /*
- API Call: /api/events/:userId/day/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date], in the timezone supplied by [tz]
+ API Call: /api/events/:userId/day/:date?tz=[:tz]&dataType=[:type] - Grabs [userId]'s events happening between beginning of [date] and end of [date], in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
  [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
+ [type] should be 'live' or 'cached', corresponding to live requests from the original data source or requests cached in the db
   */
 exports.eventsDay = function(req, res) {
   return getCalendarEvents(req, res, "day");
 };
 
 /*
- API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date] +7 days, in the timezone supplied by [tz]
+ API Call: /api/events/:userId/week/:date?tz=[:tz]&dataType=[:type] - Grabs [userId]'s events happening between beginning of [date] and end of [date] +7 days, in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
  [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
+ [type] should be 'live' or 'cached', corresponding to live requests from the original data source or requests cached in the db
   */
 exports.eventsWeek = function(req, res) {
   return getCalendarEvents(req, res, "week");
 };
 
 /*
- API Call: /api/events/:userId/week/:date - Grabs [userId]'s events happening between beginning of [date] and end of [date] +30 days, in the timezone supplied by [tz]
+ API Call: /api/events/:userId/week/:date?tz=[:tz]&dataType=[:type] - Grabs [userId]'s events happening between beginning of [date] and end of [date] +30 days, in the timezone supplied by [tz]
  [userId] should be whatever their Parse objectId is
  [date] should be in the format "yyyy-mm-dd", if empty defaults to current day
  [tz] should be in URL encoded timezone format, e.g. "Europe%2FCopenhagen" or "America%2FLos_Angeles"
+ [type] should be 'live' or 'cached', corresponding to live requests from the original data source or requests cached in the db
   */
 exports.eventsMonth = function(req, res) {
   return getCalendarEvents(req, res, "month");
@@ -87,130 +90,143 @@ exports.authentication = function(req, res) {
 /* ----------- HELPER FUNCTIONS -----------*/
 /* Get calendar events based on time constraints of 'type' - day, week, or month */
 function getCalendarEvents(req, res, type) {
-  var appUrl = req.protocol + "://" + req.get('host');
-  var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-  var calendars = [];
-  var calendarCount = 0;
+  var dataType = req.query.dataType;
+  var tz = req.query.tz;
 
-  parseApp.find('', req.params.userId, function (err, response) {
-    var access_token;
-    if(response && response.google_access_token) {
-      console.log("Using Parse auth token.");
-      access_token = response.google_access_token;
-    } else if(req.session.access_token) {
-      console.log("Using Express session auth token.");
-      access_token = req.session.access_token;
-    } else {
-      console.log("Using hard-coded auth token.");
-      access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
-    }
+  console.log("This is dataType: " + dataType);
 
-    var requestedDateRaw;
-    var requestedDate = new time.Date();
-    var timezone;
+  // If request is for cached data, attempt to get cached data from Mongo, otherwise default to live request
+  if(dataType && dataType == 'cached') {
+    // Find cached results
+    // Perform live search if no cached results found
+    req.query.dataType = 'live';
+    return getCalendarEvents(req, res, type);
+  } else {
+    var appUrl = req.protocol + "://" + req.get('host');
+    var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+    var calendars = [];
+    var calendarCount = 0;
 
-    // Default to beginning of current date if none provided
-    if(req.params.date) {
-      var requestedDateArray = req.params.date.split('-');
-      requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
-    } else {
-      requestedDateRaw = new time.Date();
-    }
+    parseApp.find('', req.params.userId, function (err, response) {
+      var access_token;
+      if(response && response.google_access_token) {
+        console.log("Using Parse auth token.");
+        access_token = response.google_access_token;
+      } else if(req.session.access_token) {
+        console.log("Using Express session auth token.");
+        access_token = req.session.access_token;
+      } else {
+        console.log("Using hard-coded auth token.");
+        access_token = HARD_CODED_GOOGLE_AUTH_TOKEN;
+      }
 
-    // Default to UTC if timezone not provided or improperly formatted
-    if(req.params.date && req.params.tz) {
-      timezone = decodeURIComponent(req.params.tz);
-    } else {
-      timezone = 'UTC';
-    }
+      var requestedDateRaw;
+      var requestedDate = new time.Date();
+      var timezone;
 
-    // Change requested date to correct date request based on provided timezone
-    requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
+      // Default to beginning of current date if none provided
+      if(req.params.date) {
+        var requestedDateArray = req.params.date.split('-');
+        requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+      } else {
+        requestedDateRaw = new time.Date();
+      }
 
-    console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
+      // Default to UTC if timezone not provided or improperly formatted
+      if(tz) {
+        timezone = decodeURIComponent(tz);
+      } else {
+        timezone = 'UTC';
+      }
 
-    google_calendar.listCalendarList(access_token, function(err, data) {
-      if(err) return res.send(500,err);
+      // Change requested date to correct date request based on provided timezone
+      requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
-      calendarCount = data.items.length;
+      console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate + "' with access token: '" + access_token + "'");
 
-      data.items.forEach(function(calendar) {
+      google_calendar.listCalendarList(access_token, function(err, data) {
+        if(err) return res.send(500,err);
 
-        // Skip unnecessary calendars
-        if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
+        calendarCount = data.items.length;
 
-        var option = {};
-        option.access_token = access_token;
-        option.key = GOOGLE_CONSUMER_KEY;
-        option.timeZone = "UTC";
-        option.timeMin = requestedDate.toISOString();
+        data.items.forEach(function(calendar) {
 
-        // Set end time to search based on type of request - day, week, month
-        var searchTimeEnd = requestedDate.getTime();
-        if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
-        else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
-        else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
-        else searchTimeEnd += MILLISEC_IN_DAY;
+          // Skip unnecessary calendars
+          if(contains(CALENDARS_TO_SKIP, calendar.id)) return returnResponse();
 
-        option.timeMax = new time.Date(searchTimeEnd).toISOString();
+          var option = {};
+          option.access_token = access_token;
+          option.key = GOOGLE_CONSUMER_KEY;
+          option.timeZone = "UTC";
+          option.timeMin = requestedDate.toISOString();
 
-        // Asynchronously access events
-        google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
+          // Set end time to search based on type of request - day, week, month
+          var searchTimeEnd = requestedDate.getTime();
+          if(type == "day") searchTimeEnd += MILLISEC_IN_DAY;
+          else if (type == "week") searchTimeEnd += MILLISEC_IN_DAY * 7;
+          else if (type == "month") searchTimeEnd += MILLISEC_IN_DAY * 30;
+          else searchTimeEnd += MILLISEC_IN_DAY;
 
-          // Error
-          if(err || !events) {
-            console.log(err);
-            return res.send(500,err);
-          }
-          // No matching items in this calendar
-          if(!events.items) {
-            return returnResponse();
-          }
+          option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
-          var tempCalendar = {};
-          tempCalendar.name = calendar.summary;
-          tempCalendar.events = [];
+          // Asynchronously access events
+          google_calendar.listEvent(access_token, calendar.id, option, function(err, events) {
 
-          // Populate relevant fields for events
-          events.items.forEach(function(event) {
-
-            // Generate clean JSON calendar object
-            if(event.id && event.summary) {
-              var calEvent = {};
-              calEvent.id = event.id;
-              calEvent.name = event.summary;
-              if(event.description) calEvent.description = event.description;
-              if(event.location) calEvent.location = event.location;
-              if(event.start) calEvent.start = event.start;
-              if(event.end) calEvent.end = event.end;
-              if(event.creator) calEvent.creator = event.creator;
-              if(event.attendees) calEvent.attendees = event.attendees;
-              if(event.created) calEvent.created = event.created;
-              if(event.updated) calEvent.updated = event.updated;
-
-              // Add event to calendar object
-              tempCalendar.events.push(calEvent);
+            // Error
+            if(err || !events) {
+              console.log(err);
+              return res.send(500,err);
             }
+            // No matching items in this calendar
+            if(!events.items) {
+              return returnResponse();
+            }
+
+            var tempCalendar = {};
+            tempCalendar.name = calendar.summary;
+            tempCalendar.events = [];
+
+            // Populate relevant fields for events
+            events.items.forEach(function(event) {
+
+              // Generate clean JSON calendar object
+              if(event.id && event.summary) {
+                var calEvent = {};
+                calEvent.id = event.id;
+                calEvent.name = event.summary;
+                if(event.description) calEvent.description = event.description;
+                if(event.location) calEvent.location = event.location;
+                if(event.start) calEvent.start = event.start;
+                if(event.end) calEvent.end = event.end;
+                if(event.creator) calEvent.creator = event.creator;
+                if(event.attendees) calEvent.attendees = event.attendees;
+                if(event.created) calEvent.created = event.created;
+                if(event.updated) calEvent.updated = event.updated;
+
+                // Add event to calendar object
+                tempCalendar.events.push(calEvent);
+              }
+            });
+
+            calendars.push(tempCalendar);
+
+            // Return JSON object after all calendars are accessed
+            return returnResponse();
           });
-
-          calendars.push(tempCalendar);
-
-          // Return JSON object after all calendars are accessed
-          return returnResponse();
         });
       });
     });
-  });
 
-  function returnResponse() {
-    if(calendarCount != 0) {
-      calendarCount--;
-    }
+    function returnResponse() {
+      if(calendarCount != 0) {
+        calendarCount--;
+      }
 
-    if(calendarCount == 0) {
-      return res.send(calendars);
-    } else {
-      return;
+      if(calendarCount == 0) {
+        return res.send(calendars);
+      } else {
+        return;
+      }
     }
   }
 }

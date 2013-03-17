@@ -38,13 +38,10 @@ app.get('/', routes.index);
 app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
-app.get('/api/events/:userId/day/:date/:tz', calendar.eventsDay);
 app.get('/api/events/:userId/week', calendar.eventsWeek);
 app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
-app.get('/api/events/:userId/week/:date/:tz', calendar.eventsWeek);
 app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
-app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 app.get('/api/mail', gmail.mail);
 
