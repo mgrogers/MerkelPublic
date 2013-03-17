@@ -1,8 +1,8 @@
-PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/Google-API-Client" "${PODS_ROOT}/Headers/SDWebImage" "${PODS_ROOT}/Headers/TestFlightSDK"
 ALWAYS_SEARCH_USER_PATHS = YES
-PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/Google-API-Client" "${PODS_ROOT}/BuildHeaders/SDWebImage" "${PODS_ROOT}/BuildHeaders/TestFlightSDK"
-PODS_HEADERS_SEARCH_PATHS = ${PODS_PUBLIC_HEADERS_SEARCH_PATHS}
-PODS_ROOT = ${SRCROOT}/Pods
-OTHER_LDFLAGS = -ObjC -lTestFlight -lz -framework ImageIO -framework Security -framework SystemConfiguration -framework UIKit
 HEADER_SEARCH_PATHS = ${PODS_HEADERS_SEARCH_PATHS}
 LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/TestFlightSDK"
+OTHER_LDFLAGS = -ObjC -lTestFlight -lz -framework ImageIO -framework MapKit -framework Security -framework SystemConfiguration -framework UIKit
+PODS_BUILD_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/Google-API-Client" "${PODS_ROOT}/BuildHeaders/SDWebImage" "${PODS_ROOT}/BuildHeaders/TestFlightSDK" "${PODS_ROOT}/BuildHeaders/gtm-oauth2"
+PODS_HEADERS_SEARCH_PATHS = ${PODS_PUBLIC_HEADERS_SEARCH_PATHS}
+PODS_PUBLIC_HEADERS_SEARCH_PATHS = "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/Google-API-Client" "${PODS_ROOT}/Headers/SDWebImage" "${PODS_ROOT}/Headers/TestFlightSDK" "${PODS_ROOT}/Headers/gtm-oauth2"
+PODS_ROOT = ${SRCROOT}/Pods
