@@ -1,10 +1,18 @@
 
-DEPENDENCIES: 
-- Google-API-Client (~> 0.0.1)
-- SDWebImage (~> 3.0)
-- TestFlightSDK (~> 1.2.4.beta)
-
-COCOAPODS: 0.16.0
+SPEC CHECKSUMS: 
+  Google-API-Client/YouTube: 6f9af209e1d4cd749161d71b8234026a63145326
+  gtm-oauth2: f75ae8b495a5de93c411dac616bbccac03b484c7
+  SDWebImage: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
+  Google-API-Client/All: 6f9af209e1d4cd749161d71b8234026a63145326
+  TestFlightSDK: aeec97fd81096753d53b942f030a443520a087f4
+  Google-API-Client/Calendar: 6f9af209e1d4cd749161d71b8234026a63145326
+  gtm-oauth2/nibs: f75ae8b495a5de93c411dac616bbccac03b484c7
+  SDWebImage/MapKit: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
+  Google-API-Client: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/AdSense: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Drive: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Plus: 6f9af209e1d4cd749161d71b8234026a63145326
+  Google-API-Client/Analytics: 6f9af209e1d4cd749161d71b8234026a63145326
 
 PODS: 
 - Google-API-Client (0.0.1): 
@@ -22,20 +30,18 @@ PODS:
 - Google-API-Client/Drive (0.0.1)
 - Google-API-Client/Plus (0.0.1)
 - Google-API-Client/YouTube (0.0.1)
-- SDWebImage (3.1): 
-  - SDWebImage/Main (= 3.1)
-- SDWebImage/Main (3.1)
+- SDWebImage (3.2): 
+  - SDWebImage/MapKit (= 3.2)
+- SDWebImage/MapKit (3.2)
 - TestFlightSDK (1.2.4.beta)
+- gtm-oauth2 (0.0.1): 
+  - gtm-oauth2/nibs (= 0.0.1)
+- gtm-oauth2/nibs (0.0.1)
 
-SPEC CHECKSUMS: 
-  Google-API-Client/YouTube: 6f9af209e1d4cd749161d71b8234026a63145326
-  Google-API-Client/Analytics: 6f9af209e1d4cd749161d71b8234026a63145326
-  Google-API-Client: 6f9af209e1d4cd749161d71b8234026a63145326
-  Google-API-Client/Plus: 6f9af209e1d4cd749161d71b8234026a63145326
-  Google-API-Client/Calendar: 6f9af209e1d4cd749161d71b8234026a63145326
-  Google-API-Client/AdSense: 6f9af209e1d4cd749161d71b8234026a63145326
-  TestFlightSDK: aeec97fd81096753d53b942f030a443520a087f4
-  SDWebImage: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
-  Google-API-Client/All: 6f9af209e1d4cd749161d71b8234026a63145326
-  SDWebImage/Main: 9e70e5dd0c69d1a043180cd2c5e1d0cd1e4ebcd7
-  Google-API-Client/Drive: 6f9af209e1d4cd749161d71b8234026a63145326
+COCOAPODS: 0.16.4
+
+DEPENDENCIES: 
+- Google-API-Client (~> 0.0.1)
+- SDWebImage (~> 3.0)
+- TestFlightSDK (~> 1.2.4.beta)
+- gtm-oauth2 (~> 0.0.1)
