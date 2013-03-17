@@ -16,7 +16,8 @@ var express = require('express'),
   	path = require('path'),
   	kue = require('kue'),
   	url = require('url');
-  	redis = require('kue/node_modules/redis');
+  	redis = require('kue/node_modules/redis'),
+    newrelic = require('newrelic');
 
 var app = express();
 
