@@ -43,8 +43,7 @@ static const NSInteger kAttendeesToDisplay = 3;
         [self updateDisplayForEvent:self.event];
     } else {
         self.title = @"No event";
-        self.titleLabel.text = @"No upcoming events";
-        self.descriptionLabel.text = @"No upcoming events to show.";
+        self.titleLabel.text = @"No upcoming events to show.";
     }
 }
 
