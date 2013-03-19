@@ -180,21 +180,27 @@ static const NSInteger kAttendeesToDisplay = 3;
 }
 
 - (void)updateDisplayForEvent:(BMWGCalendarEvent *)event {
-    self.title = event.title;
-    self.titleLabel.text = event.title;
-    self.descriptionLabel.text = event.eventDescription;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterMediumStyle];
-    [formatter setTimeStyle:NSDateFormatterMediumStyle];
-    self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
-    self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
-    [self updateDisplayForAttendees:self.attendees];
+    if(!event) {
+        self.title = @"No event";
+        self.titleLabel.text = @"No upcoming events";
+        self.descriptionLabel.text = @"No upcoming events to show.";
+
+    } else {
+        self.title = event.title;
+        self.titleLabel.text = event.title;
+        self.descriptionLabel.text = event.eventDescription;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterMediumStyle];
+        self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
+        self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
+        [self updateDisplayForAttendees:self.attendees];
+    }
 }
 
 - (void)updateDisplayForAttendees:(NSArray *)attendees {
     for (int i = 0; i < [attendees count]; i++) {
         BMWLinkedInProfile *profile = [attendees objectAtIndex:i];
-
         IDLabel *nameLabel = [self.peopleViews objectAtIndex:i*2];
         IDLabel *titleLabel = [self.peopleViews objectAtIndex:i*2 + 1];
         nameLabel.text = profile.name;
