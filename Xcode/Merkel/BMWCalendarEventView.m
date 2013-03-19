@@ -192,8 +192,9 @@ static const NSInteger kAttendeesToDisplay = 3;
 }
 
 - (void)updateDisplayForAttendees:(NSArray *)attendees {
-    for (int i = 0; i < kAttendeesToDisplay; i++) {
+    for (int i = 0; i < [attendees count]; i++) {
         BMWLinkedInProfile *profile = [attendees objectAtIndex:i];
+
         IDLabel *nameLabel = [self.peopleViews objectAtIndex:i*2];
         IDLabel *titleLabel = [self.peopleViews objectAtIndex:i*2 + 1];
         nameLabel.text = profile.name;
