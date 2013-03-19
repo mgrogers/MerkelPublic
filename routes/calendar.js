@@ -6,6 +6,7 @@ var parse = require('node-parse-api').Parse;
 var GoogleCalendar = require('google-calendar');
 var time = require('time');
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 // Constants
 var CALENDARS_TO_SKIP = ['en.usa#holiday@group.v.calendar.google.com'];
@@ -23,6 +24,51 @@ var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210'}
 mongoose.connect('ds033877.mongolab.com:33877/merkel');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
+
+// Mongoose schemas - user_id corresponds to Parse User Object ID
+var calendar_schema = new Schema({
+  name: String,
+  user_id: String
+});
+var event_schema = new Schema({
+  name: String,
+  description: String,
+  location: String,
+  start: {
+    date: Date,
+    dateTime: Date,
+    timezone: String
+  },
+  end: {
+    date: Date,
+    dateTime: Date,
+    timezone: String
+  },
+  creator: {
+    id: String,
+    email: String,
+    displayName: String,
+    self: Boolean,
+  },
+  attendees: [{
+    id: String,
+    email: String,
+    displayName: String,
+    organizer: Boolean,
+    self: Boolean,
+    resource: Boolean,
+    optional: Boolean,
+    responseStatus: String,
+    comment: String,
+    additionalGuests: Number
+  }],
+  created: Date,
+  updated: Date,
+  calendar_id: String,
+  user_id: String
+});
+var Calendar = mongoose.model('calendar', calendar_schema);
+var Event = mongoose.model('event', event_schema);
 
 
 /* ----------- API FUNCTIONS -----------*/
@@ -92,6 +138,7 @@ exports.authentication = function(req, res) {
 function getCalendarEvents(req, res, type) {
   var dataType = req.query.dataType;
   var tz = req.query.tz;
+  var userId = req.params.userId;
 
   console.log("This is dataType: " + dataType);
 
@@ -113,7 +160,7 @@ function getCalendarEvents(req, res, type) {
     var calendarCount = 0;
 
     // Use token stored in Parse if available, then degrade to a session token from /authentication, then lastly degrade to a hard-coded auth token in the codebase
-    parseApp.find('', req.params.userId, function (err, response) {
+    parseApp.find('', userId, function (err, response) {
       var access_token;
       if(response && response.google_access_token) {
         console.log("Using Parse auth token.");
@@ -229,7 +276,8 @@ function getCalendarEvents(req, res, type) {
       }
 
       if(calendarCount == 0) {
-        cacheEvents(calendars);
+        // Cache calendars & events in MongoDB
+        cacheEvents(calendars, userId);
         return res.send(calendars);
       } else {
         return;
@@ -239,8 +287,32 @@ function getCalendarEvents(req, res, type) {
 }
 
 /* Caches results in mongoDB */
-function cacheEvents(calendars) {
-  
+function cacheEvents(calendars, userId) {
+  calendars.forEach(function(calendar) {
+
+    // Cache calendar if not already present
+    var tempCalendar = new Calendar;
+    tempCalendar.name = calendar.name;
+    tempCalendar.user_id = userId;
+    // check if already exists
+    Calendar.find({'name':tempCalendar.name}).where('user_id').equals(userId).exec(function(err, calendar){
+      if(err) {
+        console.log("Didn't find, saving calendar: "+ tempCalendar.name);
+        tempCalendar.save(function(e) {
+          if(e) {
+            console.log("Error saving calendar: " + tempCalendar.name + " error: " + e);
+          }
+        });
+      } else {
+        console.log("Found calendar: " + tempCalendar.name + " already.");
+      }
+    });
+  });
+
+  // Cache events if not already present
+  tempCalendar.events.forEach(function(event) {
+
+  });
 }
 
 /* Finds cached events based on request */
