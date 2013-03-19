@@ -41,6 +41,10 @@ static const NSInteger kAttendeesToDisplay = 3;
     provider.attendeeListView.attendees = self.attendees;
     if (self.event) {
         [self updateDisplayForEvent:self.event];
+    } else {
+        self.title = @"No event";
+        self.titleLabel.text = @"No upcoming events";
+        self.descriptionLabel.text = @"No upcoming events to show.";
     }
 }
 
@@ -180,22 +184,16 @@ static const NSInteger kAttendeesToDisplay = 3;
 }
 
 - (void)updateDisplayForEvent:(BMWGCalendarEvent *)event {
-    if(!event) {
-        self.title = @"No event";
-        self.titleLabel.text = @"No upcoming events";
-        self.descriptionLabel.text = @"No upcoming events to show.";
-
-    } else {
-        self.title = event.title;
-        self.titleLabel.text = event.title;
-        self.descriptionLabel.text = event.eventDescription;
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
-        [formatter setTimeStyle:NSDateFormatterMediumStyle];
-        self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
-        self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
-        [self updateDisplayForAttendees:self.attendees];
-    }
+    self.title = event.title;
+    self.titleLabel.text = event.title;
+    self.descriptionLabel.text = event.eventDescription;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterMediumStyle];
+    self.startLabel.text = [NSString stringWithFormat:@"Start: %@", [formatter stringFromDate:event.startDate]];
+    self.endLabel.text = [NSString stringWithFormat:@"End: %@", [formatter stringFromDate:event.endDate]];
+    [self updateDisplayForAttendees:self.attendees];
+    
 }
 
 - (void)updateDisplayForAttendees:(NSArray *)attendees {
