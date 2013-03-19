@@ -98,15 +98,21 @@ function getCalendarEvents(req, res, type) {
   // If request is for cached data, attempt to get cached data from Mongo, otherwise default to live request
   if(dataType && dataType == 'cached') {
     // Find cached results
-    // Perform live search if no cached results found
-    req.query.dataType = 'live';
-    return getCalendarEvents(req, res, type);
+    var results = findCachedEvents(req, res, type);
+    if(results) {
+      return res.send(results);
+    } else {
+      // Perform live search if no cached results found
+      req.query.dataType = 'live';
+      return getCalendarEvents(req, res, type);
+    }
   } else {
     var appUrl = req.protocol + "://" + req.get('host');
     var google_calendar = new GoogleCalendar.GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
     var calendars = [];
     var calendarCount = 0;
 
+    // Use token stored in Parse if available, then degrade to a session token from /authentication, then lastly degrade to a hard-coded auth token in the codebase
     parseApp.find('', req.params.userId, function (err, response) {
       var access_token;
       if(response && response.google_access_token) {
@@ -223,12 +229,23 @@ function getCalendarEvents(req, res, type) {
       }
 
       if(calendarCount == 0) {
+        cacheEvents(calendars);
         return res.send(calendars);
       } else {
         return;
       }
     }
   }
+}
+
+/* Caches results in mongoDB */
+function cacheEvents(calendars) {
+  
+}
+
+/* Finds cached events based on request */
+function findCachedEvents(req, res, type) {
+  
 }
 
 /* Check if object contains a */
