@@ -43,6 +43,11 @@
         button.visible = YES;
         index++;
     }
+    if(!self.events) {
+        IDButton *button = [self.widgets objectAtIndex:0];
+        button.text = @"No events found for today.";
+        button.visible = YES;
+    }
 }
 
 - (void)viewDidLoseFocus:(IDView *)view {

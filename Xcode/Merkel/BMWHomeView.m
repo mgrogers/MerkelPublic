@@ -79,17 +79,19 @@
         if (!phoneNumber) {
             return;
         }
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateStyle:NSDateFormatterShortStyle];
-        [formatter setTimeStyle:NSDateFormatterShortStyle];
-        NSString *message = [NSString stringWithFormat:@"Your event: %@\r\n is at: %@", nextEvent.title, [formatter stringFromDate:nextEvent.startDate]];
-        NSString *requestString = [NSString stringWithFormat:@"http://bossmobilewunderkinds.herokuapp.com/api/sms/send?to=%@&body=%@", phoneNumber, message];
-        requestString  = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSURL *requestURL = [NSURL URLWithString:requestString];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            NSData *response = [NSData dataWithContentsOfURL:requestURL];
-            NSLog(@"%@", response);
-        });
+        if(nextEvent) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateStyle:NSDateFormatterShortStyle];
+            [formatter setTimeStyle:NSDateFormatterShortStyle];
+            NSString *message = [NSString stringWithFormat:@"Your event: %@\r\n is at: %@", nextEvent.title, [formatter stringFromDate:nextEvent.startDate]];
+            NSString *requestString = [NSString stringWithFormat:@"http://bossmobilewunderkinds.herokuapp.com/api/sms/send?to=%@&body=%@", phoneNumber, message];
+            requestString  = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSURL *requestURL = [NSURL URLWithString:requestString];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                NSData *response = [NSData dataWithContentsOfURL:requestURL];
+                NSLog(@"%@", response);
+            });
+        }
     }
 }
 
