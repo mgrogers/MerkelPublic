@@ -291,20 +291,22 @@ function cacheEvents(calendars, userId) {
   calendars.forEach(function(calendar) {
 
     // Cache calendar if not already present
-    var tempCalendar = new Calendar;
-    tempCalendar.name = calendar.name;
-    tempCalendar.user_id = userId;
+    var tempCalendar = new Calendar({
+      'name': calendar.name,
+      'user_id': userId
+    });
     // check if already exists
-    Calendar.find({'name':tempCalendar.name}).where('user_id').equals(userId).exec(function(err, calendar){
+    var options = {};
+    options.upsert = true;
+
+    Calendar.findOneAndUpdate({
+      'name': calendar.name, 
+      'user_id': userId
+    }, tempCalendar, options, function(err, data){
       if(err) {
-        console.log("Didn't find, saving calendar: "+ tempCalendar.name);
-        tempCalendar.save(function(e) {
-          if(e) {
-            console.log("Error saving calendar: " + tempCalendar.name + " error: " + e);
-          }
-        });
+        console.log("Error upserting calendar: " + calendar.name + " error: " + err);
       } else {
-        console.log("Found calendar: " + tempCalendar.name + " already.");
+        console.log("Upserted calendar: " + calendar.name);
       }
     });
   });
