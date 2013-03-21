@@ -43,7 +43,7 @@ app.get('/login/', auth.login);
 app.get('/google_auth/', auth.google_auth);
 app.get('/google_auth/token/', auth.google_auth_token);
 
-//app.get('/authentication', calendar.authentication);
+app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
 app.get('/api/events/:userId/week', calendar.eventsWeek);

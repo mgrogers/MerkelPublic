@@ -113,7 +113,6 @@ exports.eventsMonth = function(req, res) {
 
 
 /* Testing function, authenticates with Google, stores auth token in express session */
-/*
 exports.authentication = function(req, res) {
     var appUrl = req.protocol + "://" + req.get('host');
     var google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
@@ -137,7 +136,7 @@ exports.authentication = function(req, res) {
             return res.send('<html><body><h1>Google Auth Token stored in Express session.</h1><p>Access Token: "' + access_token + '"</p><p>Refresh Token: "' + refresh_token + '"</p></body></html>');
         });
     }
-}; */
+};
 
 
 /* ----------- HELPER FUNCTIONS -----------*/
@@ -165,9 +164,13 @@ function getCalendarEvents(req, res, type) {
     } else {
     var appUrl = req.protocol + "://" + req.get('host');
 
+    // Access token fallback - if access token exists in express session, use that, otherwise use Parse access token
     var google_calendar;
+    var access_token;
     if(req.session && req.session.access_token) {
         google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+        access_token = req.session.access_token;
+        console.log("Got access token from express: " + access_token);
     } else {
         google_calendar = new GoogleCalendarParse(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
     }
@@ -198,8 +201,15 @@ function getCalendarEvents(req, res, type) {
     requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
     console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
+    // Hacky way for auth fallback, TODO: refactor
+    var access_token_or_user_id;
+    if(access_token) {
+        access_token_or_user_id = access_token;
+    } else {
+        access_token_or_user_id = user_id;
+    }
 
-    return google_calendar.listCalendarList(user_id, function(err, data) {
+    return google_calendar.listCalendarList(access_token_or_user_id, function(err, data) {
         if(err) return res.send(500,err);
 
         var calendars = data.items;
@@ -208,7 +218,7 @@ function getCalendarEvents(req, res, type) {
 
         calendars.forEach(function(calendar) {
             console.log("Pushing onto queue:", calendar.summary);
-            queue.push(fetchEvents(google_calendar, user_id, calendar, requestedDate, type));
+            queue.push(fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type));
         });
 
         return Q.allResolved(queue).then(function(promises) {
@@ -237,7 +247,7 @@ function fetchEvents(google_calendar, user_id, calendar, requestedDate, type) {
     } else {
         var option = {};
         option.key = GOOGLE_CONSUMER_KEY;
-        
+        if(access_token) option.access_token = access_token;
         option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
