@@ -1,9 +1,11 @@
+
+
 //
 //  BMWMainView.m
 //  Merkel
 //
 //  Created by Tim Shi on 3/2/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 #import "BMWHomeView.h"
@@ -25,20 +27,36 @@
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-    BMWViewProvider *provider = self.application.hmiProvider;
-    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
-        provider.calendarListView.events = events;
-        
-        IDLabel *spinner = self.widgets[2];
+    //check if user here?
+    if([PFUser currentUser]) {
+        BMWViewProvider *provider = self.application.hmiProvider;
+        provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
+            provider.calendarListView.events = events;
+            
+            IDLabel *spinner = self.widgets[2];
+            IDButton *nextButton = self.widgets[0];
+            IDButton *todayButton = self.widgets[1];
+            
+            spinner.waitingAnimation = NO;
+            spinner.visible = NO;
+            spinner.selectable = NO;
+            nextButton.visible = YES;
+            todayButton.visible = YES;
+        }];
+    } else {
         IDButton *nextButton = self.widgets[0];
         IDButton *todayButton = self.widgets[1];
-        
-        spinner.waitingAnimation = NO;
+        IDLabel *spinner = self.widgets[2];
+        IDLabel *disconnectLabel = self.widgets[3];
+        IDLabel *disconnectLabel2 = self.widgets[4];
+
         spinner.visible = NO;
-        spinner.selectable = NO;
-        nextButton.visible = YES;
-        todayButton.visible = YES;
-    }];
+        disconnectLabel.visible = YES;
+        disconnectLabel2.visible = YES;
+        nextButton.visible = NO;
+        todayButton.visible = NO;
+    }
+    
 }
 
 - (void)createAllViews {
@@ -60,7 +78,15 @@
     [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     [todayButton  setTargetView:provider.calendarListView];
     
-    self.widgets = @[self.nextButton, todayButton, spinner];
+    IDLabel *disconnectLabel = [IDLabel label];
+    IDLabel *disconnectLabel2 = [IDLabel label];
+    
+    disconnectLabel.text = @"Sorry, please unplug your phone.";
+    disconnectLabel2.text = @"Log in and reconnect your device.";
+    disconnectLabel.visible = NO;
+    disconnectLabel2.visible = NO;
+    
+    self.widgets = @[self.nextButton, todayButton, spinner, disconnectLabel, disconnectLabel2];
 }
 
 - (void)buttonFocused:(IDButton *)button {

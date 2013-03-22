@@ -3,7 +3,7 @@
 //  Merkel
 //
 //  Created by Wesley Leung on 3/2/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 // Detail view of a LinkedIn profile. Displays user's basic info,
