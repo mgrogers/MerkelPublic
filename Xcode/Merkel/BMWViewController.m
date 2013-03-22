@@ -112,7 +112,7 @@
     self.userLabel.text = [curUser objectForKey:@"first_name"];
     if([curUser objectForKey:@"phone_number"]) {
         NSString *numberString = [[curUser objectForKey:@"phone_number"] stringValue];
-        self.phoneNumberField.text = numberString;
+        self.phoneNumberField.text = [self addDashtoPhoneNumber:numberString];
         self.phoneNumberValidator.hidden = NO;
     }
     
@@ -120,7 +120,7 @@
 
 #pragma mark UITextFieldDelegate Methods
 
--(void)doneEditingTextField:(id)sender {
+- (void)doneEditingTextField:(id)sender {
 
     if([self isValidPhoneNumber:self.phoneNumberField.text]) {
         self.phoneNumberValidator.hidden = NO;
@@ -131,6 +131,8 @@
         NSNumber *phoneNumber = [formatter numberFromString:self.phoneNumberField.text];
         [curUser setObject:phoneNumber forKey:@"phone_number"];
         [curUser saveInBackground];
+        
+        self.phoneNumberField.text = [self addDashtoPhoneNumber:self.phoneNumberField.text];
     } else {
         self.phoneNumberValidator.hidden = YES;
     }
@@ -138,7 +140,7 @@
     [self.phoneNumberField resignFirstResponder];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *combinedString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
     if([self isValidPhoneNumber: combinedString]) {
         self.phoneNumberValidator.hidden = NO;
@@ -149,8 +151,11 @@
     return YES;
 }
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
+    NSString *numberWithoutDashes = [textField.text
+                                     stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    textField.text = numberWithoutDashes;
     self.navigationItem.rightBarButtonItem = doneButton;
     return YES;
 }
@@ -161,6 +166,17 @@
     } else {
         return false;
     }
+}
+
+- (NSString*)addDashtoPhoneNumber:(NSString*)text
+{
+    NSMutableString *phoneNumber = [NSMutableString stringWithString:text];
+    int length = [phoneNumber length];
+    for (int i = 3;i <= length; i++) {
+        [phoneNumber insertString:@"-" atIndex:i];
+        i+=3;
+    }
+    return phoneNumber;
 }
 
 #pragma mark - User Login
