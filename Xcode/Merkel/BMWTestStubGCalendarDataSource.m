@@ -14,8 +14,7 @@
 @implementation BMWTestStubGCalendarDataSource
 
 
-
-- (NSArray *)eventsToDisplayTest {
++ (NSArray *)eventsToDisplayTest {
     NSDictionary *testCalendarJSON = @{
         @"name": @"Merkel",
         @"events": @[@{
@@ -169,7 +168,7 @@
     return events;
 }
 
-- (NSArray *)attendeesToDisplayTest {
++ (NSArray *)attendeesToDisplayTest {
     NSDictionary *attendee = @{@"name": @"Wesley Leung",
                                @"jobTitle": @"CS Student",
                                @"profileImageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",

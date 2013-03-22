@@ -10,4 +10,6 @@
 
 @interface BMWTestStubGCalendarDataSource : NSObject
 
++ (NSArray *)eventsToDisplayTest;
+
 @end

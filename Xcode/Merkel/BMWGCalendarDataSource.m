@@ -9,6 +9,7 @@
 #import "BMWGCalendarDataSource.h"
 #import "BMWGCalendarEvent.h"
 #import "BMWLinkedInProfile.h"
+#import "BMWTestStubGCalendarDataSource.h"
 
 #import <Google-API-Client/GTMOAuth2Authentication.h>
 #import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
@@ -42,6 +43,8 @@
 @end
 
 @implementation BMWGCalendarDataSource
+
+static BOOL const kOfflineMode = NO;
 
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
@@ -256,10 +259,12 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
             completion(events, error);
         });
     });
-    return [self.dataCache objectForKey:@"events/day"];
-
-//    return [self eventsToDisplayTest];
-
+    
+    if(!kOfflineMode) {
+        return [self.dataCache objectForKey:@"events/day"];
+    } else {
+        return [BMWTestStubGCalendarDataSource eventsToDisplayTest];
+    }
 }
 
 - (NSArray *)eventsToDisplayFromCache:(BOOL)fromCache {
