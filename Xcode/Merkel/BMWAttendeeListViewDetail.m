@@ -11,6 +11,7 @@
 #import "BMWViewProvider.h"
 #import "BMWGCalendarDataSource.h"
 
+
 @interface BMWAttendeeListViewDetail ()
 
 @property NSInteger selectedIndex;
