@@ -44,7 +44,8 @@
 
 @implementation BMWGCalendarDataSource
 
-static BOOL const kOfflineMode = YES;
+//toggle on or off for testing in offline mode
+static BOOL const kOfflineMode = NO;
 
 static NSString * const kBMWGoogleClientId = @"992955494422.apps.googleusercontent.com";
 static NSString * const kBMWGoogleClientSecret = @"owOZqTGiK2e59tT9OqRHs5Xt";
