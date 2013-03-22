@@ -18,17 +18,8 @@ var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
 	        Parse.initialize('ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj',
                       'LuF9wF7h9GRzarp6FnYjdGUGHQtOrlxUeoC3CJqM');
 
-	        $(document).ready(function() {
-	            var currentUser = Parse.User.current();
-		    	if (currentUser) {
-		    		$('#headline').text("Hello, " + currentUser.get("first_name"));
-		    		$('#controls').fadeIn();
-		    	} else {
-		    		window.location = '/';
-		    	}
-            });
 
-	        function authorize() {
+	        function authorize(callback) {
 				var win         =   window.open(_url, "GoogleAuth", 'width=800, height=600'); 
 
 	            var pollTimer   =   window.setInterval(function() { 
@@ -43,13 +34,13 @@ var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
 	                        win.close();
 	                        console.log("URL: " + url);
 	                        console.log("access_code: " + access_code);
-	                        retrieveTokens(access_code);
+	                        retrieveTokens(access_code, callback);
 	                    }
 	                } catch(e) {
 	                }
 	            }, 100);
 	        }
-	        function retrieveTokens(code) {
+	        function retrieveTokens(code, callback) {
 	        	$.ajax({
 	        		type: 'get',
 	                url: '/google_auth/token/',
@@ -67,6 +58,7 @@ var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
 					   	currentUser.set("google_access_token", token);
 					   	currentUser.set("google_refresh_token", refresh_token);
 					   	currentUser.save();
+                        callback();
 	                },
 	                failure: function(data, textStatus, jqXHR) {
 	                	console.log("Error: " + responseText);

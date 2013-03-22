@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <title>Andia - Responsive Agency Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
+        <link href='http://fonts.googleapis.com/css?family=Sintony' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/prettyPhoto/css/prettyPhoto.css">
+        <link rel="stylesheet" href="/assets/css/flexslider.css">
+        <link rel="stylesheet" href="/assets/css/font-awesome.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.1.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+        <script type="text/javascript" src="/js/google-auth.js"></script>
+    </head>
+
+    <body>
+
+        <!-- Header -->
+        <div class="container">
+            <div class="header row">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <h1>
+                                <a class="brand" href="/">Boss Mobile Wunderkinds</a>
+                            </h1>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav pull-right">
+                                    <li class="current-page">
+                                        <a href="/"><i class="icon-home"></i><br />Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="http://bossmobilewunderkinds.tumblr.com"><i class="icon-comments"></i><br />Blog</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="account-info" style="displane:none;">
+        <!-- Page Title -->
+            <div class="page-title">
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+                            <i class="icon-tasks page-title-icon"></i>
+                            <h2>Welcome, <span id="name">anonymous user</span></h2>
+                            <p>Check the status of your account</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call To Action -->
+            <div class="call-to-action container"  id="google-auth-notification">
+                <div class="row">
+                    <div class="call-to-action-text span12">
+                        <div id="google-must-auth" style="display:none;">
+                            <div class="ca-text">
+                                <p>In order for your Personal Assistant to work, you need to allow it to access your google calendar.</p>
+                            </div>
+                            <div class="ca-button">
+                                <a onclick="authorize(completedGoogleAuth);">Authorize Now!</a>
+                            </div>
+                        </div>
+                        <div id="google-completed-auth" style="display:none;">
+                            <div class="ca-text">
+                                <p>Thanks for authorizing google! You're all set.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="widget span3">
+                        <h4>About Us</h4>
+                        <p>We are Boss Mobile Wunderkinds, working to help create the Ultimate Lifestyle Machine. By bringing bringing together your calendar, email, contacts, and more, and leveraging wearable technology and the BMW iDrive, our Personal Assistant will simplify your life unlike anything you've used before.</p>
+                        <p><a href="">Read more...</a></p>
+                    </div>
+                    <div class="widget span3">
+                        <h4>Contact Us</h4>
+                        <p><i class="icon-map-marker"></i> Address: Stanford, California</p>
+                        <p><i class="icon-envelope-alt"></i> Email: <a href="">bossmobilewunderkinds@gmail.com</a></p>
+                    </div>
+                </div>
+                <div class="footer-border"></div>
+                <div class="row">
+                    <div class="copyright span4">
+                        <p>Layout credit: <a href="http://azmind.com/2012/12/28/free-html-template-andia-responsive-agency-portfolio-template-twitter-bootstrap/">azmind</a>.</p>
+                    </div>
+                    <div class="social span8">
+                        <a class="facebook" href="https://www.facebook.com/BossMobileWunderkinds"></a>
+                        <a class="tumblr" href="http://bossmobilewunderkinds.tumblr.com"></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Javascript -->
+        <script src="/assets/js/jquery-1.8.2.min.js"></script>
+        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/js/jquery.flexslider.js"></script>
+        <script src="/assets/js/jquery.tweet.js"></script>
+        <script src="/assets/js/jflickrfeed.js"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="/assets/js/jquery.ui.map.min.js"></script>
+        <script src="/assets/js/jquery.quicksand.js"></script>
+        <script src="/assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+        <script src="/assets/js/scripts.js"></script>
+        <script type="text/javascript">
+            function completedGoogleAuth() {
+                console.log("Called back");
+                $('#google-must-auth').fadeOut(function() {
+                    $("#google-completed-auth").fadeIn();
+                });
+            }
+
+            $(document).ready(function() {
+                Parse.initialize('ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj',
+                      'LuF9wF7h9GRzarp6FnYjdGUGHQtOrlxUeoC3CJqM');
+
+                var currentUser = Parse.User.current();
+                if (currentUser) {
+                    $('#name').text(currentUser.get("first_name"));
+                    if(currentUser.get("google_refresh_token")) {
+                        $('#google-completed-auth').fadeIn();
+                    } else {
+                        $('#google-must-auth').fadeIn();
+                    }
+                    $('#account-info').fadeIn();
+
+                } else {
+                    alert("Looks like there was a problem logging you in... redirecting.");
+                    window.location = '/';
+                }
+            });
+
+        </script>
+
+    </body>
+</html>
