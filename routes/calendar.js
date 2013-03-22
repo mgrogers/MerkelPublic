@@ -214,7 +214,7 @@ function getCalendarEvents(req, res, type) {
 
         var calendars = data.items;
         var queue = [];
-        console.log("Got calendars:",calendars);
+        //console.log("Got calendars:",calendars);
 
         calendars.forEach(function(calendar) {
             console.log("Pushing onto queue:", calendar.summary);
@@ -230,13 +230,15 @@ function getCalendarEvents(req, res, type) {
                 }
             });
             console.log("Events:", calendarList);
+
+            //cacheCalendars(calendarList);
             return res.send(200, calendarList);
         });
     });
     }
 }
 
-function fetchEvents(google_calendar, user_id, calendar, requestedDate, type) {
+function fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type) {
     var deferred = Q.defer();
     console.log("fetching events for", calendar.summary);
 
@@ -247,7 +249,9 @@ function fetchEvents(google_calendar, user_id, calendar, requestedDate, type) {
     } else {
         var option = {};
         option.key = GOOGLE_CONSUMER_KEY;
-        if(access_token) option.access_token = access_token;
+        console.log("Before access_token: " + access_token_or_user_id);
+        if(access_token_or_user_id) option.access_token = access_token_or_user_id;
+        console.log("After access token");
         option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
@@ -261,7 +265,7 @@ function fetchEvents(google_calendar, user_id, calendar, requestedDate, type) {
 
         // Asynchronously access events
         console.log("Trying to list events");
-        google_calendar.listEvent(user_id, calendar.id, option, function(err, events) {
+        google_calendar.listEvent(access_token_or_user_id, calendar.id, option, function(err, events) {
             console.log("listing event");
 
             // Error
@@ -309,8 +313,8 @@ function fetchEvents(google_calendar, user_id, calendar, requestedDate, type) {
     return deferred.promise;
 }
 
-/* Caches results in mongoDB */
-function cacheEvents(calendars, userId) {
+/* Caches calendar results in mongoDB */
+function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
 
         // Cache calendar if not already present
@@ -318,7 +322,7 @@ function cacheEvents(calendars, userId) {
             'name': calendar.name,
             'user_id': userId
         });
-        // Check if already exists
+
         var options = {};
         options.upsert = true;
 
@@ -332,16 +336,22 @@ function cacheEvents(calendars, userId) {
             console.log("Upserted calendar: " + calendar.name);
             }
         });
+        // Cache events
+        cacheEvents(calendar.events);
     });
-    // Cache events if not already present
-    tempCalendar.events.forEach(function(event) {
+}
 
+/* Caches event results in mongoDB */
+function cacheEvents(calendar) {
+    calendar.events.forEach(function(event) {
+
+        // cache event
     });
 }
 
 /* Finds cached events based on request */
 function findCachedEvents(req, res, type) {
-    
+    return;
 }
 
 /* Check if object contains a */
