@@ -1,3 +1,5 @@
+
+
 //
 //  BMWMainView.m
 //  Merkel
@@ -25,20 +27,23 @@
 }
 
 - (void)viewDidBecomeFocused:(IDView *)view {
-    BMWViewProvider *provider = self.application.hmiProvider;
-    provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
-        provider.calendarListView.events = events;
-        
-        IDLabel *spinner = self.widgets[2];
-        IDButton *nextButton = self.widgets[0];
-        IDButton *todayButton = self.widgets[1];
-        
-        spinner.waitingAnimation = NO;
-        spinner.visible = NO;
-        spinner.selectable = NO;
-        nextButton.visible = YES;
-        todayButton.visible = YES;
-    }];
+    //check if user here?
+    if([PFUser currentUser]) {
+        BMWViewProvider *provider = self.application.hmiProvider;
+        provider.calendarListView.events = [[BMWGCalendarDataSource sharedDataSource] eventsToDisplayCompletion:^(NSArray *events, NSError *error) {
+            provider.calendarListView.events = events;
+            
+            IDLabel *spinner = self.widgets[2];
+            IDButton *nextButton = self.widgets[0];
+            IDButton *todayButton = self.widgets[1];
+            
+            spinner.waitingAnimation = NO;
+            spinner.visible = NO;
+            spinner.selectable = NO;
+            nextButton.visible = YES;
+            todayButton.visible = YES;
+        }];
+    }
 }
 
 - (void)createAllViews {
