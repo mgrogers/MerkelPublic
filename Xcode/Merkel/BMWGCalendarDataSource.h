@@ -48,5 +48,7 @@ typedef void (^BMWGCalendarEventRequestCompletion)(NSArray *events, NSError *err
 // Asynchronous method.
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion;
 
+//Returns a test stub of attendee objects
+- (NSArray *)attendeesToDisplayTest;
 
 @end

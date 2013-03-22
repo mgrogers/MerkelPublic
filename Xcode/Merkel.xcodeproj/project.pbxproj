@@ -16,7 +16,6 @@
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
-		2B7CC41816FC4C0E008E053D /* BMWTestStubGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B7CC41716FC4C0E008E053D /* BMWTestStubGCalendarDataSource.m */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
@@ -112,8 +111,6 @@
 		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
 		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		2B7CC41616FC4C0E008E053D /* BMWTestStubGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWTestStubGCalendarDataSource.h; sourceTree = "<group>"; };
-		2B7CC41716FC4C0E008E053D /* BMWTestStubGCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWTestStubGCalendarDataSource.m; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
 		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
@@ -326,8 +323,6 @@
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
 				4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */,
 				4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */,
-				2B7CC41616FC4C0E008E053D /* BMWTestStubGCalendarDataSource.h */,
-				2B7CC41716FC4C0E008E053D /* BMWTestStubGCalendarDataSource.m */,
 				4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */,
 				4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */,
 				2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */,
@@ -600,7 +595,6 @@
 				4BFB653316F65FFF009E199D /* BMWEmailView.m in Sources */,
 				4BFB653916F66010009E199D /* BMWCalendarListView.m in Sources */,
 				4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */,
-				2B7CC41816FC4C0E008E053D /* BMWTestStubGCalendarDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
