@@ -21,6 +21,7 @@
 		2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41D16FC7135008E053D /* Default-568h@2x.png */; };
 		2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */; };
 		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
+		2B7CC42216FC9391008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42116FC9390008E053D /* charger.png */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
@@ -109,6 +110,7 @@
 		2B7CC41916FC7128008E053D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		2B7CC41B16FC7130008E053D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		2B7CC41D16FC7135008E053D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		2B7CC42116FC9390008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = charger.png; path = ../../../../Desktop/charger.png; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
 		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
+				2B7CC42116FC9390008E053D /* charger.png */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
@@ -503,6 +506,7 @@
 				2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */,
 				2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */,
 				2B7CC42016FC75BA008E053D /* app-icon.png in Resources */,
+				2B7CC42216FC9391008E053D /* charger.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
