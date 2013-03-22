@@ -48,7 +48,7 @@ typedef void (^BMWGCalendarEventRequestCompletion)(NSArray *events, NSError *err
 // Asynchronous method.
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion;
 
-// Return mock LinkedIn user data.
+//Returns a test stub of attendee objects
 - (NSArray *)attendeesToDisplayTest;
 
 @end

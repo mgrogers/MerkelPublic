@@ -3,4 +3,5 @@ pod 'SDWebImage', '~> 3.0'
 pod 'gtm-oauth2', '~> 0.0.1'
 pod 'Google-API-Client', '~> 0.0.1'
 pod 'TestFlightSDK', '~> 1.2.4.beta'
+pod 'AFNetworking', '~> 1.1.0'
 

@@ -24,7 +24,7 @@ static const NSString *kContentKey = @"content";
 
 
 - (void)viewWillLoad:(IDView *)view {
-    self.title = @"Email View";
+//    self.title = @"Email View";
     self.subjectLabel = [IDLabel label];
     self.subjectLabel.selectable = NO;
     self.dateLabel = [IDLabel label];
@@ -55,7 +55,7 @@ static const NSString *kContentKey = @"content";
 - (void)viewDidBecomeFocused:(IDView *)view {
     if (self.email) {
         self.subjectLabel.text = self.email[kSubjectKey];
-        
+        self.title = self.email[kSubjectKey];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setTimeStyle:NSDateFormatterMediumStyle];
