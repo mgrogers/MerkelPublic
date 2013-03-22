@@ -44,12 +44,17 @@
             todayButton.visible = YES;
         }];
     } else {
+        IDButton *nextButton = self.widgets[0];
+        IDButton *todayButton = self.widgets[1];
+        IDLabel *spinner = self.widgets[2];
         IDLabel *disconnectLabel = self.widgets[3];
         IDLabel *disconnectLabel2 = self.widgets[4];
-        IDLabel *spinner = self.widgets[2];
+
         spinner.visible = NO;
         disconnectLabel.visible = YES;
         disconnectLabel2.visible = YES;
+        nextButton.visible = NO;
+        todayButton.visible = NO;
     }
     
 }

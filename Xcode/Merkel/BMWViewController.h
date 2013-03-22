@@ -10,6 +10,7 @@
 // and account creation functionality.
 
 #import <UIKit/UIKit.h>
+#import "BMWManager.h"
 
 @interface BMWViewController : GAITrackedViewController
 
