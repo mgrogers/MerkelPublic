@@ -3,7 +3,7 @@
 //  Merkel
 //
 //  Created by Tim Shi on 2/25/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 #import "BMWGCalendarDataSource.h"
