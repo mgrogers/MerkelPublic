@@ -19,6 +19,8 @@ body {
 
 .violet { color: #9d426b; }
 
+.blue { color: #025A88;}
+
 a {
     color: #9d426b;
     text-decoration: none;
@@ -152,7 +154,7 @@ strong { font-weight: bold; }
 }
 
 .presentation h2 {
-    font-family: 'Lobster', cursive;
+    font-family: 'Sintony', cursive;
     font-size: 30px;
     color: #5d5d5d;
 }
@@ -257,7 +259,7 @@ strong { font-weight: bold; }
     width: 220px;
     margin: 0 auto;
     background: #fff;
-    font-family: 'Lobster', cursive;
+    font-family: 'Sintony', cursive;
     font-size: 24px;
     color: #5d5d5d;
 }
@@ -362,7 +364,7 @@ strong { font-weight: bold; }
     width: 180px;
     margin: 0 auto;
     background: #fff;
-    font-family: 'Lobster', cursive;
+    font-family: 'Sintony', cursive;
     font-size: 24px;
     color: #5d5d5d;
 }
@@ -553,7 +555,7 @@ footer .social a:hover { background-position: left top; }
 .page-title h2 {
     display: inline;
     margin-left: 10px;
-    font-family: 'Lobster', cursive;
+    font-family: 'Sintony', cursive;
     font-size: 24px;
     color: #5d5d5d;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
@@ -619,7 +621,7 @@ footer .social a:hover { background-position: left top; }
     width: 220px;
     margin: 0 auto;
     background: #fff;
-    font-family: 'Lobster', cursive;
+    font-family: 'Sintony', cursive;
     font-size: 24px;
     color: #5d5d5d;
 }
