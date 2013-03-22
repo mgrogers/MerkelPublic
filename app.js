@@ -7,15 +7,17 @@
  */
 
 var express = require('express'),
-  	routes = require('./routes'),
-  	calendar = require('./routes/calendar'),
-  	sms = require('./routes/sms'),
+    routes = require('./routes'),
+    calendar = require('./routes/calendar'),
+    sms = require('./routes/sms'),
     gmail = require('./routes/gmail'),
-  	http = require('http'),
-  	path = require('path'),
-  	kue = require('kue'),
-  	url = require('url');
-  	redis = require('kue/node_modules/redis');
+    auth = require('./routes/auth'),
+    http = require('http'),
+    path = require('path'),
+    kue = require('kue'),
+    url = require('url');
+    redis = require('kue/node_modules/redis'),
+    newrelic = require('newrelic');
 
 var app = express();
 
@@ -33,28 +35,31 @@ app.use(app.router);
 app.use(express.errorHandler());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Define API URLS and destinations here.
+// Define API URLS and destinations here.
 app.get('/', routes.index);
+app.get('/home/', routes.home);
+app.get('/auth/', auth.index);
+app.get('/login/', auth.login);
+app.get('/google_auth/', auth.google_auth);
+app.get('/google_auth/token/', auth.google_auth_token);
+
 app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);
-app.get('/api/events/:userId/day/:date/:tz', calendar.eventsDay);
 app.get('/api/events/:userId/week', calendar.eventsWeek);
 app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
-app.get('/api/events/:userId/week/:date/:tz', calendar.eventsWeek);
 app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
-app.get('/api/events/:userId/month/:date/:tz', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 app.get('/api/mail', gmail.mail);
 
 kue.redis.createClient = function() {
-  var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379")
-      , client = redis.createClient(redisUrl.port, redisUrl.hostname);
-  if (redisUrl.auth) {
-      client.auth(redisUrl.auth.split(":")[1]);
-  }
-  return client;
+    var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
+    if (redisUrl.auth) {
+        client.auth(redisUrl.auth.split(":")[1]);
+    }
+    
+    return client;
 };
 
 // wire up Kue (see /active for queue interface)

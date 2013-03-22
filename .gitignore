@@ -15,5 +15,6 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+*.log
 
 /Xcode/Frameworks/BMW/Simulators/

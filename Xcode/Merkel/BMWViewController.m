@@ -13,9 +13,11 @@
 #import "GTMOAuth2ViewControllerTouch.h"
 #import <Google-API-Client/GTLCalendar.h>
 
-@interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *userLabel;
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumberField;
+@property (weak, nonatomic) IBOutlet UILabel *phoneNumberValidator;
 
 @end
 
@@ -27,6 +29,7 @@
     self.userLabel.hidden = YES;
     self.title = @"Merkel";
     self.trackedViewName = @"Home Screen";
+    self.phoneNumberField.delegate = self;
 }
 
 
@@ -42,7 +45,6 @@
         }
         if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
             [self setupNewGoogleAccount];
-            
         }
         [self setupViewForUser];
     }
@@ -84,13 +86,72 @@
     }];
 }
 
+
 - (void)setupViewForUser {
     PFUser *curUser = [PFUser currentUser];
+    
+    
     if (![curUser objectForKey:@"first_name"]) {
         return;
     }
     self.userLabel.hidden = NO;
     self.userLabel.text = curUser.username;
+    if([curUser objectForKey:@"phone_number"]) {
+        NSString *numberString = [[curUser objectForKey:@"phone_number"] stringValue];
+        self.phoneNumberField.text = numberString;
+        self.phoneNumberValidator.hidden = NO;
+    }
+    
+}
+
+#pragma mark UITextFieldDelegate Methods
+
+-(void)doneEditingTextField:(id)sender {
+
+    if([self isValidPhoneNumber:self.phoneNumberField.text]) {
+        self.phoneNumberValidator.hidden = NO;
+        PFUser *curUser = [PFUser currentUser];
+        
+        NSNumberFormatter * formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterNoStyle];
+        NSNumber *phoneNumber = [formatter numberFromString:self.phoneNumberField.text];
+        [curUser setObject:phoneNumber forKey:@"phone_number"];
+        [curUser saveInBackground];
+    } else {
+        self.phoneNumberValidator.hidden = YES;
+    }
+     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:self action:@selector(logoutButtonPressed:)];
+    [self.phoneNumberField resignFirstResponder];
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *combinedString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
+    if([self isValidPhoneNumber: combinedString]) {
+        self.phoneNumberValidator.hidden = NO;
+
+    } else {
+        self.phoneNumberValidator.hidden = YES;
+    }
+    return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+//    if([self isValidPhoneNumber:textField.text]) {
+//        self.phoneNumberValidator.hidden = NO;
+//    } else {
+//        self.phoneNumberValidator.hidden = YES;
+//    }
+    return YES;
+}
+
+-(BOOL)isValidPhoneNumber:(NSString*)phoneNumber {
+    if(phoneNumber.length == 10) {
+        return YES;
+    } else {
+        return false;
+    }
 }
 
 #pragma mark - User Login
@@ -129,61 +190,6 @@
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
-}
-
--(void)fetchLatestCalendarEvent {
-    NSString *urlString = @"https://www.googleapis.com/calendar/v3/users/me/calendarList";
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:urlString]];
-    [[BMWGCalendarDataSource sharedDataSource] authorizeRequest:request
-                                              completionHandler:^(NSError *error) {
-                                                  if (error == nil) {
-                                                      //change this to async?
-                                                      NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-                                                      if(responseData) {
-                                                          NSError *error;
-                                                          NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                                                          NSLog(@"Response string %@", responseString);
-                                                          
-                                                          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-                                                          NSArray *eventsFromJSON = [json objectForKey:@"events"];
-//                                                          NSString *output = [NSString stringWithFormat:@"Event name: %@ on %@", [eventsFromJSON[1] objectForKey:@"summary"], [[eventsFromJSON[1] objectForKey:@"start"] objectForKey:@"dateTime"]];
-//                                                          [[self.widgets lastObject] setText: output];
-                                                      } else {
-//                                                          [[self.widgets lastObject] setText: @"Connection to calendar failed."];
-                                                          
-                                                          
-                                                      }
-                                                      
-                                                  } else {
-                                                      NSLog("failed");
-                                                  }
-                                              }];
-}
-
-- (void)fetchCalendarList {
-//    self.calendarList = nil;
-//    self.calendarListFetchError = nil;
-    
-    GTLServiceCalendar *service = [[GTLServiceCalendar alloc] init];
-    service.authorizer = [BMWGCalendarDataSource sharedDataSource].googleAuth;
-    
-    GTLQueryCalendar *query = [GTLQueryCalendar queryForCalendarListList];
-    
-//    BOOL shouldFetchedOwned = ([calendarSegmentedControl_ selectedSegment] == 1);
-//    if (shouldFetchedOwned) {
-//        query.minAccessRole = kGTLCalendarMinAccessRoleOwner;
-//    }
-    
-    GTLServiceTicket *calendarListTicket = [service executeQuery:query
-                                  completionHandler:^(GTLServiceTicket *ticket,
-                                                      id calendarList, NSError *error) {
-                                      NSLog(@"%@", calendarList);
-                                      // Callback
-//                                      self.calendarList = calendarList;
-//                                      self.calendarListFetchError = error;
-//                                      self.calendarListTicket = nil;
-                                      
-                                  }];
 }
 
 @end
