@@ -47,8 +47,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="xxj-GX-JYr"/>
                                 </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="mobile #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7U-MO-CaY">
@@ -65,8 +65,8 @@
                                 <color key="textColor" red="0.14287310819999999" green="0.68539826770000001" blue="0.15925277560000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
-                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="145" id="W52-Q1-o3T"/>
                                 </constraints>
@@ -95,6 +95,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="dfQ-mf-XrR"/>
                     <connections>
+                        <outlet property="bmwLogoView" destination="AHW-3F-HK6" id="Uml-vb-D6G"/>
+                        <outlet property="chargerView" destination="6nA-P2-cea" id="7cS-ky-oIq"/>
                         <outlet property="phoneNumberField" destination="Cgx-XO-5t3" id="nfT-kG-tre"/>
                         <outlet property="phoneNumberValidator" destination="3Ui-eg-5WP" id="SLj-eD-ktN"/>
                         <outlet property="userLabel" destination="aYX-Wp-ASb" id="hJi-42-dk0"/>
@@ -113,6 +115,8 @@
         <class className="BMWViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>

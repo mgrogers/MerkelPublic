@@ -19,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberValidator;
 
+@property (weak, nonatomic) IBOutlet UIImageView *chargerView;
+@property (weak, nonatomic) IBOutlet UIImageView *bmwLogoView;
+
 @end
 
 @implementation BMWViewController
@@ -30,6 +33,16 @@
     self.title = @"Merkel";
     self.trackedViewName = @"Home Screen";
     self.phoneNumberField.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectedBMW:)
+                                                 name:IDVehicleDidConnectNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(disconnectedBMW:)
+                                                 name:IDVehicleDidDisconnectNotification
+                                               object:nil];
 }
 
 
@@ -186,5 +199,22 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
+
+#pragma mark - View Callbacks
+// When phone is connected (or start button in simulator pressed), BMWManager is
+// Started. The status of the connection will be updated via NSNotification tracking IDVehicleDidConnectNotification
+- (void)connectedBMW:(NSNotification *)notification
+{
+    self.bmwLogoView.hidden = NO;
+    self.chargerView.hidden = NO;
+}
+
+- (void)disconnectedBMW:(NSNotification *)notification
+{
+    self.bmwLogoView.hidden = YES;
+    self.chargerView.hidden = YES;
+}
+
+
 
 @end
