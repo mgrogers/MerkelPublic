@@ -229,7 +229,8 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return result;
 }
 
-- (NSArray *)eventsToDisplayTest {
+- (NSArray *)eventsToDisplayTest {   
+    
     NSDictionary *event = @{@"name": @"Test Event",
                             @"description": @"This is the greatest event",
                             @"start": @{@"dateTime": @"2013-01-08T10:00:00-08:00"},
@@ -284,25 +285,7 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     return nil;
 }
 
-- (NSArray *)attendeesToDisplayTest {
-    NSDictionary *attendee = @{@"name": @"Wesley Leung",
-                               @"jobTitle": @"CS Student",
-                               @"profileImageURl": @"http://m.c.lnkd.licdn.com/media/p/8/000/1c6/09c/29b17fa.jpg",
-                               @"summary": @"I currently attend Stanford.",
-                               @"emails": @[
-  
-                                       @{@"date":@{@"dateTime": @"2013-01-08T10:00:00-08:00"},@"subject":@"Re: Catching up for lunch.", @"content":@"Let's meet at the GSB"},
-                                            
-                                       @{@"date":@{@"dateTime": @"2013-01-18T10:00:00-08:00"},@"subject":@"Re: Meeting with associates.", @"content":@"This is an all-hands meeting."}
-                                       
-                                            ]};
-    NSMutableArray *attendees = [NSMutableArray array];
-    for (int i = 0; i < 5; i++) {
-        [attendees addObject:[BMWLinkedInProfile profileFromJSONDict:attendee]];
 
-    }
-    return attendees;
-}
 
 
 @end
