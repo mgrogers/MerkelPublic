@@ -8,7 +8,7 @@ var app = new Parse(APP_ID, MASTER_KEY);
  */
 
 exports.index = function(req, res){
-    res.render('index', { title: 'Express' });
+    res.render('index.hbs', { title: 'Express' });
 };
 
 exports.home = function(req, res){
