@@ -27,10 +27,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="hello." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrQ-aw-gf4">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="xz6-uQ-TdI"/>
-                                </constraints>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="hello" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrQ-aw-gf4">
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -77,7 +74,8 @@
                             <constraint firstItem="3Ui-eg-5WP" firstAttribute="top" secondItem="S7U-MO-CaY" secondAttribute="top" type="default" id="0gs-LS-xDY"/>
                             <constraint firstAttribute="trailing" secondItem="3Ui-eg-5WP" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="2sM-7r-GBc"/>
                             <constraint firstItem="S7U-MO-CaY" firstAttribute="baseline" secondItem="Cgx-XO-5t3" secondAttribute="baseline" type="default" id="A9G-7j-OXe"/>
-                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="26" id="BaL-DO-NPv"/>
+                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="FIu-Dp-uyl"/>
+                            <constraint firstAttribute="trailing" secondItem="mrQ-aw-gf4" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Sv0-C3-IuQ"/>
                             <constraint firstItem="aYX-Wp-ASb" firstAttribute="top" secondItem="mrQ-aw-gf4" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Sxf-NT-tvf"/>
                             <constraint firstAttribute="trailing" secondItem="aYX-Wp-ASb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="TNT-pV-AZe"/>
                             <constraint firstItem="6nA-P2-cea" firstAttribute="centerX" secondItem="AHW-3F-HK6" secondAttribute="centerX" type="default" id="Xcb-kN-IqJ"/>
