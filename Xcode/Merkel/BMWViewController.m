@@ -95,7 +95,7 @@
         return;
     }
     self.userLabel.hidden = NO;
-    self.userLabel.text = curUser.username;
+    self.userLabel.text = [curUser objectForKey:@"first_name"];
     if([curUser objectForKey:@"phone_number"]) {
         NSString *numberString = [[curUser objectForKey:@"phone_number"] stringValue];
         self.phoneNumberField.text = numberString;

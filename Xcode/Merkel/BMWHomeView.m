@@ -43,7 +43,15 @@
             nextButton.visible = YES;
             todayButton.visible = YES;
         }];
+    } else {
+        IDLabel *disconnectLabel = self.widgets[3];
+        IDLabel *disconnectLabel2 = self.widgets[4];
+        IDLabel *spinner = self.widgets[2];
+        spinner.visible = NO;
+        disconnectLabel.visible = YES;
+        disconnectLabel2.visible = YES;
     }
+    
 }
 
 - (void)createAllViews {
@@ -65,7 +73,15 @@
     [todayButton setTarget:self selector:@selector(buttonFocused:) forActionEvent:IDActionEventFocus];
     [todayButton  setTargetView:provider.calendarListView];
     
-    self.widgets = @[self.nextButton, todayButton, spinner];
+    IDLabel *disconnectLabel = [IDLabel label];
+    IDLabel *disconnectLabel2 = [IDLabel label];
+    
+    disconnectLabel.text = @"Sorry, please unplug your phone.";
+    disconnectLabel2.text = @"Log in and reconnect your device.";
+    disconnectLabel.visible = NO;
+    disconnectLabel2.visible = NO;
+    
+    self.widgets = @[self.nextButton, todayButton, spinner, disconnectLabel, disconnectLabel2];
 }
 
 - (void)buttonFocused:(IDButton *)button {
