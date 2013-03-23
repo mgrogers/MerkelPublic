@@ -65,7 +65,6 @@
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
                             <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="FeR-Oq-DQj"/>
                                     <constraint firstAttribute="height" constant="145" id="W52-Q1-o3T"/>
                                 </constraints>
                             </imageView>
@@ -108,7 +107,7 @@
     </scenes>
     <resources>
         <image name="bmwLogo.png" width="45" height="45"/>
-        <image name="charger.png" width="16" height="16"/>
+        <image name="charger.png" width="75" height="163"/>
     </resources>
     <classes>
         <class className="BMWViewController" superclassName="GAITrackedViewController">
