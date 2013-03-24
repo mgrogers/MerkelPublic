@@ -231,7 +231,7 @@ function getCalendarEvents(req, res, type) {
             });
             console.log("Events:", calendarList);
 
-            //cacheCalendars(calendarList);
+            cacheCalendars(calendarList);
             return res.send(200, calendarList);
         });
     });
@@ -249,9 +249,7 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
     } else {
         var option = {};
         option.key = GOOGLE_CONSUMER_KEY;
-        console.log("Before access_token: " + access_token_or_user_id);
         if(access_token_or_user_id) option.access_token = access_token_or_user_id;
-        console.log("After access token");
         option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
@@ -264,9 +262,9 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
         option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
         // Asynchronously access events
-        console.log("Trying to list events");
+        //console.log("Trying to list events");
         google_calendar.listEvent(access_token_or_user_id, calendar.id, option, function(err, events) {
-            console.log("listing event");
+            //console.log("listing event");
 
             // Error
             if(err || !events) {
@@ -304,7 +302,7 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
                         tempCalendar.events.push(calEvent);
                     }
                 });
-                console.log("Resolving:", tempCalendar);
+                //console.log("Resolving:", tempCalendar);
                 deferred.resolve(tempCalendar);
             }
         });
