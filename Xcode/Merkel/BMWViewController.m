@@ -3,7 +3,7 @@
 //  Merkel
 //
 //  Created by Tim Shi on 2/9/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 #import "BMWViewController.h"
@@ -15,9 +15,13 @@
 
 @interface BMWViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, UITextFieldDelegate>
 
+
 @property (strong, nonatomic) IBOutlet UILabel *userLabel;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumberValidator;
+
+@property (weak, nonatomic) IBOutlet UIImageView *chargerView;
+@property (weak, nonatomic) IBOutlet UIImageView *bmwLogoView;
 
 @end
 
@@ -30,6 +34,16 @@
     self.title = @"Merkel";
     self.trackedViewName = @"Home Screen";
     self.phoneNumberField.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectedBMW:)
+                                                 name:IDVehicleDidConnectNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(disconnectedBMW:)
+                                                 name:IDVehicleDidDisconnectNotification
+                                               object:nil];
 }
 
 
@@ -95,10 +109,10 @@
         return;
     }
     self.userLabel.hidden = NO;
-    self.userLabel.text = curUser.username;
+    self.userLabel.text = [curUser objectForKey:@"first_name"];
     if([curUser objectForKey:@"phone_number"]) {
         NSString *numberString = [[curUser objectForKey:@"phone_number"] stringValue];
-        self.phoneNumberField.text = numberString;
+        self.phoneNumberField.text = [self addDashtoPhoneNumber:numberString];
         self.phoneNumberValidator.hidden = NO;
     }
     
@@ -106,7 +120,7 @@
 
 #pragma mark UITextFieldDelegate Methods
 
--(void)doneEditingTextField:(id)sender {
+- (void)doneEditingTextField:(id)sender {
 
     if([self isValidPhoneNumber:self.phoneNumberField.text]) {
         self.phoneNumberValidator.hidden = NO;
@@ -117,6 +131,8 @@
         NSNumber *phoneNumber = [formatter numberFromString:self.phoneNumberField.text];
         [curUser setObject:phoneNumber forKey:@"phone_number"];
         [curUser saveInBackground];
+        
+        self.phoneNumberField.text = [self addDashtoPhoneNumber:self.phoneNumberField.text];
     } else {
         self.phoneNumberValidator.hidden = YES;
     }
@@ -124,7 +140,7 @@
     [self.phoneNumberField resignFirstResponder];
 }
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *combinedString = [textField.text stringByReplacingCharactersInRange:range withString:string];    
     if([self isValidPhoneNumber: combinedString]) {
         self.phoneNumberValidator.hidden = NO;
@@ -135,14 +151,12 @@
     return YES;
 }
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneEditingTextField:)];
+    NSString *numberWithoutDashes = [textField.text
+                                     stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    textField.text = numberWithoutDashes;
     self.navigationItem.rightBarButtonItem = doneButton;
-//    if([self isValidPhoneNumber:textField.text]) {
-//        self.phoneNumberValidator.hidden = NO;
-//    } else {
-//        self.phoneNumberValidator.hidden = YES;
-//    }
     return YES;
 }
 
@@ -152,6 +166,17 @@
     } else {
         return false;
     }
+}
+
+- (NSString*)addDashtoPhoneNumber:(NSString*)text
+{
+    NSMutableString *phoneNumber = [NSMutableString stringWithString:text];
+    int length = [phoneNumber length];
+    for (int i = 3;i <= length; i++) {
+        [phoneNumber insertString:@"-" atIndex:i];
+        i+=3;
+    }
+    return phoneNumber;
 }
 
 #pragma mark - User Login
@@ -191,5 +216,22 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
+
+#pragma mark - View Callbacks
+// When phone is connected (or start button in simulator pressed), BMWManager is
+// Started. The status of the connection will be updated via NSNotification tracking IDVehicleDidConnectNotification
+- (void)connectedBMW:(NSNotification *)notification
+{
+    self.bmwLogoView.hidden = NO;
+    self.chargerView.hidden = NO;
+}
+
+- (void)disconnectedBMW:(NSNotification *)notification
+{
+    self.bmwLogoView.hidden = YES;
+    self.chargerView.hidden = YES;
+}
+
+
 
 @end

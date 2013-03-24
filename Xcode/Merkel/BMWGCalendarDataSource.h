@@ -3,7 +3,7 @@
 //  Merkel
 //
 //  Created by Tim Shi on 2/25/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 // This class provides all services needed to access a user's calendar data.
@@ -48,7 +48,7 @@ typedef void (^BMWGCalendarEventRequestCompletion)(NSArray *events, NSError *err
 // Asynchronous method.
 - (NSArray *)eventsToDisplayCompletion:(BMWGCalendarEventRequestCompletion)completion;
 
-// Return mock LinkedIn user data.
+//Returns a test stub of attendee objects
 - (NSArray *)attendeesToDisplayTest;
 
 @end
