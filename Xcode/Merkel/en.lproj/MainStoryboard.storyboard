@@ -27,32 +27,34 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Hello:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrQ-aw-gf4">
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="hello" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrQ-aw-gf4">
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYX-Wp-ASb">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYX-Wp-ASb">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="0On-L1-qxQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cgx-XO-5t3">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cgx-XO-5t3">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="ck7-Vo-aqF"/>
+                                    <constraint firstAttribute="height" constant="30" id="xxj-GX-JYr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mobile #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7U-MO-CaY">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="mobile #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7U-MO-CaY">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="76" id="hhy-BK-Gc3"/>
+                                    <constraint firstAttribute="height" constant="24" id="ysq-Uy-zci"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="✓" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ui-eg-5WP">
@@ -60,26 +62,39 @@
                                 <color key="textColor" red="0.14287310819999999" green="0.68539826770000001" blue="0.15925277560000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="145" id="W52-Q1-o3T"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="aYX-Wp-ASb" firstAttribute="top" secondItem="3" secondAttribute="top" constant="122" id="1hc-CP-XVG"/>
-                            <constraint firstItem="aYX-Wp-ASb" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="1wo-68-f1O"/>
+                            <constraint firstItem="3Ui-eg-5WP" firstAttribute="top" secondItem="S7U-MO-CaY" secondAttribute="top" type="default" id="0gs-LS-xDY"/>
                             <constraint firstAttribute="trailing" secondItem="3Ui-eg-5WP" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="2sM-7r-GBc"/>
-                            <constraint firstItem="3Ui-eg-5WP" firstAttribute="top" secondItem="3" secondAttribute="top" constant="163" id="Sce-yx-PVN"/>
-                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="TPZ-BI-k3a"/>
-                            <constraint firstItem="S7U-MO-CaY" firstAttribute="bottom" secondItem="Cgx-XO-5t3" secondAttribute="bottom" type="default" id="VWN-pa-Xuh"/>
-                            <constraint firstItem="Cgx-XO-5t3" firstAttribute="top" secondItem="mrQ-aw-gf4" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="cn8-ut-Bo6"/>
-                            <constraint firstAttribute="trailing" secondItem="mrQ-aw-gf4" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="eeA-bN-Y0v"/>
-                            <constraint firstAttribute="trailing" secondItem="aYX-Wp-ASb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="hGe-Z3-aU5"/>
+                            <constraint firstItem="S7U-MO-CaY" firstAttribute="baseline" secondItem="Cgx-XO-5t3" secondAttribute="baseline" type="default" id="A9G-7j-OXe"/>
+                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="FIu-Dp-uyl"/>
+                            <constraint firstAttribute="trailing" secondItem="mrQ-aw-gf4" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Sv0-C3-IuQ"/>
+                            <constraint firstItem="aYX-Wp-ASb" firstAttribute="top" secondItem="mrQ-aw-gf4" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Sxf-NT-tvf"/>
+                            <constraint firstAttribute="trailing" secondItem="aYX-Wp-ASb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="TNT-pV-AZe"/>
+                            <constraint firstItem="6nA-P2-cea" firstAttribute="centerX" secondItem="AHW-3F-HK6" secondAttribute="centerX" type="default" id="Xcb-kN-IqJ"/>
+                            <constraint firstAttribute="bottom" secondItem="AHW-3F-HK6" secondAttribute="bottom" constant="159" id="YHv-Qj-Sq2"/>
+                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="top" secondItem="3" secondAttribute="top" constant="61" id="cDc-ta-Jz6"/>
+                            <constraint firstItem="S7U-MO-CaY" firstAttribute="top" secondItem="3" secondAttribute="top" constant="161" id="d40-2R-ENE"/>
+                            <constraint firstItem="6nA-P2-cea" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="ho0-dT-rot"/>
                             <constraint firstItem="S7U-MO-CaY" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="i0d-Rw-BP8"/>
+                            <constraint firstItem="Cgx-XO-5t3" firstAttribute="top" secondItem="3" secondAttribute="top" constant="159" id="k2c-aH-WR0"/>
                             <constraint firstItem="Cgx-XO-5t3" firstAttribute="leading" secondItem="S7U-MO-CaY" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="n83-CJ-mwh"/>
+                            <constraint firstItem="AHW-3F-HK6" firstAttribute="centerX" secondItem="aYX-Wp-ASb" secondAttribute="centerX" type="default" id="o3C-R6-Snk"/>
                             <constraint firstAttribute="trailing" secondItem="Cgx-XO-5t3" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="p6s-8S-Jdn"/>
-                            <constraint firstItem="mrQ-aw-gf4" firstAttribute="baseline" secondItem="aYX-Wp-ASb" secondAttribute="baseline" type="default" id="vFu-ac-HDt"/>
+                            <constraint firstItem="aYX-Wp-ASb" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="yAz-Xt-nIo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dfQ-mf-XrR"/>
                     <connections>
+                        <outlet property="bmwLogoView" destination="AHW-3F-HK6" id="Uml-vb-D6G"/>
+                        <outlet property="chargerView" destination="6nA-P2-cea" id="7cS-ky-oIq"/>
                         <outlet property="phoneNumberField" destination="Cgx-XO-5t3" id="nfT-kG-tre"/>
                         <outlet property="phoneNumberValidator" destination="3Ui-eg-5WP" id="SLj-eD-ktN"/>
                         <outlet property="userLabel" destination="aYX-Wp-ASb" id="hJi-42-dk0"/>
@@ -90,10 +105,16 @@
             <point key="canvasLocation" x="632" y="-273"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bmwLogo.png" width="45" height="45"/>
+        <image name="charger.png" width="75" height="163"/>
+    </resources>
     <classes>
         <class className="BMWViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>

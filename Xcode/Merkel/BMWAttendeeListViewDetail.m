@@ -3,13 +3,14 @@
 //  Merkel
 //
 //  Created by Wesley Leung on 3/10/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 #import "BMWAttendeeListViewDetail.h"
 #import "BMWLinkedInProfile.h"
 #import "BMWViewProvider.h"
 #import "BMWGCalendarDataSource.h"
+
 
 @interface BMWAttendeeListViewDetail ()
 

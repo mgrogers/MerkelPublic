@@ -3,7 +3,7 @@
 //  Merkel
 //
 //  Created by Tim Shi on 3/2/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
 //
 
 // Object model class for Google Calendar events. Provides class methods
