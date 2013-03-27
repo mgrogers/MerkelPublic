@@ -41,32 +41,32 @@ var event_schema = new Schema({
     description: String,
     location: String,
     start: {
-    date: Date,
-    dateTime: Date,
-    timezone: String
+        date: Date,
+        dateTime: Date,
+        timezone: String
     },
     end: {
-    date: Date,
-    dateTime: Date,
-    timezone: String
+        date: Date,
+        dateTime: Date,
+        timezone: String
     },
     creator: {
-    id: String,
-    email: String,
-    displayName: String,
-    self: Boolean,
+        id: String,
+        email: String,
+        displayName: String,
+        self: Boolean,
     },
     attendees: [{
-    id: String,
-    email: String,
-    displayName: String,
-    organizer: Boolean,
-    self: Boolean,
-    resource: Boolean,
-    optional: Boolean,
-    responseStatus: String,
-    comment: String,
-    additionalGuests: Number
+        id: String,
+        email: String,
+        displayName: String,
+        organizer: Boolean,
+        self: Boolean,
+        resource: Boolean,
+        optional: Boolean,
+        responseStatus: String,
+        comment: String,
+        additionalGuests: Number
     }],
     created: Date,
     updated: Date,
@@ -162,79 +162,79 @@ function getCalendarEvents(req, res, type) {
             return getCalendarEvents(req, res, type);
         }
     } else {
-    var appUrl = req.protocol + "://" + req.get('host');
+        var appUrl = req.protocol + "://" + req.get('host');
 
-    // Access token fallback - if access token exists in express session, use that, otherwise use Parse access token
-    var google_calendar;
-    var access_token;
-    if(req.session && req.session.access_token) {
-        google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-        access_token = req.session.access_token;
-        console.log("Got access token from express: " + access_token);
-    } else {
-        google_calendar = new GoogleCalendarParse(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-    }
+        // Access token fallback - if access token exists in express session, use that, otherwise use Parse access token
+        var google_calendar;
+        var access_token;
+        if(req.session && req.session.access_token) {
+            google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+            access_token = req.session.access_token;
+            console.log("Got access token from express: " + access_token);
+        } else {
+            google_calendar = new GoogleCalendarParse(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+        }
 
-    var assembled_calendars = [];
-    var calendarCount = 0;
+        var assembled_calendars = [];
+        var calendarCount = 0;
 
-    var user_id = req.params.userId;
+        var user_id = req.params.userId;
 
-    var requestedDateRaw;
-    var requestedDate = new time.Date();
-    var timezone;
+        var requestedDateRaw;
+        var requestedDate = new time.Date();
+        var timezone;
 
-    // Default to beginning of current date if none provided
-    if(req.params.date) {
-        var requestedDateArray = req.params.date.split('-');
-        requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
-    } else {
-        requestedDateRaw = new time.Date();
-    }
-    // Default to UTC if timezone not provided or improperly formatted
-    if(tz) {
-        timezone = decodeURIComponent(tz);
-    } else {
-        timezone = 'UTC';
-    }
-    // Change requested date to correct date request based on provided timezone
-    requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
+        // Default to beginning of current date if none provided
+        if(req.params.date) {
+            var requestedDateArray = req.params.date.split('-');
+            requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+        } else {
+            requestedDateRaw = new time.Date();
+        }
+        // Default to UTC if timezone not provided or improperly formatted
+        if(tz) {
+            timezone = decodeURIComponent(tz);
+        } else {
+            timezone = 'UTC';
+        }
+        // Change requested date to correct date request based on provided timezone
+        requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
-    console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
-    // Hacky way for auth fallback, TODO: refactor
-    var access_token_or_user_id;
-    if(access_token) {
-        access_token_or_user_id = access_token;
-    } else {
-        access_token_or_user_id = user_id;
-    }
+        console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
+        // Hacky way for auth fallback, TODO: refactor
+        var access_token_or_user_id;
+        if(access_token) {
+            access_token_or_user_id = access_token;
+        } else {
+            access_token_or_user_id = user_id;
+        }
 
-    return google_calendar.listCalendarList(access_token_or_user_id, function(err, data) {
-        if(err) return res.send(500,err);
+        return google_calendar.listCalendarList(access_token_or_user_id, function(err, data) {
+            if(err) return res.send(500,err);
 
-        var calendars = data.items;
-        var queue = [];
-        //console.log("Got calendars:",calendars);
+            var calendars = data.items;
+            var queue = [];
+            //console.log("Got calendars:",calendars);
 
-        calendars.forEach(function(calendar) {
-            console.log("Pushing onto queue:", calendar.summary);
-            queue.push(fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type));
-        });
-
-        return Q.allResolved(queue).then(function(promises) {
-            var calendarList = []
-            promises.forEach(function(promise) {
-                if(promise.isFulfilled()) {
-                var value = promise.valueOf();
-                calendarList.push(value);
-                }
+            calendars.forEach(function(calendar) {
+                //console.log("Pushing onto queue:", calendar.summary);
+                queue.push(fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type));
             });
-            console.log("Events:", calendarList);
 
-            cacheCalendars(calendarList);
-            return res.send(200, calendarList);
+            return Q.allResolved(queue).then(function(promises) {
+                var calendarList = []
+                promises.forEach(function(promise) {
+                    if(promise.isFulfilled()) {
+                    var value = promise.valueOf();
+                    calendarList.push(value);
+                    }
+                });
+                //console.log("Events:", calendarList);
+
+                cacheCalendars(calendarList);
+                return res.send(200, calendarList);
+            });
         });
-    });
     }
 }
 
@@ -314,24 +314,21 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
 /* Caches calendar results in mongoDB */
 function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
-
-        // Cache calendar if not already present
         var tempCalendar = new Calendar({
             'name': calendar.name,
-            'user_id': userId
+            'user_id': "" + userId
         });
 
         var options = {};
         options.upsert = true;
 
-        Calendar.findOneAndUpdate({
-            'name': calendar.name, 
-            'user_id': userId
-        }, tempCalendar, options, function(err, data){
+        // Upsert calendar - update if exists, insert if doesn't
+        tempCalendar.save(function(err, data){
             if(err) {
-            console.log("Error upserting calendar: " + calendar.name + " error: " + err);
+                console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
+                return;
             } else {
-            console.log("Upserted calendar: " + calendar.name);
+                console.log("Saved calendar: " + data);
             }
         });
         // Cache events
@@ -344,6 +341,7 @@ function cacheEvents(calendar) {
     calendar.events.forEach(function(event) {
 
         // cache event
+        return;
     });
 }
 
