@@ -52,13 +52,13 @@ var eventSchema = new Schema({
         timeZone: String
     },
     creator: {
-        id: String,
+        id: String, // refers to google identifier
         email: String,
         displayName: String,
         self: Boolean,
     },
     attendees: [{
-        id: String,
+        id: String, // refers to google identifier
         email: String,
         displayName: String,
         organizer: Boolean,
@@ -232,7 +232,7 @@ function getCalendarEvents(req, res, type) {
                 });
                 //console.log("Events:", calendarList);
 
-                cacheCalendars(calendarList);
+                cacheCalendars(calendarList, userId);
                 return res.send(200, calendarList);
             });
         });
@@ -324,25 +324,26 @@ function cacheCalendars(calendars, userId) {
         });
 
         // Upsert calendar - update if exists, insert if doesn't
-        Calendar.findOneAndUpdate({id: calendar.id}, tempCalendar, {upsert: true}, function(err, data) {
-            var calendarId;
-
+        Calendar.findOneAndUpdate({id: calendar.id}, {
+            id: calendar.id,
+            name: calendar.name,
+            userId: userId
+            }, {upsert: true}, function(err, data) {
             if(err) {
                 console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
             } else {
-                console.log("Updated calendar: " + data);
-                calendarId = data.id;
+                console.log("Upserted calendar: " + calendar.name + ", data: " + data);
 
                 // Cache events in this calendar
-                cacheEvents(calendar.events, calendarId, userId);
+                cacheEvents(calendar, userId);
             }
         });
     });
 }
 
 /* Caches event results in mongoDB */
-function cacheEvents(events, calendarId, userId) {
-    events.forEach(function(event) {
+function cacheEvents(calendar, userId) {
+    calendar.events.forEach(function(event) {
         // Cache event
         var tempEvent = new Event({
             id: event.id,
@@ -355,16 +356,29 @@ function cacheEvents(events, calendarId, userId) {
             attendees: event.attendees,
             created: event.created,
             updated: event.updated,
-            calendarId: calendarId,
+            calendarId: calendar.id,
             userId: userId
         });
 
         // Upsert event
-        Event.findOneAndUpdate({id: event.id}, tempEvent, {upsert: true}, function(err, data) {
+        Event.findOneAndUpdate({id: event.id}, {
+            id: event.id,
+            name: event.name,
+            description: event.description,
+            location: event.location,
+            start: event.start,
+            end: event.end,
+            creator: event.creator,
+            attendees: event.attendees,
+            created: event.created,
+            updated: event.updated,
+            calendarId: calendar.id,
+            userId: userId
+            }, {upsert: true}, function(err, data) {
             if(err) {
-                console.log("Error saving event: " + event.summary + ", error: " + err + ", data: " + data);
+                console.log("Error saving event: " + event.name + ", error: " + err + ", data: " + data);
             } else {
-                console.log("Updated event: " + data);
+                console.log("Upserted event: " + event.name + ", data: " + data);
             }
         });
     });
