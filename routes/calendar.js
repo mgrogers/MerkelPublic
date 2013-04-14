@@ -31,24 +31,25 @@ mongoose.connect('ds033877.mongolab.com:33877/merkel', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-// Mongoose schemas - user_id corresponds to Parse User Object ID
-var calendar_schema = new Schema({
+// Mongoose schemas - userId corresponds to Parse User Object ID
+var calendarSchema = new Schema({
     name: String,
-    user_id: String
+    userId: String
 });
-var event_schema = new Schema({
+var eventSchema = new Schema({
+    id: String,
     name: String,
     description: String,
     location: String,
     start: {
         date: Date,
         dateTime: Date,
-        timezone: String
+        timeZone: String
     },
     end: {
         date: Date,
         dateTime: Date,
-        timezone: String
+        timeZone: String
     },
     creator: {
         id: String,
@@ -70,11 +71,11 @@ var event_schema = new Schema({
     }],
     created: Date,
     updated: Date,
-    calendar_id: String,
-    user_id: String
+    calendarId: String,
+    userId: String
 });
-var Calendar = mongoose.model('calendar', calendar_schema);
-var Event = mongoose.model('event', event_schema);
+var Calendar = mongoose.model('calendar', calendarSchema);
+var Event = mongoose.model('event', eventSchema);
 
 
 /* ----------- API FUNCTIONS -----------*/
@@ -178,7 +179,7 @@ function getCalendarEvents(req, res, type) {
         var assembled_calendars = [];
         var calendarCount = 0;
 
-        var user_id = req.params.userId;
+        var userId = req.params.userId;
 
         var requestedDateRaw;
         var requestedDate = new time.Date();
@@ -202,14 +203,14 @@ function getCalendarEvents(req, res, type) {
 
         console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
         // Hacky way for auth fallback, TODO: refactor
-        var access_token_or_user_id;
+        var access_token_or_userId;
         if(access_token) {
-            access_token_or_user_id = access_token;
+            access_token_or_userId = access_token;
         } else {
-            access_token_or_user_id = user_id;
+            access_token_or_userId = userId;
         }
 
-        return google_calendar.listCalendarList(access_token_or_user_id, function(err, data) {
+        return google_calendar.listCalendarList(access_token_or_userId, function(err, data) {
             if(err) return res.send(500,err);
 
             var calendars = data.items;
@@ -218,7 +219,7 @@ function getCalendarEvents(req, res, type) {
 
             calendars.forEach(function(calendar) {
                 //console.log("Pushing onto queue:", calendar.summary);
-                queue.push(fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type));
+                queue.push(fetchEvents(google_calendar, access_token_or_userId, calendar, requestedDate, type));
             });
 
             return Q.allResolved(queue).then(function(promises) {
@@ -238,7 +239,7 @@ function getCalendarEvents(req, res, type) {
     }
 }
 
-function fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type) {
+function fetchEvents(google_calendar, access_token_or_userId, calendar, requestedDate, type) {
     var deferred = Q.defer();
     console.log("fetching events for", calendar.summary);
 
@@ -249,7 +250,7 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
     } else {
         var option = {};
         option.key = GOOGLE_CONSUMER_KEY;
-        if(access_token_or_user_id) option.access_token = access_token_or_user_id;
+        if(access_token_or_userId) option.access_token = access_token_or_userId;
         option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
@@ -263,7 +264,7 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
 
         // Asynchronously access events
         //console.log("Trying to list events");
-        google_calendar.listEvent(access_token_or_user_id, calendar.id, option, function(err, events) {
+        google_calendar.listEvent(access_token_or_userId, calendar.id, option, function(err, events) {
             //console.log("listing event");
 
             // Error
@@ -273,11 +274,13 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
             } else if(!events.items) {
                 console.log("Resolving - no events");
                 var tempCalendar = {};
+                tempCalendar.id = calendar.id;
                 tempCalendar.name = calendar.summary;
                 tempCalendar.events = [];
                 deferred.resolve(tempCalendar);
             } else {
                 var tempCalendar = {};
+                tempCalendar.id = calendar.id;
                 tempCalendar.name = calendar.summary;
                 tempCalendar.events = [];
 
@@ -315,30 +318,55 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
 function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
         var tempCalendar = new Calendar({
+            id: calendar.id,
             name: calendar.name,
-            user_id: "" + userId
+            userId: userId
         });
 
         // Upsert calendar - update if exists, insert if doesn't
-        Calendar.findOneAndUpdate({name: calendar.name, user_id: userId}, tempCalendar, {upsert: true}, function(err, data){
+        Calendar.findOneAndUpdate({id: calendar.id}, tempCalendar, {upsert: true}, function(err, data) {
+            var calendarId;
+
             if(err) {
                 console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
             } else {
                 console.log("Updated calendar: " + data);
+                calendarId = data.id;
+
+                // Cache events in this calendar
+                cacheEvents(calendar.events, calendarId, userId);
             }
-            return;
         });
-        // Cache events
-        cacheEvents(calendar.events);
     });
 }
 
 /* Caches event results in mongoDB */
-function cacheEvents(calendar) {
-    calendar.events.forEach(function(event) {
+function cacheEvents(events, calendarId, userId) {
+    events.forEach(function(event) {
+        // Cache event
+        var tempEvent = new Event({
+            id: event.id,
+            name: event.name,
+            description: event.description,
+            location: event.location,
+            start: event.start,
+            end: event.end,
+            creator: event.creator,
+            attendees: event.attendees,
+            created: event.created,
+            updated: event.updated,
+            calendarId: calendarId,
+            userId: userId
+        });
 
-        // cache event
-        return;
+        // Upsert event
+        Event.findOneAndUpdate({id: event.id}, tempEvent, {upsert: true}, function(err, data) {
+            if(err) {
+                console.log("Error saving event: " + event.summary + ", error: " + err + ", data: " + data);
+            } else {
+                console.log("Updated event: " + data);
+            }
+        });
     });
 }
 
