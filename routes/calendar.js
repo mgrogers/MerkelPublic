@@ -26,8 +26,8 @@ var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRYphizlByPNZxKxwes30IISt81sJd6Qrj
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 var googleParseAuth = new GoogleParseAuth(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET);
 
-var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210'}
-mongoose.connect('ds033877.mongolab.com:33877/merkel');
+var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210', 'auto_reconnect':true};
+mongoose.connect('ds033877.mongolab.com:33877/merkel', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -315,21 +315,18 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
 function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
         var tempCalendar = new Calendar({
-            'name': calendar.name,
-            'user_id': "" + userId
+            name: calendar.name,
+            user_id: "" + userId
         });
 
-        var options = {};
-        options.upsert = true;
-
         // Upsert calendar - update if exists, insert if doesn't
-        tempCalendar.save(function(err, data){
+        Calendar.findOneAndUpdate({name: calendar.name, user_id: userId}, tempCalendar, {upsert: true}, function(err, data){
             if(err) {
                 console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
-                return;
             } else {
-                console.log("Saved calendar: " + data);
+                console.log("Updated calendar: " + data);
             }
+            return;
         });
         // Cache events
         cacheEvents(calendar.events);
