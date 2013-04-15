@@ -325,18 +325,14 @@ function fetchEvents(google_calendar, access_token_or_userId, calendar, requeste
 /* Caches calendar results in mongoDB */
 function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
-        var tempCalendar = new Calendar({
+        var tempCalendar = {
             id: calendar.id,
             name: calendar.name,
             userId: userId
-        });
+        };
 
         // Upsert calendar - update if exists, insert if doesn't
-        Calendar.findOneAndUpdate({id: calendar.id}, {
-            id: calendar.id,
-            name: calendar.name,
-            userId: userId
-            }, {upsert: true}, function(err, data) {
+        Calendar.findOneAndUpdate({id: calendar.id}, tempCalendar, {upsert: true}, function(err, data) {
             if(err) {
                 console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
             } else {
@@ -354,23 +350,7 @@ function cacheEvents(calendar, userId) {
     calendar.events.forEach(function(event) {
 
         // Cache event
-        var tempEvent = new Event({
-            id: event.id,
-            name: event.name,
-            description: event.description,
-            location: event.location,
-            start: event.start,
-            end: event.end,
-            creator: event.creator,
-            attendees: event.attendees,
-            created: event.created,
-            updated: event.updated,
-            calendarId: calendar.id,
-            userId: userId
-        });
-
-        // Upsert event
-        Event.findOneAndUpdate({id: event.id}, {
+        var tempEvent = {
             id: event.id,
             name: event.name,
             description: event.description,
@@ -408,7 +388,10 @@ function cacheEvents(calendar, userId) {
             updated: event.updated,
             calendarId: calendar.id,
             userId: userId
-            }, {upsert: true}, function(err, data) {
+        };
+
+        // Upsert event
+        Event.findOneAndUpdate({id: event.id}, tempEvent, {upsert: true}, function(err, data) {
             if(err) {
                 console.log("Error saving event: " + event.name + ", error: " + err + ", data: " + data);
             } else {
