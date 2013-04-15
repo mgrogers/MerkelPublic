@@ -33,46 +33,46 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // Mongoose schemas - userId corresponds to Parse User Object ID
 var calendarSchema = new Schema({
-    name: String,
-    userId: String
+    name: {type: String, default: ""},
+    userId: {type: String, default: ""}
 });
 var eventSchema = new Schema({
-    id: String,
-    name: String,
-    description: String,
-    location: String,
+    id: {type: String, default: ""},
+    name: {type: String, default: ""},
+    description: {type: String, default: ""},
+    location: {type: String, default: ""},
     start: {
-        date: Date,
-        dateTime: Date,
-        timeZone: String
+        date: {type: Date, default: null},
+        dateTime: {type: Date, default: null},
+        timeZone: {type: String, default: ""}
     },
     end: {
-        date: Date,
-        dateTime: Date,
-        timeZone: String
+        date: {type: Date, default: null},
+        dateTime: {type: Date, default: null},
+        timeZone: {type: String, default: ""}
     },
     creator: {
-        id: String, // refers to google identifier
-        email: String,
-        displayName: String,
-        self: Boolean,
+        id: {type: String, default: ""}, // refers to google identifier
+        email: {type: String, default: ""},
+        displayName: {type: String, default: ""},
+        self: {type: Boolean, default: false},
     },
     attendees: [{
-        id: String, // refers to google identifier
-        email: String,
-        displayName: String,
-        organizer: Boolean,
-        self: Boolean,
-        resource: Boolean,
-        optional: Boolean,
-        responseStatus: String,
-        comment: String,
-        additionalGuests: Number
+        id: {type: String, default: ""}, // refers to google identifier
+        email: {type: String, default: ""},
+        displayName: {type: String, default: ""},
+        organizer: {type: Boolean, default: false},
+        self: {type: Boolean, default: false},
+        resource: {type: Boolean, default: false},
+        optional: {type: Boolean, default: false},
+        responseStatus: {type: String, default: ""},
+        comment: {type: String, default: ""},
+        additionalGuests: {type: Number, default: 0}
     }],
-    created: Date,
-    updated: Date,
-    calendarId: String,
-    userId: String
+    created: {type: Date, default: null},
+    updated: {type: Date, default: null},
+    calendarId: {type: String, default: ""},
+    userId: {type: String, default: ""}
 });
 var Calendar = mongoose.model('calendar', calendarSchema);
 var Event = mongoose.model('event', eventSchema);
@@ -293,13 +293,21 @@ function fetchEvents(google_calendar, access_token_or_userId, calendar, requeste
                         calEvent.id = event.id;
                         calEvent.name = event.summary;
                         if(event.description) calEvent.description = event.description;
+                        else calEvent.description = "";
                         if(event.location) calEvent.location = event.location;
+                        else calEvent.location = "";
                         if(event.start) calEvent.start = event.start;
+                        else calEvent.start = {};
                         if(event.end) calEvent.end = event.end;
+                        else calEvent.end = {};
                         if(event.creator) calEvent.creator = event.creator;
+                        else calEvent.creator = {};
                         if(event.attendees) calEvent.attendees = event.attendees;
+                        else calEvent.attendees = [];
                         if(event.created) calEvent.created = event.created;
+                        else calEvent.created = "";
                         if(event.updated) calEvent.updated = event.updated;
+                        else calEvent.updated = "";
 
                         // Add event to calendar object
                         tempCalendar.events.push(calEvent);
@@ -344,6 +352,7 @@ function cacheCalendars(calendars, userId) {
 /* Caches event results in mongoDB */
 function cacheEvents(calendar, userId) {
     calendar.events.forEach(function(event) {
+
         // Cache event
         var tempEvent = new Event({
             id: event.id,
@@ -366,10 +375,35 @@ function cacheEvents(calendar, userId) {
             name: event.name,
             description: event.description,
             location: event.location,
-            start: event.start,
-            end: event.end,
-            creator: event.creator,
-            attendees: event.attendees,
+            start: {
+                date: event.start.date,
+                dateTime: event.start.dateTime,
+                timeZone: event.start.timeZone
+            },
+            end: {
+                date: event.end.date,
+                dateTime: event.end.dateTime,
+                timeZone: event.end.timeZone
+            },
+            creator: {
+                id: event.creator.id,
+                email: event.creator.email,
+                displayName: event.creator.displayName,
+                self: event.creator.self
+            },
+            /*
+            attendees: {
+                id: event.attendees.id,
+                email: event.attendees.email,
+                displayName: event.attendees.displayName,
+                organizer: event.attendees.organizer,
+                self: event.attendees.self,
+                resource: event.attendees.resource,
+                optional: event.attendees.optional,
+                responseStatus: event.attendees.responseStatus,
+                comment: event.attendees.comment,
+                additionalGuests: event.attendees.additionalGuests
+            },*/
             created: event.created,
             updated: event.updated,
             calendarId: calendar.id,
