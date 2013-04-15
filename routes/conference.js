@@ -64,7 +64,7 @@ exports.join = function(req, res) {
 }
 
 exports.twilio = function(req, res) {
-    res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='post' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Code</Say></Gather></Response>");
+    res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Code</Say></Gather></Response>");
 }
 
 function randomConferenceName() {
