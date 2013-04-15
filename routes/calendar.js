@@ -292,20 +292,67 @@ function fetchEvents(google_calendar, access_token_or_userId, calendar, requeste
                         var calEvent = {};
                         calEvent.id = event.id;
                         calEvent.name = event.summary;
+
                         if(event.description) calEvent.description = event.description;
                         else calEvent.description = "";
+
                         if(event.location) calEvent.location = event.location;
                         else calEvent.location = "";
-                        if(event.start) calEvent.start = event.start;
-                        else calEvent.start = {};
-                        if(event.end) calEvent.end = event.end;
-                        else calEvent.end = {};
-                        if(event.creator) calEvent.creator = event.creator;
-                        else calEvent.creator = {};
-                        if(event.attendees) calEvent.attendees = event.attendees;
-                        else calEvent.attendees = [];
+
+                        if(event.start) {
+                            calEvent.start = {
+                                date: event.start.date || null,
+                                dateTime: event.start.dateTime || null,
+                                timeZone: event.start.timeZone || ""
+                            };
+                        } else {
+                            calEvent.start = {};
+                        }
+
+                        if(event.end) {
+                            calEvent.end = {
+                                date: event.end.date || null,
+                                dateTime: event.end.dateTime || null,
+                                timeZone: event.end.timeZone || ""
+                            };
+                        } else {
+                            calEvent.end = {};
+                        }
+
+                        if(event.creator) {
+                            calEvent.creator = {
+                                id: event.creator.id || "",
+                                email: event.creator.email || "",
+                                displayName: event.creator.displayName || "",
+                                self: event.creator.self || false
+                            };
+                        } else {
+                            calEvent.creator = {};
+                        }
+
+                        if(event.attendees) {
+                            calEvent.attendees = [];
+                            event.attendees.forEach(function(attendee) {
+                                calEvent.attendees.push({
+                                    id: attendee.id || "",
+                                    email: attendee.email || "",
+                                    displayName: attendee.displayName || "",
+                                    organizer: attendee.organizer || false,
+                                    self: attendee.self || false,
+                                    resource: attendee.resource || false,
+                                    optional: attendee.optional || false,
+                                    responseStatus: attendee.responseStatus || "",
+                                    comment: attendee.comment || "",
+                                    additionalGuests: attendee.additionalGuests || 0
+                                });
+                            });
+                        } else {
+                            calEvent.attendees = [];
+                        }
+
                         if(event.created) calEvent.created = event.created;
                         else calEvent.created = "";
+
                         if(event.updated) calEvent.updated = event.updated;
                         else calEvent.updated = "";
 
@@ -355,6 +402,11 @@ function cacheEvents(calendar, userId) {
             name: event.name,
             description: event.description,
             location: event.location,
+            start: event.start,
+            end: event.end,
+            creator: event.creator,
+            attendees: event.attendees,
+            /*
             start: {
                 date: event.start.date,
                 dateTime: event.start.dateTime,
@@ -371,7 +423,6 @@ function cacheEvents(calendar, userId) {
                 displayName: event.creator.displayName,
                 self: event.creator.self
             },
-            /*
             attendees: {
                 id: event.attendees.id,
                 email: event.attendees.email,
