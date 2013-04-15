@@ -26,8 +26,8 @@ var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRYphizlByPNZxKxwes30IISt81sJd6Qrj
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 var googleParseAuth = new GoogleParseAuth(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET);
 
-var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210', 'auto_reconnect':true};
-mongoose.connect('ds033877.mongolab.com:33877/merkel', mongoose_options);
+var mongoose_options = {'auto_reconnect':true};
+mongoose.connect('mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -406,35 +406,6 @@ function cacheEvents(calendar, userId) {
             end: event.end,
             creator: event.creator,
             attendees: event.attendees,
-            /*
-            start: {
-                date: event.start.date,
-                dateTime: event.start.dateTime,
-                timeZone: event.start.timeZone
-            },
-            end: {
-                date: event.end.date,
-                dateTime: event.end.dateTime,
-                timeZone: event.end.timeZone
-            },
-            creator: {
-                id: event.creator.id,
-                email: event.creator.email,
-                displayName: event.creator.displayName,
-                self: event.creator.self
-            },
-            attendees: {
-                id: event.attendees.id,
-                email: event.attendees.email,
-                displayName: event.attendees.displayName,
-                organizer: event.attendees.organizer,
-                self: event.attendees.self,
-                resource: event.attendees.resource,
-                optional: event.attendees.optional,
-                responseStatus: event.attendees.responseStatus,
-                comment: event.attendees.comment,
-                additionalGuests: event.attendees.additionalGuests
-            },*/
             created: event.created,
             updated: event.updated,
             calendarId: calendar.id,
