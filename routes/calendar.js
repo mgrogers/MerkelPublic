@@ -27,7 +27,7 @@ var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 var googleParseAuth = new GoogleParseAuth(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET);
 
 var mongoose_options = {'auto_reconnect':true};
-mongoose.connect('mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
+mongoose.connect(ENV['MONGOLAB_URI'] || 'mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
