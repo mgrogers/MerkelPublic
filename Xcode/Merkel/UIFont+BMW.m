@@ -10,6 +10,11 @@
 
 @implementation UIFont (BMW)
 
++ (instancetype)defaultFontOfSize:(CGFloat)fontSize {
+    static NSString * const kBMWDefaultFont = @"Gotham-Book";
+    return [UIFont fontWithName:kBMWDefaultFont size:fontSize];
+}
+
 + (instancetype)boldFontOfSize:(CGFloat)fontSize {
     static NSString * const kBMWBoldFont = @"Gotham-Bold";
     return [UIFont fontWithName:kBMWBoldFont size:fontSize];

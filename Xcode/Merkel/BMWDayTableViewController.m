@@ -8,6 +8,8 @@
 
 #import "BMWDayTableViewController.h"
 
+#import "BMWSlidingCell.h"
+
 @interface BMWDayTableViewController ()
 
 @property (nonatomic, strong) NSArray *testData;
@@ -15,6 +17,8 @@
 @end
 
 @implementation BMWDayTableViewController
+
+static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -38,7 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[BMWSlidingCell class] forCellReuseIdentifier:kBMWSlidingCellIdentifier];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.title = @"My Day";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
@@ -71,8 +76,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
     NSDictionary *item = self.testData[indexPath.row];
     cell.textLabel.text = item[@"title"];
     return cell;

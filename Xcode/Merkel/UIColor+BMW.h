@@ -10,6 +10,6 @@
 
 @interface UIColor (BMW)
 
-+ (instancetype)navBarTintColor;
++ (instancetype)bmwDarkBlueColor;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  UIFont+BMW.h
+//  BMWSlidingCell.h
 //  Merkel
 //
 //  Created by Tim Shi on 4/16/13.
@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIFont (BMW)
-
-+ (instancetype)defaultFontOfSize:(CGFloat)fontSize;
-+ (instancetype)boldFontOfSize:(CGFloat)fontSize;
+@interface BMWSlidingCell : UITableViewCell
 
 @end
