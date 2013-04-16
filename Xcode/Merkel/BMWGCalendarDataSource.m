@@ -10,9 +10,8 @@
 #import "BMWGCalendarEvent.h"
 #import "BMWLinkedInProfile.h"
 
-
-#import <Google-API-Client/GTMOAuth2Authentication.h>
-#import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
+#import <gtm-oauth2/GTMOAuth2Authentication.h>
+#import <gtm-oauth2/GTMOAuth2ViewControllerTouch.h>
 
 @interface NSURL (additions)
 
