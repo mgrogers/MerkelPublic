@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "ConferViewController.h"
-#import "ConferListItem.h"
-#import "ConferTableViewCell.h"
+#import "BMWDayViewController.h"
+#import "BMWDayListItem.h"
+#import "BMWDayTVCell.h"
 
 @implementation ConferViewController {
     NSMutableArray *_cellItems;

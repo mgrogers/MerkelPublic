@@ -19,11 +19,11 @@
             </objects>
             <point key="canvasLocation" x="95" y="-280"/>
         </scene>
-        <!--Confer View Controller-->
+        <!--View Controller-->
         <scene sceneID="Zz1-P6-Aqa">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMa-aZ-T9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="uyK-oG-x46" customClass="ConferViewController" sceneMemberID="viewController">
+                <viewController id="uyK-oG-x46" customClass="BMWViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s4b-Mg-OlT">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -31,7 +31,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tft-6E-xEJ">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cell" id="gDX-fd-VXR" customClass="ConferTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="cell" id="gDX-fd-VXR" customClass="BMWDayTVCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -162,15 +162,6 @@
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ConferTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConferTableViewCell.h"/>
-        </class>
-        <class className="ConferViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConferViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="GAITrackedViewController" superclassName="UIViewController">

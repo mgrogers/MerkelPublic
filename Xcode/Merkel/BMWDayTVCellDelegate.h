@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ConferListItem.h"
+#import "BMWDayListItem.h"
 
-@protocol ConferTableViewCellDelegate <NSObject>
+@protocol BMWDayTVCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
 - (void) cellItemDeleted:(ConferListItem*) cellItem;

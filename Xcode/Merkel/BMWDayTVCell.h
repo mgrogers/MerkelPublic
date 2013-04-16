@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "ConferListItem.h"
-#import "ConferTableViewCellDelegate.h"
+#import "BMWDayListItem.h"
+#import "BMWDayTVCellDelegate.h" 
 
 
 // A custom table cell that renders cell items.
@@ -17,6 +17,6 @@
 @property (nonatomic) ConferListItem *cellItem;
 
 // The object that acts as delegate for this cell.
-@property (nonatomic, assign) id<ConferTableViewCellDelegate> delegate;
+@property (nonatomic, assign) id<BMWDayTVCellDelegate> delegate;
 
 @end

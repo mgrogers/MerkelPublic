@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "ConferTableViewCell.h"
+#import "BMWDayTVCell.h"
 
 @implementation ConferTableViewCell {
     CGPoint _originalCenter;

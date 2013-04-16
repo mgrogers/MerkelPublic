@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ConferTableViewCellDelegate.h"
 
-@interface ConferViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConferTableViewCellDelegate>
+#import "BMWDayTVCellDelegate.h"
+
+
+@interface ConferViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BMWDayTVCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

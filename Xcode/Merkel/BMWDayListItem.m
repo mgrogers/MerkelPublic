@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
 //
 
-#import "ConferListItem.h"
+#import "BMWDayListItem.h"
 
 @implementation ConferListItem
 
