@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "BMWDayTVCellDelegate.h"
+#import "BMWSlidingCellDelegate.h"
 
 
-@interface BMWDayViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BMWDayTVCellDelegate>
+@interface BMWDayViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BMWSlidingCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

@@ -98,7 +98,7 @@
         }
         if(_deleteOnDragRelease) {
             //change the stats
-            [self.delegate cellItemDeleted:self.cellItem];
+ 
         }
         if(_markCompleteOnDragRelease) {
             self.cellItem.completed = YES;

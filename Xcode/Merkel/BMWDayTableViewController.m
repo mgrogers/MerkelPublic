@@ -90,4 +90,25 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
+
+#pragma mark - UITableViewDataDelegate protocol methods
+
+-(void)handleLeftSwipe:(id)cellItem {
+    NSUInteger index = [self.testData indexOfObject:cellItem];
+    [self.tableView beginUpdates];
+    
+        //do something with this cell
+
+    [self.tableView endUpdates];
+}
+
+-(void)handleRightSwipe:(id)cellItem {
+    NSUInteger index = [self.testData indexOfObject:cellItem];
+    [self.tableView beginUpdates];
+    
+    //do something with this cell
+    
+    [self.tableView endUpdates];
+}
+
 @end

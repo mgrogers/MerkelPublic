@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol BMWSlideCellDelegate <NSObject>
+@protocol BMWSlidingCellDelegate <NSObject>
 
-// indicates that the given item has been deleted
-- (void) cellItemDeleted:(BMWDayListItem*) cellItem;
+
+- (void) handleLeftSwipe:(UITableViewCell*) cellItem;
+- (void) handleRightSwipe:(UITableViewCell*) cellItem;
 
 @end

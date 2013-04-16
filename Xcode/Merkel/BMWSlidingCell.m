@@ -8,6 +8,7 @@
 
 #import "BMWSlidingCell.h"
 
+
 @interface BMWSlidingCell ()
 
 @property (nonatomic, strong) UIView *bottomBar, *verticalBar;
@@ -139,9 +140,11 @@ const float UI_CUES_WIDTH = 100.0f;
         
         // indicate when the item have been pulled far enough to invoke the given action
         _leftLabel.textColor = _markCompleteOnDragRelease ?
-        [UIColor redColor] : [UIColor whiteColor];
-        _rightLabel.textColor = _deleteOnDragRelease ?
         [UIColor greenColor] : [UIColor whiteColor];
+       
+        _rightLabel.textColor = _deleteOnDragRelease ?
+         [UIColor redColor] : [UIColor whiteColor];
+      
         
     }
     
@@ -168,12 +171,13 @@ const float UI_CUES_WIDTH = 100.0f;
 
         }
         if(_deleteOnDragRelease) {
-            //change the stats
-//            [self.delegate cellItemDeleted:self.cellItem];
+            [self.delegate handleRightSwipe:self];
+            
+
         }
         if(_markCompleteOnDragRelease) {
-//            self.cellItem.completed = YES;
-            //change the state.
+            [self.delegate handleLeftSwipe:self];
+
         }
         
     }
@@ -190,13 +194,13 @@ const float UI_CUES_WIDTH = 100.0f;
 
 - (void)setupCueLabels {
     _leftLabel = [self createCueLabel];
-    _leftLabel.text = @"Late";
+    _leftLabel.text = @"Join";
     _leftLabel.font = [UIFont defaultFontOfSize:20.0];
     _leftLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:_leftLabel];
     
     _rightLabel = [self createCueLabel];
-    _rightLabel.text = @"Join";
+    _rightLabel.text = @"Late";
     _rightLabel.font = [UIFont defaultFontOfSize:20.0];
     
     _rightLabel.textAlignment = NSTextAlignmentLeft;
