@@ -10,10 +10,12 @@
 #import "BMWManager.h"
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
+#import <PKRevealController/PKRevealController.h>
 
 @interface BMWAppDelegate () <IDLogAppender, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (strong, nonatomic) PKRevealController *revealController;
 
 @end
 
@@ -32,6 +34,9 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
     [self startExternalServices];
+    self.revealController = (PKRevealController *)self.window.rootViewController;
+    UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNav"];
+    [self.revealController setFrontViewController:frontViewController];
     return YES;
 }
 
