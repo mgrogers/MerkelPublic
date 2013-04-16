@@ -20,7 +20,7 @@
 
 + (instancetype)navBarTintColor {
     static NSString * const kBMWNavBarTintColor = @"#23303D";
-    NSLog(@"%@", [UIFont familyNames]);
+    NSLog(@"%@", [UIFont fontNamesForFamilyName:@"Gotham"]);
     return [self colorFromHexString:kBMWNavBarTintColor];
 }
 

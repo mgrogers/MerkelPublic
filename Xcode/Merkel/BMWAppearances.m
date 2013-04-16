@@ -18,6 +18,8 @@
     id appearance = [UINavigationBar appearance];
     [appearance setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [appearance setBackgroundColor:[UIColor navBarTintColor]];
+    [appearance setTitleTextAttributes:@{UITextAttributeFont: [UIFont boldFontOfSize:30.0],
+                                         UITextAttributeTextColor: [UIColor whiteColor]}];
 }
 
 @end
