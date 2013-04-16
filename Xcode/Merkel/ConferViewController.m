@@ -55,8 +55,10 @@
     int index = [indexPath row];
     ConferListItem *item = _cellItems[index];
     // set the text
-	cell.delegate = self;
-	cell.cellItem = item;
+	cell.textLabel.text = item.text;
+    
+    cell.delegate = self;
+    cell.cellItem = item;
     return cell;
 }
 
