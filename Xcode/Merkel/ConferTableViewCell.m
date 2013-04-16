@@ -8,17 +8,21 @@
 
 #import "ConferTableViewCell.h"
 
-@implementation ConferTableViewCell
+@implementation ConferTableViewCell {
+    CGPoint _originalCenter;
+    BOOL _deleteOnDragRelease;
+}
 
--(id)initWithText:(NSString*)text {
-    if (self = [super init]) {
-        self.text = text;
+
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if(self) {
+        UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+		recognizer.delegate = self;
+		[self addGestureRecognizer:recognizer];
     }
-    return self;
 }
 
-+(id)toDoItemWithText:(NSString *)text {
-    return [[ConferTableViewCell alloc] initWithText:text];
-}
+
 
 @end
