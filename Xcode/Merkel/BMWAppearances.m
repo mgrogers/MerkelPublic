@@ -11,12 +11,13 @@
 @implementation BMWAppearances
 
 + (void)setupAppearance {
-    
+    [self setupNavAppearance];
 }
 
 + (void)setupNavAppearance {
     id appearance = [UINavigationBar appearance];
-//    appearance setTintColor:<#(UIColor *)#>
+    [appearance setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    [appearance setBackgroundColor:[UIColor navBarTintColor]];
 }
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "BMWAppDelegate.h"
+
+#import "BMWAppearances.h"
 #import "BMWManager.h"
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
@@ -37,6 +39,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     self.revealController = (PKRevealController *)self.window.rootViewController;
     UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNav"];
     [self.revealController setFrontViewController:frontViewController];
+    [BMWAppearances setupAppearance];
     return YES;
 }
 
