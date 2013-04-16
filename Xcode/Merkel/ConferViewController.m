@@ -19,17 +19,18 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // create a dummy event list
-        _cellItems = [[NSMutableArray alloc] init];
-        [_cellItems addObject:[ConferListItem cellItemWithText:@"Daily SCRUM"]];
-        [_cellItems addObject:[ConferListItem cellItemWithText:@"SGM"]];    }
+    }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [super viewDidLoad];
+    _cellItems = [[NSMutableArray alloc] init];
+    [_cellItems addObject:[ConferListItem cellItemWithText:@"Daily SCRUM"]];
+    [_cellItems addObject:[ConferListItem cellItemWithText:@"SGM"]];
+    
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -63,5 +64,18 @@
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0f;
+}
+
+-(void)cellItemDeleted:(id)cellItem {
+    // use the UITableView to animate the removal of this row
+    NSUInteger index = [_cellItems indexOfObject:cellItem];
+    [self.tableView beginUpdates];
+    [_cellItems removeObject:cellItem];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
 
 @end

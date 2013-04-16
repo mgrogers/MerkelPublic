@@ -21,6 +21,7 @@
 		recognizer.delegate = self;
 		[self addGestureRecognizer:recognizer];
     }
+    return self;
 }
 
 #pragma mark - horizontal pan gesture methods
