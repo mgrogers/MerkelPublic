@@ -25,13 +25,14 @@ const float UI_CUES_WIDTH = 50.0f;
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self) {
+        
         // add a tick and cross
         _tickLabel = [self createCueLabel];
-        _tickLabel.text = @"\u2713";
+        _tickLabel.text = @"L";
         _tickLabel.textAlignment = NSTextAlignmentRight;
         [self addSubview:_tickLabel];
         _crossLabel = [self createCueLabel];
-        _crossLabel.text = @"\u2717";
+        _crossLabel.text = @"J";
         _crossLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:_crossLabel];
         
@@ -65,19 +66,19 @@ const float UI_CUES_WIDTH = 50.0f;
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-        _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+        _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 4;
+        _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width / 4;
         
         // fade the contextual cues
-        float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
+        float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 4);
         _tickLabel.alpha = cueAlpha;
         _crossLabel.alpha = cueAlpha;
         
         // indicate when the item have been pulled far enough to invoke the given action
         _tickLabel.textColor = _markCompleteOnDragRelease ?
-        [UIColor greenColor] : [UIColor whiteColor];
-        _crossLabel.textColor = _deleteOnDragRelease ?
         [UIColor redColor] : [UIColor whiteColor];
+        _crossLabel.textColor = _deleteOnDragRelease ?
+        [UIColor greenColor] : [UIColor whiteColor];
         
     }
     

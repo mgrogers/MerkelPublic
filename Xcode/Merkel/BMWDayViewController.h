@@ -11,7 +11,7 @@
 #import "BMWDayTVCellDelegate.h"
 
 
-@interface ConferViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BMWDayTVCellDelegate>
+@interface BMWDayViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BMWDayTVCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

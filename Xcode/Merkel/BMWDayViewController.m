@@ -10,7 +10,7 @@
 #import "BMWDayListItem.h"
 #import "BMWDayTVCell.h"
 
-@implementation ConferViewController {
+@implementation BMWDayViewController {
     NSMutableArray *_cellItems;
 }
 

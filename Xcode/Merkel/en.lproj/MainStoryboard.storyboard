@@ -19,11 +19,11 @@
             </objects>
             <point key="canvasLocation" x="95" y="-280"/>
         </scene>
-        <!--View Controller-->
+        <!--Day View Controller-->
         <scene sceneID="Zz1-P6-Aqa">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rMa-aZ-T9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="uyK-oG-x46" customClass="BMWViewController" sceneMemberID="viewController">
+                <viewController id="uyK-oG-x46" customClass="BMWDayViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s4b-Mg-OlT">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
