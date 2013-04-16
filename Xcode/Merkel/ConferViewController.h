@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConferTableViewCellDelegate.h"
 
-
-@interface ConferViewController : UIViewController
 @interface ConferViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ConferTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

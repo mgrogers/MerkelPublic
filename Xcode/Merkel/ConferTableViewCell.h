@@ -7,16 +7,11 @@
 //
 
 #import "ConferListItem.h"
+#import "ConferTableViewCellDelegate.h"
 
-@protocol ConferTableViewCellDelegate <NSObject>
 
-// indicates that the given item has been deleted
-- (void) cellItemDeleted:(ConferListItem*) cellItem;
-@end
-
-// A custom table cell that renders SHCToDoItem items.
+// A custom table cell that renders cell items.
 @interface ConferTableViewCell : UITableViewCell
-
 
 // The item that this cell renders
 @property (nonatomic) ConferListItem *cellItem;

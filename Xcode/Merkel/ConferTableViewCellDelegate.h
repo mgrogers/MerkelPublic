@@ -12,5 +12,6 @@
 @protocol ConferTableViewCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
-- (void) toDoItemDeleted:(SHCToDoItem*) todoItem;
+- (void) cellItemDeleted:(ConferListItem*) cellItem;
+
 @end
