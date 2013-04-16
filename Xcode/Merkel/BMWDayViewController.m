@@ -28,8 +28,8 @@
 {
     [super viewDidLoad];
     _cellItems = [[NSMutableArray alloc] init];
-    [_cellItems addObject:[ConferListItem cellItemWithText:@"Daily SCRUM"]];
-    [_cellItems addObject:[ConferListItem cellItemWithText:@"SGM"]];
+    [_cellItems addObject:[BMWDayListItem cellItemWithText:@"Daily SCRUM"]];
+    [_cellItems addObject:[BMWDayListItem cellItemWithText:@"SGM"]];
     
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -53,7 +53,7 @@
     ConferTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
     // find the to-do item for this index
     int index = [indexPath row];
-    ConferListItem *item = _cellItems[index];
+    BMWDayListItem *item = _cellItems[index];
     // set the text
 	cell.textLabel.text = item.text;
     
@@ -68,12 +68,14 @@
 }
 
 -(void)cellItemDeleted:(id)cellItem {
-    // use the UITableView to animate the removal of this row
     NSUInteger index = [_cellItems indexOfObject:cellItem];
     [self.tableView beginUpdates];
-    [_cellItems removeObject:cellItem];
-    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
-                          withRowAnimation:UITableViewRowAnimationFade];
+    
+    
+    //Do something but don't actually delete
+//    [_cellItems removeObject:cellItem];
+//    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
+//                          withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 }
 

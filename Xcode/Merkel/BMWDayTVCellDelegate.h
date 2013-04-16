@@ -12,6 +12,6 @@
 @protocol BMWDayTVCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
-- (void) cellItemDeleted:(ConferListItem*) cellItem;
+- (void) cellItemDeleted:(BMWDayListItem*) cellItem;
 
 @end

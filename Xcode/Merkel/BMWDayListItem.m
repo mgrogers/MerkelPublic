@@ -8,7 +8,7 @@
 
 #import "BMWDayListItem.h"
 
-@implementation ConferListItem
+@implementation BMWDayListItem
 
 -(id)initWithText:(NSString*)text {
     if (self = [super init]) {
@@ -18,7 +18,7 @@
 }
 
 +(id)cellItemWithText:(NSString *)text {
-    return [[ConferListItem alloc] initWithText:text];
+    return [[BMWDayListItem alloc] initWithText:text];
 }
 
 

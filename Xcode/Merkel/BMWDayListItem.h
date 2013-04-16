@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ConferListItem : NSObject
+@interface BMWDayListItem : NSObject
 
 // A text description of this item.
 @property (nonatomic, copy) NSString *text;

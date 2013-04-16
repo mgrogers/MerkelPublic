@@ -14,7 +14,7 @@
 @interface ConferTableViewCell : UITableViewCell
 
 // The item that this cell renders
-@property (nonatomic) ConferListItem *cellItem;
+@property (nonatomic) BMWDayListItem *cellItem;
 
 // The object that acts as delegate for this cell.
 @property (nonatomic, assign) id<BMWDayTVCellDelegate> delegate;
