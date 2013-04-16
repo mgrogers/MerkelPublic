@@ -19,8 +19,18 @@
 }
 
 + (instancetype)bmwDarkBlueColor {
-    static NSString * const kBMWNavBarTintColor = @"#23303D";
-    return [self colorFromHexString:kBMWNavBarTintColor];
+    static NSString * const kBMWDarkBlueColor = @"#23303D";
+    return [self colorFromHexString:kBMWDarkBlueColor];
+}
+
++ (instancetype)bmwDarkGrayColor {
+    static NSString * const kBMWDarkGrayColor = @"#343434";
+    return [self colorFromHexString:kBMWDarkGrayColor];
+}
+
++ (instancetype)bmwLightGrayColor {
+    static NSString * const kBMWLightGrayColor = @"#B3B3B3";
+    return [self colorFromHexString:kBMWLightGrayColor];
 }
 
 @end

@@ -43,6 +43,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[BMWSlidingCell class] forCellReuseIdentifier:kBMWSlidingCellIdentifier];
+    self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.title = @"My Day";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
