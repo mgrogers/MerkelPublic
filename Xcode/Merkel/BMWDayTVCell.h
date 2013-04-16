@@ -7,7 +7,7 @@
 //
 
 #import "BMWDayListItem.h"
-#import "BMWDayTVCellDelegate.h" 
+#import "BMWSlidingCellDelegate.h" 
 
 
 // A custom table cell that renders cell items.
@@ -17,6 +17,6 @@
 @property (nonatomic) BMWDayListItem *cellItem;
 
 // The object that acts as delegate for this cell.
-@property (nonatomic, assign) id<BMWDayTVCellDelegate> delegate;
+@property (nonatomic, assign) id<BMWSlidingCellDelegate> delegate;
 
 @end

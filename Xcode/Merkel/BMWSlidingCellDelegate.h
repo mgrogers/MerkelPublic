@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BMWDayListItem.h"
 
-@protocol BMWDayTVCellDelegate <NSObject>
+@protocol BMWSlideCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
 - (void) cellItemDeleted:(BMWDayListItem*) cellItem;

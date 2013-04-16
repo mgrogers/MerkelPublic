@@ -19,8 +19,8 @@
 }
 
 
-const float UI_CUES_MARGIN = 10.0f;
-const float UI_CUES_WIDTH = 100.0f;
+//const float UI_CUES_MARGIN = 10.0f;
+//const float UI_CUES_WIDTH = 100.0f;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -114,11 +114,11 @@ const float LABEL_LEFT_MARGIN = 15.0f;
     [super layoutSubviews];
 
     
-    _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
-                                  UI_CUES_WIDTH, self.bounds.size.height);
-
-    _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
-                                   UI_CUES_WIDTH, self.bounds.size.height);
+//    _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
+//                                  UI_CUES_WIDTH, self.bounds.size.height);
+//
+//    _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
+//                                   UI_CUES_WIDTH, self.bounds.size.height);
 }
 
 
