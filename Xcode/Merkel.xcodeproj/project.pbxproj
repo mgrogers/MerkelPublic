@@ -23,6 +23,7 @@
 		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
 		2B7CC42616FD47A5008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42516FD47A4008E053D /* charger.png */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
+		2BB666A5171D3D540006397B /* ConferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB666A4171D3D540006397B /* ConferViewController.m */; };
 		2BFE39AD171D338100155020 /* ConferTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AC171D338100155020 /* ConferTableViewCell.m */; };
 		2BFE39B0171D36EF00155020 /* ConferListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AF171D36EF00155020 /* ConferListItem.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
@@ -115,6 +116,9 @@
 		2B7CC42516FD47A4008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charger.png; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
+		2BB666A3171D3D540006397B /* ConferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferViewController.h; sourceTree = "<group>"; };
+		2BB666A4171D3D540006397B /* ConferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferViewController.m; sourceTree = "<group>"; };
+		2BB666A6171D3DB10006397B /* ConferTableViewCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferTableViewCellDelegate.h; sourceTree = "<group>"; };
 		2BFE39AB171D338100155020 /* ConferTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferTableViewCell.h; sourceTree = "<group>"; };
 		2BFE39AC171D338100155020 /* ConferTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConferTableViewCell.m; sourceTree = "<group>"; };
 		2BFE39AE171D36EF00155020 /* ConferListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConferListItem.h; sourceTree = "<group>"; };
@@ -331,6 +335,9 @@
 				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 				2BFE39AB171D338100155020 /* ConferTableViewCell.h */,
+				2BB666A3171D3D540006397B /* ConferViewController.h */,
+				2BB666A6171D3DB10006397B /* ConferTableViewCellDelegate.h */,
+				2BB666A4171D3D540006397B /* ConferViewController.m */,
 				2BFE39AC171D338100155020 /* ConferTableViewCell.m */,
 				2BFE39AE171D36EF00155020 /* ConferListItem.h */,
 				2BFE39AF171D36EF00155020 /* ConferListItem.m */,
@@ -597,6 +604,7 @@
 				4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */,
 				2BFE39AD171D338100155020 /* ConferTableViewCell.m in Sources */,
 				2BFE39B0171D36EF00155020 /* ConferListItem.m in Sources */,
+				2BB666A5171D3D540006397B /* ConferViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
