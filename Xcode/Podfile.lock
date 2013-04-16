@@ -1,52 +1,4 @@
 
-COCOAPODS: 0.16.4
-
-DEPENDENCIES: 
-- AFNetworking (~> 1.1.0)
-- Google-API-Client (~> 0.0.1)
-- PKRevealController (~> 1.0b2)
-- SDWebImage (~> 3.0)
-- TestFlightSDK (~> 1.2.4.beta)
-- gtm-oauth2 (~> 0.0.1)
-
-SPEC CHECKSUMS: 
-  gtm-oauth2/Core/Touch: c4824003b569bc9b96446661fb92dbc681335499
-  Google-API-Client/Services/Plus: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Orkut: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  gtm-oauth2/Core: c4824003b569bc9b96446661fb92dbc681335499
-  gtm-oauth2: c4824003b569bc9b96446661fb92dbc681335499
-  Google-API-Client/Utilities: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/YouTubeAnalytics: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Storage: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
-  Google-API-Client/Services/Urlshortener: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Objects: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  TestFlightSDK: aeec97fd81096753d53b942f030a443520a087f4
-  Google-API-Client/Services/Tasks: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Books: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Analytics: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  SDWebImage: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
-  Google-API-Client/Services/AdSense: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  GTMHTTPFetcher: 563425df0ff2127edba46985df62ef60acd441e5
-  gtm-oauth2/Core/Mac: c4824003b569bc9b96446661fb92dbc681335499
-  PKRevealController: 631e6a3db833a0c660203c2dba0963109549ec8a
-  Google-API-Client/Services/Latitude: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Groupssettings: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Compute: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
-  Google-API-Client/Services/Blogger: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Networking: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/YouTube: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Shopping: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Licensing: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Drive: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/CivicInfo: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  SDWebImage/MapKit: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
-  Google-API-Client/Services/Discovery: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-  Google-API-Client/Services/Calendar: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
-
 PODS: 
 - AFNetworking (1.1.0)
 - GTMHTTPFetcher (0.0.1): 
@@ -175,6 +127,7 @@ PODS:
   - GTMHTTPFetcher
   - SBJson
   - gtm-oauth2
+- NewRelicAgent (1.309.0)
 - PKRevealController (1.0b2)
 - SBJson (3.2)
 - SDWebImage (3.2): 
@@ -196,3 +149,53 @@ PODS:
 - gtm-oauth2/Core/Touch (0.0.1): 
   - GTMHTTPFetcher
   - SBJson
+
+SPEC CHECKSUMS: 
+  gtm-oauth2/Core/Mac: c4824003b569bc9b96446661fb92dbc681335499
+  SDWebImage: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
+  PKRevealController: 631e6a3db833a0c660203c2dba0963109549ec8a
+  Google-API-Client/Services/Shopping: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Plus: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Orkut: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Groupssettings: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/CivicInfo: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
+  gtm-oauth2: c4824003b569bc9b96446661fb92dbc681335499
+  SDWebImage/MapKit: 8082fe8d658ccafaaecd9e5ecda12ed01f09ba9c
+  Google-API-Client: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Storage: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/YouTubeAnalytics: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Compute: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Calendar: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Blogger: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Networking: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  NewRelicAgent: 3caf67341dd34afff1a224aace0bd053c0f7fd5d
+  Google-API-Client/Services/Licensing: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Analytics: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  GTMHTTPFetcher: 563425df0ff2127edba46985df62ef60acd441e5
+  SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
+  Google-API-Client/Services/YouTube: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Tasks: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Drive: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  gtm-oauth2/Core/Touch: c4824003b569bc9b96446661fb92dbc681335499
+  Google-API-Client/Utilities: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Urlshortener: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Latitude: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/Discovery: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Services/AdSense: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  gtm-oauth2/Core: c4824003b569bc9b96446661fb92dbc681335499
+  TestFlightSDK: aeec97fd81096753d53b942f030a443520a087f4
+  Google-API-Client/Services/Books: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+  Google-API-Client/Objects: ef8c2c80d2d350bd560f351865e75b6cbdb426a3
+
+COCOAPODS: 0.16.4
+
+DEPENDENCIES: 
+- AFNetworking (~> 1.1.0)
+- Google-API-Client (~> 0.0.1)
+- NewRelicAgent (~> 1.309.0)
+- PKRevealController (~> 1.0b2)
+- SDWebImage (~> 3.0)
+- TestFlightSDK (~> 1.2.4.beta)
+- gtm-oauth2 (~> 0.0.1)
