@@ -44,6 +44,15 @@
                                              selector:@selector(disconnectedBMW:)
                                                  name:IDVehicleDidDisconnectNotification
                                                object:nil];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
+    button.backgroundColor = [UIColor clearColor];
+    [button setBackgroundImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] forState:UIControlStateNormal];
+    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    spacer.width = 10.0;
+    self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] landscapeImagePhone:[UIImage imageNamed:@"reveal_menu_icon_landscape.png"] style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 

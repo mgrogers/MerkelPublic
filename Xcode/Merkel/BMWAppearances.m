@@ -15,10 +15,11 @@
 }
 
 + (void)setupNavAppearance {
+    const CGFloat kTitleFontSize = 24.0;
     id appearance = [UINavigationBar appearance];
     [appearance setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [appearance setBackgroundColor:[UIColor navBarTintColor]];
-    [appearance setTitleTextAttributes:@{UITextAttributeFont: [UIFont boldFontOfSize:30.0],
+    [appearance setTitleTextAttributes:@{UITextAttributeFont: [UIFont boldFontOfSize:kTitleFontSize],
                                          UITextAttributeTextColor: [UIColor whiteColor]}];
 }
 
