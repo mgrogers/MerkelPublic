@@ -714,14 +714,17 @@
 				4BFB653316F65FFF009E199D /* BMWEmailView.m in Sources */,
 				4BFB653916F66010009E199D /* BMWCalendarListView.m in Sources */,
 				4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */,
+<<<<<<< HEAD
 				4BE26268171D382E004F742F /* BMWAppearances.m in Sources */,
 				4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */,
 				4BBDFE74171D3D840083D4BC /* UIFont+BMW.m in Sources */,
 				4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
 				4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
+=======
 				2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */,
 				2BFE39B0171D36EF00155020 /* BMWDayListItem.m in Sources */,
 				2BB666A5171D3D540006397B /* BMWDayViewController.m in Sources */,
+>>>>>>> feature/ios-gestures
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
