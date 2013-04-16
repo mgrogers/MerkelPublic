@@ -33,9 +33,6 @@
     
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    self.tableView.separatorColor = [UIColor clearColor];
-    self.tableView.backgroundColor = [UIColor blackColor];
 	[self.tableView registerClass:[ConferTableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 

@@ -335,10 +335,10 @@
 				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 				2BFE39AB171D338100155020 /* ConferTableViewCell.h */,
-				2BB666A3171D3D540006397B /* ConferViewController.h */,
-				2BB666A6171D3DB10006397B /* ConferTableViewCellDelegate.h */,
-				2BB666A4171D3D540006397B /* ConferViewController.m */,
 				2BFE39AC171D338100155020 /* ConferTableViewCell.m */,
+				2BB666A3171D3D540006397B /* ConferViewController.h */,
+				2BB666A4171D3D540006397B /* ConferViewController.m */,
+				2BB666A6171D3DB10006397B /* ConferTableViewCellDelegate.h */,
 				2BFE39AE171D36EF00155020 /* ConferListItem.h */,
 				2BFE39AF171D36EF00155020 /* ConferListItem.m */,
 			);
