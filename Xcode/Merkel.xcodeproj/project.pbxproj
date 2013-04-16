@@ -65,7 +65,11 @@
 		4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384316D1948700A2CD24 /* Social.framework */; };
 		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
 		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
+		4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
+		4BBDFE71171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
 		4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */; };
+		4BE26268171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
+		4BE26269171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
 		4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
 		4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
 		4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6016F518C60058F182 /* CoreTelephony.framework */; };
@@ -153,9 +157,13 @@
 		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BMW.h"; sourceTree = "<group>"; };
+		4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BMW.m"; sourceTree = "<group>"; };
 		4BBEF1A716D1B8880080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "../app-icon.png"; sourceTree = "<group>"; };
 		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "../app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4BE26266171D382E004F742F /* BMWAppearances.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAppearances.h; sourceTree = "<group>"; };
+		4BE26267171D382E004F742F /* BMWAppearances.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAppearances.m; sourceTree = "<group>"; };
 		4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarDataSource.h; sourceTree = "<group>"; };
 		4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarDataSource.m; sourceTree = "<group>"; };
 		4BF95F6016F518C60058F182 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -308,6 +316,10 @@
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
+				4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */,
+				4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */,
+				4BE26266171D382E004F742F /* BMWAppearances.h */,
+				4BE26267171D382E004F742F /* BMWAppearances.m */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
 				4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */,
@@ -579,6 +591,8 @@
 				4BFB653316F65FFF009E199D /* BMWEmailView.m in Sources */,
 				4BFB653916F66010009E199D /* BMWCalendarListView.m in Sources */,
 				4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */,
+				4BE26268171D382E004F742F /* BMWAppearances.m in Sources */,
+				4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +609,8 @@
 				4BFB653416F65FFF009E199D /* BMWEmailView.m in Sources */,
 				4BFB653A16F66010009E199D /* BMWCalendarListView.m in Sources */,
 				4BFB653F16F66038009E199D /* BMWLinkedInView.m in Sources */,
+				4BE26269171D382E004F742F /* BMWAppearances.m in Sources */,
+				4BBDFE71171D39810083D4BC /* UIColor+BMW.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
