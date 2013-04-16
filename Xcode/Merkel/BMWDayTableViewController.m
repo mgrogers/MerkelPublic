@@ -77,9 +77,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
+    BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
     NSDictionary *item = self.testData[indexPath.row];
     cell.textLabel.text = item[@"title"];
+    cell.startLabel.text = item[@"start"];
+    cell.endLabel.text = item[@"end"];
     return cell;
 }
 

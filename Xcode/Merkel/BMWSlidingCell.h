@@ -10,4 +10,6 @@
 
 @interface BMWSlidingCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *startLabel, *endLabel;
+
 @end
