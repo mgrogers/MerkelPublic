@@ -12,6 +12,7 @@ var express = require('express'),
     sms = require('./routes/sms'),
     gmail = require('./routes/gmail'),
     auth = require('./routes/auth'),
+    conference = require('./routes/conference'),
     http = require('http'),
     path = require('path'),
     kue = require('kue'),
@@ -53,6 +54,12 @@ app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 app.get('/api/mail', gmail.mail);
+app.get('/api/conference/join', conference.join);
+app.get('/api/conference/twilio', conference.twilio);
+app.post('/api/conference', conference.create);
+app.get('/api/conference', conference.list);
+app.get('/api/conference/:name', conference.read);
+app.get('/conference', conference.form);
 
 kue.redis.createClient = function() {
     var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);

@@ -26,55 +26,56 @@ var HARD_CODED_GOOGLE_AUTH_TOKEN = "ya29.AHES6ZRYphizlByPNZxKxwes30IISt81sJd6Qrj
 var parseApp = new parse(PARSE_APP_ID, PARSE_MASTER_KEY);
 var googleParseAuth = new GoogleParseAuth(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET);
 
-var mongoose_options = {'user':'bmw', 'pass':'stanfordcs210'}
-mongoose.connect('ds033877.mongolab.com:33877/merkel');
+var mongoose_options = {'auto_reconnect':true};
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-// Mongoose schemas - user_id corresponds to Parse User Object ID
-var calendar_schema = new Schema({
-    name: String,
-    user_id: String
+// Mongoose schemas - userId corresponds to Parse User Object ID
+var calendarSchema = new Schema({
+    name: {type: String, default: ""},
+    userId: {type: String, default: ""}
 });
-var event_schema = new Schema({
-    name: String,
-    description: String,
-    location: String,
+var eventSchema = new Schema({
+    id: {type: String, default: ""},
+    name: {type: String, default: ""},
+    description: {type: String, default: ""},
+    location: {type: String, default: ""},
     start: {
-    date: Date,
-    dateTime: Date,
-    timezone: String
+        date: {type: Date, default: null},
+        dateTime: {type: Date, default: null},
+        timeZone: {type: String, default: ""}
     },
     end: {
-    date: Date,
-    dateTime: Date,
-    timezone: String
+        date: {type: Date, default: null},
+        dateTime: {type: Date, default: null},
+        timeZone: {type: String, default: ""}
     },
     creator: {
-    id: String,
-    email: String,
-    displayName: String,
-    self: Boolean,
+        id: {type: String, default: ""}, // refers to google identifier
+        email: {type: String, default: ""},
+        displayName: {type: String, default: ""},
+        self: {type: Boolean, default: false},
     },
     attendees: [{
-    id: String,
-    email: String,
-    displayName: String,
-    organizer: Boolean,
-    self: Boolean,
-    resource: Boolean,
-    optional: Boolean,
-    responseStatus: String,
-    comment: String,
-    additionalGuests: Number
+        id: {type: String, default: ""}, // refers to google identifier
+        email: {type: String, default: ""},
+        displayName: {type: String, default: ""},
+        organizer: {type: Boolean, default: false},
+        self: {type: Boolean, default: false},
+        resource: {type: Boolean, default: false},
+        optional: {type: Boolean, default: false},
+        responseStatus: {type: String, default: ""},
+        comment: {type: String, default: ""},
+        additionalGuests: {type: Number, default: 0}
     }],
-    created: Date,
-    updated: Date,
-    calendar_id: String,
-    user_id: String
+    created: {type: Date, default: null},
+    updated: {type: Date, default: null},
+    calendarId: {type: String, default: ""},
+    userId: {type: String, default: ""}
 });
-var Calendar = mongoose.model('calendar', calendar_schema);
-var Event = mongoose.model('event', event_schema);
+var Calendar = mongoose.model('calendar', calendarSchema);
+var Event = mongoose.model('event', eventSchema);
 
 
 /* ----------- API FUNCTIONS -----------*/
@@ -162,83 +163,83 @@ function getCalendarEvents(req, res, type) {
             return getCalendarEvents(req, res, type);
         }
     } else {
-    var appUrl = req.protocol + "://" + req.get('host');
+        var appUrl = req.protocol + "://" + req.get('host');
 
-    // Access token fallback - if access token exists in express session, use that, otherwise use Parse access token
-    var google_calendar;
-    var access_token;
-    if(req.session && req.session.access_token) {
-        google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-        access_token = req.session.access_token;
-        console.log("Got access token from express: " + access_token);
-    } else {
-        google_calendar = new GoogleCalendarParse(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
-    }
+        // Access token fallback - if access token exists in express session, use that, otherwise use Parse access token
+        var google_calendar;
+        var access_token;
+        if(req.session && req.session.access_token) {
+            google_calendar = new GoogleCalendar(GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+            access_token = req.session.access_token;
+            console.log("Got access token from express: " + access_token);
+        } else {
+            google_calendar = new GoogleCalendarParse(parseApp, GOOGLE_CONSUMER_KEY, GOOGLE_CONSUMER_SECRET, appUrl + '/authentication');
+        }
 
-    var assembled_calendars = [];
-    var calendarCount = 0;
+        var assembled_calendars = [];
+        var calendarCount = 0;
 
-    var user_id = req.params.userId;
+        var userId = req.params.userId;
 
-    var requestedDateRaw;
-    var requestedDate = new time.Date();
-    var timezone;
+        var requestedDateRaw;
+        var requestedDate = new time.Date();
+        var timezone;
 
-    // Default to beginning of current date if none provided
-    if(req.params.date) {
-        var requestedDateArray = req.params.date.split('-');
-        requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
-    } else {
-        requestedDateRaw = new time.Date();
-    }
-    // Default to UTC if timezone not provided or improperly formatted
-    if(tz) {
-        timezone = decodeURIComponent(tz);
-    } else {
-        timezone = 'UTC';
-    }
-    // Change requested date to correct date request based on provided timezone
-    requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
+        // Default to beginning of current date if none provided
+        if(req.params.date) {
+            var requestedDateArray = req.params.date.split('-');
+            requestedDateRaw = new time.Date(parseInt(requestedDateArray[0]), parseInt(requestedDateArray[1]) - 1, parseInt(requestedDateArray[2]));
+        } else {
+            requestedDateRaw = new time.Date();
+        }
+        // Default to UTC if timezone not provided or improperly formatted
+        if(tz) {
+            timezone = decodeURIComponent(tz);
+        } else {
+            timezone = 'UTC';
+        }
+        // Change requested date to correct date request based on provided timezone
+        requestedDate = new time.Date(requestedDateRaw.getFullYear(), requestedDateRaw.getMonth(), requestedDateRaw.getDate(), timezone);
 
-    console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
-    // Hacky way for auth fallback, TODO: refactor
-    var access_token_or_user_id;
-    if(access_token) {
-        access_token_or_user_id = access_token;
-    } else {
-        access_token_or_user_id = user_id;
-    }
+        console.log("Received a request for the events for userID: '" + req.params.userId + "' on date: '" + requestedDate);
+        // Hacky way for auth fallback, TODO: refactor
+        var access_token_or_userId;
+        if(access_token) {
+            access_token_or_userId = access_token;
+        } else {
+            access_token_or_userId = userId;
+        }
 
-    return google_calendar.listCalendarList(access_token_or_user_id, function(err, data) {
-        if(err) return res.send(500,err);
+        return google_calendar.listCalendarList(access_token_or_userId, function(err, data) {
+            if(err) return res.send(500,err);
 
-        var calendars = data.items;
-        var queue = [];
-        //console.log("Got calendars:",calendars);
+            var calendars = data.items;
+            var queue = [];
+            //console.log("Got calendars:",calendars);
 
-        calendars.forEach(function(calendar) {
-            console.log("Pushing onto queue:", calendar.summary);
-            queue.push(fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type));
-        });
-
-        return Q.allResolved(queue).then(function(promises) {
-            var calendarList = []
-            promises.forEach(function(promise) {
-                if(promise.isFulfilled()) {
-                var value = promise.valueOf();
-                calendarList.push(value);
-                }
+            calendars.forEach(function(calendar) {
+                //console.log("Pushing onto queue:", calendar.summary);
+                queue.push(fetchEvents(google_calendar, access_token_or_userId, calendar, requestedDate, type));
             });
-            console.log("Events:", calendarList);
 
-            //cacheCalendars(calendarList);
-            return res.send(200, calendarList);
+            return Q.allResolved(queue).then(function(promises) {
+                var calendarList = []
+                promises.forEach(function(promise) {
+                    if(promise.isFulfilled()) {
+                    var value = promise.valueOf();
+                    calendarList.push(value);
+                    }
+                });
+                //console.log("Events:", calendarList);
+
+                cacheCalendars(calendarList, userId);
+                return res.send(200, calendarList);
+            });
         });
-    });
     }
 }
 
-function fetchEvents(google_calendar, access_token_or_user_id, calendar, requestedDate, type) {
+function fetchEvents(google_calendar, access_token_or_userId, calendar, requestedDate, type) {
     var deferred = Q.defer();
     console.log("fetching events for", calendar.summary);
 
@@ -249,9 +250,7 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
     } else {
         var option = {};
         option.key = GOOGLE_CONSUMER_KEY;
-        console.log("Before access_token: " + access_token_or_user_id);
-        if(access_token_or_user_id) option.access_token = access_token_or_user_id;
-        console.log("After access token");
+        if(access_token_or_userId) option.access_token = access_token_or_userId;
         option.timeZone = "UTC";
         option.timeMin = requestedDate.toISOString();
 
@@ -264,9 +263,9 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
         option.timeMax = new time.Date(searchTimeEnd).toISOString();
 
         // Asynchronously access events
-        console.log("Trying to list events");
-        google_calendar.listEvent(access_token_or_user_id, calendar.id, option, function(err, events) {
-            console.log("listing event");
+        //console.log("Trying to list events");
+        google_calendar.listEvent(access_token_or_userId, calendar.id, option, function(err, events) {
+            //console.log("listing event");
 
             // Error
             if(err || !events) {
@@ -275,11 +274,13 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
             } else if(!events.items) {
                 console.log("Resolving - no events");
                 var tempCalendar = {};
+                tempCalendar.id = calendar.id;
                 tempCalendar.name = calendar.summary;
                 tempCalendar.events = [];
                 deferred.resolve(tempCalendar);
             } else {
                 var tempCalendar = {};
+                tempCalendar.id = calendar.id;
                 tempCalendar.name = calendar.summary;
                 tempCalendar.events = [];
 
@@ -291,20 +292,75 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
                         var calEvent = {};
                         calEvent.id = event.id;
                         calEvent.name = event.summary;
+
                         if(event.description) calEvent.description = event.description;
+                        else calEvent.description = "";
+
                         if(event.location) calEvent.location = event.location;
-                        if(event.start) calEvent.start = event.start;
-                        if(event.end) calEvent.end = event.end;
-                        if(event.creator) calEvent.creator = event.creator;
-                        if(event.attendees) calEvent.attendees = event.attendees;
+                        else calEvent.location = "";
+
+                        if(event.start) {
+                            calEvent.start = {
+                                date: event.start.date || null,
+                                dateTime: event.start.dateTime || null,
+                                timeZone: event.start.timeZone || ""
+                            };
+                        } else {
+                            calEvent.start = {};
+                        }
+
+                        if(event.end) {
+                            calEvent.end = {
+                                date: event.end.date || null,
+                                dateTime: event.end.dateTime || null,
+                                timeZone: event.end.timeZone || ""
+                            };
+                        } else {
+                            calEvent.end = {};
+                        }
+
+                        if(event.creator) {
+                            calEvent.creator = {
+                                id: event.creator.id || "",
+                                email: event.creator.email || "",
+                                displayName: event.creator.displayName || "",
+                                self: event.creator.self || false
+                            };
+                        } else {
+                            calEvent.creator = {};
+                        }
+
+                        if(event.attendees) {
+                            calEvent.attendees = [];
+                            event.attendees.forEach(function(attendee) {
+                                calEvent.attendees.push({
+                                    id: attendee.id || "",
+                                    email: attendee.email || "",
+                                    displayName: attendee.displayName || "",
+                                    organizer: attendee.organizer || false,
+                                    self: attendee.self || false,
+                                    resource: attendee.resource || false,
+                                    optional: attendee.optional || false,
+                                    responseStatus: attendee.responseStatus || "",
+                                    comment: attendee.comment || "",
+                                    additionalGuests: attendee.additionalGuests || 0
+                                });
+                            });
+                        } else {
+                            calEvent.attendees = [];
+                        }
+
                         if(event.created) calEvent.created = event.created;
+                        else calEvent.created = "";
+
                         if(event.updated) calEvent.updated = event.updated;
+                        else calEvent.updated = "";
 
                         // Add event to calendar object
                         tempCalendar.events.push(calEvent);
                     }
                 });
-                console.log("Resolving:", tempCalendar);
+                //console.log("Resolving:", tempCalendar);
                 deferred.resolve(tempCalendar);
             }
         });
@@ -316,36 +372,54 @@ function fetchEvents(google_calendar, access_token_or_user_id, calendar, request
 /* Caches calendar results in mongoDB */
 function cacheCalendars(calendars, userId) {
     calendars.forEach(function(calendar) {
+        var tempCalendar = {
+            id: calendar.id,
+            name: calendar.name,
+            userId: userId
+        };
 
-        // Cache calendar if not already present
-        var tempCalendar = new Calendar({
-            'name': calendar.name,
-            'user_id': userId
-        });
-
-        var options = {};
-        options.upsert = true;
-
-        Calendar.findOneAndUpdate({
-            'name': calendar.name, 
-            'user_id': userId
-        }, tempCalendar, options, function(err, data){
+        // Upsert calendar - update if exists, insert if doesn't
+        Calendar.findOneAndUpdate({id: calendar.id}, tempCalendar, {upsert: true}, function(err, data) {
             if(err) {
-            console.log("Error upserting calendar: " + calendar.name + " error: " + err);
+                console.log("Error saving calendar: " + calendar.name + ", error: " + err + ", data: " + data);
             } else {
-            console.log("Upserted calendar: " + calendar.name);
+                console.log("Upserted calendar: " + calendar.name + ", data: " + data);
+
+                // Cache events in this calendar
+                cacheEvents(calendar, userId);
             }
         });
-        // Cache events
-        cacheEvents(calendar.events);
     });
 }
 
 /* Caches event results in mongoDB */
-function cacheEvents(calendar) {
+function cacheEvents(calendar, userId) {
     calendar.events.forEach(function(event) {
 
-        // cache event
+        // Cache event
+        var tempEvent = {
+            id: event.id,
+            name: event.name,
+            description: event.description,
+            location: event.location,
+            start: event.start,
+            end: event.end,
+            creator: event.creator,
+            attendees: event.attendees,
+            created: event.created,
+            updated: event.updated,
+            calendarId: calendar.id,
+            userId: userId
+        };
+
+        // Upsert event
+        Event.findOneAndUpdate({id: event.id}, tempEvent, {upsert: true}, function(err, data) {
+            if(err) {
+                console.log("Error saving event: " + event.name + ", error: " + err + ", data: " + data);
+            } else {
+                console.log("Upserted event: " + event.name + ", data: " + data);
+            }
+        });
     });
 }
 
