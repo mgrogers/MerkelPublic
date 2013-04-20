@@ -12,4 +12,8 @@
 
 + (instancetype)sharedClient;
 
+- (void)getCapabilityTokenWithParameters:(NSDictionary *)parameters
+                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end
