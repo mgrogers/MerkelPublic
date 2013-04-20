@@ -23,7 +23,6 @@
 		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
 		2B7CC42616FD47A5008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42516FD47A4008E053D /* charger.png */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
-		2BB666A5171D3D540006397B /* BMWDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB666A4171D3D540006397B /* BMWDayViewController.m */; };
 		2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AC171D338100155020 /* BMWDayTVCell.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
@@ -147,8 +146,6 @@
 		2B7CC42516FD47A4008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charger.png; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
-		2BB666A3171D3D540006397B /* BMWDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayViewController.h; sourceTree = "<group>"; };
-		2BB666A4171D3D540006397B /* BMWDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayViewController.m; sourceTree = "<group>"; };
 		2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCellDelegate.h; sourceTree = "<group>"; };
 		2BFE39AB171D338100155020 /* BMWDayTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayTVCell.h; sourceTree = "<group>"; };
 		2BFE39AC171D338100155020 /* BMWDayTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayTVCell.m; sourceTree = "<group>"; };
@@ -393,8 +390,6 @@
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 				2BFE39AB171D338100155020 /* BMWDayTVCell.h */,
 				2BFE39AC171D338100155020 /* BMWDayTVCell.m */,
-				2BB666A3171D3D540006397B /* BMWDayViewController.h */,
-				2BB666A4171D3D540006397B /* BMWDayViewController.m */,
 				2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */,
 			);
 			path = Merkel;
@@ -715,7 +710,6 @@
 				4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
 				4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
 				2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */,
-				2BB666A5171D3D540006397B /* BMWDayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
