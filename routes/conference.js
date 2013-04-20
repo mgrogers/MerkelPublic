@@ -21,7 +21,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var conferenceSchema = new Schema({
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
-    code: {type: String, default: ""}
+    conferenceCode: {type: String, default: ""}
 });
 
 var Conference = db.model('conference', conferenceSchema);
@@ -56,7 +56,7 @@ exports.createConference = function(req, res) {
             hash = hashids.encrypt(0);
         }
 
-        var conferenceObject = { code: hash }
+        var conferenceObject = { conferenceCode: hash }
         var conference = new Conference(conferenceObject);
         conference.save();
         return res.send(conferenceObject);
@@ -73,6 +73,11 @@ exports.twilio = function(req, res) {
     var conferenceCode = req.query.conferenceCode;
     // Generate TWiML to join conference
     if(conferenceCode) {
+        /*
+        Conference.findOne({'conferenceCode': conferenceCode}, function(err, conferences) {
+
+        }); */
+
         var conferenceName = "";
         return res.send("<Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response><?xml version='1.0' encoding='UTF-8'?>");
     } else {
