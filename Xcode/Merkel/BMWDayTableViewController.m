@@ -88,7 +88,40 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BMWSlidingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"Show Detail" sender:cell];
+
+    
+    
 }
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = nil;
+    
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        indexPath = [self.tableView indexPathForCell:sender];
+    }
+    
+    if (indexPath) {
+        if ([segue.identifier isEqualToString:@"Show Detail"]) {
+            NSDictionary *item = self.testData[indexPath.row];
+            NSString *eventTitle = item[@"title"];
+            NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
+            
+                       
+            if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
+            
+            [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
+            [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
+        }
+    }
+}
+
+
+}
+
 
 
 #pragma mark - UITableViewDataDelegate protocol methods

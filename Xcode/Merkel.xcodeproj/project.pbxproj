@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1504451723494500957F8A /* BMWDayDetailViewController.m */; };
 		2B1A358A16D1B5B000A3B339 /* bmw.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358116D1B5B000A3B339 /* bmw.jpg */; };
 		2B1A358B16D1B5B000A3B339 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358216D1B5B000A3B339 /* bmwLogo.png */; };
 		2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358416D1B5B000A3B339 /* BMWManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -129,6 +130,8 @@
 
 /* Begin PBXFileReference section */
 		299F765672A2407E8FF33FE1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		2B1504441723494500957F8A /* BMWDayDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayDetailViewController.h; sourceTree = "<group>"; };
+		2B1504451723494500957F8A /* BMWDayDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayDetailViewController.m; sourceTree = "<group>"; };
 		2B1A358116D1B5B000A3B339 /* bmw.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bmw.jpg; sourceTree = "<group>"; };
 		2B1A358216D1B5B000A3B339 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmwLogo.png; sourceTree = "<group>"; };
 		2B1A358316D1B5B000A3B339 /* BMWManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWManager.h; path = Merkel/BMWManager.h; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
+				2B1504441723494500957F8A /* BMWDayDetailViewController.h */,
+				2B1504451723494500957F8A /* BMWDayDetailViewController.m */,
 				4BBEDA2A171D4EC90016B00D /* BMWSlidingCell.h */,
 				4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */,
 				4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */,
@@ -710,6 +715,7 @@
 				4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
 				4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
 				2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */,
+				2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
