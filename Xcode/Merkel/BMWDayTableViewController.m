@@ -8,9 +8,11 @@
 
 #import "BMWDayTableViewController.h"
 
+#import "BMWPhone.h"
 #import "BMWSlidingCell.h"
+#import "TCConnectionDelegate.h"
 
-@interface BMWDayTableViewController ()
+@interface BMWDayTableViewController () <TCConnectionDelegate>
 
 @property (nonatomic, strong) NSArray *testData;
 
@@ -54,6 +56,20 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spacer.width = 10.0;
     self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceStatusChanged:) name:BMWPhoneDeviceStatusDidChangeNotification object:nil];
+}
+
+- (void)deviceStatusChanged:(NSNotification *)notification {
+    if ([[BMWPhone sharedPhone] isReady]) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+    }
+}
+
+- (void)callButtonPressed {
+    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

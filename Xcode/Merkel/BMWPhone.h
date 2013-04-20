@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const BMWPhoneDeviceStatusDidChangeNotification;
+
 @class TCDevice;
+@protocol TCConnectionDelegate;
 
 @interface BMWPhone : NSObject
 
-- (void)quickCall;
++ (instancetype)sharedPhone;
+- (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate;
+
+@property (readonly) BOOL isReady;
 
 @end

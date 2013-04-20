@@ -21,17 +21,35 @@
 
 @implementation BMWPhone
 
+NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
+
++ (instancetype)sharedPhone {
+    static BMWPhone *sharedPhone = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedPhone = [[self alloc] init];
+    });
+    return sharedPhone;
+}
+
 -(id)init {
     if ( self = [super init] ) {
         NSDictionary *params = @{@"clientId": [PFUser currentUser].email};
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *capabilityToken = responseObject[@"capabilityToken"];
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
+                                                                object:self
+                                                              userInfo:@{@"deviceStatus": [NSNumber numberWithBool:self.isReady]}];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error logging into Twilio: %@", [error localizedDescription]);
         }]; 
     }
     return self;
+}
+
+- (BOOL)isReady {
+    return self.device != nil;
 }
 
 - (void)connectWithConferenceCode:(NSString *)conferenceCode delegate:(id<TCConnectionDelegate>)connectionDelegate {
