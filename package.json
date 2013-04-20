@@ -6,7 +6,18 @@
     "jade": "*",
     "kue": "~0.3.4",
     "parse": "*",
-    "newrelic": "*"
+    "newrelic": "*",
+    "google-calendar": "*",
+    "hashids": "*",
+    "hbs": "*",
+    "imap": "*",
+    "linkedin-js": "*",
+    "mongoose": "*",
+    "node-parse-api": "*",
+    "q": "*",
+    "request": "*",
+    "time": "*",
+    "twilio": "*"
   },
   "engines": {
     "node": "0.8.x",

@@ -16,7 +16,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     kue = require('kue'),
-    url = require('url');
+    url = require('url'),
     redis = require('kue/node_modules/redis'),
     newrelic = require('newrelic');
 
@@ -54,12 +54,16 @@ app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 app.get('/api/mail', gmail.mail);
+app.get('/api/conference/capability', conference.capability);
+app.get('/api/conference/createConference', conference.createConference);
+app.get('/api/conference/twilio', conference.twilio);
+/*
 app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
 app.post('/api/conference', conference.create);
 app.get('/api/conference', conference.list);
 app.get('/api/conference/:name', conference.read);
-app.get('/conference', conference.form);
+app.get('/conference', conference.form);*/
 
 kue.redis.createClient = function() {
     var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
