@@ -16,7 +16,11 @@ exports.capability = function(req, res) {
 
     capability.allowClientIncoming(clientId);
     capability.allowClientOutgoing(TWIML_APP_ID);
-    return res.send(capability.generate(expires=timeout));
+    
+    var response;
+    response.capabilityToken = capability.generate(expires=timeout);
+
+    return res.send(response);
 }
 
 exports.voice = function(req, res) {
