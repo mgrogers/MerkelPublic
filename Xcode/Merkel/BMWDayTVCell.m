@@ -8,10 +8,10 @@
 
 #import "BMWDayTVCell.h"
 
-@implementation ConferTableViewCell {
+@implementation BMWDayTableViewCell {
     CGPoint _originalCenter;
-    BOOL _deleteOnDragRelease;
-    BOOL _markCompleteOnDragRelease;
+    BOOL _rightDragRelease;
+    BOOL _leftDragRelease;
     
     UILabel *_tickLabel;
     UILabel *_crossLabel;
@@ -66,8 +66,8 @@
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
-        _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width / 8;
+        _rightDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
+        _leftDragRelease = self.frame.origin.x > self.frame.size.width / 8;
         
         // fade the contextual cues
         float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 8);
@@ -75,9 +75,9 @@
         _crossLabel.alpha = cueAlpha;
         
         // indicate when the item have been pulled far enough to invoke the given action
-        _tickLabel.textColor = _markCompleteOnDragRelease ?
+        _tickLabel.textColor = _leftDragRelease ?
         [UIColor redColor] : [UIColor whiteColor];
-        _crossLabel.textColor = _deleteOnDragRelease ?
+        _crossLabel.textColor = _rightDragRelease ?
         [UIColor greenColor] : [UIColor whiteColor];
         
     }
@@ -88,21 +88,20 @@
         CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
                                           self.bounds.size.width, self.bounds.size.height);
         
-        if (!_deleteOnDragRelease) {
-            // if the item is not being deleted, snap back to the original location
+        if (!_rightDragRelease) {
+            // if the swipe action is not completed, snap back to the original location
             [UIView animateWithDuration:0.2
                              animations:^{
                                  self.frame = originalFrame;
                              }
              ];
         }
-        if(_deleteOnDragRelease) {
-            //change the stats
+        if(_rightDragRelease) {
+            //handle state change
  
         }
-        if(_markCompleteOnDragRelease) {
-            self.cellItem.completed = YES;
-            //change the state.
+        if(_leftDragRelease) {
+            //handle state change
         }
     
     }
@@ -112,7 +111,6 @@ const float LABEL_LEFT_MARGIN = 15.0f;
 
 -(void)layoutSubviews {
     [super layoutSubviews];
-
     
 //    _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
 //                                  UI_CUES_WIDTH, self.bounds.size.height);

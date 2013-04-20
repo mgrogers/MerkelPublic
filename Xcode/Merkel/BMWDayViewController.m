@@ -7,7 +7,6 @@
 //
 
 #import "BMWDayViewController.h"
-#import "BMWDayListItem.h"
 #import "BMWDayTVCell.h"
 
 @implementation BMWDayViewController {
@@ -33,7 +32,7 @@
     
 	self.tableView.dataSource = self;
     self.tableView.delegate = self;
-	[self.tableView registerClass:[ConferTableViewCell class] forCellReuseIdentifier:@"cell"];
+	[self.tableView registerClass:[BMWDayTableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,7 +49,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *ident = @"cell";
-    ConferTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
+    BMWDayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
     // find the to-do item for this index
     int index = [indexPath row];
     BMWDayListItem *item = _cellItems[index];
@@ -67,16 +66,18 @@
     return 50.0f;
 }
 
--(void)cellItemDeleted:(id)cellItem {
+-(void)handleLeftSwipe:(UITableViewCell *)cellItem {
     NSUInteger index = [_cellItems indexOfObject:cellItem];
     [self.tableView beginUpdates];
-    
-    
-    //Do something but don't actually delete
-//    [_cellItems removeObject:cellItem];
-//    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
-//                          withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
+    
+}
+
+-(void)handleRightSwipe:(UITableViewCell *)cellItem {
+    NSUInteger index = [_cellItems indexOfObject:cellItem];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    
 }
 
 @end
