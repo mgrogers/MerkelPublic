@@ -16,9 +16,10 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     kue = require('kue'),
-    url = require('url');
+    url = require('url'),
     redis = require('kue/node_modules/redis'),
-    newrelic = require('newrelic');
+    newrelic = require('newrelic'),
+    twilio = require('twilio');
 
 var app = express();
 
@@ -59,6 +60,8 @@ app.get('/api/conference/twilio', conference.twilio);
 app.post('/api/conference', conference.create);
 app.get('/api/conference', conference.list);
 app.get('/api/conference/:name', conference.read);
+app.get('/api/twilio/capability', twilio.capability);
+app.get('/api/twilio/voice', twilio.voice);
 app.get('/conference', conference.form);
 
 kue.redis.createClient = function() {

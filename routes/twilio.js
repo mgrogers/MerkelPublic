@@ -1,35 +1,21 @@
 var https = require('https');
-var qs = require('querystring');
 
-var api = 'ACbbb2f0208bf81489c3c497c7ca3cad88';
-var auth = '6aa8522ddf93b0ce14791e864118f94b';
+var ACCOUNT_SID = 'ACbbb2f0208bf81489c3c497c7ca3cad88';
+var AUTH_TOKEN = '6aa8522ddf93b0ce14791e864118f94b';
+var TWIML_APP_ID = 'AP361c96431ce7485f8b27da32da715b7d';
 
-var postdata = qs.stringify({
-    'From' : '+16503535255',
-    'To' : '+15103647987',
-    'Url' : 'http://safe-mountain-5325.herokuapp.com/call'
-});
+var twilio = require('twilio');
+var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
 
-var options = {
-    host: 'api.twilio.com',
-    path: '/2010-04-01/Accounts/ACbbb2f0208bf81489c3c497c7ca3cad88/Calls.xml',
-    port: 443,
-    method: 'POST',
-    headers: {
-        'Content-Type' : 'application/x-www-form-urlencoded',
-        'Content-Length' : postdata.length
-    },
-    auth: api + ':' + auth
-};
+exports.capability = function(req, res) {
+    var clientId = req.params.clientId;
+    if(!clientId) clientId = 'test';
 
-var request = https.request(options, function(res){
-    res.setEncoding('utf8');
-    res.on('data', function(chunk){
-        console.log('Response: ' + chunk);
-    })
-})
+    capability.allowClientIncoming(clientId);
+    capability.allowClientOutgoing(TWIML_APP_ID);
+    return res.send(capability.generate());
+}
 
-exports.twilio = function(req, res) {
-  request.write(postdata);
-  request.end();
+exports.voice = function(req, res) {
+    return res.send("Nothing here yet");
 };
