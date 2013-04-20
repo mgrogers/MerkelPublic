@@ -12,7 +12,7 @@
 
 @implementation BMWAPIClient
 
-static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderkinds.herokuapp.com/api";
+static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderkinds.herokuapp.com/api/";
 
 + (instancetype)sharedClient {
     static BMWAPIClient *_sharedClient = nil;
@@ -40,7 +40,7 @@ static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderk
 - (void)getCapabilityTokenWithParameters:(NSDictionary *)parameters
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    static NSString * const kBMWCapabilityTokenPath = @"";
+    static NSString * const kBMWCapabilityTokenPath = @"twilio/capability";
     [self getPath:kBMWCapabilityTokenPath
        parameters:parameters
           success:success
