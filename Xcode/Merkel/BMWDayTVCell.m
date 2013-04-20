@@ -13,36 +13,37 @@
     BOOL _rightDragRelease;
     BOOL _leftDragRelease;
     
-    UILabel *_tickLabel;
-    UILabel *_crossLabel;
+    UILabel *_leftDragLabel;
+    UILabel *_rightDragLabel;
     
 }
-
-
-//const float UI_CUES_MARGIN = 10.0f;
-//const float UI_CUES_WIDTH = 100.0f;
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self) {
-        
-        // add a tick and cross
-        _tickLabel = [self createCueLabel];
-        _tickLabel.text = @"Late";
-
-        _tickLabel.textAlignment = NSTextAlignmentRight;
-        [self addSubview:_tickLabel];
-        _crossLabel = [self createCueLabel];
-        _crossLabel.text = @"Join";
-
-        _crossLabel.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:_crossLabel];
-        
-        UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-		recognizer.delegate = self;
-		[self addGestureRecognizer:recognizer];
+        [self setupCueLabels];
+        [self setupGestureRecognizers];
     }
     return self;
+}
+
+-(void)setupCueLabels {
+    _leftDragLabel = [self createCueLabel];
+    _leftDragLabel.text = @"Late";
+    
+    _leftDragLabel.textAlignment = NSTextAlignmentRight;
+    [self addSubview:_leftDragLabel];
+    
+    _rightDragLabel = [self createCueLabel];
+    _rightDragLabel.text = @"Join";
+    _rightDragLabel.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:_rightDragLabel];
+}
+
+-(void)setupGestureRecognizers {
+    UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    recognizer.delegate = self;
+    [self addGestureRecognizer:recognizer];
 }
 
 #pragma mark - horizontal pan gesture methods
@@ -61,23 +62,21 @@
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         _originalCenter = self.center;
     }
-    
-    // apply offset to the cell. determine whether item is far enough to initiate a delete
+
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
         _rightDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
         _leftDragRelease = self.frame.origin.x > self.frame.size.width / 8;
         
-        // fade the contextual cues
         float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 8);
-        _tickLabel.alpha = cueAlpha;
-        _crossLabel.alpha = cueAlpha;
+        _leftDragLabel.alpha = cueAlpha;
+        _rightDragLabel.alpha = cueAlpha;
         
         // indicate when the item have been pulled far enough to invoke the given action
-        _tickLabel.textColor = _leftDragRelease ?
+        _leftDragLabel.textColor = _leftDragRelease ?
         [UIColor redColor] : [UIColor whiteColor];
-        _crossLabel.textColor = _rightDragRelease ?
+        _rightDragLabel.textColor = _rightDragRelease ?
         [UIColor greenColor] : [UIColor whiteColor];
         
     }
@@ -97,30 +96,29 @@
              ];
         }
         if(_rightDragRelease) {
+            [self.delegate handleRightSwipe:self];
             //handle state change
  
         }
         if(_leftDragRelease) {
+            [self.delegate handleLeftSwipe:self];
             //handle state change
         }
     
     }
 }
 
-const float LABEL_LEFT_MARGIN = 15.0f;
-
 -(void)layoutSubviews {
     [super layoutSubviews];
     
-//    _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
+//    _leftDragLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
 //                                  UI_CUES_WIDTH, self.bounds.size.height);
 //
-//    _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
+//    _rightDragLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
 //                                   UI_CUES_WIDTH, self.bounds.size.height);
 }
 
-
--(UILabel*) createCueLabel {
+- (UILabel*) createCueLabel {
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectNull];
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont boldSystemFontOfSize:32.0];
