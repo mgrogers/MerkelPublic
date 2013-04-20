@@ -1,0 +1,982 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B1A358A16D1B5B000A3B339 /* bmw.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358116D1B5B000A3B339 /* bmw.jpg */; };
+		2B1A358B16D1B5B000A3B339 /* bmwLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358216D1B5B000A3B339 /* bmwLogo.png */; };
+		2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358416D1B5B000A3B339 /* BMWManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */; };
+		2B1A358F16D1B5B000A3B339 /* manifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A358916D1B5B000A3B339 /* manifest.plist */; };
+		2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
+		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
+		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
+		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
+		2B7CC41A16FC7128008E053D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41916FC7128008E053D /* Default.png */; };
+		2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41B16FC7130008E053D /* Default@2x.png */; };
+		2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41D16FC7135008E053D /* Default-568h@2x.png */; };
+		2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */; };
+		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
+		2B7CC42616FD47A5008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42516FD47A4008E053D /* charger.png */; };
+		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
+		2BB666A5171D3D540006397B /* BMWDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB666A4171D3D540006397B /* BMWDayViewController.m */; };
+		2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AC171D338100155020 /* BMWDayTVCell.m */; };
+		2BFE39B0171D36EF00155020 /* BMWDayListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AF171D36EF00155020 /* BMWDayListItem.m */; };
+		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
+		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
+		4B319AB716ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
+		4B319AB816ED333000F888FC /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB416ED333000F888FC /* iconMan.png */; };
+		4B319AB916ED333000F888FC /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB416ED333000F888FC /* iconMan.png */; };
+		4B319ABA16ED333000F888FC /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB516ED333000F888FC /* iconNote.png */; };
+		4B319ABB16ED333000F888FC /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB516ED333000F888FC /* iconNote.png */; };
+		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
+		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
+		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
+		4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0D16C6F2AF00426018 /* CoreGraphics.framework */; };
+		4B77FE1416C6F2AF00426018 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE1216C6F2AF00426018 /* InfoPlist.strings */; };
+		4B77FE1616C6F2AF00426018 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE1516C6F2AF00426018 /* main.m */; };
+		4B77FE1A16C6F2AF00426018 /* BMWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4B77FE2316C6F2AF00426018 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */; };
+		4B77FE2616C6F2AF00426018 /* BMWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE2516C6F2AF00426018 /* BMWViewController.m */; };
+		4B77FE2E16C6F2AF00426018 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE2D16C6F2AF00426018 /* SenTestingKit.framework */; };
+		4B77FE2F16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
+		4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
+		4B77FE3816C6F2AF00426018 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE3616C6F2AF00426018 /* InfoPlist.strings */; };
+		4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE3A16C6F2AF00426018 /* MerkelTests.m */; };
+		4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
+		4B80DF3516E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
+		4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */; };
+		4B80DF4116E2FDBA00676BC9 /* BMWHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */; };
+		4B80DF4416E3018B00676BC9 /* BMWCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */; };
+		4B80DF4516E3018B00676BC9 /* BMWCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */; };
+		4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
+		4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
+		4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */; };
+		4BA3383216D1945100A2CD24 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383116D1945100A2CD24 /* Accounts.framework */; };
+		4BA3383416D1945600A2CD24 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383316D1945600A2CD24 /* AdSupport.framework */; };
+		4BA3383616D1945B00A2CD24 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383516D1945B00A2CD24 /* CFNetwork.framework */; };
+		4BA3383816D1946100A2CD24 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383716D1946100A2CD24 /* CoreLocation.framework */; };
+		4BA3383A16D1946900A2CD24 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383916D1946900A2CD24 /* libsqlite3.dylib */; };
+		4BA3383C16D1946F00A2CD24 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383B16D1946F00A2CD24 /* libz.1.1.3.dylib */; };
+		4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383D16D1947400A2CD24 /* MobileCoreServices.framework */; };
+		4BA3384016D1947C00A2CD24 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3383F16D1947C00A2CD24 /* QuartzCore.framework */; };
+		4BA3384216D1948300A2CD24 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384116D1948300A2CD24 /* Security.framework */; };
+		4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384316D1948700A2CD24 /* Social.framework */; };
+		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
+		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
+		4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
+		4BBDFE71171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
+		4BBDFE74171D3D840083D4BC /* UIFont+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */; };
+		4BBDFE75171D3D840083D4BC /* UIFont+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */; };
+		4BBDFE7E171D3DDE0083D4BC /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE76171D3DDE0083D4BC /* Gotham-Black.otf */; };
+		4BBDFE7F171D3DDE0083D4BC /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE76171D3DDE0083D4BC /* Gotham-Black.otf */; };
+		4BBDFE80171D3DDE0083D4BC /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE77171D3DDE0083D4BC /* Gotham-Bold.otf */; };
+		4BBDFE81171D3DDE0083D4BC /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE77171D3DDE0083D4BC /* Gotham-Bold.otf */; };
+		4BBDFE82171D3DDE0083D4BC /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE78171D3DDE0083D4BC /* Gotham-Book.otf */; };
+		4BBDFE83171D3DDE0083D4BC /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE78171D3DDE0083D4BC /* Gotham-Book.otf */; };
+		4BBDFE84171D3DDE0083D4BC /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE79171D3DDE0083D4BC /* Gotham-Light.otf */; };
+		4BBDFE85171D3DDE0083D4BC /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE79171D3DDE0083D4BC /* Gotham-Light.otf */; };
+		4BBDFE86171D3DDE0083D4BC /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7A171D3DDE0083D4BC /* Gotham-Medium.otf */; };
+		4BBDFE87171D3DDE0083D4BC /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7A171D3DDE0083D4BC /* Gotham-Medium.otf */; };
+		4BBDFE88171D3DDE0083D4BC /* Gotham-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7B171D3DDE0083D4BC /* Gotham-Thin.otf */; };
+		4BBDFE89171D3DDE0083D4BC /* Gotham-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7B171D3DDE0083D4BC /* Gotham-Thin.otf */; };
+		4BBDFE8A171D3DDE0083D4BC /* Gotham-Ultra.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7C171D3DDE0083D4BC /* Gotham-Ultra.otf */; };
+		4BBDFE8B171D3DDE0083D4BC /* Gotham-Ultra.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7C171D3DDE0083D4BC /* Gotham-Ultra.otf */; };
+		4BBDFE8C171D3DDE0083D4BC /* Gotham-XLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7D171D3DDE0083D4BC /* Gotham-XLight.otf */; };
+		4BBDFE8D171D3DDE0083D4BC /* Gotham-XLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE7D171D3DDE0083D4BC /* Gotham-XLight.otf */; };
+		4BBDFE92171D41F40083D4BC /* reveal_menu_icon_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE90171D41F40083D4BC /* reveal_menu_icon_portrait.png */; };
+		4BBDFE93171D41F40083D4BC /* reveal_menu_icon_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE90171D41F40083D4BC /* reveal_menu_icon_portrait.png */; };
+		4BBDFE94171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE91171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png */; };
+		4BBDFE95171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE91171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png */; };
+		4BBDFE98171D427D0083D4BC /* reveal_menu_icon_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE96171D427D0083D4BC /* reveal_menu_icon_landscape.png */; };
+		4BBDFE99171D427D0083D4BC /* reveal_menu_icon_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE96171D427D0083D4BC /* reveal_menu_icon_landscape.png */; };
+		4BBDFE9A171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE97171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png */; };
+		4BBDFE9B171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDFE97171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png */; };
+		4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */; };
+		4BBEDA29171D4AD30016B00D /* BMWDayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */; };
+		4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */; };
+		4BBEDA2D171D4EC90016B00D /* BMWSlidingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */; };
+		4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */; };
+		4BE26268171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
+		4BE26269171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
+		4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
+		4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
+		4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6016F518C60058F182 /* CoreTelephony.framework */; };
+		4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6216F518CB0058F182 /* libz.dylib */; };
+		4BFB653116F65FFF009E199D /* BMWAttendeeListViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB652C16F65FFF009E199D /* BMWAttendeeListViewDetail.m */; };
+		4BFB653216F65FFF009E199D /* BMWAttendeeListViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB652C16F65FFF009E199D /* BMWAttendeeListViewDetail.m */; };
+		4BFB653316F65FFF009E199D /* BMWEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB652E16F65FFF009E199D /* BMWEmailView.m */; };
+		4BFB653416F65FFF009E199D /* BMWEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB652E16F65FFF009E199D /* BMWEmailView.m */; };
+		4BFB653916F66010009E199D /* BMWCalendarListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653816F66010009E199D /* BMWCalendarListView.m */; };
+		4BFB653A16F66010009E199D /* BMWCalendarListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653816F66010009E199D /* BMWCalendarListView.m */; };
+		4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653D16F66038009E199D /* BMWLinkedInView.m */; };
+		4BFB653F16F66038009E199D /* BMWLinkedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFB653D16F66038009E199D /* BMWLinkedInView.m */; };
+		4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFB654516F660A5009E199D /* libGoogleAnalytics.a */; };
+		4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFB654516F660A5009E199D /* libGoogleAnalytics.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4B77FE3116C6F2AF00426018 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B77FDFC16C6F2AF00426018 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B77FE0416C6F2AF00426018;
+			remoteInfo = Merkel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		299F765672A2407E8FF33FE1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		2B1A358116D1B5B000A3B339 /* bmw.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bmw.jpg; sourceTree = "<group>"; };
+		2B1A358216D1B5B000A3B339 /* bmwLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmwLogo.png; sourceTree = "<group>"; };
+		2B1A358316D1B5B000A3B339 /* BMWManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWManager.h; path = Merkel/BMWManager.h; sourceTree = "<group>"; };
+		2B1A358416D1B5B000A3B339 /* BMWManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWManager.m; path = Merkel/BMWManager.m; sourceTree = "<group>"; };
+		2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWViewProvider.h; path = Merkel/BMWViewProvider.h; sourceTree = "<group>"; };
+		2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWViewProvider.m; path = Merkel/BMWViewProvider.m; sourceTree = "<group>"; };
+		2B1A358916D1B5B000A3B339 /* manifest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = manifest.plist; path = Merkel/manifest.plist; sourceTree = "<group>"; };
+		2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMWAppKit.framework; path = Frameworks/BMWAppKit.framework; sourceTree = "<group>"; };
+		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
+		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		2B7CC41916FC7128008E053D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		2B7CC41B16FC7130008E053D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		2B7CC41D16FC7135008E053D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		2B7CC42516FD47A4008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charger.png; sourceTree = "<group>"; };
+		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
+		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
+		2BB666A3171D3D540006397B /* BMWDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayViewController.h; sourceTree = "<group>"; };
+		2BB666A4171D3D540006397B /* BMWDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayViewController.m; sourceTree = "<group>"; };
+		2BB666A6171D3DB10006397B /* BMWDayTVCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWDayTVCellDelegate.h; sourceTree = "<group>"; };
+		2BFE39AB171D338100155020 /* BMWDayTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayTVCell.h; sourceTree = "<group>"; };
+		2BFE39AC171D338100155020 /* BMWDayTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayTVCell.m; sourceTree = "<group>"; };
+		2BFE39AE171D36EF00155020 /* BMWDayListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayListItem.h; sourceTree = "<group>"; };
+		2BFE39AF171D36EF00155020 /* BMWDayListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayListItem.m; sourceTree = "<group>"; };
+		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
+		4B319AB416ED333000F888FC /* iconMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconMan.png; sourceTree = "<group>"; };
+		4B319AB516ED333000F888FC /* iconNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconNote.png; sourceTree = "<group>"; };
+		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B77FE0916C6F2AF00426018 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4B77FE0B16C6F2AF00426018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4B77FE0D16C6F2AF00426018 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4B77FE1116C6F2AF00426018 /* Merkel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Merkel-Info.plist"; sourceTree = "<group>"; };
+		4B77FE1316C6F2AF00426018 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4B77FE1516C6F2AF00426018 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4B77FE1716C6F2AF00426018 /* Merkel-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Merkel-Prefix.pch"; sourceTree = "<group>"; };
+		4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWAppDelegate.h; sourceTree = "<group>"; };
+		4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMWAppDelegate.m; sourceTree = "<group>"; };
+		4B77FE2216C6F2AF00426018 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		4B77FE2416C6F2AF00426018 /* BMWViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWViewController.h; sourceTree = "<group>"; };
+		4B77FE2516C6F2AF00426018 /* BMWViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BMWViewController.m; sourceTree = "<group>"; };
+		4B77FE2C16C6F2AF00426018 /* MerkelTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MerkelTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B77FE2D16C6F2AF00426018 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		4B77FE3516C6F2AF00426018 /* MerkelTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MerkelTests-Info.plist"; sourceTree = "<group>"; };
+		4B77FE3716C6F2AF00426018 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4B77FE3916C6F2AF00426018 /* MerkelTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MerkelTests.h; sourceTree = "<group>"; };
+		4B77FE3A16C6F2AF00426018 /* MerkelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MerkelTests.m; sourceTree = "<group>"; };
+		4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarEvent.h; sourceTree = "<group>"; };
+		4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarEvent.m; sourceTree = "<group>"; };
+		4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWHomeView.h; path = Merkel/BMWHomeView.h; sourceTree = "<group>"; };
+		4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWHomeView.m; path = Merkel/BMWHomeView.m; sourceTree = "<group>"; };
+		4B80DF4216E3018A00676BC9 /* BMWCalendarEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWCalendarEventView.h; path = Merkel/BMWCalendarEventView.h; sourceTree = "<group>"; };
+		4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWCalendarEventView.m; path = Merkel/BMWCalendarEventView.m; sourceTree = "<group>"; };
+		4BA3382C16D1942700A2CD24 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4BA3383116D1945100A2CD24 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		4BA3383316D1945600A2CD24 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4BA3383516D1945B00A2CD24 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4BA3383716D1946100A2CD24 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4BA3383916D1946900A2CD24 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		4BA3383B16D1946F00A2CD24 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		4BA3383D16D1947400A2CD24 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		4BA3383F16D1947C00A2CD24 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4BA3384116D1948300A2CD24 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BMW.h"; sourceTree = "<group>"; };
+		4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BMW.m"; sourceTree = "<group>"; };
+		4BBDFE72171D3D840083D4BC /* UIFont+BMW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+BMW.h"; sourceTree = "<group>"; };
+		4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+BMW.m"; sourceTree = "<group>"; };
+		4BBDFE76171D3DDE0083D4BC /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Black.otf"; sourceTree = "<group>"; };
+		4BBDFE77171D3DDE0083D4BC /* Gotham-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Bold.otf"; sourceTree = "<group>"; };
+		4BBDFE78171D3DDE0083D4BC /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
+		4BBDFE79171D3DDE0083D4BC /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.otf"; sourceTree = "<group>"; };
+		4BBDFE7A171D3DDE0083D4BC /* Gotham-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.otf"; sourceTree = "<group>"; };
+		4BBDFE7B171D3DDE0083D4BC /* Gotham-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Thin.otf"; sourceTree = "<group>"; };
+		4BBDFE7C171D3DDE0083D4BC /* Gotham-Ultra.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Ultra.otf"; sourceTree = "<group>"; };
+		4BBDFE7D171D3DDE0083D4BC /* Gotham-XLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-XLight.otf"; sourceTree = "<group>"; };
+		4BBDFE90171D41F40083D4BC /* reveal_menu_icon_portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reveal_menu_icon_portrait.png; sourceTree = "<group>"; };
+		4BBDFE91171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal_menu_icon_portrait@2x.png"; sourceTree = "<group>"; };
+		4BBDFE96171D427D0083D4BC /* reveal_menu_icon_landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reveal_menu_icon_landscape.png; sourceTree = "<group>"; };
+		4BBDFE97171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal_menu_icon_landscape@2x.png"; sourceTree = "<group>"; };
+		4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayTableViewController.h; sourceTree = "<group>"; };
+		4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayTableViewController.m; sourceTree = "<group>"; };
+		4BBEDA2A171D4EC90016B00D /* BMWSlidingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCell.h; sourceTree = "<group>"; };
+		4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWSlidingCell.m; sourceTree = "<group>"; };
+		4BBEF1A716D1B8880080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "../app-icon.png"; sourceTree = "<group>"; };
+		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "../app-icon@2x.png"; sourceTree = "<group>"; };
+		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4BE26266171D382E004F742F /* BMWAppearances.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAppearances.h; sourceTree = "<group>"; };
+		4BE26267171D382E004F742F /* BMWAppearances.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAppearances.m; sourceTree = "<group>"; };
+		4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarDataSource.h; sourceTree = "<group>"; };
+		4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWGCalendarDataSource.m; sourceTree = "<group>"; };
+		4BF95F6016F518C60058F182 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4BF95F6216F518CB0058F182 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4BFB652B16F65FFF009E199D /* BMWAttendeeListViewDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWAttendeeListViewDetail.h; path = Merkel/BMWAttendeeListViewDetail.h; sourceTree = "<group>"; };
+		4BFB652C16F65FFF009E199D /* BMWAttendeeListViewDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWAttendeeListViewDetail.m; path = Merkel/BMWAttendeeListViewDetail.m; sourceTree = "<group>"; };
+		4BFB652D16F65FFF009E199D /* BMWEmailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWEmailView.h; path = Merkel/BMWEmailView.h; sourceTree = "<group>"; };
+		4BFB652E16F65FFF009E199D /* BMWEmailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWEmailView.m; path = Merkel/BMWEmailView.m; sourceTree = "<group>"; };
+		4BFB653716F66010009E199D /* BMWCalendarListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWCalendarListView.h; path = Merkel/BMWCalendarListView.h; sourceTree = "<group>"; };
+		4BFB653816F66010009E199D /* BMWCalendarListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWCalendarListView.m; path = Merkel/BMWCalendarListView.m; sourceTree = "<group>"; };
+		4BFB653C16F66038009E199D /* BMWLinkedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWLinkedInView.h; path = Merkel/BMWLinkedInView.h; sourceTree = "<group>"; };
+		4BFB653D16F66038009E199D /* BMWLinkedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWLinkedInView.m; path = Merkel/BMWLinkedInView.m; sourceTree = "<group>"; };
+		4BFB654016F660A5009E199D /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Frameworks/GoogleAnalytics/GAI.h; sourceTree = "<group>"; };
+		4BFB654116F660A5009E199D /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Frameworks/GoogleAnalytics/GAITrackedViewController.h; sourceTree = "<group>"; };
+		4BFB654216F660A5009E199D /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Frameworks/GoogleAnalytics/GAITracker.h; sourceTree = "<group>"; };
+		4BFB654316F660A5009E199D /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = Frameworks/GoogleAnalytics/GAITransaction.h; sourceTree = "<group>"; };
+		4BFB654416F660A5009E199D /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = Frameworks/GoogleAnalytics/GAITransactionItem.h; sourceTree = "<group>"; };
+		4BFB654516F660A5009E199D /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = Frameworks/GoogleAnalytics/libGoogleAnalytics.a; sourceTree = "<group>"; };
+		8CF2515D55FF42B095C2BE58 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4B77FE0216C6F2AF00426018 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */,
+				4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */,
+				4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */,
+				4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */,
+				2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */,
+				2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */,
+				4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */,
+				4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */,
+				4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */,
+				4BA3384216D1948300A2CD24 /* Security.framework in Frameworks */,
+				4BA3384016D1947C00A2CD24 /* QuartzCore.framework in Frameworks */,
+				4BA3383C16D1946F00A2CD24 /* libz.1.1.3.dylib in Frameworks */,
+				4BA3383A16D1946900A2CD24 /* libsqlite3.dylib in Frameworks */,
+				4BA3383816D1946100A2CD24 /* CoreLocation.framework in Frameworks */,
+				4BA3383616D1945B00A2CD24 /* CFNetwork.framework in Frameworks */,
+				4BA3383416D1945600A2CD24 /* AdSupport.framework in Frameworks */,
+				4BA3383216D1945100A2CD24 /* Accounts.framework in Frameworks */,
+				4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */,
+				4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */,
+				4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */,
+				4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */,
+				4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */,
+				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
+				2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */,
+				4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B77FE2816C6F2AF00426018 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B77FE2E16C6F2AF00426018 /* SenTestingKit.framework in Frameworks */,
+				4B77FE2F16C6F2AF00426018 /* UIKit.framework in Frameworks */,
+				4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */,
+				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
+				4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */,
+				4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2B606F2516DB7BF800CBACDC /* Google Apps */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Google Apps";
+			path = Merkel;
+			sourceTree = "<group>";
+		};
+		2B8FB3E116ED2D9000AC5A95 /* AttendeeSection */ = {
+			isa = PBXGroup;
+			children = (
+				4BFB652B16F65FFF009E199D /* BMWAttendeeListViewDetail.h */,
+				4BFB652C16F65FFF009E199D /* BMWAttendeeListViewDetail.m */,
+				4BFB652D16F65FFF009E199D /* BMWEmailView.h */,
+				4BFB652E16F65FFF009E199D /* BMWEmailView.m */,
+				4BFB653C16F66038009E199D /* BMWLinkedInView.h */,
+				4BFB653D16F66038009E199D /* BMWLinkedInView.m */,
+			);
+			name = AttendeeSection;
+			sourceTree = "<group>";
+		};
+		4B77FDFA16C6F2AF00426018 = {
+			isa = PBXGroup;
+			children = (
+				4B77FE0F16C6F2AF00426018 /* Merkel */,
+				4B77FE3316C6F2AF00426018 /* MerkelTests */,
+				4B77FE0816C6F2AF00426018 /* Frameworks */,
+				4B77FE0616C6F2AF00426018 /* Products */,
+				299F765672A2407E8FF33FE1 /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		4B77FE0616C6F2AF00426018 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4B77FE0516C6F2AF00426018 /* Merkel.app */,
+				4B77FE2C16C6F2AF00426018 /* MerkelTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4BF95F6216F518CB0058F182 /* libz.dylib */,
+				4BF95F6016F518C60058F182 /* CoreTelephony.framework */,
+				2B606F2516DB7BF800CBACDC /* Google Apps */,
+				4BBEF1BC16D1BD760080F6E5 /* Google Analytics */,
+				2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */,
+				2B1A359E16D1B67D00A3B339 /* ImageIO.framework */,
+				2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */,
+				2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */,
+				4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */,
+				4BA3382C16D1942700A2CD24 /* Parse.framework */,
+				4B77FE0916C6F2AF00426018 /* UIKit.framework */,
+				4B77FE0B16C6F2AF00426018 /* Foundation.framework */,
+				4B77FE0D16C6F2AF00426018 /* CoreGraphics.framework */,
+				4B77FE2D16C6F2AF00426018 /* SenTestingKit.framework */,
+				8CF2515D55FF42B095C2BE58 /* libPods.a */,
+				4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */,
+				4BA3384516D1948D00A2CD24 /* StoreKit.framework */,
+				4BA3384316D1948700A2CD24 /* Social.framework */,
+				4BA3384116D1948300A2CD24 /* Security.framework */,
+				4BA3383F16D1947C00A2CD24 /* QuartzCore.framework */,
+				4BA3383D16D1947400A2CD24 /* MobileCoreServices.framework */,
+				4BA3383B16D1946F00A2CD24 /* libz.1.1.3.dylib */,
+				4BA3383916D1946900A2CD24 /* libsqlite3.dylib */,
+				4BA3383716D1946100A2CD24 /* CoreLocation.framework */,
+				4BA3383516D1945B00A2CD24 /* CFNetwork.framework */,
+				4BA3383316D1945600A2CD24 /* AdSupport.framework */,
+				4BA3383116D1945100A2CD24 /* Accounts.framework */,
+				4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4B77FE0F16C6F2AF00426018 /* Merkel */ = {
+			isa = PBXGroup;
+			children = (
+				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
+				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
+				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
+				4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */,
+				4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */,
+				4BBDFE72171D3D840083D4BC /* UIFont+BMW.h */,
+				4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */,
+				4BE26266171D382E004F742F /* BMWAppearances.h */,
+				4BE26267171D382E004F742F /* BMWAppearances.m */,
+				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
+				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
+				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
+				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
+				4BBEDA2A171D4EC90016B00D /* BMWSlidingCell.h */,
+				4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */,
+				4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */,
+				4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */,
+				4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */,
+				4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */,
+				2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */,
+				2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */,
+				4BEED18316DC14500019312B /* ConnectedDrive */,
+				4B77FE1016C6F2AF00426018 /* Supporting Files */,
+				2BFE39AB171D338100155020 /* BMWDayTVCell.h */,
+				2BFE39AC171D338100155020 /* BMWDayTVCell.m */,
+				2BB666A3171D3D540006397B /* BMWDayViewController.h */,
+				2BB666A4171D3D540006397B /* BMWDayViewController.m */,
+				2BB666A6171D3DB10006397B /* BMWDayTVCellDelegate.h */,
+				2BFE39AE171D36EF00155020 /* BMWDayListItem.h */,
+				2BFE39AF171D36EF00155020 /* BMWDayListItem.m */,
+			);
+			path = Merkel;
+			sourceTree = "<group>";
+		};
+		4B77FE1016C6F2AF00426018 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4BBDFE8E171D3DE70083D4BC /* Fonts */,
+				2B7CC42516FD47A4008E053D /* charger.png */,
+				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
+				2B1A358216D1B5B000A3B339 /* bmwLogo.png */,
+				4BBEF1A616D1B82F0080F6E5 /* Icons */,
+				4B77FE1116C6F2AF00426018 /* Merkel-Info.plist */,
+				4B77FE1216C6F2AF00426018 /* InfoPlist.strings */,
+				4B77FE1516C6F2AF00426018 /* main.m */,
+				4B77FE1716C6F2AF00426018 /* Merkel-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4B77FE3316C6F2AF00426018 /* MerkelTests */ = {
+			isa = PBXGroup;
+			children = (
+				4B77FE3916C6F2AF00426018 /* MerkelTests.h */,
+				4B77FE3A16C6F2AF00426018 /* MerkelTests.m */,
+				4B77FE3416C6F2AF00426018 /* Supporting Files */,
+			);
+			path = MerkelTests;
+			sourceTree = "<group>";
+		};
+		4B77FE3416C6F2AF00426018 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4B77FE3516C6F2AF00426018 /* MerkelTests-Info.plist */,
+				4B77FE3616C6F2AF00426018 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4BBDFE8E171D3DE70083D4BC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4BBDFE8F171D3DEC0083D4BC /* Gotham */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		4BBDFE8F171D3DEC0083D4BC /* Gotham */ = {
+			isa = PBXGroup;
+			children = (
+				4BBDFE76171D3DDE0083D4BC /* Gotham-Black.otf */,
+				4BBDFE77171D3DDE0083D4BC /* Gotham-Bold.otf */,
+				4BBDFE78171D3DDE0083D4BC /* Gotham-Book.otf */,
+				4BBDFE79171D3DDE0083D4BC /* Gotham-Light.otf */,
+				4BBDFE7A171D3DDE0083D4BC /* Gotham-Medium.otf */,
+				4BBDFE7B171D3DDE0083D4BC /* Gotham-Thin.otf */,
+				4BBDFE7C171D3DDE0083D4BC /* Gotham-Ultra.otf */,
+				4BBDFE7D171D3DDE0083D4BC /* Gotham-XLight.otf */,
+			);
+			name = Gotham;
+			sourceTree = "<group>";
+		};
+		4BBEF1A616D1B82F0080F6E5 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				4BBDFE96171D427D0083D4BC /* reveal_menu_icon_landscape.png */,
+				4BBDFE97171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png */,
+				4BBDFE90171D41F40083D4BC /* reveal_menu_icon_portrait.png */,
+				4BBDFE91171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png */,
+				4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */,
+				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
+				2B7CC41D16FC7135008E053D /* Default-568h@2x.png */,
+				2B7CC41B16FC7130008E053D /* Default@2x.png */,
+				2B7CC41916FC7128008E053D /* Default.png */,
+				4B319AB316ED333000F888FC /* iconFlag.png */,
+				4B319AB416ED333000F888FC /* iconMan.png */,
+				4B319AB516ED333000F888FC /* iconNote.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
+		4BBEF1BC16D1BD760080F6E5 /* Google Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				4BFB654016F660A5009E199D /* GAI.h */,
+				4BFB654116F660A5009E199D /* GAITrackedViewController.h */,
+				4BFB654216F660A5009E199D /* GAITracker.h */,
+				4BFB654316F660A5009E199D /* GAITransaction.h */,
+				4BFB654416F660A5009E199D /* GAITransactionItem.h */,
+				4BFB654516F660A5009E199D /* libGoogleAnalytics.a */,
+			);
+			name = "Google Analytics";
+			sourceTree = "<group>";
+		};
+		4BEED18316DC14500019312B /* ConnectedDrive */ = {
+			isa = PBXGroup;
+			children = (
+				2B1A358316D1B5B000A3B339 /* BMWManager.h */,
+				2B1A358416D1B5B000A3B339 /* BMWManager.m */,
+				2B8FB3E116ED2D9000AC5A95 /* AttendeeSection */,
+				2B1A358716D1B5B000A3B339 /* BMWViewProvider.h */,
+				2B1A358816D1B5B000A3B339 /* BMWViewProvider.m */,
+				4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */,
+				4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */,
+				4BFB653B16F66015009E199D /* Calendar */,
+				2B1A358916D1B5B000A3B339 /* manifest.plist */,
+			);
+			name = ConnectedDrive;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		4BFB653B16F66015009E199D /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				4BFB653716F66010009E199D /* BMWCalendarListView.h */,
+				4BFB653816F66010009E199D /* BMWCalendarListView.m */,
+				4B80DF4216E3018A00676BC9 /* BMWCalendarEventView.h */,
+				4B80DF4316E3018A00676BC9 /* BMWCalendarEventView.m */,
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4B77FE0416C6F2AF00426018 /* Merkel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B77FE3E16C6F2AF00426018 /* Build configuration list for PBXNativeTarget "Merkel" */;
+			buildPhases = (
+				4B77FE0116C6F2AF00426018 /* Sources */,
+				4B77FE0216C6F2AF00426018 /* Frameworks */,
+				4BA3384D16D1A7AE00A2CD24 /* ShellScript */,
+				4B77FE0316C6F2AF00426018 /* Resources */,
+				939CA24B6D584BABAD99711C /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Merkel;
+			productName = Merkel;
+			productReference = 4B77FE0516C6F2AF00426018 /* Merkel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4B77FE2B16C6F2AF00426018 /* MerkelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B77FE4116C6F2AF00426018 /* Build configuration list for PBXNativeTarget "MerkelTests" */;
+			buildPhases = (
+				4B77FE2716C6F2AF00426018 /* Sources */,
+				4B77FE2816C6F2AF00426018 /* Frameworks */,
+				4B77FE2916C6F2AF00426018 /* Resources */,
+				4B77FE2A16C6F2AF00426018 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4B77FE3216C6F2AF00426018 /* PBXTargetDependency */,
+			);
+			name = MerkelTests;
+			productName = MerkelTests;
+			productReference = 4B77FE2C16C6F2AF00426018 /* MerkelTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4B77FDFC16C6F2AF00426018 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BMW;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = BossMobileWunderkinds;
+			};
+			buildConfigurationList = 4B77FDFF16C6F2AF00426018 /* Build configuration list for PBXProject "Merkel" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4B77FDFA16C6F2AF00426018;
+			productRefGroup = 4B77FE0616C6F2AF00426018 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4B77FE0416C6F2AF00426018 /* Merkel */,
+				4B77FE2B16C6F2AF00426018 /* MerkelTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4B77FE0316C6F2AF00426018 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B77FE1416C6F2AF00426018 /* InfoPlist.strings in Resources */,
+				4B77FE2316C6F2AF00426018 /* MainStoryboard.storyboard in Resources */,
+				2B1A358A16D1B5B000A3B339 /* bmw.jpg in Resources */,
+				2B1A358B16D1B5B000A3B339 /* bmwLogo.png in Resources */,
+				2B1A358F16D1B5B000A3B339 /* manifest.plist in Resources */,
+				2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */,
+				4B319AB616ED333000F888FC /* iconFlag.png in Resources */,
+				4B319AB816ED333000F888FC /* iconMan.png in Resources */,
+				4B319ABA16ED333000F888FC /* iconNote.png in Resources */,
+				2B7CC41A16FC7128008E053D /* Default.png in Resources */,
+				2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */,
+				2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */,
+				2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */,
+				2B7CC42016FC75BA008E053D /* app-icon.png in Resources */,
+				2B7CC42616FD47A5008E053D /* charger.png in Resources */,
+				4BBDFE7E171D3DDE0083D4BC /* Gotham-Black.otf in Resources */,
+				4BBDFE80171D3DDE0083D4BC /* Gotham-Bold.otf in Resources */,
+				4BBDFE82171D3DDE0083D4BC /* Gotham-Book.otf in Resources */,
+				4BBDFE84171D3DDE0083D4BC /* Gotham-Light.otf in Resources */,
+				4BBDFE86171D3DDE0083D4BC /* Gotham-Medium.otf in Resources */,
+				4BBDFE88171D3DDE0083D4BC /* Gotham-Thin.otf in Resources */,
+				4BBDFE8A171D3DDE0083D4BC /* Gotham-Ultra.otf in Resources */,
+				4BBDFE8C171D3DDE0083D4BC /* Gotham-XLight.otf in Resources */,
+				4BBDFE92171D41F40083D4BC /* reveal_menu_icon_portrait.png in Resources */,
+				4BBDFE94171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png in Resources */,
+				4BBDFE98171D427D0083D4BC /* reveal_menu_icon_landscape.png in Resources */,
+				4BBDFE9A171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B77FE2916C6F2AF00426018 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B77FE3816C6F2AF00426018 /* InfoPlist.strings in Resources */,
+				4B319AB716ED333000F888FC /* iconFlag.png in Resources */,
+				4B319AB916ED333000F888FC /* iconMan.png in Resources */,
+				4B319ABB16ED333000F888FC /* iconNote.png in Resources */,
+				4BBDFE7F171D3DDE0083D4BC /* Gotham-Black.otf in Resources */,
+				4BBDFE81171D3DDE0083D4BC /* Gotham-Bold.otf in Resources */,
+				4BBDFE83171D3DDE0083D4BC /* Gotham-Book.otf in Resources */,
+				4BBDFE85171D3DDE0083D4BC /* Gotham-Light.otf in Resources */,
+				4BBDFE87171D3DDE0083D4BC /* Gotham-Medium.otf in Resources */,
+				4BBDFE89171D3DDE0083D4BC /* Gotham-Thin.otf in Resources */,
+				4BBDFE8B171D3DDE0083D4BC /* Gotham-Ultra.otf in Resources */,
+				4BBDFE8D171D3DDE0083D4BC /* Gotham-XLight.otf in Resources */,
+				4BBDFE93171D41F40083D4BC /* reveal_menu_icon_portrait.png in Resources */,
+				4BBDFE95171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png in Resources */,
+				4BBDFE99171D427D0083D4BC /* reveal_menu_icon_landscape.png in Resources */,
+				4BBDFE9B171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B77FE2A16C6F2AF00426018 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		4BA3384D16D1A7AE00A2CD24 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo ${SRCROOT}/version.sh\n${SRCROOT}/version.sh --set --plist-path \"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\" --quiet";
+		};
+		939CA24B6D584BABAD99711C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4B77FE0116C6F2AF00426018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B77FE1616C6F2AF00426018 /* main.m in Sources */,
+				4B77FE1A16C6F2AF00426018 /* BMWAppDelegate.m in Sources */,
+				4B77FE2616C6F2AF00426018 /* BMWViewController.m in Sources */,
+				2B1A358C16D1B5B000A3B339 /* BMWManager.m in Sources */,
+				2B1A358E16D1B5B000A3B339 /* BMWViewProvider.m in Sources */,
+				4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */,
+				4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */,
+				4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */,
+				4B80DF4416E3018B00676BC9 /* BMWCalendarEventView.m in Sources */,
+				2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */,
+				4BFB653116F65FFF009E199D /* BMWAttendeeListViewDetail.m in Sources */,
+				4BFB653316F65FFF009E199D /* BMWEmailView.m in Sources */,
+				4BFB653916F66010009E199D /* BMWCalendarListView.m in Sources */,
+				4BFB653E16F66038009E199D /* BMWLinkedInView.m in Sources */,
+<<<<<<< HEAD
+				4BE26268171D382E004F742F /* BMWAppearances.m in Sources */,
+				4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */,
+				4BBDFE74171D3D840083D4BC /* UIFont+BMW.m in Sources */,
+				4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
+				4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
+=======
+				2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */,
+				2BFE39B0171D36EF00155020 /* BMWDayListItem.m in Sources */,
+				2BB666A5171D3D540006397B /* BMWDayViewController.m in Sources */,
+>>>>>>> feature/ios-gestures
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B77FE2716C6F2AF00426018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */,
+				4BEED18716DC14C40019312B /* BMWGCalendarDataSource.m in Sources */,
+				4B80DF3516E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */,
+				4B80DF4116E2FDBA00676BC9 /* BMWHomeView.m in Sources */,
+				4B80DF4516E3018B00676BC9 /* BMWCalendarEventView.m in Sources */,
+				4BFB653216F65FFF009E199D /* BMWAttendeeListViewDetail.m in Sources */,
+				4BFB653416F65FFF009E199D /* BMWEmailView.m in Sources */,
+				4BFB653A16F66010009E199D /* BMWCalendarListView.m in Sources */,
+				4BFB653F16F66038009E199D /* BMWLinkedInView.m in Sources */,
+				4BE26269171D382E004F742F /* BMWAppearances.m in Sources */,
+				4BBDFE71171D39810083D4BC /* UIColor+BMW.m in Sources */,
+				4BBDFE75171D3D840083D4BC /* UIFont+BMW.m in Sources */,
+				4BBEDA29171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
+				4BBEDA2D171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4B77FE3216C6F2AF00426018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4B77FE0416C6F2AF00426018 /* Merkel */;
+			targetProxy = 4B77FE3116C6F2AF00426018 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4B77FE1216C6F2AF00426018 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4B77FE1316C6F2AF00426018 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4B77FE2216C6F2AF00426018 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		4B77FE3616C6F2AF00426018 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4B77FE3716C6F2AF00426018 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4B77FE3C16C6F2AF00426018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4B77FE3D16C6F2AF00426018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4B77FE3F16C6F2AF00426018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
+			buildSettings = {
+				ARCHS = armv7;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tim Shi (YA8NR9T4J2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 13;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "76A9B8EF-AEEA-4A6E-AE1B-321C81401564";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76A9B8EF-AEEA-4A6E-AE1B-321C81401564";
+				VALID_ARCHS = armv7;
+				VERSIONING_SYSTEM = "apple-generic";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4B77FE4016C6F2AF00426018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 13;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				VALID_ARCHS = armv7;
+				VERSIONING_SYSTEM = "apple-generic";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4B77FE4216C6F2AF00426018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Merkel.app/Merkel";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				INFOPLIST_FILE = "MerkelTests/MerkelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		4B77FE4316C6F2AF00426018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Merkel.app/Merkel";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				INFOPLIST_FILE = "MerkelTests/MerkelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4B77FDFF16C6F2AF00426018 /* Build configuration list for PBXProject "Merkel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B77FE3C16C6F2AF00426018 /* Debug */,
+				4B77FE3D16C6F2AF00426018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B77FE3E16C6F2AF00426018 /* Build configuration list for PBXNativeTarget "Merkel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B77FE3F16C6F2AF00426018 /* Debug */,
+				4B77FE4016C6F2AF00426018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B77FE4116C6F2AF00426018 /* Build configuration list for PBXNativeTarget "MerkelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B77FE4216C6F2AF00426018 /* Debug */,
+				4B77FE4316C6F2AF00426018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4B77FDFC16C6F2AF00426018 /* Project object */;
+}
