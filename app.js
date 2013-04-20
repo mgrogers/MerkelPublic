@@ -19,7 +19,7 @@ var express = require('express'),
     url = require('url'),
     redis = require('kue/node_modules/redis'),
     newrelic = require('newrelic'),
-    twilio = require('twilio');
+    twilio = require('./routes/twilio');
 
 var app = express();
 

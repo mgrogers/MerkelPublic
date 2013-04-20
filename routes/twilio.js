@@ -9,11 +9,14 @@ var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
 
 exports.capability = function(req, res) {
     var clientId = req.params.clientId;
-    if(!clientId) clientId = 'test';
+    clientId = clientId || 'test';
+
+    var timeout = req.params.timeout;
+    timeout = timeout || 600;
 
     capability.allowClientIncoming(clientId);
     capability.allowClientOutgoing(TWIML_APP_ID);
-    return res.send(capability.generate());
+    return res.send(capability.generate(expires=timeout));
 }
 
 exports.voice = function(req, res) {
