@@ -9,11 +9,13 @@
 #import "BMWPhone.h"
 
 #import "BMWAPIClient.h"
+#import "TCConnection.h"
 #import "TCDevice.h"
 
 @interface BMWPhone () <TCDeviceDelegate>
 
 @property (nonatomic, strong) TCDevice *device;
+@property (nonatomic, strong) TCConnection *connection;
 
 @end
 
@@ -30,6 +32,28 @@
         }]; 
     }
     return self;
+}
+
+- (void)connectWithConferenceCode:(NSString *)conferenceCode delegate:(id<TCConnectionDelegate>)connectionDelegate {
+    [self connectWithParameters:@{@"conferenceCode": conferenceCode} delegate:connectionDelegate];
+}
+
+- (void)connectWithParameters:(NSDictionary *)parameters
+                     delegate:(id<TCConnectionDelegate>)connectionDelegate {
+    self.connection = [self.device connect:parameters delegate:connectionDelegate];
+}
+
+- (void)disconnect {
+    [self.connection disconnect];
+}
+
+- (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate {
+    [[BMWAPIClient sharedClient] getNewConferenceWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *conferenceCode = responseObject[@"conferenceCode"];
+        [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 #pragma mark - TCDeviceDelegate Methods

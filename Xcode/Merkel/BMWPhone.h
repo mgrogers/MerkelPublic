@@ -12,4 +12,6 @@
 
 @interface BMWPhone : NSObject
 
+- (void)quickCall;
+
 @end

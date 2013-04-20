@@ -40,8 +40,18 @@ static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderk
 - (void)getCapabilityTokenWithParameters:(NSDictionary *)parameters
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    static NSString * const kBMWCapabilityTokenPath = @"twilio/capability";
+    static NSString * const kBMWCapabilityTokenPath = @"conference/capability";
     [self getPath:kBMWCapabilityTokenPath
+       parameters:parameters
+          success:success
+          failure:failure];
+}
+
+- (void)getNewConferenceWithParameters:(NSDictionary *)parameters
+                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    static NSString * const kBMWNewConferencePath = @"conference/createConference";
+    [self getPath:kBMWNewConferencePath
        parameters:parameters
           success:success
           failure:failure];
