@@ -34,7 +34,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 
 -(id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": [PFUser currentUser].email};
+        NSDictionary *params = @{@"clientId": [PFUser currentUser].username};
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *capabilityToken = responseObject[@"capabilityToken"];
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
@@ -53,7 +53,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 }
 
 - (BMWPhoneStatus)status {
-    if (self.connection && self.connection.state == TCConnectionStateConnected) {
+    if (self.connection && self.connection.state == TCConnectionStateConnected || self.connection.state == TCConnectionStateConnecting) {
         return BMWPhoneStatusConnected;
     } else if (self.device != nil) {
         return BMWPhoneStatusReady;
@@ -68,6 +68,9 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 - (void)connectWithParameters:(NSDictionary *)parameters
                      delegate:(id<TCConnectionDelegate>)connectionDelegate {
     self.connection = [self.device connect:parameters delegate:connectionDelegate];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
 }
 
 - (void)disconnect {
@@ -80,6 +83,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 - (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate {
     [[BMWAPIClient sharedClient] getNewConferenceWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *conferenceCode = responseObject[@"conferenceCode"];
+        NSLog(@"conference code: %@", conferenceCode);
         [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
