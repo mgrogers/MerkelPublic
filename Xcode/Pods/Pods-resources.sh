@@ -25,5 +25,4 @@ install_resource()
       ;;
   esac
 }
-install_resource 'Google-API-Client/Source/OAuth2/Touch/GTMOAuth2ViewTouch.xib'
 install_resource 'gtm-oauth2/Source/Touch/GTMOAuth2ViewTouch.xib'

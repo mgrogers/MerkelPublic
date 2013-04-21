@@ -91,7 +91,7 @@ exports.join = function(req, res) {
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
                 var conferenceName = conference.id;
-                return res.send("<Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response><?xml version='1.0' encoding='UTF-8'?>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
             }
