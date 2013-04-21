@@ -4,7 +4,6 @@ var TWIML_APP_ID = 'AP361c96431ce7485f8b27da32da715b7d';
 var TWILIO_NUMBER = '+16503535255'
 
 var twilio = require('twilio');
-var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
 
 var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
 
@@ -34,7 +33,8 @@ exports.capability = function(req, res) {
 
     var timeout = req.query.timeout;
     timeout = timeout || 600;
-
+    
+    var capability = new twilio.Capability(ACCOUNT_SID, AUTH_TOKEN);
     capability.allowClientIncoming(clientId);
     capability.allowClientOutgoing(TWIML_APP_ID);
 
