@@ -55,7 +55,8 @@ app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
 app.get('/api/sms/send', sms.sendsms);
 app.get('/api/mail', gmail.mail);
 app.get('/api/conference/capability', conference.capability);
-app.get('/api/conference/createConference', conference.createConference);
+app.get('/api/conference/create', conference.createConference);
+app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
 /*
 app.get('/api/conference/join', conference.join);
