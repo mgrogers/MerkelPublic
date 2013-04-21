@@ -42,7 +42,7 @@ exports.capability = function(req, res) {
     response.capabilityToken = capability.generate(expires=timeout);
 
     return res.send(response);
-}
+};
 
 /* ----- API Calls ----- */
 /* API call for "/api/conference/createConference" to generate a new conference */
@@ -61,12 +61,12 @@ exports.createConference = function(req, res) {
         conference.save();
         return res.send(conferenceObject);
     });
-}
+};
 
 
 /* 
-API Call: "/api/conference/twilio" for Twilio to access
-[conferenceCode] is the code for the conference to join
+API Call: "/api/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
+[conferenceCode] is the conference code
  */
 exports.twilio = function(req, res) {
 
@@ -75,12 +75,16 @@ exports.twilio = function(req, res) {
     if(conferenceCode) {
         return res.redirect("/api/conference/join?Digits=" + conferenceCode);
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Code</Say></Gather></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
     }
 };
 
 
-exports.join = function(req, rest) {
+/*
+API Call: "/api/conference/join" to join a conference
+[Digits] is the conference code
+*/
+exports.join = function(req, res) {
     if (req.query['Digits']) {
         var conferenceCode = req.query['Digits'];
 
@@ -97,8 +101,6 @@ exports.join = function(req, rest) {
     }
 };
 
-exports.twilio
-
 
 /* ----- Helper Functions ----- */
 /* Generate a unique code for conference */
@@ -113,4 +115,4 @@ function generateConferenceCode() {
             return hashids.encrypt(numConferences);
         }
     });
-}
+};
