@@ -89,8 +89,8 @@ exports.join = function(req, res) {
         var conferenceCode = req.query['Digits'];
 
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
-            if(!err) {
-                var conferenceName = conference._id;
+            if(!err && conference) {
+                var conferenceName = conference.id;
                 return res.send("<Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response><?xml version='1.0' encoding='UTF-8'?>");
             } else {
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
