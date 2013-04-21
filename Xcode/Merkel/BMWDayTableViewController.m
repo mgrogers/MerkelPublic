@@ -54,6 +54,22 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spacer.width = 10.0;
     self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
+    
+    
+    const CGFloat kTitleFontSize = 20.0;
+    UIButton *create_button = [UIButton buttonWithType:UIButtonTypeCustom];
+    create_button.frame = CGRectMake(0.0, 0.0, 30.0, 19.0);
+    create_button.backgroundColor = [UIColor bmwDarkBlueColor];
+    create_button.titleLabel.text = @"Create";
+    create_button.titleLabel.font = [UIFont defaultFontOfSize:kTitleFontSize];
+    create_button.titleLabel.textColor = [UIColor whiteColor];
+    
+        
+    
+    UIBarButtonItem *menuBarButtonCreate = [[UIBarButtonItem alloc] initWithCustomView:create_button];
+    self.navigationItem.rightBarButtonItems = @[menuBarButtonCreate];
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

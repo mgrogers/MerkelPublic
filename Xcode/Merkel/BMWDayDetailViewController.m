@@ -7,8 +7,11 @@
 //
 
 #import "BMWDayDetailViewController.h"
+#import "BMWDayTableViewController.h"
 
 @interface BMWDayDetailViewController ()
+
+@property (nonatomic, strong) BMWDayTableViewController *attendeeStream;
 
 @end
 
@@ -25,6 +28,15 @@
     //customer setter here
 }
 
+- (BMWDayTableViewController *)attendeeStream {
+    if (!_attendeeStream) {
+        _attendeeStream = [[BMWDayTableViewController alloc] init];
+
+    }
+    return _attendeeStream;
+    
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,6 +44,14 @@
         // Custom initialization
     }
     return self;
+}
+
+-(void)createVisualAssets {
+    [self addChildViewController:self.attendeeStream];
+    
+    //check this.
+    [self.view addSubview:self.attendeeStream.view];
+    [self.attendeeStream didMoveToParentViewController:self];
 }
 
 - (void)viewDidLoad
@@ -44,6 +64,7 @@
 
     
     self.title = self.eventTitle;
+
 
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
