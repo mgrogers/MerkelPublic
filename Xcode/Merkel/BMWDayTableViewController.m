@@ -63,13 +63,23 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
-    if ([[BMWPhone sharedPhone] isReady]) {
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Call" style:UIBarButtonItemStyleDone target:self action:@selector(endCallButtonPressed)];
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [spinner startAnimating];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     }
 }
 
 - (void)callButtonPressed {
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+}
+
+- (void)endCallButtonPressed {
+    [[BMWPhone sharedPhone] disconnect];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

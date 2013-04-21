@@ -50,7 +50,7 @@ static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderk
 - (void)getNewConferenceWithParameters:(NSDictionary *)parameters
                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    static NSString * const kBMWNewConferencePath = @"conference/createConference";
+    static NSString * const kBMWNewConferencePath = @"conference/create";
     [self getPath:kBMWNewConferencePath
        parameters:parameters
           success:success

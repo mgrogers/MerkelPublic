@@ -40,7 +40,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
             [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
                                                                 object:self
-                                                              userInfo:@{@"deviceStatus": [NSNumber numberWithBool:self.isReady]}];
+                                                              userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error logging into Twilio: %@", [error localizedDescription]);
         }]; 
@@ -50,6 +50,15 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 
 - (BOOL)isReady {
     return self.device != nil;
+}
+
+- (BMWPhoneStatus)status {
+    if (self.connection && self.connection.state == TCConnectionStateConnected) {
+        return BMWPhoneStatusConnected;
+    } else if (self.device != nil) {
+        return BMWPhoneStatusReady;
+    }
+    return BMWPhoneStatusNotReady;
 }
 
 - (void)connectWithConferenceCode:(NSString *)conferenceCode delegate:(id<TCConnectionDelegate>)connectionDelegate {
@@ -63,6 +72,9 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 
 - (void)disconnect {
     [self.connection disconnect];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
 }
 
 - (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate {

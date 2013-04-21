@@ -10,6 +10,12 @@
 
 extern NSString * const BMWPhoneDeviceStatusDidChangeNotification;
 
+typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
+    BMWPhoneStatusNotReady,
+    BMWPhoneStatusReady,
+    BMWPhoneStatusConnected
+};
+
 @class TCDevice;
 @protocol TCConnectionDelegate;
 
@@ -17,7 +23,9 @@ extern NSString * const BMWPhoneDeviceStatusDidChangeNotification;
 
 + (instancetype)sharedPhone;
 - (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate;
+- (void)disconnect;
 
 @property (readonly) BOOL isReady;
+@property (readonly) BMWPhoneStatus status;
 
 @end
