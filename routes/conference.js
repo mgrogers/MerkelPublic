@@ -73,15 +73,27 @@ exports.twilio = function(req, res) {
     var conferenceCode = req.query.conferenceCode;
     // Generate TWiML to join conference
     if(conferenceCode) {
-        /*
-        Conference.findOne({'conferenceCode': conferenceCode}, function(err, conferences) {
-
-        }); */
-
-        var conferenceName = "";
-        return res.send("<Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response><?xml version='1.0' encoding='UTF-8'?>");
+        return res.redirect("/api/conference/join?Digits=" + conferenceCode);
     } else {
-        return res.send("Something went wrong! Did you pass in the conference code?");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Code</Say></Gather></Response>");
+    }
+};
+
+
+exports.join = function(req, rest) {
+    if (req.query['Digits']) {
+        var conferenceCode = req.query['Digits'];
+
+        Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+            if(!err) {
+                var conferenceName = conference._id;
+                return res.send("<Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response><?xml version='1.0' encoding='UTF-8'?>");
+            } else {
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+            }
+        });
+    } else {
+        res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
     }
 };
 
