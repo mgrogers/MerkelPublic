@@ -18,14 +18,32 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 var conferenceSchema = new Schema({
+    conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
+    status: {type: String, default: "inactive"} // 'active' or 'inactive'
+});
+
+var participantSchema = new Schema({
+    phoneNumber: {type: String, default: ""},
+    email: {type: String, default: ""},
+    muted: {type: Boolean, default: false},
+    conferenceCode: {type: String, default: ""},
+    status: {type: String, default: "absent"} // 'present' or 'absent'
+});
+
+var inviteeSchema = new Schema({
+    phoneNumber: {type: String, default: ""},
+    email: {type: String, default: ""},
     conferenceCode: {type: String, default: ""}
 });
 
 var Conference = db.model('conference', conferenceSchema);
+var Participant = db.model('participant', participantSchema);
+var Invitee = db.model('invitee', inviteeSchema);
 
 
+/* ----- API Calls ----- */
 /* API call for "/api/conference/capability" to generate a Twilio capability token */
 exports.capability = function(req, res) {
     var clientId = req.query.clientId;
@@ -44,8 +62,10 @@ exports.capability = function(req, res) {
     return res.send(response);
 };
 
-/* ----- API Calls ----- */
-/* API call for "/api/conference/create" to generate a new conference */
+
+/*
+API Call: "/api/conference/create" to generate a new conference 
+*/
 exports.create = function(req, res) {
     Conference.find(function(err, conferences) {
         var hash = 0;
@@ -56,7 +76,7 @@ exports.create = function(req, res) {
             hash = hashids.encrypt(0);
         }
 
-        var conferenceObject = { conferenceCode: hash }
+        var conferenceObject = { conferenceCode: hash, status: "active" }
         var conference = new Conference(conferenceObject);
         conference.save();
         return res.send(conferenceObject);
@@ -64,9 +84,20 @@ exports.create = function(req, res) {
 };
 
 
+/*
+API Call: "/api/conference/remove" to remove a conference specified by [conferenceCode]. This should change the status of the conference to 'inactive' and remove the participants.
+[conferenceCode] conference code of conference to remove
+*/
+exports.remove = function(req, res) {
+    // find conference
+    // label conference 'inactive'
+    // declare all participants 'absent'
+};
+
+
 /* 
 API Call: "/api/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
-[conferenceCode] is the conference code
+[conferenceCode] conference code of conference to access
  */
 exports.twilio = function(req, res) {
 
@@ -82,7 +113,7 @@ exports.twilio = function(req, res) {
 
 /*
 API Call: "/api/conference/join" to join a conference
-[Digits] is the conference code
+[Digits] conference code of conference to join
 */
 exports.join = function(req, res) {
     if(req.query['Digits']) {
@@ -104,18 +135,31 @@ exports.join = function(req, res) {
 
 
 /* 
-API Call: "/api/conference/addParticipant" to add a participant with number [participantNumber] to the specified [conferenceCode]
-[participantNumber] required, number of participant to add
+API Call: "/api/conference/addParticipant" to add a participant with number [phoneNumber] to the specified [conferenceCode]
+[phoneNumber] required, number of participant to add
+[email] email of participant to add
+[muted] whether participant to add should join muted
 [conferenceCode] required, conference to add participant to
 */
 exports.addParticipant = function(req, res) {
     if(req.query['participantNumber'] && req.query['conferenceCode']) {
+        var conferenceCode = req.query['conferenceCode'];
+
+        Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+            if(!err && conference) {
+                // Add participant to conference, specified by phoneNumber, email, status is 'absent' until confirmed in call
+            } else {
+                // Didn't find conference
+                var err = {message: "Couldn't find conference specified by conferenceCode"};
+                res.send(500, err);
+            }
+        });
 
     } else {
         var err = {message: "Please supply both participantNumber and conferenceCode"};
         res.send(500, err);
     }
-}
+};
 
 /* ----- Helper Functions ----- */
 /* Generate a unique code for conference */
