@@ -56,19 +56,31 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
     
     
-    const CGFloat kTitleFontSize = 20.0;
-    UIButton *create_button = [UIButton buttonWithType:UIButtonTypeCustom];
-    create_button.frame = CGRectMake(0.0, 0.0, 30.0, 19.0);
-    create_button.backgroundColor = [UIColor bmwDarkBlueColor];
-    create_button.titleLabel.text = @"Create";
-    create_button.titleLabel.font = [UIFont defaultFontOfSize:kTitleFontSize];
-    create_button.titleLabel.textColor = [UIColor whiteColor];
+    const CGFloat kTitleFontSize = 10.0;
     
-        
+    UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 30.0, 19.0)];
+    UILabel *title_text = [[UILabel alloc] init];
+    title_text.text = @"Create";
     
-    UIBarButtonItem *menuBarButtonCreate = [[UIBarButtonItem alloc] initWithCustomView:create_button];
-    self.navigationItem.rightBarButtonItems = @[menuBarButtonCreate];
+    [buttonItemView addSubview:title_text];
+//    
+//    UIButton *create_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [create_button setBackgroundImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
+//
+//    create_button.frame = CGRectMake(0.0, 0.0, 30.0, 19.0);
+//    [create_button setBackgroundColor:[UIColor clearColor]];
+//     
+//    [create_button setTitle:@"Create" forState:UIControlStateNormal];
+//    [create_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    
+//
+//    [create_button addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    UIBarButtonItem *cbarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonItemView];
+    
+    
+//    UIBarButtonItem *menuBarButtonCreate = [[UIBarButtonItem alloc] initWithCustomView:create_button];
+    self.navigationItem.rightBarButtonItems = @[cbarButtonItem];
     
 }
 
@@ -131,14 +143,10 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
             
             [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
             [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
+            }
         }
     }
 }
-
-
-}
-
-
 
 #pragma mark - UITableViewDataDelegate protocol methods
 
@@ -158,6 +166,9 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     //do something with this cell
     
     [self.tableView endUpdates];
+}
+
+- (void)createButtonPressed:(id)sender {
 }
 
 @end
