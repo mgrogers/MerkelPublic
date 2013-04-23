@@ -58,7 +58,7 @@ app.get('/api/conference/capability', conference.capability);
 app.get('/api/conference/create', conference.create);
 app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
-//app.get('/api/conference/addParticipant', conference.addParticipant);
+app.get('/api/conference/addParticipant', conference.addParticipant);
 /*
 app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
