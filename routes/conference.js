@@ -85,7 +85,7 @@ API Call: "/api/conference/join" to join a conference
 [Digits] is the conference code
 */
 exports.join = function(req, res) {
-    if (req.query['Digits']) {
+    if(req.query['Digits']) {
         var conferenceCode = req.query['Digits'];
 
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
@@ -93,6 +93,7 @@ exports.join = function(req, res) {
                 var conferenceName = conference.id;
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
+                // Prompt for conference code again
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
             }
         });
@@ -101,6 +102,20 @@ exports.join = function(req, res) {
     }
 };
 
+
+/* 
+API Call: "/api/conference/addParticipant" to add a participant with number [participantNumber] to the specified [conferenceCode]
+[participantNumber] required, number of participant to add
+[conferenceCode] required, conference to add participant to
+*/
+exports.addParticipant = function(req, res) {
+    if(req.query['participantNumber'] && req.query['conferenceCode']) {
+        
+    } else {
+        var err = {message: "Please supply both participantNumber and conferenceCode"};
+        res.send(500, err);
+    }
+}
 
 /* ----- Helper Functions ----- */
 /* Generate a unique code for conference */
