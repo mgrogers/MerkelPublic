@@ -39,14 +39,14 @@ exports.capability = function(req, res) {
     capability.allowClientOutgoing(TWIML_APP_ID);
 
     var response = {};
-    response.capabilityToken = capability.generate(expires=timeout);
+    response.capabilityToken = capability.generate(timeout);
 
     return res.send(response);
 };
 
 /* ----- API Calls ----- */
-/* API call for "/api/conference/createConference" to generate a new conference */
-exports.createConference = function(req, res) {
+/* API call for "/api/conference/create" to generate a new conference */
+exports.create = function(req, res) {
     Conference.find(function(err, conferences) {
         var hash = 0;
         if (!err) {
@@ -110,7 +110,7 @@ API Call: "/api/conference/addParticipant" to add a participant with number [par
 */
 exports.addParticipant = function(req, res) {
     if(req.query['participantNumber'] && req.query['conferenceCode']) {
-        
+
     } else {
         var err = {message: "Please supply both participantNumber and conferenceCode"};
         res.send(500, err);
