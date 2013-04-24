@@ -87,8 +87,9 @@ exports.create = function(req, res) {
         var conference = new Conference(conferenceObject);
         conference.save();
 
-        var attendeesObject = {conferenceCode: conferenceObject.conferenceCode,
-                        attendees: req.body.attendees}
+        var participantsObject = {conferenceCode: conferenceObject.conferenceCode,
+                        participants: req.body.attendees}
+        addParticipants(participantsObject);
         return res.send(conferenceObject);
     });
 };
