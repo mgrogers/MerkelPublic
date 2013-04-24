@@ -44,6 +44,7 @@ app.get('/2013-04-23/mail', gmail.mail);
 app.get('/2013-04-23/conference/capability', conference.capability);
 app.get('/2013-04-23/conference/create', conference.create);
 app.get('/2013-04-23/conference/join', conference.join);
+app.get('/2013-04-23/conference/number', conference.number);
 app.get('/2013-04-23/conference/twilio', conference.twilio);
 
 /* Depricated routes

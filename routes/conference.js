@@ -43,7 +43,7 @@ var Participant = db.model('participant', participantSchema);
 
 
 /* ----- API Calls ----- */
-/* API call for "/api/conference/capability" to generate a Twilio capability token */
+/* API call for "/2013-04-23/conference/capability" to generate a Twilio capability token */
 exports.capability = function(req, res) {
     var clientId = req.query.clientId;
     clientId = clientId || 'test';
@@ -63,7 +63,7 @@ exports.capability = function(req, res) {
 
 
 /*
-API Call: "/api/conference/create" to generate a new conference 
+API Call: "/2013-04-23/conference/create" to generate a new conference, data in POST
 */
 exports.create = function(req, res) {
     Conference.find(function(err, conferences) {
@@ -95,24 +95,8 @@ exports.create = function(req, res) {
 };
 
 
-/* 
-API Call: "/api/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
-[conferenceCode] conference code of conference to access
- */
-exports.twilio = function(req, res) {
-
-    var conferenceCode = req.query.conferenceCode;
-    // Generate TWiML to join conference
-    if(conferenceCode) {
-        return res.redirect("/api/conference/join?Digits=" + conferenceCode);
-    } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
-    }
-};
-
-
 /*
-API Call: "/api/conference/join" to join a conference
+API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
 */
 exports.join = function(req, res) {
@@ -130,6 +114,30 @@ exports.join = function(req, res) {
         });
     } else {
         res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+    }
+};
+
+
+/*
+API Call: "/2013-04-23/conference/number" to get a Twilio number
+*/
+exports.number = function(req, res) {
+    return res.send(TWILIO_NUMBER);
+}
+
+
+/* 
+API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
+[conferenceCode] conference code of conference to access
+ */
+exports.twilio = function(req, res) {
+
+    var conferenceCode = req.query.conferenceCode;
+    // Generate TWiML to join conference
+    if(conferenceCode) {
+        return res.redirect("/api/conference/join?Digits=" + conferenceCode);
+    } else {
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
     }
 };
 
