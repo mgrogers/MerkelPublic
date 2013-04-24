@@ -96,7 +96,8 @@
         
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = self.eventTitle;
-        
+    [self createLabels];
+    
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
 //    button.backgroundColor = [UIColor clearColor];
