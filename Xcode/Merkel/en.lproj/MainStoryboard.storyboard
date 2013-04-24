@@ -129,7 +129,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-06-92b">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="66" id="9qG-94-eYy"/>
-                                    <constraint firstAttribute="height" constant="21" id="WfS-V8-xXg"/>
+                                    <constraint firstAttribute="height" constant="21" id="qL7-48-Z4p"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -137,7 +137,7 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJw-9z-vFk">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="vUl-at-lWC"/>
+                                    <constraint firstAttribute="height" constant="21" id="5cx-8q-2yD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -145,7 +145,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx1-0K-yh1">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="Uui-3B-Roh"/>
+                                    <constraint firstAttribute="height" constant="43" id="ael-PC-fU5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="Join Call">
@@ -168,8 +168,8 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Event Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvv-Ob-EIk">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="kgv-KA-UDn"/>
-                                    <constraint firstAttribute="width" constant="141" id="yUb-d7-p1t"/>
+                                    <constraint firstAttribute="width" constant="141" id="Rq0-Fx-8eD"/>
+                                    <constraint firstAttribute="height" constant="47" id="mlb-cs-w7L"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -182,7 +182,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFF-Bg-oPR">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="kBS-qN-AbS"/>
+                                    <constraint firstAttribute="height" constant="43" id="TIP-pb-SDT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="I'm Late">
@@ -198,23 +198,23 @@
                         <constraints>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="top" secondItem="rx1-0K-yh1" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="5IA-Jm-Rj2"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="baseline" secondItem="cvv-Ob-EIk" secondAttribute="baseline" type="default" id="5rw-KC-dqf"/>
+                            <constraint firstItem="kg3-9m-gFd" firstAttribute="top" secondItem="cvv-Ob-EIk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="7pp-MI-hgv"/>
                             <constraint firstItem="PHD-06-92b" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8CU-cR-h2P"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="H63-Xw-wcP"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="trailing" secondItem="rx1-0K-yh1" secondAttribute="trailing" type="default" id="MB9-jC-YUA"/>
                             <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Msi-CL-4cQ"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="top" secondItem="KJw-9z-vFk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="O5E-VH-8Je"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="leading" type="default" id="QgE-lH-QTa"/>
-                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="trailing" secondItem="kg3-9m-gFd" secondAttribute="trailing" type="default" id="Tky-hG-IWF"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="Uw6-bF-qQn"/>
                             <constraint firstItem="p4S-ef-Dh9" firstAttribute="baseline" secondItem="KJw-9z-vFk" secondAttribute="baseline" type="default" id="Ztg-R5-L9K"/>
                             <constraint firstItem="XFD-dx-ipv" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="c1R-VG-g4r"/>
-                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="139" id="iGz-Xx-dlq"/>
                             <constraint firstItem="PHD-06-92b" firstAttribute="leading" secondItem="h04-J1-KSi" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="jAz-wx-jvi"/>
                             <constraint firstItem="XFD-dx-ipv" firstAttribute="leading" secondItem="PHD-06-92b" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="kXi-oJ-XQX"/>
-                            <constraint firstItem="kg3-9m-gFd" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="190" id="o7X-Gb-j5s"/>
+                            <constraint firstItem="kg3-9m-gFd" firstAttribute="trailing" secondItem="cvv-Ob-EIk" secondAttribute="trailing" type="default" id="lFF-xK-kO1"/>
                             <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="XFD-dx-ipv" secondAttribute="leading" type="default" id="ppW-2G-orT"/>
                             <constraint firstItem="KJw-9z-vFk" firstAttribute="top" secondItem="PHD-06-92b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="r9k-1z-x4O"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="h04-J1-KSi" secondAttribute="centerX" type="default" id="t0p-QA-vNr"/>
+                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="134" id="xUW-tQ-mga"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4gE-cs-OGE"/>

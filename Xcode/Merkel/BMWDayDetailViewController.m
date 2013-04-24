@@ -84,13 +84,14 @@
 
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat=@"EEEE, MMMM DD";
+    dateFormatter.dateFormat=@"EEEE, MMMM dd";
     NSString * monthString = [[dateFormatter stringFromDate:self.eventDate] capitalizedString];
     self.eventDateLabel.text = monthString;
     
     self.eventDateLabel.numberOfLines = 0;
     
-    
+    self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+
     
         [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
     self.eventTimeLabel.text = [dateFormatter stringFromDate:self.eventDate];
