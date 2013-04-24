@@ -32,15 +32,8 @@ var participantSchema = new Schema({
     status: {type: String, default: "absent"} // 'present' or 'absent'
 });
 
-var inviteeSchema = new Schema({
-    phoneNumber: {type: String, default: ""},
-    email: {type: String, default: ""},
-    conferenceCode: {type: String, default: ""}
-});
-
 var Conference = db.model('conference', conferenceSchema);
 var Participant = db.model('participant', participantSchema);
-var Invitee = db.model('invitee', inviteeSchema);
 
 
 /* ----- API Calls ----- */
