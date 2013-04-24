@@ -39,6 +39,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Define API URLS and destinations here.
 app.get('/', routes.index);
+app.get('/2013-04-23/sms/send', sms.sendsms);
+app.get('/2013-04-23/mail', gmail.mail);
+app.get('/2013-04-23/conference/capability', conference.capability);
+app.get('/2013-04-23/conference/create', conference.create);
+app.get('/2013-04-23/conference/join', conference.join);
+app.get('/2013-04-23/conference/twilio', conference.twilio);
+
+/* Depricated routes
 app.get('/home/', routes.home);
 app.get('/auth/', auth.index);
 app.get('/login/', auth.login);
@@ -52,14 +60,6 @@ app.get('/api/events/:userId/week', calendar.eventsWeek);
 app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
 app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
-app.get('/api/sms/send', sms.sendsms);
-app.get('/api/mail', gmail.mail);
-app.get('/api/conference/capability', conference.capability);
-app.get('/api/conference/create', conference.create);
-app.get('/api/conference/join', conference.join);
-app.get('/api/conference/twilio', conference.twilio);
-app.get('/api/conference/addParticipant', conference.addParticipant);
-/*
 app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
 app.post('/api/conference', conference.create);
