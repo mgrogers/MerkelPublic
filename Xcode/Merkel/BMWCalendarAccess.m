@@ -77,8 +77,15 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
                                                                      endDate:end
                                                                    calendars:nil];
         NSArray *events = [self.store eventsMatchingPredicate:predicate];
+        events = [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
+        NSMutableArray *filteredEvents = [NSMutableArray array];
+        for (EKEvent *event in events) {
+            if (event.birthdayPersonID == -1) {
+                [filteredEvents addObject:event];
+            }
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            completion(events, nil);
+            completion(filteredEvents, nil);
         });
     });
 }
