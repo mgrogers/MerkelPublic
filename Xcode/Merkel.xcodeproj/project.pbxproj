@@ -17,11 +17,6 @@
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
-		2B7CC41A16FC7128008E053D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41916FC7128008E053D /* Default.png */; };
-		2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41B16FC7130008E053D /* Default@2x.png */; };
-		2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41D16FC7135008E053D /* Default-568h@2x.png */; };
-		2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */; };
-		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
 		2B7CC42616FD47A5008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42516FD47A4008E053D /* charger.png */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
 		2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AC171D338100155020 /* BMWDayTVCell.m */; };
@@ -121,6 +116,9 @@
 		4BE0B9E31727A15F00A2FFD8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9D91727A15F00A2FFD8 /* Icon@2x.png */; };
 		4BE0B9E41727A15F00A2FFD8 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9DA1727A15F00A2FFD8 /* iTunesArtwork.png */; };
 		4BE0B9E51727A15F00A2FFD8 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9DB1727A15F00A2FFD8 /* iTunesArtwork@2x.png */; };
+		4BE0B9EE1727A6A400A2FFD8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9EB1727A6A400A2FFD8 /* Default-568h@2x.png */; };
+		4BE0B9EF1727A6A400A2FFD8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9EC1727A6A400A2FFD8 /* Default.png */; };
+		4BE0B9F01727A6A400A2FFD8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE0B9ED1727A6A400A2FFD8 /* Default@2x.png */; };
 		4BE26268171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
 		4BE26269171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
 		4BEED18616DC14C40019312B /* BMWGCalendarDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEED18516DC14C40019312B /* BMWGCalendarDataSource.m */; };
@@ -164,9 +162,6 @@
 		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
 		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		2B7CC41916FC7128008E053D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
-		2B7CC41B16FC7130008E053D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
-		2B7CC41D16FC7135008E053D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		2B7CC42516FD47A4008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charger.png; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
@@ -249,8 +244,6 @@
 		4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayTableViewController.m; sourceTree = "<group>"; };
 		4BBEDA2A171D4EC90016B00D /* BMWSlidingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCell.h; sourceTree = "<group>"; };
 		4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWSlidingCell.m; sourceTree = "<group>"; };
-		4BBEF1A716D1B8880080F6E5 /* app-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon.png"; path = "../app-icon.png"; sourceTree = "<group>"; };
-		4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-icon@2x.png"; path = "../app-icon@2x.png"; sourceTree = "<group>"; };
 		4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BE0B9D21727A15F00A2FFD8 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Resources/Images/AppIcons/Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		4BE0B9D31727A15F00A2FFD8 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Resources/Images/AppIcons/Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -262,6 +255,9 @@
 		4BE0B9D91727A15F00A2FFD8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Images/AppIcons/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		4BE0B9DA1727A15F00A2FFD8 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = Resources/Images/AppIcons/iTunesArtwork.png; sourceTree = SOURCE_ROOT; };
 		4BE0B9DB1727A15F00A2FFD8 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "Resources/Images/AppIcons/iTunesArtwork@2x.png"; sourceTree = SOURCE_ROOT; };
+		4BE0B9EB1727A6A400A2FFD8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Images/AppIcons/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
+		4BE0B9EC1727A6A400A2FFD8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Images/AppIcons/Default.png; sourceTree = SOURCE_ROOT; };
+		4BE0B9ED1727A6A400A2FFD8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Images/AppIcons/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		4BE26266171D382E004F742F /* BMWAppearances.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAppearances.h; sourceTree = "<group>"; };
 		4BE26267171D382E004F742F /* BMWAppearances.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAppearances.m; sourceTree = "<group>"; };
 		4BEED18416DC14C40019312B /* BMWGCalendarDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWGCalendarDataSource.h; sourceTree = "<group>"; };
@@ -548,11 +544,6 @@
 				4BBDFE97171D427D0083D4BC /* reveal_menu_icon_landscape@2x.png */,
 				4BBDFE90171D41F40083D4BC /* reveal_menu_icon_portrait.png */,
 				4BBDFE91171D41F40083D4BC /* reveal_menu_icon_portrait@2x.png */,
-				4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */,
-				4BBEF1A716D1B8880080F6E5 /* app-icon.png */,
-				2B7CC41D16FC7135008E053D /* Default-568h@2x.png */,
-				2B7CC41B16FC7130008E053D /* Default@2x.png */,
-				2B7CC41916FC7128008E053D /* Default.png */,
 				4B319AB316ED333000F888FC /* iconFlag.png */,
 				4B319AB416ED333000F888FC /* iconMan.png */,
 				4B319AB516ED333000F888FC /* iconNote.png */,
@@ -576,6 +567,9 @@
 		4BE0B9E61727A16300A2FFD8 /* AppIcons */ = {
 			isa = PBXGroup;
 			children = (
+				4BE0B9EB1727A6A400A2FFD8 /* Default-568h@2x.png */,
+				4BE0B9EC1727A6A400A2FFD8 /* Default.png */,
+				4BE0B9ED1727A6A400A2FFD8 /* Default@2x.png */,
 				4BE0B9D21727A15F00A2FFD8 /* Icon-72.png */,
 				4BE0B9D31727A15F00A2FFD8 /* Icon-72@2x.png */,
 				4BE0B9D41727A15F00A2FFD8 /* Icon-Small-50.png */,
@@ -701,11 +695,6 @@
 				4B319AB616ED333000F888FC /* iconFlag.png in Resources */,
 				4B319AB816ED333000F888FC /* iconMan.png in Resources */,
 				4B319ABA16ED333000F888FC /* iconNote.png in Resources */,
-				2B7CC41A16FC7128008E053D /* Default.png in Resources */,
-				2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */,
-				2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */,
-				2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */,
-				2B7CC42016FC75BA008E053D /* app-icon.png in Resources */,
 				2B7CC42616FD47A5008E053D /* charger.png in Resources */,
 				4BBDFE7E171D3DDE0083D4BC /* Gotham-Black.otf in Resources */,
 				4BBDFE80171D3DDE0083D4BC /* Gotham-Bold.otf in Resources */,
@@ -729,6 +718,9 @@
 				4BE0B9E31727A15F00A2FFD8 /* Icon@2x.png in Resources */,
 				4BE0B9E41727A15F00A2FFD8 /* iTunesArtwork.png in Resources */,
 				4BE0B9E51727A15F00A2FFD8 /* iTunesArtwork@2x.png in Resources */,
+				4BE0B9EE1727A6A400A2FFD8 /* Default-568h@2x.png in Resources */,
+				4BE0B9EF1727A6A400A2FFD8 /* Default.png in Resources */,
+				4BE0B9F01727A6A400A2FFD8 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
