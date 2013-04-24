@@ -13,10 +13,14 @@
 extern NSString * const BMWCalendarAccessGrantedNotification;
 extern NSString * const BMWCalendarAccessDeniedNotification;
 
+typedef void(^BMWCalendarEventCompletion)(NSArray *events, NSError *error);
+typedef void(^BMWCalendarAuthorizeCompletion)(BOOL granted, NSError *error);
+
 @interface BMWCalendarAccess : NSObject
 
 + (instancetype)sharedAccess;
-- (void)authorize;
+- (void)authorizeCompletion:(BMWCalendarAuthorizeCompletion)completion;
+- (void)getTodaysEventsCompletion:(BMWCalendarEventCompletion)completion;
 
 @property (readonly) BOOL isAuthorized;
 
