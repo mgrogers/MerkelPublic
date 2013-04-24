@@ -156,8 +156,13 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
      */
     EKEvent *event = [self eventForIndexPath:indexPath];
     cell.textLabel.text = event.title;
-    cell.startLabel.text = [self timeStringForDate:event.startDate];
-    cell.endLabel.text = [self timeStringForDate:event.endDate];
+    if (event.allDay) {
+        cell.startLabel.text = @"All";
+        cell.endLabel.text = @"Day";
+    } else {
+        cell.startLabel.text = [self timeStringForDate:event.startDate];
+        cell.endLabel.text = [self timeStringForDate:event.endDate];
+    }
     return cell;
 }
 
