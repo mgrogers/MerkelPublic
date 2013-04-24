@@ -76,9 +76,15 @@
                                 <color key="textColor" red="0.14287310819999999" green="0.68539826770000001" blue="0.15925277560000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Hjh-US-SCK"/>
+                                    <constraint firstAttribute="width" constant="45" id="f6E-Mz-sqk"/>
+                                </constraints>
+                            </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="2si-IY-p5S"/>
                                     <constraint firstAttribute="height" constant="145" id="W52-Q1-o3T"/>
                                 </constraints>
                             </imageView>
@@ -265,11 +271,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bmwLogo.png" width="45" height="45"/>
-        <image name="charger.png" width="75" height="163"/>
+        <image name="bmwLogo.png" width="16" height="16"/>
+        <image name="charger.png" width="16" height="16"/>
     </resources>
     <classes>
-        <class className="BMWDayDetailViewController" superclassName="UIViewController">
+        <class className="BMWDayDetailViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="conferenceCodes" candidateClass="UILabel"/>
@@ -278,25 +284,6 @@
                 <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
             </relationships>
-        </class>
-        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
-        </class>
-        <class className="BMWDayTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
-        </class>
-        <class className="BMWViewController" superclassName="GAITrackedViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GAITrackedViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
