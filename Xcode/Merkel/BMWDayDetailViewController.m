@@ -28,36 +28,23 @@
 
 - (void)setEKEvent: (EKEvent*)event {
     _event = event;
-    
 }
 
 - (void)setPhoneNumber:(NSNumber*)phoneNumber
 {
-
-    
     _phoneNumber = phoneNumber;
-    //custom setter here
 }
 
 -(void)setEventTitle:(NSString *)eventTitle {
     _eventTitle = eventTitle;
-    //customer setter here
 }
-
--(void)setEventDate:(NSDate *)eventDate {
-    _eventDate = eventDate;
-    //customer setter here
-}
-
 
 
 - (BMWDayTableViewController *)attendeeStream {
     if (!_attendeeStream) {
         _attendeeStream = [[BMWDayTableViewController alloc] init];
-
     }
     return _attendeeStream;
-    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
