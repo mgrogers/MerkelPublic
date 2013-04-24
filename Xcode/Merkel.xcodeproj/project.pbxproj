@@ -17,6 +17,9 @@
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
+		2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */; };
+		2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8A1727A5F80011E557 /* AddressBook.framework */; };
+		2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */; };
 		2B7CC41A16FC7128008E053D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41916FC7128008E053D /* Default.png */; };
 		2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41B16FC7130008E053D /* Default@2x.png */; };
 		2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41D16FC7135008E053D /* Default-568h@2x.png */; };
@@ -164,6 +167,10 @@
 		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
 		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		2B4ACF871727A5260011E557 /* BMWAddressBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAddressBookViewController.h; sourceTree = "<group>"; };
+		2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAddressBookViewController.m; sourceTree = "<group>"; };
+		2B4ACF8A1727A5F80011E557 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		2B7CC41916FC7128008E053D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		2B7CC41B16FC7130008E053D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		2B7CC41D16FC7135008E053D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -290,6 +297,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */,
+				2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */,
 				4B37026117233D0000ACAAED /* AVFoundation.framework in Frameworks */,
 				4BA3383616D1945B00A2CD24 /* CFNetwork.framework in Frameworks */,
 				4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */,
@@ -408,6 +417,8 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B4ACF8A1727A5F80011E557 /* AddressBook.framework */,
+				2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */,
 				4B37026017233D0000ACAAED /* AVFoundation.framework */,
 				4B37025A17233CC300ACAAED /* libcrypto.a */,
 				4B37025B17233CC300ACAAED /* libssl.a */,
@@ -461,6 +472,8 @@
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
 				2B1504441723494500957F8A /* BMWDayDetailViewController.h */,
+				2B4ACF871727A5260011E557 /* BMWAddressBookViewController.h */,
+				2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */,
 				2B1504451723494500957F8A /* BMWDayDetailViewController.m */,
 				4BBEDA2A171D4EC90016B00D /* BMWSlidingCell.h */,
 				4BBEDA2B171D4EC90016B00D /* BMWSlidingCell.m */,
@@ -828,6 +841,7 @@
 				4B37026417233E1B00ACAAED /* BMWPhone.m in Sources */,
 				4B3702691723405F00ACAAED /* BMWAPIClient.m in Sources */,
 				2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */,
+				2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
