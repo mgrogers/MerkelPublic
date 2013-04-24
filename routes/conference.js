@@ -140,6 +140,7 @@ function addParticipants(participantsObject) {
     if(participantsObject) {
         var conferenceCode = participantsObject.conferenceCode;
 
+        // Make sure conference exists
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
                 // Add participants to conference
