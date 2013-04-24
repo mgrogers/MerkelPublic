@@ -77,31 +77,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    cell.textLabel.text = event.title;
-//    if (event.allDay) {
-//        cell.startLabel.text = @"All";
-//        cell.endLabel.text = @"Day";
-//    } else {
-//        cell.startLabel.text = [self timeStringForDate:event.startDate];
-//        cell.endLabel.text = [self timeStringForDate:event.endDate];
-//    }
-//    return cell;
-    
-    
+        
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = self.eventTitle;
     self.conferencePhoneNumber.text =[NSString stringWithFormat:@"%@", self.phoneNumber];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat=@"EEEE, MMMM dd";
-    NSString * monthString = [[dateFormatter stringFromDate:self.eventDate] capitalizedString];
-    self.eventDateLabel.text = monthString;
-    self.eventDateLabel.numberOfLines = 0;
-    self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    self.eventTimeLabel.text = [dateFormatter stringFromDate:self.eventDate];
+    if(self.event.allDay) {
+        self.eventDateLabel.text = @"All Day";
+    } else {
     
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat=@"EEEE, MMMM dd";
+        NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
+        self.eventDateLabel.text = monthString;
+        self.eventDateLabel.numberOfLines = 0;
+        self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
+    }
     
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
