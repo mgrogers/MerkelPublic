@@ -9,6 +9,7 @@
 #import "BMWAppDelegate.h"
 
 #import "BMWAppearances.h"
+#import "BMWPhone.h"
 #import "BMWManager.h"
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
@@ -58,6 +59,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
         [[GAI sharedInstance] trackerWithTrackingId:kMerkelGoogleAnalyticsId];
         [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
         [self startSignificantChangeUpdates];
+        [BMWPhone sharedPhone];
     });
 }
 

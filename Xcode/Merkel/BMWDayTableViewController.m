@@ -8,9 +8,11 @@
 
 #import "BMWDayTableViewController.h"
 
+#import "BMWPhone.h"
 #import "BMWSlidingCell.h"
+#import "TCConnectionDelegate.h"
 
-@interface BMWDayTableViewController ()
+@interface BMWDayTableViewController () <TCConnectionDelegate>
 
 @property (nonatomic, strong) NSArray *testData;
 
@@ -54,6 +56,30 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spacer.width = 10.0;
     self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceStatusChanged:) name:BMWPhoneDeviceStatusDidChangeNotification object:nil];
+}
+
+- (void)deviceStatusChanged:(NSNotification *)notification {
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Call" style:UIBarButtonItemStyleDone target:self action:@selector(endCallButtonPressed)];
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [spinner startAnimating];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    }
+}
+
+- (void)callButtonPressed {
+    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+}
+
+- (void)endCallButtonPressed {
+    [[BMWPhone sharedPhone] disconnect];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,6 +135,24 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     //do something with this cell
     
     [self.tableView endUpdates];
+}
+
+#pragma mark - TCConnectionDelegate Methods
+
+- (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"failed");
+}
+
+- (void)connectionDidConnect:(TCConnection *)connection {
+    NSLog(@"connected");
+}
+
+- (void)connectionDidDisconnect:(TCConnection *)connection {
+    NSLog(@"disconnected");
+}
+
+- (void)connectionDidStartConnecting:(TCConnection *)connection {
+    NSLog(@"connecting");
 }
 
 @end

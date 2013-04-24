@@ -31,6 +31,17 @@
 		4B319AB916ED333000F888FC /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB416ED333000F888FC /* iconMan.png */; };
 		4B319ABA16ED333000F888FC /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB516ED333000F888FC /* iconNote.png */; };
 		4B319ABB16ED333000F888FC /* iconNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB516ED333000F888FC /* iconNote.png */; };
+		4B37025717233CAD00ACAAED /* libTwilioClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025017233CAD00ACAAED /* libTwilioClient.a */; };
+		4B37025817233CAD00ACAAED /* libTwilioClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025017233CAD00ACAAED /* libTwilioClient.a */; };
+		4B37025C17233CC300ACAAED /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025A17233CC300ACAAED /* libcrypto.a */; };
+		4B37025D17233CC300ACAAED /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025A17233CC300ACAAED /* libcrypto.a */; };
+		4B37025E17233CC300ACAAED /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025B17233CC300ACAAED /* libssl.a */; };
+		4B37025F17233CC300ACAAED /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37025B17233CC300ACAAED /* libssl.a */; };
+		4B37026117233D0000ACAAED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B37026017233D0000ACAAED /* AVFoundation.framework */; };
+		4B37026417233E1B00ACAAED /* BMWPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B37026317233E1B00ACAAED /* BMWPhone.m */; };
+		4B37026517233E1B00ACAAED /* BMWPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B37026317233E1B00ACAAED /* BMWPhone.m */; };
+		4B3702691723405F00ACAAED /* BMWAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3702681723405F00ACAAED /* BMWAPIClient.m */; };
+		4B37026A1723405F00ACAAED /* BMWAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3702681723405F00ACAAED /* BMWAPIClient.m */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
 		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
@@ -152,6 +163,20 @@
 		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
 		4B319AB416ED333000F888FC /* iconMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconMan.png; sourceTree = "<group>"; };
 		4B319AB516ED333000F888FC /* iconNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconNote.png; sourceTree = "<group>"; };
+		4B37025017233CAD00ACAAED /* libTwilioClient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTwilioClient.a; path = Frameworks/Twilio/libTwilioClient.a; sourceTree = "<group>"; };
+		4B37025117233CAD00ACAAED /* TCConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCConnection.h; path = Frameworks/Twilio/TCConnection.h; sourceTree = "<group>"; };
+		4B37025217233CAD00ACAAED /* TCConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCConnectionDelegate.h; path = Frameworks/Twilio/TCConnectionDelegate.h; sourceTree = "<group>"; };
+		4B37025317233CAD00ACAAED /* TCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCDevice.h; path = Frameworks/Twilio/TCDevice.h; sourceTree = "<group>"; };
+		4B37025417233CAD00ACAAED /* TCDeviceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCDeviceDelegate.h; path = Frameworks/Twilio/TCDeviceDelegate.h; sourceTree = "<group>"; };
+		4B37025517233CAD00ACAAED /* TCPresenceEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TCPresenceEvent.h; path = Frameworks/Twilio/TCPresenceEvent.h; sourceTree = "<group>"; };
+		4B37025617233CAD00ACAAED /* TwilioClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwilioClient.h; path = Frameworks/Twilio/TwilioClient.h; sourceTree = "<group>"; };
+		4B37025A17233CC300ACAAED /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Frameworks/libcrypto.a; sourceTree = "<group>"; };
+		4B37025B17233CC300ACAAED /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Frameworks/libssl.a; sourceTree = "<group>"; };
+		4B37026017233D0000ACAAED /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4B37026217233E1B00ACAAED /* BMWPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWPhone.h; sourceTree = "<group>"; };
+		4B37026317233E1B00ACAAED /* BMWPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWPhone.m; sourceTree = "<group>"; };
+		4B3702671723405F00ACAAED /* BMWAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAPIClient.h; sourceTree = "<group>"; };
+		4B3702681723405F00ACAAED /* BMWAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAPIClient.m; sourceTree = "<group>"; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B77FE0916C6F2AF00426018 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B77FE0B16C6F2AF00426018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -242,6 +267,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B37026117233D0000ACAAED /* AVFoundation.framework in Frameworks */,
+				4BA3383616D1945B00A2CD24 /* CFNetwork.framework in Frameworks */,
+				4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */,
 				4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */,
 				4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */,
 				4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */,
@@ -256,10 +284,8 @@
 				4BA3383C16D1946F00A2CD24 /* libz.1.1.3.dylib in Frameworks */,
 				4BA3383A16D1946900A2CD24 /* libsqlite3.dylib in Frameworks */,
 				4BA3383816D1946100A2CD24 /* CoreLocation.framework in Frameworks */,
-				4BA3383616D1945B00A2CD24 /* CFNetwork.framework in Frameworks */,
 				4BA3383416D1945600A2CD24 /* AdSupport.framework in Frameworks */,
 				4BA3383216D1945100A2CD24 /* Accounts.framework in Frameworks */,
-				4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */,
 				4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */,
 				4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */,
 				4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */,
@@ -267,6 +293,9 @@
 				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
 				2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */,
 				4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
+				4B37025717233CAD00ACAAED /* libTwilioClient.a in Frameworks */,
+				4B37025C17233CC300ACAAED /* libcrypto.a in Frameworks */,
+				4B37025E17233CC300ACAAED /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +309,9 @@
 				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
 				4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */,
 				4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
+				4B37025817233CAD00ACAAED /* libTwilioClient.a in Frameworks */,
+				4B37025D17233CC300ACAAED /* libcrypto.a in Frameworks */,
+				4B37025F17233CC300ACAAED /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +339,29 @@
 			name = AttendeeSection;
 			sourceTree = "<group>";
 		};
+		4B37025917233CB500ACAAED /* Twilio */ = {
+			isa = PBXGroup;
+			children = (
+				4B37025017233CAD00ACAAED /* libTwilioClient.a */,
+				4B37025117233CAD00ACAAED /* TCConnection.h */,
+				4B37025217233CAD00ACAAED /* TCConnectionDelegate.h */,
+				4B37025317233CAD00ACAAED /* TCDevice.h */,
+				4B37025417233CAD00ACAAED /* TCDeviceDelegate.h */,
+				4B37025517233CAD00ACAAED /* TCPresenceEvent.h */,
+				4B37025617233CAD00ACAAED /* TwilioClient.h */,
+			);
+			name = Twilio;
+			sourceTree = "<group>";
+		};
+		4B37026617233E2100ACAAED /* Twilio */ = {
+			isa = PBXGroup;
+			children = (
+				4B37026217233E1B00ACAAED /* BMWPhone.h */,
+				4B37026317233E1B00ACAAED /* BMWPhone.m */,
+			);
+			name = Twilio;
+			sourceTree = "<group>";
+		};
 		4B77FDFA16C6F2AF00426018 = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +385,10 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B37026017233D0000ACAAED /* AVFoundation.framework */,
+				4B37025A17233CC300ACAAED /* libcrypto.a */,
+				4B37025B17233CC300ACAAED /* libssl.a */,
+				4B37025917233CB500ACAAED /* Twilio */,
 				4BF95F6216F518CB0058F182 /* libz.dylib */,
 				4BF95F6016F518C60058F182 /* CoreTelephony.framework */,
 				2B606F2516DB7BF800CBACDC /* Google Apps */,
@@ -386,11 +445,14 @@
 				4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */,
 				2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */,
 				2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */,
-				4BEED18316DC14500019312B /* ConnectedDrive */,
-				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 				2BFE39AB171D338100155020 /* BMWDayTVCell.h */,
 				2BFE39AC171D338100155020 /* BMWDayTVCell.m */,
 				2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */,
+				4B3702671723405F00ACAAED /* BMWAPIClient.h */,
+				4B3702681723405F00ACAAED /* BMWAPIClient.m */,
+				4B37026617233E2100ACAAED /* Twilio */,
+				4BEED18316DC14500019312B /* ConnectedDrive */,
+				4B77FE1016C6F2AF00426018 /* Supporting Files */,
 			);
 			path = Merkel;
 			sourceTree = "<group>";
@@ -710,6 +772,8 @@
 				4BBEDA28171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
 				4BBEDA2C171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
 				2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */,
+				4B37026417233E1B00ACAAED /* BMWPhone.m in Sources */,
+				4B3702691723405F00ACAAED /* BMWAPIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +795,8 @@
 				4BBDFE75171D3D840083D4BC /* UIFont+BMW.m in Sources */,
 				4BBEDA29171D4AD30016B00D /* BMWDayTableViewController.m in Sources */,
 				4BBEDA2D171D4EC90016B00D /* BMWSlidingCell.m in Sources */,
+				4B37026517233E1B00ACAAED /* BMWPhone.m in Sources */,
+				4B37026A1723405F00ACAAED /* BMWAPIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,16 +903,20 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}/**";
 				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+					"\"$(SRCROOT)/Frameworks/Twilio\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "76A9B8EF-AEEA-4A6E-AE1B-321C81401564";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "76A9B8EF-AEEA-4A6E-AE1B-321C81401564";
+				USER_HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}/**";
 				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -867,16 +937,20 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Merkel/Merkel-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}/**";
 				INFOPLIST_FILE = "Merkel/Merkel-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+					"\"$(SRCROOT)/Frameworks/Twilio\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				USER_HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}/**";
 				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -900,6 +974,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+					"\"$(SRCROOT)/Frameworks/Twilio\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -924,6 +1000,8 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
+					"\"$(SRCROOT)/Frameworks/Twilio\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
