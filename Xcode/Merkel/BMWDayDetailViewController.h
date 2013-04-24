@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BMWDayTableViewController.h"
 
 @interface BMWDayDetailViewController : UIViewController
 
@@ -15,4 +16,6 @@
 
 @property (nonatomic, strong) NSDate *eventDate;
 
+
+@property (nonatomic, strong) EKEvent *event;
 @end

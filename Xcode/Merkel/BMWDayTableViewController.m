@@ -17,6 +17,7 @@
 
 
 @property (nonatomic, strong) NSArray *testData;
+@property (nonatomic, strong) NSArray *calendarEvents;
 
 @end
 
@@ -64,6 +65,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     [spinner startAnimating];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceStatusChanged:) name:BMWPhoneDeviceStatusDidChangeNotification object:nil];
+    [self updateTableViewCalendarEvents];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(eventStoreChanged:)
+                                                 name:EKEventStoreChangedNotification
+                                               object:nil];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -144,15 +150,36 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.testData.count;
+    return self.calendarEvents.count;
+}
+
+- (NSString *)timeStringForDate:(NSDate *)date {
+    static NSDateFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"h:mm a"];
+    }
+    return [formatter stringFromDate:date];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
+    /*
     NSDictionary *item = self.testData[indexPath.row];
     cell.textLabel.text = item[@"title"];
     cell.startLabel.text = item[@"start"];
     cell.endLabel.text = item[@"end"];
+     */
+    EKEvent *event = [self eventForIndexPath:indexPath];
+    
+    cell.textLabel.text = event.title;
+    if (event.allDay) {
+        cell.startLabel.text = @"All";
+        cell.endLabel.text = @"Day";
+    } else {
+        cell.startLabel.text = [self timeStringForDate:event.startDate];
+        cell.endLabel.text = [self timeStringForDate:event.endDate];
+    }
     return cell;
 }
 
@@ -177,20 +204,37 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     
     if (indexPath) {
         if ([segue.identifier isEqualToString:@"Show Detail"]) {
-            NSDictionary *item = self.testData[indexPath.row];
-            NSString *eventTitle = item[@"title"];
+       
+            EKEvent *event = [self eventForIndexPath:indexPath];            
+            NSString *eventTitle = event.title;
             NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
-            NSDate *eventDate = [NSDate date];
-                       
+
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
             
-            [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
-            [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
+                [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
+                [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
                 
-            [segue.destinationViewController performSelector:@selector(setEventDate:) withObject:eventDate];
+                [segue.destinationViewController performSelector:@selector(setEvent:) withObject:event];
             }
         }
     }
+}
+
+#pragma mark - Calendar Events Handling
+
+- (void)updateTableViewCalendarEvents {
+    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
+        self.calendarEvents = events;
+        [self.tableView reloadData];
+    }];
+}
+
+- (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {
+    return self.calendarEvents[indexPath.row];
+}
+
+- (void)eventStoreChanged:(NSNotification *)notification {
+    [self updateTableViewCalendarEvents];
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
