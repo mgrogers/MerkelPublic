@@ -74,6 +74,46 @@
 
 #pragma mark UITableViewCell Delegate
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"ContactCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:CellIdentifier];
+    }
+    
+    int index = indexPath.row;
+    ABRecordRef person = CFArrayGetValueAtIndex(self.people, index);
+    NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person,
+                                                                         kABPersonFirstNameProperty);
+    NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person,
+                                                                        kABPersonLastNameProperty);
+    NSString *name = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    
+    cell.textLabel.text = name;
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section     {
+    return [self.all_contacts count];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    id person = [self.all_contacts objectAtIndex:indexPath.row];
+    if (cell.accessoryType == UITableViewCellAccessoryNone) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [self.selected_contacts addObject:person];
+    } else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [self.selected_contacts removeObject:person];
+    }
+    NSLog(@"%@", self.selected_contacts);
+}
+
 //#pragma mark ABPeoplePickerNavigationControllerDelegate methods
 //- (void)peoplePickerNavigationControllerDidCancel:
 //(ABPeoplePickerNavigationController *)peoplePicker
