@@ -80,6 +80,34 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (void)endCallButtonPressed {
     [[BMWPhone sharedPhone] disconnect];
+    
+    
+    // const CGFloat kTitleFontSize = 10.0;
+    
+    // UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 30.0, 19.0)];
+    // UILabel *title_text = [[UILabel alloc] init];
+    // title_text.text = @"Create";
+    
+    // [buttonItemView addSubview:title_text];
+//    
+//    UIButton *create_button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [create_button setBackgroundImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
+//
+//    create_button.frame = CGRectMake(0.0, 0.0, 30.0, 19.0);
+//    [create_button setBackgroundColor:[UIColor clearColor]];
+//     
+//    [create_button setTitle:@"Create" forState:UIControlStateNormal];
+//    [create_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    
+//
+//    [create_button addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // UIBarButtonItem *cbarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonItemView];
+    
+    
+//    UIBarButtonItem *menuBarButtonCreate = [[UIBarButtonItem alloc] initWithCustomView:create_button];
+    // self.navigationItem.rightBarButtonItems = @[cbarButtonItem];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,8 +142,37 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BMWSlidingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"Show Detail" sender:cell];
+
+    
+    
 }
 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = nil;
+    
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        indexPath = [self.tableView indexPathForCell:sender];
+    }
+    
+    if (indexPath) {
+        if ([segue.identifier isEqualToString:@"Show Detail"]) {
+            NSDictionary *item = self.testData[indexPath.row];
+            NSString *eventTitle = item[@"title"];
+            NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
+            
+                       
+            if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
+            
+            [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
+            [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
+            }
+        }
+    }
+}
 
 #pragma mark - UITableViewDataDelegate protocol methods
 
@@ -137,6 +194,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     [self.tableView endUpdates];
 }
 
+<<<<<<< HEAD
 #pragma mark - TCConnectionDelegate Methods
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
@@ -153,6 +211,9 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (void)connectionDidStartConnecting:(TCConnection *)connection {
     NSLog(@"connecting");
+=======
+- (void)createButtonPressed:(id)sender {
+>>>>>>> feature/client-detail-view
 }
 
 @end
