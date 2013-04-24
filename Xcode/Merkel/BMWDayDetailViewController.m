@@ -39,7 +39,6 @@
     _eventTitle = eventTitle;
 }
 
-
 - (BMWDayTableViewController *)attendeeStream {
     if (!_attendeeStream) {
         _attendeeStream = [[BMWDayTableViewController alloc] init];
@@ -74,18 +73,12 @@
     [self.attendeeStream didMoveToParentViewController:self];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-        
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = self.eventTitle;
+-(void)createLabels {
     self.conferencePhoneNumber.text =[NSString stringWithFormat:@"%@", self.phoneNumber];
     
     if(self.event.allDay) {
         self.eventDateLabel.text = @"All Day";
     } else {
-    
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat=@"EEEE, MMMM dd";
         NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
@@ -95,7 +88,15 @@
         [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
         self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
     }
-    
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+        
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = self.eventTitle;
+        
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
 //    button.backgroundColor = [UIColor clearColor];
