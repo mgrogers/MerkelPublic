@@ -67,6 +67,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 
 - (void)connectWithParameters:(NSDictionary *)parameters
                      delegate:(id<TCConnectionDelegate>)connectionDelegate {
+    NSLog(@"%@", [_device.capabilities objectForKey:TCDeviceCapabilityOutgoingKey]);
     self.connection = [self.device connect:parameters delegate:connectionDelegate];
     [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
                                                         object:self
@@ -81,13 +82,15 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 }
 
 - (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate {
-    [[BMWAPIClient sharedClient] getNewConferenceWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *conferenceCode = responseObject[@"conferenceCode"];
-        NSLog(@"conference code: %@", conferenceCode);
-        [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+    NSString *testCode = @"0991035193";
+    [self connectWithConferenceCode:testCode delegate:connectionDelegate];
+//    [[BMWAPIClient sharedClient] getNewConferenceWithParameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSString *conferenceCode = responseObject[@"conferenceCode"];
+//        NSLog(@"conference code: %@", conferenceCode);
+//        [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
 }
 
 #pragma mark - TCDeviceDelegate Methods
