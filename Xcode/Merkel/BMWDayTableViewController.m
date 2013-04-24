@@ -27,9 +27,21 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self sharedInitializer];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self sharedInitializer];
+    }
+    return self;
+}
+
+- (void)sharedInitializer {
+    [[UILabel appearanceWhenContainedIn:[self class], nil] setFont:[UIFont defaultFontOfSize:14.0]];
 }
 
 - (NSArray *)testData {
