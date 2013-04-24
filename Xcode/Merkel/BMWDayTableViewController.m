@@ -13,7 +13,8 @@
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
 
-@interface BMWDayTableViewController () <TCConnectionDelegate>
+@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate>
+
 
 @property (nonatomic, strong) NSArray *testData;
 
@@ -76,12 +77,17 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (void)callButtonPressed {
-    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
-
-
-    [self presentViewController:abvc animated:YES completion:nil];
+//    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
+//
+//
+//    [self presentViewController:abvc animated:YES completion:nil];
     
+    ABPeoplePickerNavigationController *picker =
+    [[ABPeoplePickerNavigationController alloc] init];
     
+    picker.peoplePickerDelegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
     
@@ -222,6 +228,33 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (void)createButtonPressed:(id)sender {
+}
+
+#pragma mark ABPeoplePickerNavigationControllerDelegate methods
+- (void)peoplePickerNavigationControllerDidCancel:
+(ABPeoplePickerNavigationController *)peoplePicker
+{
+    
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (BOOL)peoplePickerNavigationController:
+(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+    
+    //    [self displayPerson:person];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+- (BOOL)peoplePickerNavigationController:
+(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
 }
 
 @end
