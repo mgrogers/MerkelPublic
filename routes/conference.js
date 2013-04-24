@@ -31,9 +31,9 @@ var conferenceSchema = new Schema({
 });
 
 var participantSchema = new Schema({
-    phoneNumber: {type: String, default: ""},
+    phone: {type: String, default: ""},
     email: {type: String, default: ""},
-    muted: {type: Boolean, default: false},
+    displayName: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
     status: {type: String, default: "absent"} // 'present' or 'absent'
 });
@@ -94,17 +94,6 @@ exports.create = function(req, res) {
 };
 
 
-/*
-API Call: "/api/conference/remove" to remove a conference specified by [conferenceCode]. This should change the status of the conference to 'inactive' and remove the participants.
-[conferenceCode] conference code of conference to remove
-*/
-exports.remove = function(req, res) {
-    // find conference
-    // label conference 'inactive'
-    // declare all participants 'absent'
-};
-
-
 /* 
 API Call: "/api/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
 [conferenceCode] conference code of conference to access
@@ -144,34 +133,33 @@ exports.join = function(req, res) {
 };
 
 
-/* 
-API Call: "/api/conference/addParticipant" to add a participant with number [phoneNumber] to the specified [conferenceCode]
-[phoneNumber] required, number of participant to add
-[email] email of participant to add
-[muted] whether participant to add should join muted
-[conferenceCode] required, conference to add participant to
-*/
-exports.addParticipant = function(req, res) {
-    if(req.query['participantNumber'] && req.query['conferenceCode']) {
-        var conferenceCode = req.query['conferenceCode'];
+/* ----- Helper Functions ----- */
+/* Add participants mongoDB, participantsObject includes conferenceCode and array of participants */
+function addParticipants(participantsObject) {
+    if(participantsObject) {
+        var conferenceCode = participantsObject.conferenceCode;
 
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
-                // Add participant to conference, specified by phoneNumber, email, status is 'absent' until confirmed in call
-            } else {
-                // Didn't find conference
-                var err = {message: "Couldn't find conference specified by conferenceCode"};
-                res.send(500, err);
+                // Add participants to conference
+                for(var p in participantsObject.participants) {
+                    var participantObject = {
+                        phone: p.phone,
+                        email: p.email,
+                        displayName: p.displayName,
+                        conferenceCode: conferenceCode,
+                        status: "absent"
+                    };
+
+                    var participant = new Participant(participantObject);
+                    participant.save();
+                }
             }
         });
-
-    } else {
-        var err = {message: "Please supply both participantNumber and conferenceCode"};
-        res.send(500, err);
     }
 };
 
-/* ----- Helper Functions ----- */
+
 /* Generate a unique code for conference */
 function generateConferenceCode() {
     Conference.find(function(err, conferences) {
