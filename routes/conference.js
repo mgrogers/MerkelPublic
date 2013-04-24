@@ -21,7 +21,13 @@ var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
-    status: {type: String, default: "inactive"} // 'active' or 'inactive'
+    status: {type: String, default: "inactive"},
+    title: {type: String, default: ""},
+    description: {type: String, default: ""},
+    start: {type: Date, default: ""},
+    timeZone: {type: String, default: "America/Los_Angeles"},
+    sms: {type: Boolean, default:false},
+    email: {type: Boolean, default:false} // 'active' or 'inactive'
 });
 
 var participantSchema = new Schema({
@@ -69,9 +75,20 @@ exports.create = function(req, res) {
             hash = hashids.encrypt(0);
         }
 
-        var conferenceObject = { conferenceCode: hash, status: "active" }
+        var conferenceObject = { conferenceCode: hash, 
+                                         status: "active",
+                                          title: req.body.title,
+                                    description: req.body.description,
+                                          start: req.body.start.datetime,
+                                       timeZone: req.body.start.timeZone,
+                                            sms: req.body.inviteMethod.sms,
+                                          email: req.body.inviteMethod.email}
+        
         var conference = new Conference(conferenceObject);
         conference.save();
+
+        var attendeesObject = {conferenceCode: conferenceObject.conferenceCode,
+                        attendees: req.body.attendees}
         return res.send(conferenceObject);
     });
 };
