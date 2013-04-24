@@ -62,6 +62,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     [spinner startAnimating];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceStatusChanged:) name:BMWPhoneDeviceStatusDidChangeNotification object:nil];
+    [self updateTableViewCalendarEvents];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -129,15 +130,19 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.testData.count;
+    return self.calendarEvents.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
+    /*
     NSDictionary *item = self.testData[indexPath.row];
     cell.textLabel.text = item[@"title"];
     cell.startLabel.text = item[@"start"];
     cell.endLabel.text = item[@"end"];
+     */
+    EKEvent *event = [self eventForIndexPath:indexPath];
+    cell.textLabel.text = event.title;
     return cell;
 }
 
@@ -174,6 +179,19 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
             }
         }
     }
+}
+
+#pragma mark - Calendar Events Handling
+
+- (void)updateTableViewCalendarEvents {
+    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
+        self.calendarEvents = events;
+        [self.tableView reloadData];
+    }];
+}
+
+- (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {
+    return self.calendarEvents[indexPath.row];
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods

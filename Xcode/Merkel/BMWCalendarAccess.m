@@ -48,7 +48,9 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         if (error) {
             NSLog(@"Calendar access error: %@", [error localizedDescription]);
         }
-        completion(granted, error);
+        if (completion) {
+            completion(granted, error);
+        }
     }];
 }
 
