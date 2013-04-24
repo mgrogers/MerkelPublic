@@ -34,7 +34,7 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 
 -(id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": [PFUser currentUser].username};
+        NSDictionary *params = @{@"clientId": ([PFUser currentUser].username) ? [PFUser currentUser].username : [NSNull null]};
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *capabilityToken = responseObject[@"capabilityToken"];
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
