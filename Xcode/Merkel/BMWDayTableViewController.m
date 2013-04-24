@@ -63,6 +63,10 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceStatusChanged:) name:BMWPhoneDeviceStatusDidChangeNotification object:nil];
     [self updateTableViewCalendarEvents];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(eventStoreChanged:)
+                                                 name:EKEventStoreChangedNotification
+                                               object:nil];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -192,6 +196,10 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {
     return self.calendarEvents[indexPath.row];
+}
+
+- (void)eventStoreChanged:(NSNotification *)notification {
+    [self updateTableViewCalendarEvents];
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
