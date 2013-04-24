@@ -178,12 +178,14 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
             NSDictionary *item = self.testData[indexPath.row];
             NSString *eventTitle = item[@"title"];
             NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
-            
+            NSDate *eventDate = [NSDate date];
                        
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
             
             [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
             [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
+                
+            [segue.destinationViewController performSelector:@selector(setEventDate:) withObject:eventDate];
             }
         }
     }

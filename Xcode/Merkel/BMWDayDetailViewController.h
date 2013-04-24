@@ -13,4 +13,6 @@
 @property (nonatomic, strong) NSNumber *phoneNumber;
 @property (nonatomic, strong) NSString *eventTitle;
 
+@property (nonatomic, strong) NSDate *eventDate;
+
 @end
