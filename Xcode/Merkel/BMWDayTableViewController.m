@@ -137,6 +137,15 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     return self.calendarEvents.count;
 }
 
+- (NSString *)timeStringForDate:(NSDate *)date {
+    static NSDateFormatter *formatter = nil;
+    if (!formatter) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"h:mm a"];
+    }
+    return [formatter stringFromDate:date];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
     /*
@@ -147,6 +156,8 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
      */
     EKEvent *event = [self eventForIndexPath:indexPath];
     cell.textLabel.text = event.title;
+    cell.startLabel.text = [self timeStringForDate:event.startDate];
+    cell.endLabel.text = [self timeStringForDate:event.endDate];
     return cell;
 }
 

@@ -59,10 +59,7 @@ const float UI_CUES_WIDTH = 100.0f;
     self.verticalBar = [[UIView alloc] init];
     self.verticalBar.backgroundColor = [UIColor bmwLightGrayColor];
     [self.contentView addSubview:self.verticalBar];
-    
     [self setupCueLabels];
-
-  
 }
 
 - (void)setupGestureRecognizers {
@@ -83,8 +80,6 @@ const float UI_CUES_WIDTH = 100.0f;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)layoutSubviews {
