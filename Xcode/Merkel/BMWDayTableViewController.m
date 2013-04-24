@@ -11,6 +11,7 @@
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
 #import "TCConnectionDelegate.h"
+#import "BMWAddressBookViewController.h"
 
 @interface BMWDayTableViewController () <TCConnectionDelegate>
 
@@ -75,7 +76,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (void)callButtonPressed {
+    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
+    [abvc showPicker:self];
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+    
+    
 }
 
 - (void)endCallButtonPressed {
