@@ -3,5 +3,5 @@
  */
 
 exports.index = function(req, res){
-    res.render("This is the CallIn API - you're not supposed to be here!");
+    res.send("This is the CallIn API - you're not supposed to be here!");
 };

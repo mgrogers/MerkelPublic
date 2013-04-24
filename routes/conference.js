@@ -2,11 +2,10 @@ var ACCOUNT_SID = 'ACbbb2f0208bf81489c3c497c7ca3cad88';
 var AUTH_TOKEN = '6aa8522ddf93b0ce14791e864118f94b';
 var TWIML_APP_ID = 'AP361c96431ce7485f8b27da32da715b7d';
 var TWILIO_NUMBER = '+16503535255'
+var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
+var API_VERSION = '2013-04-23'
 
 var twilio = require('twilio');
-
-var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
-
 var Hashids = require("hashids");
 var hashids = new Hashids("dat salt, yo", MINIMUM_CONFERENCE_CODE_LENGTH, "0123456789");
 
@@ -75,20 +74,31 @@ exports.create = function(req, res) {
             hash = hashids.encrypt(0);
         }
 
-        var conferenceObject = { conferenceCode: hash, 
-                                         status: "active",
-                                          title: req.body.title,
-                                    description: req.body.description,
-                                          start: req.body.start.datetime,
-                                       timeZone: req.body.start.timeZone,
-                                            sms: req.body.inviteMethod.sms,
-                                          email: req.body.inviteMethod.email}
+        var conferenceObject = {};
+        var postBody = req.body;
+
+        if(postBody) {
+            conferenceObject.conferenceCode = hash;
+            conferenceObject.status = "active";
+            conferenceObject.title = postBody.title || "";
+            conferenceObject.description = postBody.description || "";
+            if(postBody.start) conferenceObject.start = postBody.start.datetime;
+            else conferenceObject.start = "";
+            if(postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
+            else conferenceObject.timeZone = "";
+            if(postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+            else conferenceObject.sms = false;
+            if(postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+            else conferenceObject.email = false;
+        } else {
+            conferenceObject = { conferenceCode: hash };
+        }
         
         var conference = new Conference(conferenceObject);
         conference.save();
 
         var participantsObject = {conferenceCode: conferenceObject.conferenceCode,
-                        participants: req.body.attendees}
+                        participants: postBody.attendees}
         addParticipants(participantsObject);
         return res.send(conferenceObject);
     });
@@ -122,7 +132,8 @@ exports.join = function(req, res) {
 API Call: "/2013-04-23/conference/number" to get a Twilio number
 */
 exports.number = function(req, res) {
-    return res.send(TWILIO_NUMBER);
+    var numberObject = { number: TWILIO_NUMBER };
+    return res.send(numberObject);
 }
 
 
@@ -135,9 +146,9 @@ exports.twilio = function(req, res) {
     var conferenceCode = req.query.conferenceCode;
     // Generate TWiML to join conference
     if(conferenceCode) {
-        return res.redirect("/api/conference/join?Digits=" + conferenceCode);
+        return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/api/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
     }
 };
 
