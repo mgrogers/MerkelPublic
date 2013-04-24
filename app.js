@@ -22,6 +22,8 @@ var express = require('express'),
 
 var app = express();
 
+var API_VERSION = '2013-04-23';
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -39,13 +41,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Define API URLS and destinations here.
 app.get('/', routes.index);
-app.get('/2013-04-23/sms/send', sms.sendsms);
-app.get('/2013-04-23/mail', gmail.mail);
-app.get('/2013-04-23/conference/capability', conference.capability);
-app.get('/2013-04-23/conference/create', conference.create);
-app.get('/2013-04-23/conference/join', conference.join);
-app.get('/2013-04-23/conference/number', conference.number);
-app.get('/2013-04-23/conference/twilio', conference.twilio);
+app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
+app.get('/' + API_VERSION + '/mail', gmail.mail);
+app.get('/' + API_VERSION + '/conference/capability', conference.capability);
+app.get('/' + API_VERSION + '/conference/create', conference.create);
+app.get('/' + API_VERSION + '/conference/join', conference.join);
+app.get('/' + API_VERSION + '/conference/number', conference.number);
+app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
 
 /* Depricated routes
 app.get('/home/', routes.home);
