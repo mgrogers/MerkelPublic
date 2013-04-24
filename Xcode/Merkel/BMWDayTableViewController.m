@@ -77,7 +77,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (void)callButtonPressed {
     BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
-    [abvc showPicker:self];
+
+
+    [self presentViewController:abvc animated:YES completion:nil];
+    
+    
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
     

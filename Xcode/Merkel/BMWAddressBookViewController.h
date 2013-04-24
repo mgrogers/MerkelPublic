@@ -10,9 +10,9 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-//@interface BMWAddressBookViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate>
+@interface BMWAddressBookViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate>
 
-@interface BMWAddressBookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+//@interface BMWAddressBookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @end
 
 
