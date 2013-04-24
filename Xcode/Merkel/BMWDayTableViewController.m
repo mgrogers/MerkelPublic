@@ -194,7 +194,6 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     [self.tableView endUpdates];
 }
 
-<<<<<<< HEAD
 #pragma mark - TCConnectionDelegate Methods
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
@@ -211,9 +210,9 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 - (void)connectionDidStartConnecting:(TCConnection *)connection {
     NSLog(@"connecting");
-=======
+}
+
 - (void)createButtonPressed:(id)sender {
->>>>>>> feature/client-detail-view
 }
 
 @end
