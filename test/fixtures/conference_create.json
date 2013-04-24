@@ -17,5 +17,9 @@
         "displayName": "Tim Cook",
         "phone": "6505551234"
     }
-  ]
+  ],
+  "inviteMethod": {
+    "sms": true,
+    "email": false
+  }
 }
