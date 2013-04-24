@@ -8,6 +8,7 @@
 
 #import "BMWDayTableViewController.h"
 
+#import "BMWCalendarAccess.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
 #import "TCConnectionDelegate.h"
@@ -15,6 +16,7 @@
 @interface BMWDayTableViewController () <TCConnectionDelegate>
 
 @property (nonatomic, strong) NSArray *testData;
+@property (nonatomic, strong) NSArray *calendarEvents;
 
 @end
 

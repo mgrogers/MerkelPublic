@@ -75,7 +75,9 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
                                                                      endDate:end
                                                                    calendars:nil];
         NSArray *events = [self.store eventsMatchingPredicate:predicate];
-        completion(events, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(events, nil);
+        });
     });
 }
 
