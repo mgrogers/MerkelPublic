@@ -69,7 +69,7 @@
 }
 
 - (void)sharedInitializer {
-    [[UILabel appearanceWhenContainedIn:[self class], nil] setFont:[UIFont defaultFontOfSize:20.0]];
+    [[UILabel appearanceWhenContainedIn:[self class], nil] setFont:[UIFont defaultFontOfSize:18.0]];
 }
 
 -(void)createVisualAssets {

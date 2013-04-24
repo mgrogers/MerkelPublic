@@ -76,15 +76,9 @@
                                 <color key="textColor" red="0.14287310819999999" green="0.68539826770000001" blue="0.15925277560000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="Hjh-US-SCK"/>
-                                    <constraint firstAttribute="width" constant="45" id="f6E-Mz-sqk"/>
-                                </constraints>
-                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bmwLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="AHW-3F-HK6"/>
                             <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" image="charger.png" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-P2-cea">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="2si-IY-p5S"/>
                                     <constraint firstAttribute="height" constant="145" id="W52-Q1-o3T"/>
                                 </constraints>
                             </imageView>
@@ -134,18 +128,14 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-06-92b">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="9qG-94-eYy"/>
-                                    <constraint firstAttribute="height" constant="21" id="qL7-48-Z4p"/>
+                                    <constraint firstAttribute="height" constant="24" id="Mz0-e4-HJC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJw-9z-vFk">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="5cx-8q-2yD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -163,11 +153,17 @@
                                 </state>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phone Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFD-dx-ipv">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="155" id="kXf-4t-QCn"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phone Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4S-ef-Dh9">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="0jT-fO-pD1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -202,25 +198,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="baseline" secondItem="KJw-9z-vFk" secondAttribute="baseline" type="default" id="0ya-8u-l6m"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="trailing" secondItem="XFD-dx-ipv" secondAttribute="trailing" type="default" id="2WC-XI-mck"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="centerY" secondItem="KJw-9z-vFk" secondAttribute="centerY" type="default" id="4Fq-bV-Pdf"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="top" secondItem="rx1-0K-yh1" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="5IA-Jm-Rj2"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="baseline" secondItem="cvv-Ob-EIk" secondAttribute="baseline" type="default" id="5rw-KC-dqf"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="top" secondItem="cvv-Ob-EIk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="7pp-MI-hgv"/>
                             <constraint firstItem="PHD-06-92b" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8CU-cR-h2P"/>
+                            <constraint firstItem="XFD-dx-ipv" firstAttribute="leading" secondItem="PHD-06-92b" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="BUN-be-rDW"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="EmI-gN-mK8"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="H63-Xw-wcP"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="trailing" secondItem="rx1-0K-yh1" secondAttribute="trailing" type="default" id="MB9-jC-YUA"/>
-                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Msi-CL-4cQ"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="top" secondItem="KJw-9z-vFk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="O5E-VH-8Je"/>
-                            <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="leading" type="default" id="QgE-lH-QTa"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="h04-J1-KSi" secondAttribute="centerX" type="default" id="Pbt-ot-OeH"/>
+                            <constraint firstItem="PHD-06-92b" firstAttribute="leading" secondItem="rx1-0K-yh1" secondAttribute="leading" type="default" id="Ql4-g8-nJn"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="XFD-dx-ipv" secondAttribute="leading" type="default" id="RxL-Zz-2rs"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="Uw6-bF-qQn"/>
-                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="baseline" secondItem="KJw-9z-vFk" secondAttribute="baseline" type="default" id="Ztg-R5-L9K"/>
-                            <constraint firstItem="XFD-dx-ipv" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="c1R-VG-g4r"/>
-                            <constraint firstItem="PHD-06-92b" firstAttribute="leading" secondItem="h04-J1-KSi" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="jAz-wx-jvi"/>
-                            <constraint firstItem="XFD-dx-ipv" firstAttribute="leading" secondItem="PHD-06-92b" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="kXi-oJ-XQX"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="trailing" secondItem="p4S-ef-Dh9" secondAttribute="trailing" type="default" id="fCQ-dl-b8Q"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="trailing" secondItem="cvv-Ob-EIk" secondAttribute="trailing" type="default" id="lFF-xK-kO1"/>
-                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="XFD-dx-ipv" secondAttribute="leading" type="default" id="ppW-2G-orT"/>
                             <constraint firstItem="KJw-9z-vFk" firstAttribute="top" secondItem="PHD-06-92b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="r9k-1z-x4O"/>
-                            <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="h04-J1-KSi" secondAttribute="centerX" type="default" id="t0p-QA-vNr"/>
                             <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="134" id="xUW-tQ-mga"/>
+                            <constraint firstItem="XFD-dx-ipv" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="21" id="zEg-7c-p8T"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4gE-cs-OGE"/>
@@ -271,11 +269,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bmwLogo.png" width="16" height="16"/>
-        <image name="charger.png" width="16" height="16"/>
+        <image name="bmwLogo.png" width="45" height="45"/>
+        <image name="charger.png" width="75" height="163"/>
     </resources>
     <classes>
-        <class className="BMWDayDetailViewController">
+        <class className="BMWDayDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="conferenceCodes" candidateClass="UILabel"/>
@@ -284,6 +282,25 @@
                 <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
             </relationships>
+        </class>
+        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
+        </class>
+        <class className="BMWDayTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
+        </class>
+        <class className="BMWViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
