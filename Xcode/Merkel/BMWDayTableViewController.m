@@ -206,15 +206,16 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     if (indexPath) {
         if ([segue.identifier isEqualToString:@"Show Detail"]) {
        
-            EKEvent *event = [self eventForIndexPath:indexPath];            
+            EKEvent *event = [self eventForIndexPath:indexPath];
             NSString *eventTitle = event.title;
+            NSNumber *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
             NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
 
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
             
                 [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
                 [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
-                
+                [segue.destinationViewController performSelector:@selector(setConferenceCode:) withObject:conferenceCode];
                 [segue.destinationViewController performSelector:@selector(setEvent:) withObject:event];
             }
         }
@@ -231,8 +232,14 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 - (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {
-    return self.calendarEvents[indexPath.row];
+    return self.calendarEvents[indexPath.row][@"event"];
 }
+
+- (NSNumber *)eventConferenceCodeForIndexPath:(NSIndexPath *)indexPath {
+    return self.calendarEvents[indexPath.row][@"conferenceCode"];
+}
+
+
 
 - (void)eventStoreChanged:(NSNotification *)notification {
     [self updateTableViewCalendarEvents];
