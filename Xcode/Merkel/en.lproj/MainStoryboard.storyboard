@@ -127,9 +127,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-06-92b">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Mz0-e4-HJC"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -140,9 +137,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx1-0K-yh1">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="ael-PC-fU5"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="Join Call">
                                     <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
@@ -195,6 +189,20 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYb-qf-mXe">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="kwd-KK-9oj" kind="embed" id="aaH-hv-4Uf"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Attendees" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7B-96-EnM">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="ZeH-Lp-C0U"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -206,19 +214,25 @@
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="top" secondItem="cvv-Ob-EIk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="7pp-MI-hgv"/>
                             <constraint firstItem="PHD-06-92b" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8CU-cR-h2P"/>
                             <constraint firstItem="XFD-dx-ipv" firstAttribute="leading" secondItem="PHD-06-92b" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="BUN-be-rDW"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="leading" secondItem="h04-J1-KSi" secondAttribute="leading" type="default" id="DL7-E5-HrG"/>
                             <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="EmI-gN-mK8"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="H63-Xw-wcP"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="trailing" secondItem="h04-J1-KSi" secondAttribute="trailing" type="default" id="IVj-yJ-Nsz"/>
+                            <constraint firstItem="R7B-96-EnM" firstAttribute="leading" secondItem="kg3-9m-gFd" secondAttribute="leading" type="default" id="KHI-k5-NiN"/>
                             <constraint firstItem="oFF-Bg-oPR" firstAttribute="trailing" secondItem="rx1-0K-yh1" secondAttribute="trailing" type="default" id="MB9-jC-YUA"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="top" secondItem="KJw-9z-vFk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="O5E-VH-8Je"/>
-                            <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="h04-J1-KSi" secondAttribute="centerX" type="default" id="Pbt-ot-OeH"/>
+                            <constraint firstItem="R7B-96-EnM" firstAttribute="top" secondItem="kg3-9m-gFd" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Ond-65-cpO"/>
                             <constraint firstItem="PHD-06-92b" firstAttribute="leading" secondItem="rx1-0K-yh1" secondAttribute="leading" type="default" id="Ql4-g8-nJn"/>
                             <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="XFD-dx-ipv" secondAttribute="leading" type="default" id="RxL-Zz-2rs"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="Uw6-bF-qQn"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="GYb-qf-mXe" secondAttribute="centerX" type="default" id="Zb7-fz-Kgd"/>
+                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="rx1-0K-yh1" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="f5n-IN-Uym"/>
                             <constraint firstItem="rx1-0K-yh1" firstAttribute="trailing" secondItem="p4S-ef-Dh9" secondAttribute="trailing" type="default" id="fCQ-dl-b8Q"/>
                             <constraint firstItem="kg3-9m-gFd" firstAttribute="trailing" secondItem="cvv-Ob-EIk" secondAttribute="trailing" type="default" id="lFF-xK-kO1"/>
                             <constraint firstItem="KJw-9z-vFk" firstAttribute="top" secondItem="PHD-06-92b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="r9k-1z-x4O"/>
-                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="134" id="xUW-tQ-mga"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="bottom" secondItem="h04-J1-KSi" secondAttribute="bottom" type="default" id="uxp-DB-QrP"/>
                             <constraint firstItem="XFD-dx-ipv" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="21" id="zEg-7c-p8T"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="top" secondItem="R7B-96-EnM" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="zMc-eE-aXU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4gE-cs-OGE"/>
@@ -267,11 +281,74 @@
             </objects>
             <point key="canvasLocation" x="632" y="411"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Jvi-CZ-39m">
+            <objects>
+                <viewController id="kwd-KK-9oj" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="umf-tk-kVr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="254"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ngp-Gu-KGh">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ngp-Gu-KGh" firstAttribute="top" secondItem="umf-tk-kVr" secondAttribute="top" type="default" id="2XT-hL-rbM"/>
+                            <constraint firstItem="Ngp-Gu-KGh" firstAttribute="trailing" secondItem="umf-tk-kVr" secondAttribute="trailing" type="default" id="HoI-8A-YXw"/>
+                            <constraint firstItem="Ngp-Gu-KGh" firstAttribute="bottom" secondItem="umf-tk-kVr" secondAttribute="bottom" type="default" id="JWY-HT-CJB"/>
+                            <constraint firstItem="Ngp-Gu-KGh" firstAttribute="leading" secondItem="umf-tk-kVr" secondAttribute="leading" type="default" id="j8V-4g-Ws7"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pjm-AT-7tB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1628" y="733"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bmwLogo.png" width="45" height="45"/>
         <image name="charger.png" width="75" height="163"/>
     </resources>
+    <classes>
+        <class className="BMWDayDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="conferenceCodes" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
+        </class>
+        <class className="BMWDayTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
+        </class>
+        <class className="BMWViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PKRevealController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

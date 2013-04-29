@@ -20,13 +20,9 @@
 		2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */; };
 		2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8A1727A5F80011E557 /* AddressBook.framework */; };
 		2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */; };
-		2B7CC41A16FC7128008E053D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41916FC7128008E053D /* Default.png */; };
-		2B7CC41C16FC7130008E053D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41B16FC7130008E053D /* Default@2x.png */; };
-		2B7CC41E16FC7135008E053D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC41D16FC7135008E053D /* Default-568h@2x.png */; };
-		2B7CC41F16FC75B3008E053D /* app-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A916D1B8930080F6E5 /* app-icon@2x.png */; };
-		2B7CC42016FC75BA008E053D /* app-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEF1A716D1B8880080F6E5 /* app-icon.png */; };
 		2B7CC42616FD47A5008E053D /* charger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B7CC42516FD47A4008E053D /* charger.png */; };
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
+		2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */; };
 		2BFE39AD171D338100155020 /* BMWDayTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BFE39AC171D338100155020 /* BMWDayTVCell.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
@@ -177,13 +173,12 @@
 		2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAddressBookViewController.m; sourceTree = "<group>"; };
 		2B4ACF8A1727A5F80011E557 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		2B7CC41916FC7128008E053D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
-		2B7CC41B16FC7130008E053D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
-		2B7CC41D16FC7135008E053D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		2B7CC42516FD47A4008E053D /* charger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charger.png; sourceTree = "<group>"; };
 		2B8FB3EB16ED32B400AC5A95 /* BMWLinkedInProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLinkedInProfile.h; sourceTree = "<group>"; };
 		2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLinkedInProfile.m; sourceTree = "<group>"; };
 		2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCellDelegate.h; sourceTree = "<group>"; };
+		2BD4CB70172DF1C100687647 /* BMWAttendeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeTableViewController.h; sourceTree = "<group>"; };
+		2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeTableViewController.m; sourceTree = "<group>"; };
 		2BFE39AB171D338100155020 /* BMWDayTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayTVCell.h; sourceTree = "<group>"; };
 		2BFE39AC171D338100155020 /* BMWDayTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayTVCell.m; sourceTree = "<group>"; };
 		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
@@ -484,6 +479,8 @@
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
 				2B1504441723494500957F8A /* BMWDayDetailViewController.h */,
+				2BD4CB70172DF1C100687647 /* BMWAttendeeTableViewController.h */,
+				2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */,
 				2B1504451723494500957F8A /* BMWDayDetailViewController.m */,
 				2B4ACF871727A5260011E557 /* BMWAddressBookViewController.h */,
 				2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */,
@@ -853,6 +850,7 @@
 				2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */,
 				2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */,
 				4BE0B9F31727A9AE00A2FFD8 /* BMWCalendarAccess.m in Sources */,
+				2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

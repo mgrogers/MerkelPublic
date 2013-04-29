@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 
 
-@property (nonatomic, strong) BMWDayTableViewController *attendeeStream;
+@property (nonatomic, strong) BMWDayTableViewController *attendeeTable;
 
 @end
 
@@ -39,11 +39,11 @@
     _eventTitle = eventTitle;
 }
 
-- (BMWDayTableViewController *)attendeeStream {
-    if (!_attendeeStream) {
-        _attendeeStream = [[BMWDayTableViewController alloc] init];
+- (BMWDayTableViewController *)attendeeTable {
+    if (!_attendeeTable) {
+        _attendeeTable= [[BMWDayTableViewController alloc] init];
     }
-    return _attendeeStream;
+    return _attendeeTable;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -68,9 +68,11 @@
 }
 
 -(void)createVisualAssets {
-    [self addChildViewController:self.attendeeStream];
-    [self.view addSubview:self.attendeeStream.view];
-    [self.attendeeStream didMoveToParentViewController:self];
+ 
+    
+    [self addChildViewController:self.attendeeTable];
+    [self.view addSubview:self.attendeeTable.tableView];
+    [self.attendeeTable didMoveToParentViewController:self];
 }
 
 -(void)createLabels {
@@ -113,5 +115,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
 
 @end

@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
+@property (nonatomic, strong) NSArray *selectedPeople;
 
 @end
 
