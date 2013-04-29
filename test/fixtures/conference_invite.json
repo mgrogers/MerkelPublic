@@ -1,0 +1,14 @@
+{
+    "conferenceCode": "9351579103",
+    "attendees": [
+        {
+            "email": "taylor@taylorsavage.com",
+            "displayName": "Taylor Savage",
+            "phone": "3102663121"
+        },
+        {
+            "email": "tim@apple.com",
+            "displayName": "Tim Cook",
+        }
+    ],
+}

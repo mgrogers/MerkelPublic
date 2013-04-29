@@ -34,7 +34,7 @@ var participantSchema = new Schema({
     email: {type: String, default: ""},
     displayName: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
-    status: {type: String, default: "absent"} // 'present' or 'absent'
+    status: {type: String, default: "active"} // 'active' or 'inactive'
 });
 
 var Conference = db.model('conference', conferenceSchema);
@@ -54,15 +54,14 @@ exports.capability = function(req, res) {
     capability.allowClientIncoming(clientId);
     capability.allowClientOutgoing(TWIML_APP_ID);
 
-    var response = {};
-    response.capabilityToken = capability.generate(timeout);
-
+    var response = {capabilityToken: capability.generate(timeout)};
     return res.send(response);
 };
 
 
 /*
-API Call: "/2013-04-23/conference/create" to generate a new conference, data in POST
+API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
+[Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
 exports.create = function(req, res) {
     Conference.find(function(err, conferences) {
@@ -97,11 +96,38 @@ exports.create = function(req, res) {
         var conference = new Conference(conferenceObject);
         conference.save();
 
-        var participantsObject = {conferenceCode: conferenceObject.conferenceCode,
-                        participants: postBody.attendees}
+        var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
         addParticipants(participantsObject);
         return res.send(conferenceObject);
     });
+};
+
+
+/*
+API Call: "/2013-04-23/conference/invite" to send an invite for a conference to someone, data will be in POST data
+[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
+*/
+exports.invite = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+
+        if(postBody.conferenceCode && postBody.attendees) {
+            // Add participants to db
+            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
+            addParticipants(participantsObject);
+
+            // Send invite to participants
+            // invite blah blah
+
+            return res.send(participantsObject);
+        } else {
+            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            return res.send(err);
+        }
+    } else {
+        var err = {message: "This API is POST only, please POST your invitee data"};
+        return res.send(err);
+    }
 };
 
 
@@ -123,7 +149,7 @@ exports.join = function(req, res) {
             }
         });
     } else {
-        res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
     }
 };
 
@@ -132,13 +158,13 @@ exports.join = function(req, res) {
 API Call: "/2013-04-23/conference/number" to get a Twilio number
 */
 exports.number = function(req, res) {
-    var numberObject = { number: TWILIO_NUMBER };
-    return res.send(numberObject);
-}
+    var response = {number: TWILIO_NUMBER};
+    return res.send(response);
+};
 
 
 /*
-API Call: "/2013-04-23/conference/:conferenceCode" to get a conference object
+API Call: "/2013-04-23/conference/get/:conferenceCode" to get a conference object
 [conferenceCode] is the conference code of the conference object to get
 */
 exports.get = function(req, res) {
@@ -148,10 +174,11 @@ exports.get = function(req, res) {
         if(!err && conference) {
             return res.send(conference);
         } else {
-            return res.send(500, err);
+            var response = {message: "Couldn't find the specified conference."};
+            return res.send(response);
         }
     });
-}
+};
 
 
 /* 
@@ -186,7 +213,7 @@ function addParticipants(participantsObject) {
                         email: p.email,
                         displayName: p.displayName,
                         conferenceCode: conferenceCode,
-                        status: "absent"
+                        status: "inactive"
                     };
 
                     var participant = new Participant(participantObject);
