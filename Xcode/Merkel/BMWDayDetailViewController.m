@@ -35,6 +35,11 @@
     _phoneNumber = phoneNumber;
 }
 
+- (void)setConferenceCode:(NSNumber *)conferenceCode
+{
+    _conferenceCode = conferenceCode;
+}
+
 -(void)setEventTitle:(NSString *)eventTitle {
     _eventTitle = eventTitle;
 }
@@ -78,7 +83,8 @@
 }
 
 -(void)createLabels {
-    self.conferencePhoneNumber.text =[NSString stringWithFormat:@"%@", self.phoneNumber];
+    self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
+    self.conferenceCodes.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
     
     if(self.event.allDay) {
         self.eventDateLabel.text = @"All Day";
