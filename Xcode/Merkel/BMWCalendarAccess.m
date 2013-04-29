@@ -7,6 +7,7 @@
 //
 
 #import "BMWCalendarAccess.h"
+#import "BMWAPIClient.h"
 
 @interface BMWCalendarAccess ()
 
@@ -88,8 +89,15 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
                 if(event.attendees.count) {
                     //dispatch af netwokring call.
                     
+                    [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSNumber *conferenceCode = responseObject[@"conferenceCode"];
+                        //do something with this.
+                        
+                    
+                    }   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            NSLog(@"Error creating conference: %@", [error localizedDescription]);
+                    }];
                 }
-                
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
