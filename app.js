@@ -22,6 +22,8 @@ var express = require('express'),
 
 var app = express();
 
+var API_VERSION = '2013-04-23';
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -38,7 +40,21 @@ app.use(express.errorHandler());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Define API URLS and destinations here.
+// GET
 app.get('/', routes.index);
+app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
+app.get('/' + API_VERSION + '/mail', gmail.mail);
+app.get('/' + API_VERSION + '/conference/capability', conference.capability);
+app.get('/' + API_VERSION + '/conference/create', conference.create);
+app.get('/' + API_VERSION + '/conference/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/join', conference.join);
+app.get('/' + API_VERSION + '/conference/number', conference.number);
+app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
+
+// POST
+app.post('/' + API_VERSION + '/conference/create', conference.create);
+
+/* Depricated routes
 app.get('/home/', routes.home);
 app.get('/auth/', auth.index);
 app.get('/login/', auth.login);
@@ -52,14 +68,6 @@ app.get('/api/events/:userId/week', calendar.eventsWeek);
 app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
 app.get('/api/events/:userId/month', calendar.eventsMonth);
 app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
-app.get('/api/sms/send', sms.sendsms);
-app.get('/api/mail', gmail.mail);
-app.get('/api/conference/capability', conference.capability);
-app.get('/api/conference/create', conference.create);
-app.get('/api/conference/join', conference.join);
-app.get('/api/conference/twilio', conference.twilio);
-//app.get('/api/conference/addParticipant', conference.addParticipant);
-/*
 app.get('/api/conference/join', conference.join);
 app.get('/api/conference/twilio', conference.twilio);
 app.post('/api/conference', conference.create);

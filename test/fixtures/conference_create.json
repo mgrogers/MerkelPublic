@@ -1,0 +1,25 @@
+{
+
+  "title": "Earnings Call",
+  "description": "We're reporting earnings for the 2013 fiscal year",
+  "start": {
+    "dateTime": "2012-04-23T18:25:43.511Z",
+    "timeZone": "America/Los_Angeles"
+  },
+  "attendees": [
+    {
+        "email": "taylor@taylorsavage.com",
+        "displayName": "Taylor Savage",
+        "phone": "3102663121"
+    },
+    {
+        "email": "tim@apple.com",
+        "displayName": "Tim Cook",
+        "phone": "6505551234"
+    }
+  ],
+  "inviteMethod": {
+    "sms": true,
+    "email": false
+  }
+}
