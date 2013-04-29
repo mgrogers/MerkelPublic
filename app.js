@@ -40,15 +40,19 @@ app.use(express.errorHandler());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Define API URLS and destinations here.
+// GET
 app.get('/', routes.index);
 app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 app.get('/' + API_VERSION + '/mail', gmail.mail);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
-app.get/'/' + API_VERSION + '/conference/get/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/:conferenceCode', conference.get);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
+
+// POST
+app.post('/' + API_VERSION + '/conference/create', conference.create);
 
 /* Depricated routes
 app.get('/home/', routes.home);
