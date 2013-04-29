@@ -19,6 +19,7 @@ var express = require('express'),
     url = require('url'),
     redis = require('kue/node_modules/redis'),
     newrelic = require('newrelic');
+    sendgrid = require('./routes/sendgrid');
 
 var app = express();
 
@@ -53,6 +54,8 @@ app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
+app.post('/' + API_VERSION + '/sendgrid/alert', sendgrid.emailAlert);
+
 
 /* Depricated routes
 app.get('/home/', routes.home);
