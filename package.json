@@ -15,7 +15,9 @@
     "node-parse-api": "*",
     "q": "*",
     "request": "*",
-    "twilio": "*"
+    "twilio": "*",
+    "kue": "*",
+    "redis": "*"
   },
   "engines": {
     "node": "0.10.5",
