@@ -54,9 +54,7 @@ exports.capability = function(req, res) {
     capability.allowClientIncoming(clientId);
     capability.allowClientOutgoing(TWIML_APP_ID);
 
-    var response = {};
-    response.capabilityToken = capability.generate(timeout);
-
+    var response = {capabilityToken: capability.generate(timeout)};
     return res.send(response);
 };
 
@@ -111,7 +109,6 @@ API Call: "/2013-04-23/conference/invite" to send an invite for a conference to 
 */
 exports.invite = function(req, res) {
     if(req.method == 'POST') {
-        console.log("POST");
         var postBody = req.body;
 
         if(postBody.conferenceCode && postBody.attendees) {
@@ -128,7 +125,6 @@ exports.invite = function(req, res) {
             return res.send(err);
         }
     } else {
-        console.log("GET");
         var err = {message: "This API is POST only, please POST your invitee data"};
         return res.send(err);
     }
@@ -153,7 +149,7 @@ exports.join = function(req, res) {
             }
         });
     } else {
-        res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
     }
 };
 
@@ -162,13 +158,13 @@ exports.join = function(req, res) {
 API Call: "/2013-04-23/conference/number" to get a Twilio number
 */
 exports.number = function(req, res) {
-    var numberObject = { number: TWILIO_NUMBER };
-    return res.send(numberObject);
+    var response = {number: TWILIO_NUMBER};
+    return res.send(response);
 };
 
 
 /*
-API Call: "/2013-04-23/conference/:conferenceCode" to get a conference object
+API Call: "/2013-04-23/conference/get/:conferenceCode" to get a conference object
 [conferenceCode] is the conference code of the conference object to get
 */
 exports.get = function(req, res) {
@@ -178,7 +174,8 @@ exports.get = function(req, res) {
         if(!err && conference) {
             return res.send(conference);
         } else {
-            return res.send(err);
+            var response = {message: "Couldn't find the specified conference."};
+            return res.send(response);
         }
     });
 };
