@@ -137,6 +137,23 @@ exports.number = function(req, res) {
 }
 
 
+/*
+API Call: "/2013-04-23/conference/:conferenceCode" to get a conference object
+[conferenceCode] is the conference code of the conference object to get
+*/
+exports.get = function(req, res) {
+    var conferenceCode = req.params.conferenceCode;
+
+    Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+        if(!err && conference) {
+            return res.send(conference);
+        } else {
+            return res.send(500, err);
+        }
+    });
+}
+
+
 /* 
 API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
 [conferenceCode] conference code of conference to access
