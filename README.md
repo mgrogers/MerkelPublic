@@ -1,7 +1,7 @@
 Merkel
 ======
 
-Team - BossMobileWunderkinds
+Team - BossMobileWunderkinder (Callin App)
 ----------------------------
 [Wesley Leung](mailto:wleung1@stanford.edu) ~ [wesleyleung](https://github.com/Wesleyleung)  
 [Tony Jin](mailto:tonyjin@stanford.edu) ~ [tonyjin](https://github.com/tonyjin)    

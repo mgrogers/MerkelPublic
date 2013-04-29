@@ -45,6 +45,7 @@ app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 app.get('/' + API_VERSION + '/mail', gmail.mail);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
+app.get/'/' + API_VERSION + '/conference/get/:conferenceCode', conference.get);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
