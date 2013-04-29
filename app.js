@@ -45,14 +45,16 @@ app.get('/', routes.index);
 app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 app.get('/' + API_VERSION + '/mail', gmail.mail);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
-app.get('/' + API_VERSION + '/conference/create', conference.create);
 app.get('/' + API_VERSION + '/conference/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/create', conference.create);
+app.get('/' + API_VERSION + '/conference/invite');
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
+app.post('/' + API_VERSION + '/conference/invite');
 
 /* Depricated routes
 app.get('/home/', routes.home);
@@ -60,7 +62,6 @@ app.get('/auth/', auth.index);
 app.get('/login/', auth.login);
 app.get('/google_auth/', auth.google_auth);
 app.get('/google_auth/token/', auth.google_auth_token);
-
 app.get('/authentication', calendar.authentication);
 app.get('/api/events/:userId/day', calendar.eventsDay);
 app.get('/api/events/:userId/day/:date', calendar.eventsDay);

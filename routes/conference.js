@@ -62,7 +62,8 @@ exports.capability = function(req, res) {
 
 
 /*
-API Call: "/2013-04-23/conference/create" to generate a new conference, data in POST
+API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
+[Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
 exports.create = function(req, res) {
     Conference.find(function(err, conferences) {
@@ -106,6 +107,15 @@ exports.create = function(req, res) {
 
 
 /*
+API Call: "/2013-04-23/conference/invite" to send an invite for a conference to someone, data will be in POST data
+[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
+*/
+exports.invite = function(req, res) {
+
+};
+
+
+/*
 API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
 */
@@ -134,7 +144,7 @@ API Call: "/2013-04-23/conference/number" to get a Twilio number
 exports.number = function(req, res) {
     var numberObject = { number: TWILIO_NUMBER };
     return res.send(numberObject);
-}
+};
 
 
 /*
@@ -148,10 +158,10 @@ exports.get = function(req, res) {
         if(!err && conference) {
             return res.send(conference);
         } else {
-            return res.send(500, err);
+            return res.send(err);
         }
     });
-}
+};
 
 
 /* 
