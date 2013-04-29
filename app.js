@@ -9,9 +9,11 @@ var express = require('express'),
     routes = require('./routes'),
     path = require('path'),
     newrelic = require('newrelic'),
+    url = require('url'),
+    kue = require('kue'),
+    redis = require('kue/node_modules/redis'),
     sms = require('./routes/sms'),
-    conference = require('./routes/conference'),
-    redis = require('kue/node_modules/redis');
+    conference = require('./routes/conference');
 
 var app = express();
 
@@ -47,6 +49,20 @@ app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
 app.post('/' + API_VERSION + '/conference/invite', conference.invite);
+
+// Kue & Redis for sending SMS
+kue.redis.createClient = function() {
+    var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
+    if (redisUrl.auth) {
+        client.auth(redisUrl.auth.split(":")[1]);
+    }
+    
+    return client;
+};
+
+// wire up Kue (see /active for queue interface)
+app.use(kue.app);
+if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
 
 app.listen(app.get('port'));
 console.log("Callin app server listening on port " + app.get('port'));
