@@ -12,7 +12,7 @@ var hashids = new Hashids("dat salt, yo", MINIMUM_CONFERENCE_CODE_LENGTH, "01234
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongoose_options = {'auto_reconnect':true};
-mongoose.createConnection(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -25,8 +25,8 @@ var conferenceSchema = new Schema({
     description: {type: String, default: ""},
     start: {type: Date, default: ""},
     timeZone: {type: String, default: "America/Los_Angeles"},
-    sms: {type: Boolean, default:false},
-    email: {type: Boolean, default:false} // 'active' or 'inactive'
+    sms: {type: Boolean, default: false},
+    email: {type: Boolean, default: false} // 'active' or 'inactive'
 });
 
 var participantSchema = new Schema({
@@ -34,7 +34,7 @@ var participantSchema = new Schema({
     email: {type: String, default: ""},
     displayName: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
-    status: {type: String, default: "active"} // 'active' or 'inactive'
+    status: {type: String, default: "inactive"} // 'active' or 'inactive'
 });
 
 var Conference = db.model('conference', conferenceSchema);
@@ -78,7 +78,7 @@ exports.create = function(req, res) {
 
         if(postBody) {
             conferenceObject.conferenceCode = hash;
-            conferenceObject.status = "active";
+            conferenceObject.status = "inactive";
             conferenceObject.title = postBody.title || "";
             conferenceObject.description = postBody.description || "";
             if(postBody.start) conferenceObject.start = postBody.start.datetime;
@@ -90,7 +90,7 @@ exports.create = function(req, res) {
             if(postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
             else conferenceObject.email = false;
         } else {
-            conferenceObject = { conferenceCode: hash };
+            conferenceObject = {conferenceCode: hash};
         }
         
         var conference = new Conference(conferenceObject);
