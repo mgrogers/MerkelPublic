@@ -5,20 +5,16 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
     routes = require('./routes'),
+    http = require('http'),
+    url = require('url'),
+    path = require('path'),
+    newrelic = require('newrelic'),
     calendar = require('./routes/calendar'),
     sms = require('./routes/sms'),
-    gmail = require('./routes/gmail'),
-    auth = require('./routes/auth'),
     conference = require('./routes/conference'),
-    http = require('http'),
-    path = require('path'),
-    kue = require('kue'),
-    url = require('url'),
-    redis = require('kue/node_modules/redis'),
-    newrelic = require('newrelic');
+    redis = require('kue/node_modules/redis');
 
 var app = express();
 
@@ -43,18 +39,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // GET
 app.get('/', routes.index);
 app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
-app.get('/' + API_VERSION + '/mail', gmail.mail);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/:conferenceCode', conference.get);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
-app.get('/' + API_VERSION + '/conference/invite');
+app.get('/' + API_VERSION + '/conference/invite', conference.invite);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
-app.post('/' + API_VERSION + '/conference/invite');
+app.post('/' + API_VERSION + '/conference/invite', conference.invite);
 
 /* Depricated routes
 app.get('/home/', routes.home);
@@ -76,18 +71,5 @@ app.get('/api/conference', conference.list);
 app.get('/api/conference/:name', conference.read);
 app.get('/conference', conference.form);*/
 
-kue.redis.createClient = function() {
-    var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
-    if (redisUrl.auth) {
-        client.auth(redisUrl.auth.split(":")[1]);
-    }
-    
-    return client;
-};
-
-// wire up Kue (see /active for queue interface)
-app.use(kue.app);
-if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
-
 app.listen(app.get('port'));
-console.log("Express server listening on port " + app.get('port'));
+console.log("Callin app server listening on port " + app.get('port'));

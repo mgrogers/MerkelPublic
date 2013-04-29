@@ -34,7 +34,7 @@ var participantSchema = new Schema({
     email: {type: String, default: ""},
     displayName: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
-    status: {type: String, default: "absent"} // 'present' or 'absent'
+    status: {type: String, default: "active"} // 'active' or 'inactive'
 });
 
 var Conference = db.model('conference', conferenceSchema);
@@ -98,8 +98,7 @@ exports.create = function(req, res) {
         var conference = new Conference(conferenceObject);
         conference.save();
 
-        var participantsObject = {conferenceCode: conferenceObject.conferenceCode,
-                        participants: postBody.attendees}
+        var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
         addParticipants(participantsObject);
         return res.send(conferenceObject);
     });
@@ -111,7 +110,28 @@ API Call: "/2013-04-23/conference/invite" to send an invite for a conference to 
 [Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
 */
 exports.invite = function(req, res) {
+    if(req.method == 'POST') {
+        console.log("POST");
+        var postBody = req.body;
 
+        if(postBody.conferenceCode && postBody.attendees) {
+            // Add participants to db
+            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
+            addParticipants(participantsObject);
+
+            // Send invite to participants
+            // invite blah blah
+
+            return res.send(participantsObject);
+        } else {
+            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            return res.send(err);
+        }
+    } else {
+        console.log("GET");
+        var err = {message: "This API is POST only, please POST your invitee data"};
+        return res.send(err);
+    }
 };
 
 
@@ -196,7 +216,7 @@ function addParticipants(participantsObject) {
                         email: p.email,
                         displayName: p.displayName,
                         conferenceCode: conferenceCode,
-                        status: "absent"
+                        status: "inactive"
                     };
 
                     var participant = new Participant(participantObject);
