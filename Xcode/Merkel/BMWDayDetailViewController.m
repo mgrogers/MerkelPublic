@@ -71,6 +71,8 @@
  
     
     [self addChildViewController:self.attendeeTable];
+    
+    //create frame
     [self.view addSubview:self.attendeeTable.tableView];
     [self.attendeeTable didMoveToParentViewController:self];
 }

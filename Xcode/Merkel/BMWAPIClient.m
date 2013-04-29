@@ -57,4 +57,25 @@ static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderk
           failure:failure];
 }
 
+- (void)createConferenceForCalendarEvent:(EKEvent *)event
+                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    static NSString * const kBMWNewConferencePath = @"conference/create";
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                            event.title, @"title",
+                            event.notes, @"description",
+                        event.startDate, @"start",
+                        event.attendees, @"attendees", nil];
+    
+    [self postPath:kBMWNewConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
+}
+
+
+
+
 @end

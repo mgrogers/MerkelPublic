@@ -64,7 +64,9 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
     [self getEventsStartDate:[NSDate date] endDate:tomorrow completion:completion];
 }
 
-- (void)getEventsStartDate:(NSDate *)start endDate:(NSDate *)end completion:(BMWCalendarEventCompletion)completion {
+- (void)getEventsStartDate:(NSDate *)start
+                   endDate:(NSDate *)end
+                completion:(BMWCalendarEventCompletion)completion {
     if (!self.isAuthorized) {
         [[NSNotificationCenter defaultCenter] postNotificationName:BMWCalendarAccessDeniedNotification
                                                             object:self];
@@ -82,6 +84,12 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         for (EKEvent *event in events) {
             if (event.birthdayPersonID == -1) {
                 [filteredEvents addObject:event];
+ 
+                if(event.attendees.count) {
+                    //dispatch af netwokring call.
+                    
+                }
+                
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{

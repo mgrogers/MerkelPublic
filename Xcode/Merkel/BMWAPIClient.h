@@ -8,6 +8,8 @@
 
 #import <AFNetworking/AFHTTPClient.h>
 
+#import <EventKit/EventKit.h>
+
 @interface BMWAPIClient : AFHTTPClient
 
 + (instancetype)sharedClient;
@@ -19,5 +21,9 @@
 - (void)getNewConferenceWithParameters:(NSDictionary *)parameters
                                success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (void)createConferenceForCalendarEvent:(EKEvent *)event
+                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end
