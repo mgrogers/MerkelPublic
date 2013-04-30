@@ -8,7 +8,6 @@
 
 #import "BMWDayDetailViewController.h"
 #import "BMWPhone.h"
-#import "TCConnectionDelegate.h"
 
 @interface BMWDayDetailViewController ()
 
@@ -103,8 +102,10 @@
 - (IBAction)joinCallButtonPressed:(id)sender {
     NSString *codetoCall = self.conferenceCodes.text;
     if(codetoCall) {
-        [self connectWithConferenceCode:codetoCall delegate:connectionDelegate];
+        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+        [self.joinCallButton setTitle:@"Call in Profess" forState:UIControlStateNormal];
     }
+    
 }
 
 

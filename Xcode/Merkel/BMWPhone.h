@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 
 + (instancetype)sharedPhone;
 - (void)quickCallWithDelegate:(id<TCConnectionDelegate>)connectionDelegate;
+- (void)callWithDelegate:(id<TCConnectionDelegate>)connectionDelegate
+       andConferenceCode: (NSString*) conferenceCode;
 - (void)disconnect;
 
 @property (readonly) BOOL isReady;
