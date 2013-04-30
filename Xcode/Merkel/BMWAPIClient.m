@@ -63,6 +63,15 @@ static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderk
     
     static NSString * const kBMWNewConferencePath = @"conference/create";
     
+    NSMutableArray *attendeeArray = [NSMutableArray array];
+    
+    for (EKAttendee *attendee in event.attendees) {
+        NSDictionary *attendeeObject = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         attendee.name, @"name",
+                                        attendee.email, @"email", nil];
+        [attendeeArray addObject:attendeeObject];
+    }
+    
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                             event.title, @"title",
                             event.notes, @"description",
