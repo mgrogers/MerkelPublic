@@ -33,7 +33,7 @@
     _phoneNumber = phoneNumber;
 }
 
-- (void)setConferenceCode:(NSNumber *)conferenceCode
+- (void)setConferenceCode:(NSString *)conferenceCode
 {
     _conferenceCode = conferenceCode;
 }
