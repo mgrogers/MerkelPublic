@@ -84,22 +84,14 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         NSMutableArray *filteredEvents = [NSMutableArray array];
         for (EKEvent *event in events) {
             if (event.birthdayPersonID == -1) {
-                
-                
-                [filteredEvents addObject:event];
- 
                 if(event.attendees.count) {
                     //dispatch af netwokring call.
-                    
+                    NSMutableDictionary *eventWithCode = [@{@"event": event,
+                                                          @"conferenceCode": @""} mutableCopy];
+                    [filteredEvents addObject:eventWithCode];
                     [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSNumber *conferenceCode = responseObject[@"conferenceCode"];
-                        NSDictionary *eventWithCode = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                                event, "@event",
-                                                       conferenceCode, @"conferenceCode", nil];
-                        [filteredEvents addObject:eventWithCode];
-                        //do something with this.
-                        
-                    
+                        NSString *conferenceCode = responseObject[@"conferenceCode"];
+                        eventWithCode[@"conferenceCode"] = conferenceCode;
                     }   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                             NSLog(@"Error creating conference: %@", [error localizedDescription]);
                     }];
