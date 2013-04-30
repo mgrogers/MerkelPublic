@@ -12,7 +12,7 @@
 
 @interface BMWDayDetailViewController : UIViewController <TCConnectionDelegate>
 
-@property (nonatomic, strong) NSNumber *phoneNumber;
+@property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *conferenceCode;
 @property (nonatomic, strong) NSString *eventTitle;
 @property (nonatomic, strong) EKEvent *event;

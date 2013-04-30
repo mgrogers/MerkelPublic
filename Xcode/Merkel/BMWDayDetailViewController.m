@@ -28,7 +28,7 @@
     _event = event;
 }
 
-- (void)setPhoneNumber:(NSNumber*)phoneNumber
+- (void)setPhoneNumber:(NSString *)phoneNumber
 {
     _phoneNumber = phoneNumber;
 }
