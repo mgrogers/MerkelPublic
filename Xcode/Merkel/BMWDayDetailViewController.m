@@ -103,7 +103,7 @@
     NSString *codetoCall = self.conferenceCodes.text;
     if(codetoCall) {
         [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-        [self.joinCallButton setTitle:@"Call in Profess" forState:UIControlStateNormal];
+        [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
     }
     
 }
