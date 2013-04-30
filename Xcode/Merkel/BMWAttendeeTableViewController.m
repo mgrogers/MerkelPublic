@@ -22,10 +22,17 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     }
     return self;
 }
+
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    self = [super initWithCoder:aDecoder];
+//    if (self) {
+//    }
+//    return self;
+//}
 
 - (NSArray *)attendees {
     if (!_attendees) {
@@ -37,6 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 
 - (void)didReceiveMemoryWarning

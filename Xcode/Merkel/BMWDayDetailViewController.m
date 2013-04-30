@@ -8,6 +8,7 @@
 
 #import "BMWDayDetailViewController.h"
 #import "BMWPhone.h"
+#import "BMWAttendeeTableViewController.h"
 
 @interface BMWDayDetailViewController ()
 
@@ -17,8 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
-
-@property (nonatomic, strong) BMWDayTableViewController *attendeeTable;
 
 @end
 
@@ -42,12 +41,12 @@
     _eventTitle = eventTitle;
 }
 
-- (BMWDayTableViewController *)attendeeTable {
-    if (!_attendeeTable) {
-        _attendeeTable= [[BMWDayTableViewController alloc] init];
-    }
-    return _attendeeTable;
-}
+//- (BMWAttendeeTableViewController *)attendeeTable {
+//    if (!_attendeeTable) {
+//        _attendeeTable= [[BMWAttendeeTableViewController alloc] init];
+//    }
+//    return _attendeeTable;
+//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -71,9 +70,10 @@
 }
 
 -(void)createVisualAssets {
-    [self addChildViewController:self.attendeeTable];
-    [self.view addSubview:self.attendeeTable.tableView];
-    [self.attendeeTable didMoveToParentViewController:self];
+//    [self addChildViewController:self.attendeeTable];
+//    [self.attendeeTable setEventAttendees:self.event.attendees];
+//    [self.view addSubview:self.attendeeTable.tableView];
+//    [self.attendeeTable didMoveToParentViewController:self];
 }
 
 -(void)createLabels {
@@ -130,7 +130,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"EmbedAttendee"]) {
+        BMWAttendeeTableViewController *attendeeTVC = segue.destinationViewController;
+        [attendeeTVC setEventAttendees:self.event.attendees];
+    }
+}
 
 
 @end
