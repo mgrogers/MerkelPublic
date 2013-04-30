@@ -12,7 +12,7 @@
 
 @implementation BMWAPIClient
 
-static NSString * const kBMWAPIClientBaseURLString = @"https://bossmobilewunderkinds.herokuapp.com/api/";
+static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/2013-04-23/";
 
 + (instancetype)sharedClient {
     static BMWAPIClient *_sharedClient = nil;
