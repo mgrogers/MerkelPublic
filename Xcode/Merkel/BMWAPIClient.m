@@ -99,4 +99,13 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 //    }
 }
 
+- (void)getPhoneNumberSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    static NSString * const kBMWPhoneNumberPath = @"conference/number";
+    [self getPath:kBMWPhoneNumberPath
+       parameters:nil
+          success:success
+          failure:failure];
+}
+
 @end

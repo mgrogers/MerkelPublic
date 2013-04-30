@@ -95,11 +95,15 @@
 }
 
 - (IBAction)joinCallButtonPressed:(id)sender {
-    NSString *codetoCall = self.conferenceCodeLabel.text;
-    if(codetoCall) {
-        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-        [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
-    }
+    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
+    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, self.phoneNumber, self.conferenceCode];
+    NSURL *callURL = [NSURL URLWithString:callNumber];
+    [[UIApplication sharedApplication] openURL:callURL];
+//    NSString *codetoCall = self.conferenceCodeLabel.text;
+//    if(codetoCall) {
+//        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+//        [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
+//    }
 }
 
 

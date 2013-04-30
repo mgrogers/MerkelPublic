@@ -8,6 +8,7 @@
 
 #import "BMWDayTableViewController.h"
 
+#import "BMWAPIClient.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
 #import "TCConnectionDelegate.h"
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
 @property (nonatomic, strong) NSArray *selectedPeople;
+@property (nonatomic, copy) NSString *phoneNumber;
 
 @end
 
@@ -71,6 +73,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
                                              selector:@selector(eventStoreChanged:)
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
+    [[BMWAPIClient sharedClient] getPhoneNumberSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.phoneNumber = responseObject[@"number"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -209,7 +216,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
             EKEvent *event = [self eventForIndexPath:indexPath];
             NSString *eventTitle = event.title;
             NSString *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
-            NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
+            NSString *phoneNumber = self.phoneNumber;
 
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
             
