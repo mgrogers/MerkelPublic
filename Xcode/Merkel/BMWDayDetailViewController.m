@@ -105,14 +105,12 @@
         [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
         [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
     }
-    
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = self.eventTitle;
     [self createLabels];
