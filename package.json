@@ -1,10 +1,9 @@
 {
-  "name": "Merkel",
-  "version": "0.0.1",
+  "name": "Callin",
+  "version": "0.1.0",
   "dependencies": {
-    "express": "3.1.0",
+    "express": "*",
     "jade": "*",
-    "kue": "~0.3.4",
     "parse": "*",
     "newrelic": "*",
     "google-calendar": "*",
@@ -16,12 +15,13 @@
     "node-parse-api": "*",
     "q": "*",
     "request": "*",
-    "time": "*",
-    "twilio": "*",
     "sendgrid": "0.2.1"
+    "twilio": "*",
+    "kue": "*",
+    "redis": "*"
   },
   "engines": {
-    "node": "0.8.x",
-    "npm": "1.2.10"
+    "node": "0.10.5",
+    "npm": "1.2.18"
   }
 }

@@ -5,21 +5,16 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
     routes = require('./routes'),
-    calendar = require('./routes/calendar'),
-    sms = require('./routes/sms'),
-    gmail = require('./routes/gmail'),
-    auth = require('./routes/auth'),
-    conference = require('./routes/conference'),
-    http = require('http'),
     path = require('path'),
-    kue = require('kue'),
+    newrelic = require('newrelic'),
     url = require('url'),
+    kue = require('kue'),
     redis = require('kue/node_modules/redis'),
-    newrelic = require('newrelic');
     sendgrid = require('./routes/sendgrid');
+    sms = require('./routes/sms'),
+    conference = require('./routes/conference');
 
 var app = express();
 
@@ -43,41 +38,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define API URLS and destinations here.
 // GET
 app.get('/', routes.index);
-app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
-app.get('/' + API_VERSION + '/mail', gmail.mail);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
-app.get('/' + API_VERSION + '/conference/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/get/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/invite', conference.invite);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
+app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
 app.post('/' + API_VERSION + '/sendgrid/alert', sendgrid.emailAlert);
+app.post('/' + API_VERSION + '/conference/invite', conference.invite);
 
-
-/* Depricated routes
-app.get('/home/', routes.home);
-app.get('/auth/', auth.index);
-app.get('/login/', auth.login);
-app.get('/google_auth/', auth.google_auth);
-app.get('/google_auth/token/', auth.google_auth_token);
-
-app.get('/authentication', calendar.authentication);
-app.get('/api/events/:userId/day', calendar.eventsDay);
-app.get('/api/events/:userId/day/:date', calendar.eventsDay);
-app.get('/api/events/:userId/week', calendar.eventsWeek);
-app.get('/api/events/:userId/week/:date', calendar.eventsWeek);
-app.get('/api/events/:userId/month', calendar.eventsMonth);
-app.get('/api/events/:userId/month/:date', calendar.eventsMonth);
-app.get('/api/conference/join', conference.join);
-app.get('/api/conference/twilio', conference.twilio);
-app.post('/api/conference', conference.create);
-app.get('/api/conference', conference.list);
-app.get('/api/conference/:name', conference.read);
-app.get('/conference', conference.form);*/
-
+// Kue & Redis for sending SMS
 kue.redis.createClient = function() {
     var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
     if (redisUrl.auth) {
@@ -92,4 +67,4 @@ app.use(kue.app);
 if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
 
 app.listen(app.get('port'));
-console.log("Express server listening on port " + app.get('port'));
+console.log("Callin app server listening on port " + app.get('port'));
