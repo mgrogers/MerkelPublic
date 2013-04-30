@@ -95,6 +95,10 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 //    }];
 }
 
+- (void)callWithDelegate:(id<TCConnectionDelegate>)connectionDelegate
+       andConferenceCode: (NSString*) conferenceCode {
+    [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
+}
 #pragma mark - TCDeviceDelegate Methods
 
 - (void)device:(TCDevice *)device didStopListeningForIncomingConnections:(NSError *)error {

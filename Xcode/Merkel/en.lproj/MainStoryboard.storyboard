@@ -145,6 +145,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="joinCallButtonPressed:" destination="IGI-XZ-Asx" eventType="touchUpInside" id="HaE-Iz-5gF"/>
+                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phone Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFD-dx-ipv">
                                 <constraints>
@@ -241,6 +244,7 @@
                         <outlet property="conferencePhoneNumber" destination="XFD-dx-ipv" id="yFX-ix-Mvu"/>
                         <outlet property="eventDateLabel" destination="cvv-Ob-EIk" id="wLj-56-P9Z"/>
                         <outlet property="eventTimeLabel" destination="kg3-9m-gFd" id="fsy-kR-bJW"/>
+                        <outlet property="joinCallButton" destination="rx1-0K-yh1" id="a9D-Uu-ffm"/>
                         <outlet property="masterCallButton" destination="rx1-0K-yh1" id="U05-Xh-22A"/>
                     </connections>
                 </viewController>
@@ -320,6 +324,7 @@
                 <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="joinCallButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
             </relationships>
         </class>
