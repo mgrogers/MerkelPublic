@@ -64,10 +64,12 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
     static NSString * const kBMWNewConferencePath = @"conference/create";
     NSMutableArray *attendeeArray = [NSMutableArray array];
     
-    for (id attendee in event.attendees) {
+    for (EKParticipant *attendee in event.attendees) {
         NSDictionary *attendeeObject = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [attendee objectForKey:@"name"], @"name",
-                                        [attendee objectForKey:@"email"], @"email", nil];
+                                        attendee.name, @"name", nil];
+                            
+//                                        [attendee objectForKey:@"name"], @"name",
+//                                        [attendee objectForKey:@"email"], @"email", nil];
         [attendeeArray addObject:attendeeObject];
     }
     
