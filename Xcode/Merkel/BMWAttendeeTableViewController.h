@@ -10,5 +10,6 @@
 
 @interface BMWAttendeeTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 
+- (void)setEventAttendees:(NSArray *)attendees;
 
 @end
