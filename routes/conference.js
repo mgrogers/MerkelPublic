@@ -172,7 +172,17 @@ exports.get = function(req, res) {
 
     Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
         if(!err && conference) {
-            return res.send(conference);
+
+            // Find attendees to the conference
+            Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+                conference.attendees = [];
+
+                if(!err_p && participants) {
+                    conference.attendees = participants;
+                }
+
+                return res.send(conference);
+            });
         } else {
             var response = {message: "Couldn't find the specified conference."};
             return res.send(response);
@@ -186,7 +196,7 @@ API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCo
 [conferenceCode] conference code of conference to access
  */
 exports.twilio = function(req, res) {
-
+    console.log(req.query);
     var conferenceCode = req.query.conferenceCode;
     // Generate TWiML to join conference
     if(conferenceCode) {
