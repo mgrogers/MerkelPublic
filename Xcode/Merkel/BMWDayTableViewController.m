@@ -239,8 +239,6 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     return self.calendarEvents[indexPath.row][@"conferenceCode"];
 }
 
-
-
 - (void)eventStoreChanged:(NSNotification *)notification {
     [self updateTableViewCalendarEvents];
 }

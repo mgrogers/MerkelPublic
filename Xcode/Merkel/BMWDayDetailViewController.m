@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 
-
 @property (nonatomic, strong) BMWDayTableViewController *attendeeTable;
 
 @end
@@ -72,11 +71,7 @@
 }
 
 -(void)createVisualAssets {
- 
-    
     [self addChildViewController:self.attendeeTable];
-    
-    //create frame
     [self.view addSubview:self.attendeeTable.tableView];
     [self.attendeeTable didMoveToParentViewController:self];
 }

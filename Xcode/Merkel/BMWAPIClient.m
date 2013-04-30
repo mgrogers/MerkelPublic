@@ -8,7 +8,13 @@
 
 #import "BMWAPIClient.h"
 
-#import <AFNetworking/AFJSONRequestOperation.h>
+#import <AFNetworking/AFJSONRequestOperation.h>`
+
+@interface EKAttendee : EKParticipant
+
+@property (readonly) NSString *email;
+
+@end
 
 @implementation BMWAPIClient
 
@@ -63,26 +69,34 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
     
     static NSString * const kBMWNewConferencePath = @"conference/create";
     NSMutableArray *attendeeArray = [NSMutableArray array];
-    
-    for (EKParticipant *attendee in event.attendees) {
-        NSDictionary *attendeeObject = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        attendee.name, @"name", nil];
-                            
-//                                        [attendee objectForKey:@"name"], @"name",
-//                                        [attendee objectForKey:@"email"], @"email", nil];
-        [attendeeArray addObject:attendeeObject];
-    }
-    
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                            event.title, @"title",
-                            event.notes, @"description",
-                        event.startDate, @"start",
-                        attendeeArray, @"attendees", nil];
-    
-    [self postPath:kBMWNewConferencePath
-        parameters:parameters
-           success:success
-           failure:failure];
+//    ABAddressBookRef addressBook = ABAddressBookCreate();
+//    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        for (EKParticipant *attendee in event.attendees) {
+            NSMutableDictionary *attendeeObject = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                            attendee.name, @"name", nil];
+//            ABRecordRef record = [attendee ABRecordWithAddressBook:addressBook];
+//            if (record) {
+//                CFStringRef email = ABRecordCopyValue(record, kABPersonEmailProperty);
+//                NSString *nsEmail = (__bridge NSString *)email;
+//                [attendeeObject setObject:nsEmail forKey:@"email"];
+//                CFRelease(email);
+//            }
+            [attendeeArray addObject:attendeeObject];
+        }
+        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    event.title, @"title",
+                                    event.notes, @"description",
+                                    event.startDate, @"start",
+                                    attendeeArray, @"attendees", nil];
+        
+        [self postPath:kBMWNewConferencePath
+            parameters:parameters
+               success:success
+               failure:failure];
+//    });
+//    if (addressBook) {
+//        CFRelease(addressBook);
+//    }
 }
 
 @end
