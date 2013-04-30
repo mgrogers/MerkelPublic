@@ -136,11 +136,26 @@ API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
 */
 exports.join = function(req, res) {
-    if(req.query['Digits']) {
-        var conferenceCode = req.query['Digits'];
+    if(req.query.Digits) {
+        var conferenceCode = req.query.Digits;
+        var fromPhoneNumber = req.query.From;
 
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
+
+                // Change participant designated by "fromPhoneNumber" status to 'active'
+                // If participant doesn't exist, add new participant
+                Participant.findOne({'conferenceCode': conferenceCode, 'phone': fromPhoneNumber}, function(err_p, participant) {
+                    if(!err_p && participant) {
+                        participant.status = 'active';
+                        participant.save();
+                    } else {
+                        var participantObject = {phone: fromPhoneNumber, conferenceCode: conferenceCode, status: "active"};
+                        participant = new Participant(participantObject);
+                        participant.save();
+                    }
+                });
+
                 var conferenceName = conference.id;
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
@@ -172,7 +187,17 @@ exports.get = function(req, res) {
 
     Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
         if(!err && conference) {
-            return res.send(conference);
+
+            // Find attendees to the conference
+            Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+                conference.attendees = [];
+
+                if(!err_p && participants) {
+                    conference.attendees = participants;
+                }
+
+                return res.send(conference);
+            });
         } else {
             var response = {message: "Couldn't find the specified conference."};
             return res.send(response);
@@ -186,13 +211,18 @@ API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCo
 [conferenceCode] conference code of conference to access
  */
 exports.twilio = function(req, res) {
-
+    console.log(req.query);
     var conferenceCode = req.query.conferenceCode;
+
     // Generate TWiML to join conference
     if(conferenceCode) {
         return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+        if(req.query.From) {
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+        } else {
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+        }
     }
 };
 
