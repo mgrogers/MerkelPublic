@@ -84,7 +84,7 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         NSMutableArray *filteredEvents = [NSMutableArray array];
         for (EKEvent *event in events) {
             if (event.birthdayPersonID == -1) {
-                if(event.attendees.count) {
+//                if(event.attendees.count) {
                     //dispatch af netwokring call.
                     NSMutableDictionary *eventWithCode = [@{@"event": event,
                                                           @"conferenceCode": @""} mutableCopy];
@@ -95,10 +95,10 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
                     }   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                             NSLog(@"Error creating conference: %@", [error localizedDescription]);
                     }];
-                } else {
+//                } else {
 
-                    [filteredEvents addObject:@{@"event":event, @"conferenceCode":@""}];
-                }
+//                    [filteredEvents addObject:@{@"event":event, @"conferenceCode":@""}];
+//                }
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{

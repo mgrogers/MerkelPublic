@@ -208,7 +208,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
        
             EKEvent *event = [self eventForIndexPath:indexPath];
             NSString *eventTitle = event.title;
-            NSNumber *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
+            NSString *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
             NSNumber *phoneNumber = [NSNumber numberWithLongLong:5554443333];
 
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
@@ -235,7 +235,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
     return self.calendarEvents[indexPath.row][@"event"];
 }
 
-- (NSNumber *)eventConferenceCodeForIndexPath:(NSIndexPath *)indexPath {
+- (NSString *)eventConferenceCodeForIndexPath:(NSIndexPath *)indexPath {
     return self.calendarEvents[indexPath.row][@"conferenceCode"];
 }
 
