@@ -7,9 +7,8 @@
 //
 
 #import "BMWDayDetailViewController.h"
-
-
-
+#import "BMWPhone.h"
+#import "TCConnectionDelegate.h"
 
 @interface BMWDayDetailViewController ()
 
@@ -18,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *masterCallButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 
 
 @property (nonatomic, strong) BMWDayTableViewController *attendeeTable;
@@ -99,6 +99,14 @@
         self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
     }
 }
+
+- (IBAction)joinCallButtonPressed:(id)sender {
+    NSString *codetoCall = self.conferenceCodes.text;
+    if(codetoCall) {
+        [self connectWithConferenceCode:codetoCall delegate:connectionDelegate];
+    }
+}
+
 
 - (void)viewDidLoad
 {

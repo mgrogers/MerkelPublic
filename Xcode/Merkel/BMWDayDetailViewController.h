@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BMWDayTableViewController.h"
+#import "TCConnectionDelegate.h"
 
-@interface BMWDayDetailViewController : UIViewController
+@interface BMWDayDetailViewController : UIViewController <TCConnectionDelegate>
 
 @property (nonatomic, strong) NSNumber *phoneNumber;
 @property (nonatomic, strong) NSNumber *conferenceCode;
