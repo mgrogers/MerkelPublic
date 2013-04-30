@@ -6,6 +6,7 @@ var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
 var API_VERSION = '2013-04-23'
 
 var twilio = require('twilio');
+var SendGrid = require('sendgrid').SendGrid;
 var Hashids = require("hashids");
 var hashids = new Hashids("dat salt, yo", MINIMUM_CONFERENCE_CODE_LENGTH, "0123456789");
 
@@ -110,14 +111,63 @@ API Call: "/2013-04-23/conference/invite" to send an invite for a conference to 
 exports.invite = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
-
         if(postBody.conferenceCode && postBody.attendees) {
             // Add participants to db
             var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
             addParticipants(participantsObject);
 
-            // Send invite to participants
-            // invite blah blah
+            var user, key; 
+            if(!process.env.SENDGRID_USERNAME) {
+                user = "app12018585@heroku.com";
+            } else {
+                user = process.env.SENDGRID_USERNAME;
+            }
+            if(!process.env.SENDGRID_PASSWORD) {
+                key = "xtce2l6u";
+            } else {
+                key = process.env.SENDGRID_PASSWORD;
+            }
+
+            toArray = [];
+            for(var attendee in postBody.attendees) {
+                if(attendee.email && attendee.email != "") {
+                    toArray.push(attendee.email);
+                }
+            }
+
+            var sendgrid = new SendGrid(user, key);
+            var Email = require('sendgrid').Email;
+            var email = new Email(optionalParams);
+            var optionalParams = {
+                html: ''
+            };
+            var email = new Email({
+                to: toArray, 
+                from: 'Invite@CallInApp.com',
+                subject: "You have been invited you to a conference call with CallIn!",
+                text: "You're receiving this email because one of your colleagues has initiated a conference\
+                call with CallIn, and would like you to join! If you have the CallIn app installed on your phone, you can enter\
+                the conference call at any time simply by swiping the conference call event you want to join.\
+                Otherwise, you may dial in by calling: " + TWILIO_NUMBER + " and the following conference code: " + postBody.conferenceCode
+            });
+            sendgrid.send(email, function(success, message) {
+            if(!success) {
+                console.log(message);
+                var response = {"meta": {
+                                   "code": 400
+                                },
+                                "message": "Invitation delivery failed"
+                               };
+                res.send(400, response);
+                } 
+                console.log(success);
+                var response = {"meta": {
+                                  "code": 200
+                                },
+                                "message": "Invite delivered"
+                               };
+                res.send(response);
+            });
 
             return res.send(participantsObject);
         } else {
