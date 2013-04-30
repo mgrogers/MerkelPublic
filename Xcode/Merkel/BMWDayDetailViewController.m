@@ -12,7 +12,7 @@
 @interface BMWDayDetailViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
-@property (weak, nonatomic) IBOutlet UILabel *conferenceCodes;
+@property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *masterCallButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
@@ -28,12 +28,12 @@
     _event = event;
 }
 
-- (void)setPhoneNumber:(NSNumber*)phoneNumber
+- (void)setPhoneNumber:(NSString *)phoneNumber
 {
     _phoneNumber = phoneNumber;
 }
 
-- (void)setConferenceCode:(NSNumber *)conferenceCode
+- (void)setConferenceCode:(NSString *)conferenceCode
 {
     _conferenceCode = conferenceCode;
 }
@@ -78,7 +78,7 @@
 
 -(void)createLabels {
     self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
-    self.conferenceCodes.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
+    self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
     
     if(self.event.allDay) {
         self.eventDateLabel.text = @"All Day";
@@ -95,19 +95,17 @@
 }
 
 - (IBAction)joinCallButtonPressed:(id)sender {
-    NSString *codetoCall = self.conferenceCodes.text;
+    NSString *codetoCall = self.conferenceCodeLabel.text;
     if(codetoCall) {
         [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
         [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
     }
-    
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = self.eventTitle;
     [self createLabels];

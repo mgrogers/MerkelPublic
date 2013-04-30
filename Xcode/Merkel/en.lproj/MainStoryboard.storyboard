@@ -240,7 +240,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4gE-cs-OGE"/>
                     <connections>
-                        <outlet property="conferenceCodes" destination="p4S-ef-Dh9" id="VO1-Yz-xsR"/>
+                        <outlet property="conferenceCodeLabel" destination="p4S-ef-Dh9" id="Itk-pW-tIt"/>
                         <outlet property="conferencePhoneNumber" destination="XFD-dx-ipv" id="yFX-ix-Mvu"/>
                         <outlet property="eventDateLabel" destination="cvv-Ob-EIk" id="wLj-56-P9Z"/>
                         <outlet property="eventTimeLabel" destination="kg3-9m-gFd" id="fsy-kR-bJW"/>
@@ -320,7 +320,7 @@
         <class className="BMWDayDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="conferenceCodes" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="conferenceCodeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
