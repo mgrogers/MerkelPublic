@@ -62,13 +62,12 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     static NSString * const kBMWNewConferencePath = @"conference/create";
-    
     NSMutableArray *attendeeArray = [NSMutableArray array];
     
-    for (EKAttendee *attendee in event.attendees) {
+    for (id attendee in event.attendees) {
         NSDictionary *attendeeObject = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         attendee.name, @"name",
-                                        attendee.email, @"email", nil];
+                                        [attendee objectForKey:@"name"], @"name",
+                                        [attendee objectForKey:@"email"], @"email", nil];
         [attendeeArray addObject:attendeeObject];
     }
     
@@ -76,15 +75,12 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
                             event.title, @"title",
                             event.notes, @"description",
                         event.startDate, @"start",
-                        event.attendees, @"attendees", nil];
+                        attendeeArray, @"attendees", nil];
     
     [self postPath:kBMWNewConferencePath
         parameters:parameters
            success:success
            failure:failure];
 }
-
-
-
 
 @end
