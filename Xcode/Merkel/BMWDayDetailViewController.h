@@ -1,19 +1,19 @@
+////
+////  BMWDayDetailViewController.h
+////  Merkel
+////
+////  Created by Wesley Leung on 4/20/13.
+////  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+////
 //
-//  BMWDayDetailViewController.h
-//  Merkel
+//#import <UIKit/UIKit.h>
+//#import "BMWDayTableViewController.h"
+//#import "TCConnectionDelegate.h"
 //
-//  Created by Wesley Leung on 4/20/13.
-//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//@interface BMWDayDetailViewController : UIViewController <TCConnectionDelegate>
 //
-
-#import <UIKit/UIKit.h>
-#import "BMWDayTableViewController.h"
-#import "TCConnectionDelegate.h"
-
-@interface BMWDayDetailViewController : UIViewController <TCConnectionDelegate>
-
-@property (nonatomic, strong) NSString *phoneNumber;
-@property (nonatomic, strong) NSString *conferenceCode;
-@property (nonatomic, strong) NSString *eventTitle;
-@property (nonatomic, strong) EKEvent *event;
-@end
+//@property (nonatomic, strong) NSString *phoneNumber;
+//@property (nonatomic, strong) NSString *conferenceCode;
+//@property (nonatomic, strong) NSString *eventTitle;
+//@property (nonatomic, strong) EKEvent *event;
+//@end
