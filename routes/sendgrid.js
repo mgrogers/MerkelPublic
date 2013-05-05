@@ -4,35 +4,32 @@
 [initiator] Person initiating the conference call or an alert that he or she is running late 
 [attendees] Unique identifier for a conference call 
 */
+var Email = require('sendgrid').Email;
+var SendGrid = require('sendgrid').SendGrid;
 
 exports.emailAlert = function(req, res) {
-	var SendGrid = require('sendgrid').SendGrid;
-	
-
 	var user, key; 
-	if(!process.env.SENDGRID_USERNAME) {
+
+    if(!process.env.SENDGRID_USERNAME) {
 		user = "app12018585@heroku.com";
 	} else {
-		user = process.env.SENDGRID_USERNAME;
+	   user = process.env.SENDGRID_USERNAME;
 	}
 	if(!process.env.SENDGRID_PASSWORD) {
 		key = "xtce2l6u";
 	} else {
-		key = process.env.SENDGRID_PASSWORD;
+        key = process.env.SENDGRID_PASSWORD;
 	}
-	var sendgrid = new SendGrid(user, key);
-	var data = req.body;
-    console.log("data attendees" + data);
-    var messageType = data.msgType;
-    var initiator = data.initiator;
-    var conferenceAttendees = data.attendees;
+    var sendgrid = new SendGrid(user, key);
+
+
+    var messageType = req.body.msgType;
+    var initiator = red.body.initiator;
+    var conferenceAttendees = red.body.attendees;
+
     var sender, msgSubject, body;
 
-    var Email = require('sendgrid').Email;
-    var email = new Email(optionalParams);
-    var optionalParams = {
-        html: ''
-    };
+
 
     if(messageType == 'invite') {
         sender = 'Invite@CallInapp.com';
@@ -44,12 +41,12 @@ exports.emailAlert = function(req, res) {
         body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running lateand will be joining the conference call as soon as possible.";
      }
     var email = new Email({
-        // to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
+        to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
         from: sender,
         subject: msgSubject,
         text: body
     });
-    email.addTo(conferenceAttendees);
+    // email.addTo(conferenceAttendees);
     sendgrid.send(email, function(success, message) {
         if(!success) {
             console.log("failed" + message);
