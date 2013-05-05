@@ -24,6 +24,10 @@ body {
     padding-top: 5px;
 }
 
+.title #call-status {
+    text-align: center;
+}
+
 #conference-container {
 }
 

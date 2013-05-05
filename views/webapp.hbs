@@ -3,7 +3,7 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="/css/flat-ui.css">
         <link rel="stylesheet" type="text/css" href="/css/webapp.css">
-        
+
         <script type="text/javascript"
 src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
         <script src="/js/jquery-1.9.1.min.js" type="text/javascript"></script>
@@ -14,7 +14,8 @@ src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
         <script type="text/javascript">
             $(function() {
                 var conference = new CallIn.Conference({
-                    "conferenceCode": 3193879715
+                    "conferenceCode": {{ conferenceCode }},
+                    "token": "{{ token }}"
                 });
 
                 var conferenceView = new CallIn.ConferenceView({
@@ -33,7 +34,9 @@ src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
                         <%= title %>
                         <small> <%= description %> </small>
                     </h1>
-                    <a href="#" class="btn btn-large btn-primary btn-block">Join</a>
+                    <div id="call-status">
+                        Preparing Twilio device...
+                    </div>
                 </div>
             </div>
             <hr>
