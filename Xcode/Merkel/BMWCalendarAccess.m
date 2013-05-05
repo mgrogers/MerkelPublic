@@ -59,12 +59,15 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
 
 - (void)getTodaysEventsCompletion:(BMWCalendarEventCompletion)completion {
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    NSDateComponents *todayComponents = [calendar components:preservedComponents fromDate:[NSDate date]];
+    NSDate *today = [calendar dateFromComponents:todayComponents];
     NSDateComponents *tomorrowComponents = [[NSDateComponents alloc] init];
     tomorrowComponents.day = 1;
     NSDate *tomorrow = [calendar dateByAddingComponents:tomorrowComponents
-                                                  toDate:[NSDate date]
-                                                 options:0];
-    [self getEventsStartDate:[NSDate date] endDate:tomorrow completion:completion];
+                                                 toDate:today
+                                                options:0];
+    [self getEventsStartDate:today endDate:tomorrow completion:completion];
 }
 
 - (void)getEventsStartDate:(NSDate *)start
