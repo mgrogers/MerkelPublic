@@ -22,48 +22,45 @@ exports.emailAlert = function(req, res) {
 	}
 	var sendgrid = new SendGrid(user, key);
 	var data = req.body;
-  var messageType = data.msgType;
-  var initiator = data.initiator;
-  var conferenceAttendees = data.attendees;
-  var sender, msgSubject, body;
+    console.log("data" + data);
+    var messageType = data.msgType;
+    var initiator = data.initiator;
+    var conferenceAttendees = data.attendees;
+    var sender, msgSubject, body;
 
-  var Email = require('sendgrid').Email;
-  var email = new Email(optionalParams);
-  var optionalParams = {
-    html: ''
-  };
+    var Email = require('sendgrid').Email;
+    var email = new Email(optionalParams);
+    var optionalParams = {
+        html: ''
+    };
 
-  if(messageType == 'invite') {
-    sender = 'Invite@CallInapp.com';
-    msgSubject = initiator + " has invited you to a conference call with CallIn!";
-    body = "You're receiving this email because " + initiator + " has initiated a conference call with CallIn, and would like you to join!";
-  } else {
-    sender = 'Alert@CallInapp.com';
-    msgSubject = initiator + " has sent you an alert regarding your upcoming conference call";
-    body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running lateand will be joining the conference call as soon as possible.";
-  }
-  var email = new Email({
-    to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
-    from: sender,
-    subject: msgSubject,
-    text: body
-  });
-  sendgrid.send(email, function(success, message) {
-  	  if(!success) {
-			console.log(message);
-			var response = {"meta": {
-                               "code": 400
-                           	},
-      	                    "message": "Invitation delivery failed"
-   	                       };
-			res.send(400, response);
-		} 
+    if(messageType == 'invite') {
+        sender = 'Invite@CallInapp.com';
+        msgSubject = initiator + " has invited you to a conference call with CallIn!";
+        body = "You're receiving this email because " + initiator + " has initiated a conference call with CallIn, and would like you to join!";
+    } else {
+        sender = 'Alert@CallInapp.com';
+        msgSubject = initiator + " has sent you an alert regarding your upcoming conference call";
+        body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running lateand will be joining the conference call as soon as possible.";
+     }
+    var email = new Email({
+        to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
+        from: sender,
+        subject: msgSubject,
+        text: body
+    });
+    sendgrid.send(email, function(success, message) {
+        if(!success) {
+	       console.log(message);
+		   var response = {"meta": {"code": 400},
+      	                "message": "Invitation delivery failed"};
+		    res.send(400, response);
+		}
+
+
 		console.log(success);
-		var response = {"meta": {
-                          "code": 200
-                        },
-                        "message": "Invite delivered"
-                       };
+		var response = {"meta": {"code": 200},
+                    "message": "Invite delivered"};
 		res.send(response);
   	});
  }
