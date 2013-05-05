@@ -24,8 +24,8 @@ exports.emailAlert = function(req, res) {
 
 
     var messageType = req.body.msgType;
-    var initiator = red.body.initiator;
-    var conferenceAttendees = red.body.attendees;
+    var initiator = req.body.initiator;
+    var conferenceAttendees = req.body.attendees;
 
     var sender, msgSubject, body;
 
@@ -41,12 +41,13 @@ exports.emailAlert = function(req, res) {
         body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running lateand will be joining the conference call as soon as possible.";
      }
     var email = new Email({
-        to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
+        // to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
         from: sender,
         subject: msgSubject,
         text: body
     });
-    // email.addTo(conferenceAttendees);
+    email.addTo(conferenceAttendees);
+    
     sendgrid.send(email, function(success, message) {
         if(!success) {
             console.log("failed" + message);
