@@ -22,7 +22,7 @@ exports.emailAlert = function(req, res) {
 	}
 	var sendgrid = new SendGrid(user, key);
 	var data = req.body;
-    console.log("data" + data);
+    console.log("data attendees" + data);
     var messageType = data.msgType;
     var initiator = data.initiator;
     var conferenceAttendees = data.attendees;
@@ -44,23 +44,23 @@ exports.emailAlert = function(req, res) {
         body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running lateand will be joining the conference call as soon as possible.";
      }
     var email = new Email({
-        to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
+        // to: conferenceAttendees, //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
         from: sender,
         subject: msgSubject,
         text: body
     });
+    email.addTo(conferenceAttendees);
     sendgrid.send(email, function(success, message) {
         if(!success) {
-	       console.log(message);
-		   var response = {"meta": {"code": 400},
-      	                "message": "Invitation delivery failed"};
-		    res.send(400, response);
-		}
-
-
-		console.log(success);
-		var response = {"meta": {"code": 200},
-                    "message": "Invite delivered"};
-		res.send(response);
-  	});
+            console.log("failed" + message);
+            var response = {"meta": {"code": 400},
+      	                 "message": "Invitation delivery failed"};
+            res.send(400, response);
+		} else {
+            console.log("succeed" + success);
+            var response = {"meta": {"code": 200},
+                         "message": "Invite delivered"};    
+            res.send(response);
+        }
+    });
  }
