@@ -1,0 +1,89 @@
+body {
+    background-color: #ECF0F1;
+}
+
+.title {
+    padding-top: 40px;
+    text-align: center;
+    float-left: auto;
+    float-right: auto;
+}
+
+.title img {
+    width: 100px;
+}
+
+.events li:first-child {
+}
+
+.events {
+    background-color: #2c3e50;
+    border-radius: 8px 8px 6px 6px;
+    color: #6285a8;
+    margin-bottom: 20px; 
+}
+.events ul {
+    margin: 0;
+    list-style-type: none; 
+}
+
+.events li {
+    /*background: #34495e url("../images/todo/todo.png") 92% center no-repeat;*/
+    background-size: 20px 20px;
+    cursor: pointer;
+    margin-top: 2px;
+    padding: 18px 42px 17px 25px;
+    position: relative;
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    -o-transition: 0.25s;
+    transition: 0.25s;
+    -webkit-backface-visibility: hidden; 
+}
+
+.events li:first-child {
+    margin-top: 0; 
+    border-radius: 6px 6px 0 0;
+
+}
+
+.events li:last-child {
+    border-radius: 0 0 6px 6px;
+    padding-bottom: 18px; 
+}
+/*
+.events li.events-done {
+    background: transparent url("../images/todo/done.png") 92% center no-repeat;
+    background-size: 20px 20px;
+    color: #1abc9c; 
+}
+
+.events li.events-done .todo-name {
+    color: #1abc9c; 
+}
+*/
+
+.events-icon {
+    float: left;
+    font-size: 24px;
+    padding: 11px 22px 0 0; 
+}
+
+.events-content {
+    padding-top: 1px;
+    overflow: hidden; }
+
+.events-name {
+    color: white;
+    font-size: 17px;
+    margin: 1px 0 3px; 
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 3 / 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 2) {
+  .events li {
+    background-image: "../images/todo/todo-2x.png"; }
+    .events li.events-done {
+      background-image: "../images/todo/done-2x.png"; }
+
+  .events-search {
+    background-image: "../images/todo/search-2x.png"; } }
