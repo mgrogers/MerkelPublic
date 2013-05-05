@@ -109,8 +109,10 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
 }
 
 - (void)addConferenceCode:(NSString *)code toEvent:(EKEvent *)event {
+    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\nConference Code:";
     NSString *notes = event.notes;
-    if (![notes hasSuffix:code]) {
+    NSRange range = [notes rangeOfString:kBMWCalendarNote];
+    if (range.location == NSNotFound) {
         event.notes = [notes stringByAppendingFormat:@"\n\nConference Added by CallInApp\nConference Code: %@", code];
         NSError *error;
         [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
