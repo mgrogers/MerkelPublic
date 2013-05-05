@@ -232,10 +232,10 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Calendar Events Handling
 
 - (void)updateTableViewCalendarEvents {
-//    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
-//        self.calendarEvents = events;
-//        [self.tableView reloadData];
-//    }];
+    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
+        self.calendarEvents = events;
+        [self.tableView reloadData];
+    }];
 }
 
 - (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {
