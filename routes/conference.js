@@ -75,6 +75,7 @@ exports.create = function(req, res) {
 
         var conferenceObject = {};
         var postBody = req.body;
+        console.log(req);
 
         if(postBody) {
             conferenceObject.conferenceCode = hash;
