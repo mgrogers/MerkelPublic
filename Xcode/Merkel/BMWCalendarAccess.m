@@ -7,7 +7,9 @@
 //
 
 #import "BMWCalendarAccess.h"
+
 #import "BMWAPIClient.h"
+#import "BMWPhone.h"
 
 @interface BMWCalendarAccess ()
 
@@ -114,13 +116,14 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
 }
 
 - (void)getAndSaveConferenceCodeForEvent:(EKEvent *)event completion:(void (^)(NSString *conferenceCode))completion {
-    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\nConference Code: ";
+    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\n";
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
     if (range.location == NSNotFound) {
         [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *conferenceCode = responseObject[@"conferenceCode"];
-            event.notes = [notes stringByAppendingFormat:@"\n\nConference Added by CallInApp\nConference Code: %@", conferenceCode];
+            NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
+            event.notes = [notes stringByAppendingFormat:@"%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
             NSError *error;
             [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
             if (error) {

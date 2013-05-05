@@ -73,11 +73,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
                                              selector:@selector(eventStoreChanged:)
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
-    [[BMWAPIClient sharedClient] getPhoneNumberSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.phoneNumber = responseObject[@"number"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+    self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
