@@ -90,13 +90,18 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
                     NSMutableDictionary *eventWithCode = [@{@"event": event,
                                                           @"conferenceCode": @""} mutableCopy];
                     [filteredEvents addObject:eventWithCode];
-                    [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        NSString *conferenceCode = responseObject[@"conferenceCode"];
+                    [self getAndSaveConferenceCodeForEvent:event completion:^(NSString *conferenceCode) {
                         eventWithCode[@"conferenceCode"] = conferenceCode;
-                        [self addConferenceCode:conferenceCode toEvent:event];
-                    }   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            NSLog(@"Error creating conference: %@", [error localizedDescription]);
+                        NSLog(@"Conference code: %@", conferenceCode);
                     }];
+//                    [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                        NSString *conferenceCode = responseObject[@"conferenceCode"];
+//                        // Add the conference code to the notes section of the event. If a code exists already it is returned for us to use.
+//                        conferenceCode = [self addConferenceCode:conferenceCode toEvent:event];
+//                        eventWithCode[@"conferenceCode"] = conferenceCode;
+//                    }   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                            NSLog(@"Error creating conference: %@", [error localizedDescription]);
+//                    }];
                 } else {
 //                    [filteredEvents addObject:@{@"event":event, @"conferenceCode":@""}];
                 }
@@ -108,17 +113,27 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
     });
 }
 
-- (void)addConferenceCode:(NSString *)code toEvent:(EKEvent *)event {
-    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\nConference Code:";
+- (void)getAndSaveConferenceCodeForEvent:(EKEvent *)event completion:(void (^)(NSString *conferenceCode))completion {
+    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\nConference Code: ";
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
     if (range.location == NSNotFound) {
-        event.notes = [notes stringByAppendingFormat:@"\n\nConference Added by CallInApp\nConference Code: %@", code];
-        NSError *error;
-        [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
-        if (error) {
-            NSLog(@"Event save error: %@", [error localizedDescription]);
-        }
+        [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *conferenceCode = responseObject[@"conferenceCode"];
+            event.notes = [notes stringByAppendingFormat:@"\n\nConference Added by CallInApp\nConference Code: %@", conferenceCode];
+            NSError *error;
+            [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
+            if (error) {
+                NSLog(@"Event save error: %@", [error localizedDescription]);
+            }
+            completion(conferenceCode);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error creating conference: %@", [error localizedDescription]);
+            completion(@"");
+        }];
+    } else {
+        NSString *code = [event.notes substringFromIndex:range.location + range.length];
+        completion(code);
     }
 }
 
