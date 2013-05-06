@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class BMWManager;
+//@class BMWManager;
 
 @interface BMWAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, retain) BMWManager *manager;
+//@property (nonatomic, retain) BMWManager *manager;
 
 @end

@@ -14,14 +14,19 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *masterCallButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
+@property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
 @end
 
 @implementation BMWDayDetailViewController
+
+static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
+static NSString * const kAlertMessageType = @"alert";
+static NSString * const kInviteMessageType = @"invite";
+
 
 - (void)setEKEvent: (EKEvent*)event {
     _event = event;
@@ -106,6 +111,23 @@
 //    }
 }
 
+- (IBAction)lateButtonPressed:(id)sender {
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                self.event.title, @"title",
+                                self.event.startDate, @"startTime",
+                                self.phoneNumber, @"phoneNumber",
+                                self.conferenceCode, @"conferenceCode",
+                                self.event.attendees, @"attendees",
+                                kAlertMessageType, @"messageType",
+                                kTestSenderEmailAddress, @"initiator",nil];
+    
+
+    [[BMWAPIClient sharedClient] sendLateMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Alert success with response %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error sending message", [error localizedDescription]);
+    }];
+}
 
 - (void)viewDidLoad
 {
@@ -136,6 +158,5 @@
         [attendeeTVC setEventAttendees:self.event.attendees];
     }
 }
-
 
 @end

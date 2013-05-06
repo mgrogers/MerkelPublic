@@ -42,6 +42,21 @@
 		4B37026517233E1B00ACAAED /* BMWPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B37026317233E1B00ACAAED /* BMWPhone.m */; };
 		4B3702691723405F00ACAAED /* BMWAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3702681723405F00ACAAED /* BMWAPIClient.m */; };
 		4B37026A1723405F00ACAAED /* BMWAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3702681723405F00ACAAED /* BMWAPIClient.m */; };
+		4B47581417378150004434FD /* disconnect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580517378150004434FD /* disconnect.wav */; };
+		4B47581517378150004434FD /* dtmf_0.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580617378150004434FD /* dtmf_0.wav */; };
+		4B47581617378150004434FD /* dtmf_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580717378150004434FD /* dtmf_1.wav */; };
+		4B47581717378150004434FD /* dtmf_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580817378150004434FD /* dtmf_2.wav */; };
+		4B47581817378150004434FD /* dtmf_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580917378150004434FD /* dtmf_3.wav */; };
+		4B47581917378150004434FD /* dtmf_4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580A17378150004434FD /* dtmf_4.wav */; };
+		4B47581A17378150004434FD /* dtmf_5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580B17378150004434FD /* dtmf_5.wav */; };
+		4B47581B17378150004434FD /* dtmf_6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580C17378150004434FD /* dtmf_6.wav */; };
+		4B47581C17378150004434FD /* dtmf_7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580D17378150004434FD /* dtmf_7.wav */; };
+		4B47581D17378150004434FD /* dtmf_8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580E17378150004434FD /* dtmf_8.wav */; };
+		4B47581E17378150004434FD /* dtmf_9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47580F17378150004434FD /* dtmf_9.wav */; };
+		4B47581F17378150004434FD /* dtmf_hash.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581017378150004434FD /* dtmf_hash.wav */; };
+		4B47582017378150004434FD /* dtmf_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581117378150004434FD /* dtmf_star.wav */; };
+		4B47582117378150004434FD /* incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581217378150004434FD /* incoming.wav */; };
+		4B47582217378150004434FD /* outgoing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581317378150004434FD /* outgoing.wav */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
 		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
@@ -198,6 +213,21 @@
 		4B37026317233E1B00ACAAED /* BMWPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWPhone.m; sourceTree = "<group>"; };
 		4B3702671723405F00ACAAED /* BMWAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAPIClient.h; sourceTree = "<group>"; };
 		4B3702681723405F00ACAAED /* BMWAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAPIClient.m; sourceTree = "<group>"; };
+		4B47580517378150004434FD /* disconnect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = disconnect.wav; path = Resources/Sounds/disconnect.wav; sourceTree = SOURCE_ROOT; };
+		4B47580617378150004434FD /* dtmf_0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_0.wav; path = Resources/Sounds/dtmf_0.wav; sourceTree = SOURCE_ROOT; };
+		4B47580717378150004434FD /* dtmf_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_1.wav; path = Resources/Sounds/dtmf_1.wav; sourceTree = SOURCE_ROOT; };
+		4B47580817378150004434FD /* dtmf_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_2.wav; path = Resources/Sounds/dtmf_2.wav; sourceTree = SOURCE_ROOT; };
+		4B47580917378150004434FD /* dtmf_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_3.wav; path = Resources/Sounds/dtmf_3.wav; sourceTree = SOURCE_ROOT; };
+		4B47580A17378150004434FD /* dtmf_4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_4.wav; path = Resources/Sounds/dtmf_4.wav; sourceTree = SOURCE_ROOT; };
+		4B47580B17378150004434FD /* dtmf_5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_5.wav; path = Resources/Sounds/dtmf_5.wav; sourceTree = SOURCE_ROOT; };
+		4B47580C17378150004434FD /* dtmf_6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_6.wav; path = Resources/Sounds/dtmf_6.wav; sourceTree = SOURCE_ROOT; };
+		4B47580D17378150004434FD /* dtmf_7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_7.wav; path = Resources/Sounds/dtmf_7.wav; sourceTree = SOURCE_ROOT; };
+		4B47580E17378150004434FD /* dtmf_8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_8.wav; path = Resources/Sounds/dtmf_8.wav; sourceTree = SOURCE_ROOT; };
+		4B47580F17378150004434FD /* dtmf_9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_9.wav; path = Resources/Sounds/dtmf_9.wav; sourceTree = SOURCE_ROOT; };
+		4B47581017378150004434FD /* dtmf_hash.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_hash.wav; path = Resources/Sounds/dtmf_hash.wav; sourceTree = SOURCE_ROOT; };
+		4B47581117378150004434FD /* dtmf_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_star.wav; path = Resources/Sounds/dtmf_star.wav; sourceTree = SOURCE_ROOT; };
+		4B47581217378150004434FD /* incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = incoming.wav; path = Resources/Sounds/incoming.wav; sourceTree = SOURCE_ROOT; };
+		4B47581317378150004434FD /* outgoing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = outgoing.wav; path = Resources/Sounds/outgoing.wav; sourceTree = SOURCE_ROOT; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B77FE0916C6F2AF00426018 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B77FE0B16C6F2AF00426018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -302,6 +332,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */,
+				4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */,
 				2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */,
 				2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */,
 				4BE0B9F61727AA2900A2FFD8 /* EventKit.framework in Frameworks */,
@@ -311,10 +343,8 @@
 				4BF95F6316F518CB0058F182 /* libz.dylib in Frameworks */,
 				4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */,
 				4BBEF1BE16D1BE8D0080F6E5 /* CoreData.framework in Frameworks */,
-				4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */,
 				2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */,
 				2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */,
-				4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */,
 				4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */,
 				4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */,
 				4BA3384216D1948300A2CD24 /* Security.framework in Frameworks */,
@@ -398,6 +428,28 @@
 				4B37026317233E1B00ACAAED /* BMWPhone.m */,
 			);
 			name = Twilio;
+			sourceTree = "<group>";
+		};
+		4B47582317378158004434FD /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				4B47580517378150004434FD /* disconnect.wav */,
+				4B47580617378150004434FD /* dtmf_0.wav */,
+				4B47580717378150004434FD /* dtmf_1.wav */,
+				4B47580817378150004434FD /* dtmf_2.wav */,
+				4B47580917378150004434FD /* dtmf_3.wav */,
+				4B47580A17378150004434FD /* dtmf_4.wav */,
+				4B47580B17378150004434FD /* dtmf_5.wav */,
+				4B47580C17378150004434FD /* dtmf_6.wav */,
+				4B47580D17378150004434FD /* dtmf_7.wav */,
+				4B47580E17378150004434FD /* dtmf_8.wav */,
+				4B47580F17378150004434FD /* dtmf_9.wav */,
+				4B47581017378150004434FD /* dtmf_hash.wav */,
+				4B47581117378150004434FD /* dtmf_star.wav */,
+				4B47581217378150004434FD /* incoming.wav */,
+				4B47581317378150004434FD /* outgoing.wav */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		4B77FDFA16C6F2AF00426018 = {
@@ -509,6 +561,7 @@
 		4B77FE1016C6F2AF00426018 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4B47582317378158004434FD /* Sounds */,
 				4BBDFE8E171D3DE70083D4BC /* Fonts */,
 				2B7CC42516FD47A4008E053D /* charger.png */,
 				2B1A358116D1B5B000A3B339 /* bmw.jpg */,
@@ -749,6 +802,21 @@
 				4BE0B9EE1727A6A400A2FFD8 /* Default-568h@2x.png in Resources */,
 				4BE0B9EF1727A6A400A2FFD8 /* Default.png in Resources */,
 				4BE0B9F01727A6A400A2FFD8 /* Default@2x.png in Resources */,
+				4B47581417378150004434FD /* disconnect.wav in Resources */,
+				4B47581517378150004434FD /* dtmf_0.wav in Resources */,
+				4B47581617378150004434FD /* dtmf_1.wav in Resources */,
+				4B47581717378150004434FD /* dtmf_2.wav in Resources */,
+				4B47581817378150004434FD /* dtmf_3.wav in Resources */,
+				4B47581917378150004434FD /* dtmf_4.wav in Resources */,
+				4B47581A17378150004434FD /* dtmf_5.wav in Resources */,
+				4B47581B17378150004434FD /* dtmf_6.wav in Resources */,
+				4B47581C17378150004434FD /* dtmf_7.wav in Resources */,
+				4B47581D17378150004434FD /* dtmf_8.wav in Resources */,
+				4B47581E17378150004434FD /* dtmf_9.wav in Resources */,
+				4B47581F17378150004434FD /* dtmf_hash.wav in Resources */,
+				4B47582017378150004434FD /* dtmf_star.wav in Resources */,
+				4B47582117378150004434FD /* incoming.wav in Resources */,
+				4B47582217378150004434FD /* outgoing.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,7 +1039,7 @@
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tim Shi (J75H52U2R7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 14;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -991,8 +1059,34 @@
 					"\"$(SRCROOT)/Frameworks/Twilio\"",
 					"\"$(SRCROOT)/Frameworks\"",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lTestFlight",
+					"-lz",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MapKit,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					NewRelicAgent,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6E5EE612-B722-4821-BDBE-8304D35573AF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}/**";
 				VALID_ARCHS = armv7;
@@ -1005,8 +1099,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 299F765672A2407E8FF33FE1 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 14;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1024,6 +1118,32 @@
 					"\"$(SRCROOT)/Frameworks/GoogleAnalytics\"",
 					"\"$(SRCROOT)/Frameworks/Twilio\"",
 					"\"$(SRCROOT)/Frameworks\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lTestFlight",
+					"-lz",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreTelephony,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MapKit,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					NewRelicAgent,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					UIKit,
+					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

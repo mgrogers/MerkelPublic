@@ -33,7 +33,8 @@ static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cdfb7f3b65";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.manager = [[BMWManager alloc] init];
+//    self.manager = [[BMWManager alloc] init];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [Parse setApplicationId:kMerkelParseAppId
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];

@@ -27,6 +27,9 @@
 @implementation BMWDayTableViewController
 
 static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
+static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
+static NSString * const kAlertMessageType = @"alert";
+static NSString * const kInviteMessageType = @"invite";
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -73,11 +76,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
                                              selector:@selector(eventStoreChanged:)
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
-    [[BMWAPIClient sharedClient] getPhoneNumberSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.phoneNumber = responseObject[@"number"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+    self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -98,11 +97,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 //
 //    [self presentViewController:abvc animated:YES completion:nil];
     
-    ABPeoplePickerNavigationController *picker =
-    [[ABPeoplePickerNavigationController alloc] init];
-    
-    picker.peoplePickerDelegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
+//    ABPeoplePickerNavigationController *picker =
+//    [[ABPeoplePickerNavigationController alloc] init];
+//    
+//    picker.peoplePickerDelegate = self;
+//    [self presentViewController:picker animated:YES completion:nil];
 
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
@@ -194,12 +193,8 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BMWSlidingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
+    BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
-
-    
-    
 }
 
 
@@ -252,20 +247,43 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 
 #pragma mark - UITableViewDataDelegate protocol methods
 
+/* Start a conference call */
 -(void)handleLeftSwipe:(id)cellItem {
-    NSUInteger index = [self.testData indexOfObject:cellItem];
+    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];    
     [self.tableView beginUpdates];
     
-        //do something with this cell
-
+    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    NSString *phoneNumber = self.phoneNumber;
+    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
+    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, phoneNumber, conferenceCode];
+    NSURL *callURL = [NSURL URLWithString:callNumber];
+    [[UIApplication sharedApplication] openURL:callURL];
     [self.tableView endUpdates];
 }
 
+/* Send a late text message and email */
 -(void)handleRightSwipe:(id)cellItem {
-    NSUInteger index = [self.testData indexOfObject:cellItem];
+    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];
     [self.tableView beginUpdates];
     
-    //do something with this cell
+    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    NSString *phoneNumber = self.phoneNumber;
+    EKEvent *event = self.calendarEvents[index][@"event"];
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                event.title, @"title",
+                                event.startDate, @"startTime",
+                                phoneNumber, @"phoneNumber",
+                                conferenceCode, @"conferenceCode",
+                                event.attendees, @"attendees",
+                                kAlertMessageType, @"messageType",
+                                kTestSenderEmailAddress, @"initiator",nil];
+    
+    [[BMWAPIClient sharedClient] sendLateMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Alert success with response %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error sending message", [error localizedDescription]);
+    }];
     
     [self.tableView endUpdates];
 }
@@ -295,7 +313,6 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 - (void)peoplePickerNavigationControllerDidCancel:
 (ABPeoplePickerNavigationController *)peoplePicker
 {
-    
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
