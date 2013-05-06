@@ -144,9 +144,11 @@ exports.invite = function(req, res) {
                 }, function(err, responseData) {
                     if(!err) {
                         console.log("SMS delivered");
+                        res.send(responseData);
                     } else {
-                        console.log(message);
+                        console.log(err);
                         console.log("SMS delivery error");
+                        res.send(err);
                     }
                 });
             }
