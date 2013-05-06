@@ -108,14 +108,17 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
 }
 
 - (void)getAndSaveConferenceCodeForEvent:(EKEvent *)event completion:(void (^)(NSString *conferenceCode))completion {
-    static NSString * const kBMWCalendarNote = @"\n\nConference Added by CallInApp\n";
+    static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp\n";
+    static const NSInteger kBMWConferenceCodeLength = 10;
+    [event refresh];
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
-    if (range.location == NSNotFound) {
+    if (range.location == NSNotFound || (range.location == 0 && range.length == 0) || !notes) {
+        NSLog(@"Code not found, creating new conference.");
         [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *conferenceCode = responseObject[@"conferenceCode"];
             NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
-            event.notes = [notes stringByAppendingFormat:@"%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
+            event.notes = [notes stringByAppendingFormat:@"\n\n%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
             NSError *error;
             [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
             if (error) {
@@ -127,7 +130,10 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
             completion(@"");
         }];
     } else {
-        NSString *code = [event.notes substringFromIndex:range.location + range.length];
+        NSString *code = [event.notes substringFromIndex:event.notes.length - kBMWConferenceCodeLength];
+        if (!code) {
+            code = @"";
+        }
         completion(code);
     }
 }

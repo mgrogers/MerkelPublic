@@ -190,7 +190,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BMWSlidingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
 
