@@ -319,47 +319,6 @@
         <image name="bmwLogo.png" width="45" height="45"/>
         <image name="charger.png" width="75" height="163"/>
     </resources>
-    <classes>
-        <class className="BMWAttendeeTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWAttendeeTableViewController.h"/>
-        </class>
-        <class className="BMWDayDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="conferenceCodeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="joinCallButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
-        </class>
-        <class className="BMWDayTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
-        </class>
-        <class className="BMWViewController" superclassName="GAITrackedViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GAITrackedViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PKRevealController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

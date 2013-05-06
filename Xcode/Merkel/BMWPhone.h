@@ -29,5 +29,6 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 
 @property (readonly) BOOL isReady;
 @property (readonly) BMWPhoneStatus status;
+@property (readonly) NSString *phoneNumber;
 
 @end
