@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) UILabel *startLabel, *endLabel;
 @property (nonatomic, assign) id<BMWSlidingCellDelegate> delegate;
+@property NSInteger index;
 
 @end
