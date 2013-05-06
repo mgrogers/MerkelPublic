@@ -10,8 +10,8 @@
 #import "BMWGCalendarEvent.h"
 #import "BMWLinkedInProfile.h"
 
-#import <gtm-oauth2/GTMOAuth2Authentication.h>
-#import <gtm-oauth2/GTMOAuth2ViewControllerTouch.h>
+#import <Google-API-Client/GTMOAuth2Authentication.h>
+#import <Google-API-Client/GTMOAuth2ViewControllerTouch.h>
 
 @interface NSURL (additions)
 
@@ -450,8 +450,5 @@ static NSString * const kGTMOAuth2AccountName = @"OAuth";
     }
     return attendees;
 }
-
-
-
 
 @end

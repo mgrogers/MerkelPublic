@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lI2-ju-ciw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lI2-ju-ciw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -118,6 +118,169 @@
             </objects>
             <point key="canvasLocation" x="632" y="-273"/>
         </scene>
+        <!--Day Detail View Controller-->
+        <scene sceneID="dai-Oe-D3p">
+            <objects>
+                <viewController id="IGI-XZ-Asx" customClass="BMWDayDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="h04-J1-KSi">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-06-92b">
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Code:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJw-9z-vFk">
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx1-0K-yh1">
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal" title="Join Call">
+                                    <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="joinCallButtonPressed:" destination="IGI-XZ-Asx" eventType="touchUpInside" id="HaE-Iz-5gF"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phone Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFD-dx-ipv">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="155" id="kXf-4t-QCn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Phone Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4S-ef-Dh9">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="0jT-fO-pD1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Event Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvv-Ob-EIk">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="141" id="Rq0-Fx-8eD"/>
+                                    <constraint firstAttribute="height" constant="47" id="mlb-cs-w7L"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Event Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kg3-9m-gFd">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFF-Bg-oPR">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="TIP-pb-SDT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="I'm Late">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYb-qf-mXe">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="xZn-Xr-oKw" kind="embed" identifier="EmbedAttendee" id="d9d-2F-qCf"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Attendees" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R7B-96-EnM">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="ZeH-Lp-C0U"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="baseline" secondItem="KJw-9z-vFk" secondAttribute="baseline" type="default" id="0ya-8u-l6m"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="trailing" secondItem="XFD-dx-ipv" secondAttribute="trailing" type="default" id="2WC-XI-mck"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="centerY" secondItem="KJw-9z-vFk" secondAttribute="centerY" type="default" id="4Fq-bV-Pdf"/>
+                            <constraint firstItem="oFF-Bg-oPR" firstAttribute="top" secondItem="rx1-0K-yh1" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="5IA-Jm-Rj2"/>
+                            <constraint firstItem="oFF-Bg-oPR" firstAttribute="baseline" secondItem="cvv-Ob-EIk" secondAttribute="baseline" type="default" id="5rw-KC-dqf"/>
+                            <constraint firstItem="kg3-9m-gFd" firstAttribute="top" secondItem="cvv-Ob-EIk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="7pp-MI-hgv"/>
+                            <constraint firstItem="PHD-06-92b" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8CU-cR-h2P"/>
+                            <constraint firstItem="XFD-dx-ipv" firstAttribute="leading" secondItem="PHD-06-92b" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="BUN-be-rDW"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="leading" secondItem="h04-J1-KSi" secondAttribute="leading" type="default" id="DL7-E5-HrG"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="KJw-9z-vFk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="EmI-gN-mK8"/>
+                            <constraint firstItem="kg3-9m-gFd" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="H63-Xw-wcP"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="trailing" secondItem="h04-J1-KSi" secondAttribute="trailing" type="default" id="IVj-yJ-Nsz"/>
+                            <constraint firstItem="R7B-96-EnM" firstAttribute="leading" secondItem="kg3-9m-gFd" secondAttribute="leading" type="default" id="KHI-k5-NiN"/>
+                            <constraint firstItem="oFF-Bg-oPR" firstAttribute="trailing" secondItem="rx1-0K-yh1" secondAttribute="trailing" type="default" id="MB9-jC-YUA"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="top" secondItem="KJw-9z-vFk" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="O5E-VH-8Je"/>
+                            <constraint firstItem="R7B-96-EnM" firstAttribute="top" secondItem="kg3-9m-gFd" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Ond-65-cpO"/>
+                            <constraint firstItem="PHD-06-92b" firstAttribute="leading" secondItem="rx1-0K-yh1" secondAttribute="leading" type="default" id="Ql4-g8-nJn"/>
+                            <constraint firstItem="p4S-ef-Dh9" firstAttribute="leading" secondItem="XFD-dx-ipv" secondAttribute="leading" type="default" id="RxL-Zz-2rs"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="leading" secondItem="cvv-Ob-EIk" secondAttribute="leading" type="default" id="Uw6-bF-qQn"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="centerX" secondItem="GYb-qf-mXe" secondAttribute="centerX" type="default" id="Zb7-fz-Kgd"/>
+                            <constraint firstItem="cvv-Ob-EIk" firstAttribute="top" secondItem="rx1-0K-yh1" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="f5n-IN-Uym"/>
+                            <constraint firstItem="rx1-0K-yh1" firstAttribute="trailing" secondItem="p4S-ef-Dh9" secondAttribute="trailing" type="default" id="fCQ-dl-b8Q"/>
+                            <constraint firstItem="kg3-9m-gFd" firstAttribute="trailing" secondItem="cvv-Ob-EIk" secondAttribute="trailing" type="default" id="lFF-xK-kO1"/>
+                            <constraint firstItem="KJw-9z-vFk" firstAttribute="top" secondItem="PHD-06-92b" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="r9k-1z-x4O"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="bottom" secondItem="h04-J1-KSi" secondAttribute="bottom" type="default" id="uxp-DB-QrP"/>
+                            <constraint firstItem="XFD-dx-ipv" firstAttribute="top" secondItem="h04-J1-KSi" secondAttribute="top" constant="21" id="zEg-7c-p8T"/>
+                            <constraint firstItem="GYb-qf-mXe" firstAttribute="top" secondItem="R7B-96-EnM" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="zMc-eE-aXU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4gE-cs-OGE"/>
+                    <connections>
+                        <outlet property="conferenceCodeLabel" destination="p4S-ef-Dh9" id="Itk-pW-tIt"/>
+                        <outlet property="conferencePhoneNumber" destination="XFD-dx-ipv" id="yFX-ix-Mvu"/>
+                        <outlet property="eventDateLabel" destination="cvv-Ob-EIk" id="wLj-56-P9Z"/>
+                        <outlet property="eventTimeLabel" destination="kg3-9m-gFd" id="fsy-kR-bJW"/>
+                        <outlet property="joinCallButton" destination="rx1-0K-yh1" id="a9D-Uu-ffm"/>
+                        <outlet property="masterCallButton" destination="rx1-0K-yh1" id="U05-Xh-22A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ai9-GC-R8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1133" y="411"/>
+        </scene>
+        <!--Attendee Table View Controller-->
+        <scene sceneID="7aV-OL-lsB">
+            <objects>
+                <tableViewController id="xZn-Xr-oKw" customClass="BMWAttendeeTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qiX-DS-fMi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="254"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uAV-yT-268">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xZn-Xr-oKw" id="m03-vl-hfJ"/>
+                            <outlet property="delegate" destination="xZn-Xr-oKw" id="JEJ-SS-Usc"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zlE-0G-oMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1599" y="595"/>
+        </scene>
         <!--Day Table View Controller-->
         <scene sceneID="a50-WX-nU8">
             <objects>
@@ -127,14 +290,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uer-ym-kid">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uer-ym-kid" customClass="BMWDayTableViewCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="IGI-XZ-Asx" kind="push" identifier="Show Detail" id="juK-KX-vbK"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -153,6 +319,47 @@
         <image name="bmwLogo.png" width="45" height="45"/>
         <image name="charger.png" width="75" height="163"/>
     </resources>
+    <classes>
+        <class className="BMWAttendeeTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWAttendeeTableViewController.h"/>
+        </class>
+        <class className="BMWDayDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="conferenceCodeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="joinCallButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="masterCallButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
+        </class>
+        <class className="BMWDayTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
+        </class>
+        <class className="BMWViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PKRevealController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
