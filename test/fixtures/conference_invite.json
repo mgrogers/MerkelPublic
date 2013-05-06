@@ -5,14 +5,19 @@
     "attendees": [
 
         {
+            "email": "timgshi@gmail.com",
+            "displayName": "Tim Shi",
+            "phone": "6505551234"
+        },
+        {
             "email": "wes.k.leung@gmail.com",
             "displayName": "Wesley Leung",
             "phone": "3102663121"
         },
         {
-            "email": "wleung1@stanford.edu",
-            "displayName": "Wesley Leung",
-            "phone": "6505551234"
+            "email": "mjgrogers@gmail.com",
+            "displayName": "Mike Rogers",
+            "phone": "3102663121"
         }
     ],
     

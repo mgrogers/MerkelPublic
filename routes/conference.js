@@ -142,9 +142,8 @@ exports.invite = function(req, res) {
             var conferenceAttendees = [];
             for (var i = 0; i < postBody.attendees.length; i++) {
                 conferenceAttendees.push(postBody.attendees[i].email);
-                console.log(postBody.attendees[i].email);
             }
-            
+
             var conferencePhoneNumber = postBody.phoneNumber;
             var conferenceCode = postBody.conferenceCode;
             var eventTitle = postBody.title;
@@ -177,7 +176,7 @@ exports.invite = function(req, res) {
                     return res.send(response);
                 } else {
                     var response = {"meta": {"code": 200},
-                                 "message": "Invite delivered to :" + postBody.attendees};    
+                                 "message": "Invite delivered to :" + conferenceAttendees.toString()};    
                     return res.send(response);
                 }
             });

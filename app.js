@@ -12,7 +12,6 @@ var express = require('express'),
     url = require('url'),
     kue = require('kue'),
     redis = require('kue/node_modules/redis'),
-    emailer = require('./routes/emailer');
     sms = require('./routes/sms'),
     conference = require('./routes/conference');
 
@@ -49,7 +48,6 @@ app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
-app.post('/' + API_VERSION + '/emailer/alert', emailer.emailAlert);
 app.post('/' + API_VERSION + '/conference/invite', conference.invite);
 
 // Kue & Redis for sending SMS
