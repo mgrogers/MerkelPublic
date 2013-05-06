@@ -120,10 +120,35 @@ exports.invite = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
         if(postBody.conferenceCode && postBody.attendees) {
-            // Add participants to db
             var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
-            // addParticipants(participantsObject);
+            var initiator = postBody.initiator;
+            var conferencePhoneNumber = postBody.phoneNumber;
+            var conferenceCode = postBody.conferenceCode;
+            var eventTitle = postBody.title;
+            var startTime = stringifyTimeObject(req.body.start);
+            var messageType = postBody.messageType;
 
+            var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+            var message;
+            if(messageType == 'invite') {
+                message = initiator + " invited you to a conference call via CallIn. Download the app here " + downloadURL + " or dial-in at: " + conferencePhoneNumber + conferenceCode; 
+            } else if (messageType == 'alert') {
+                message = initiator + " is running late to the upcoming " + eventTitle + " conference call, but will join as soon as possible.";
+            }
+            for(var i = 0; i < postBody.attendees.length; i++) {
+                client.sendSms({
+                    to: postBody.attendees[i].phone,
+                    from: TWILIO_NUMBER,
+                    body: message
+                }, function(err, responseData) {
+                    if(!err) {
+                        console.log("SMS delivered");
+                    } else {
+                        console.log(message);
+                        console.log("SMS delivery error");
+                    }
+                });
+            }
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
                 user = kSendGridUser
@@ -136,36 +161,27 @@ exports.invite = function(req, res) {
                 key = process.env.SENDGRID_PASSWORD;
             }
             var sendgrid = new SendGrid(user, key);
-
-            var messageType = postBody.messageType;
-            var initiator = postBody.initiator;
             var conferenceAttendees = [];
             for (var i = 0; i < postBody.attendees.length; i++) {
                 conferenceAttendees.push(postBody.attendees[i].email);
-            }
-
-            var conferencePhoneNumber = postBody.phoneNumber;
-            var conferenceCode = postBody.conferenceCode;
-            var eventTitle = postBody.title;
-            var startTime = stringifyTimeObject(req.body.start);
-         
-            var sender, msgSubject, body;
+            } 
+            var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'Invite@CallInapp.com';
                 msgSubject = eventTitle + " Call: " + initiator + " on " + startTime;
-                body = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
+                content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
                     + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
                     + "With code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
                 msgSubject = initiator + " is running late for your call: " + eventTitle + "at " + conferenceCode; 
-                body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
+                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
             }
             var email = new Email({
                 from: sender,
                 replyto: initiator,
                 subject: msgSubject,
-                text: body
+                text: content
             });
             email.addTo(conferenceAttendees);
 
