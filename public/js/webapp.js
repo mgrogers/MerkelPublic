@@ -7,6 +7,7 @@ CallIn.Conference = Backbone.Model.extend({
         this.attendees = new CallIn.AttendeeList([], {
             "conferenceCode": this.get("conferenceCode")
         });
+
         this.fetch();
         this.on("change", this.onChange, this);
         
@@ -28,6 +29,11 @@ CallIn.Conference = Backbone.Model.extend({
 
         this.on("begin:call", this.beginCall, this);
         this.on("end:call", this.endCall, this);
+
+        this.attendeesPoller = Backbone.Poller.get(this.attendees, {
+            delay: 2000
+        });
+        this.attendeesPoller.start();
     },
 
     sync: function(method, model, options) {
@@ -35,7 +41,6 @@ CallIn.Conference = Backbone.Model.extend({
             var T = this;
             $.getJSON('/2013-04-23/conference/get/' + this.get("conferenceCode"), function(data, textStatus, jqXHR) {
                 T.set(data);
-                T.attendees.add(data.attendees);
                 T.trigger("change");
             });
         }
@@ -81,6 +86,8 @@ CallIn.ConferenceView = Backbone.View.extend({
         this.model.on("device:error", this.deviceError, this);
         this.model.on("device:connect", this.deviceConnect, this);
         this.model.on("device:disconnect", this.deviceReady, this);
+    
+        this.model.attendees.on("add", this.addAll, this);
     },
 
     render: function() {
@@ -102,6 +109,7 @@ CallIn.ConferenceView = Backbone.View.extend({
     },
 
     addAll: function() {
+        this.$el.find("#attendee-list").html("");
         this.model.attendees.each(this.addAttendee, this);
     },
 
