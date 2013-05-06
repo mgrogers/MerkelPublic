@@ -249,8 +249,17 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - UITableViewDataDelegate protocol methods
 
 -(void)handleLeftSwipe:(id)cellItem {
-    NSUInteger index = [self.testData indexOfObject:cellItem];
+    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];
+
+    
     [self.tableView beginUpdates];
+    
+    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    NSString *phoneNumber = self.phoneNumber;
+    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
+    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, phoneNumber, conferenceCode];
+    NSURL *callURL = [NSURL URLWithString:callNumber];
+    [[UIApplication sharedApplication] openURL:callURL];
     
         //do something with this cell
 
@@ -258,7 +267,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 }
 
 -(void)handleRightSwipe:(id)cellItem {
-    NSUInteger index = [self.testData indexOfObject:cellItem];
+    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];
     [self.tableView beginUpdates];
     
     //do something with this cell
