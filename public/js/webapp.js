@@ -4,7 +4,7 @@ var CallIn = function () {
 
 CallIn.Conference = Backbone.Model.extend({
     initialize: function() {
-        this.attendees = new CallIn.AttendeeList({
+        this.attendees = new CallIn.AttendeeList([], {
             "conferenceCode": this.get("conferenceCode")
         });
         this.fetch();
@@ -63,8 +63,12 @@ CallIn.Attendee = Backbone.Model.extend({
 
 CallIn.AttendeeList = Backbone.Collection.extend({
     model: CallIn.Attendee,
+    initialize: function(models, options) {
+        this.conferenceCode = options.conferenceCode;
+    },
+
     url: function() {
-        return "/2013-04-23/conference/get/" + this.get("conferenceCode") + "/attendees";
+        return "/2013-04-23/conference/get/" + this.conferenceCode + "/attendees";
     }
 });
 
@@ -93,13 +97,11 @@ CallIn.ConferenceView = Backbone.View.extend({
     },
 
     addAttendee: function(attendee) {
-        console.log(attendee.toJSON());
         var view = new CallIn.AttendeeView({model: attendee});
         this.$el.find("#attendee-list").append(view.render().el);
     },
 
     addAll: function() {
-        console.log(this.model.attendees.length);
         this.model.attendees.each(this.addAttendee, this);
     },
 
