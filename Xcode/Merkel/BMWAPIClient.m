@@ -99,6 +99,25 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 //    }
 }
 
+- (void)sendLateMessageWithParameters:(NSDictionary *)parameters
+                             success:(void (^)(AFHTTPRequestOperation *, id))success
+                             failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    
+    static NSString * const kBMWNewConferencePath = @"conference/invite";
+    
+    [self postPath:kBMWNewConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
+}
+
+
+
+
+
+
+
+
 - (void)getPhoneNumberSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     static NSString * const kBMWPhoneNumberPath = @"conference/number";
