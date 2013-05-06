@@ -26,6 +26,8 @@ var SendGrid = require('sendgrid').SendGrid;
 var downloadURL = "http://itunes.com/apps/callinapp"  
 
 exports.emailAlert = function(req, res) {
+
+    
 	var user, key; 
     if(!process.env.SENDGRID_USERNAME) {
 		user = "app12018585@heroku.com";

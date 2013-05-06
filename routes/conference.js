@@ -17,6 +17,14 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+
+var Email = require('sendgrid').Email;
+var SendGrid = require('sendgrid').SendGrid;
+var kSendGridUser = "app12018585@heroku.com";
+var kSendGridKey = "xtce2l6u";
+//Update this upon app store approval.
+var downloadURL = "http://itunes.com/apps/callinapp"  
+
 var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
@@ -114,62 +122,65 @@ exports.invite = function(req, res) {
         if(postBody.conferenceCode && postBody.attendees) {
             // Add participants to db
             var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
-            addParticipants(participantsObject);
+            // addParticipants(participantsObject);
 
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
-                user = "app12018585@heroku.com";
+                user = kSendGridUser
             } else {
-                user = process.env.SENDGRID_USERNAME;
+               user = process.env.SENDGRID_USERNAME;
             }
             if(!process.env.SENDGRID_PASSWORD) {
-                key = "xtce2l6u";
+                key = kSendGridKey;
             } else {
                 key = process.env.SENDGRID_PASSWORD;
             }
-
-            toArray = [];
-            for(var attendee in postBody.attendees) {
-                if(attendee.email && attendee.email != "") {
-                    toArray.push(attendee.email);
-                }
-            }
-
             var sendgrid = new SendGrid(user, key);
-            var Email = require('sendgrid').Email;
-            var email = new Email(optionalParams);
-            var optionalParams = {
-                html: ''
-            };
-            var email = new Email({
-                to: toArray, 
-                from: 'Invite@CallInApp.com',
-                subject: "You have been invited you to a conference call with CallIn!",
-                text: "You're receiving this email because one of your colleagues has initiated a conference\
-                call with CallIn, and would like you to join! If you have the CallIn app installed on your phone, you can enter\
-                the conference call at any time simply by swiping the conference call event you want to join.\
-                Otherwise, you may dial in by calling: " + TWILIO_NUMBER + " and the following conference code: " + postBody.conferenceCode
-            });
-            sendgrid.send(email, function(success, message) {
-            if(!success) {
-                console.log(message);
-                var response = {"meta": {
-                                   "code": 400
-                                },
-                                "message": "Invitation delivery failed"
-                               };
-                res.send(400, response);
-                } 
-                console.log(success);
-                var response = {"meta": {
-                                  "code": 200
-                                },
-                                "message": "Invite delivered"
-                               };
-                res.send(response);
-            });
 
-            return res.send(participantsObject);
+            var messageType = postBody.messageType;
+            var initiator = postBody.initiator;
+            var conferenceAttendees = [];
+            for (var i = 0; i < postBody.attendees.length; i++) {
+                conferenceAttendees.push(postBody.attendees[i].email);
+                console.log(postBody.attendees[i].email);
+            }
+            
+            var conferencePhoneNumber = postBody.phoneNumber;
+            var conferenceCode = postBody.conferenceCode;
+            var eventTitle = postBody.title;
+            var startTime = stringifyTimeObject(req.body.start);
+         
+            var sender, msgSubject, body;
+            if(messageType == 'invite') {
+                sender = 'Invite@CallInapp.com';
+                msgSubject = eventTitle + " Call: " + initiator + " on " + startTime;
+                body = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
+                    + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
+                    + "With code: " + conferenceCode + ".\n";
+            } else if (messageType == 'alert') {
+                sender = 'Alert@CallInapp.com';
+                msgSubject = initiator + " is running late for your call: " + eventTitle + "at " + conferenceCode; 
+                body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
+            }
+            var email = new Email({
+                from: sender,
+                replyto: initiator,
+                subject: msgSubject,
+                text: body
+            });
+            email.addTo(conferenceAttendees);
+
+            sendgrid.send(email, function(success, message) {
+                if(!success) {
+                    var response = {"meta": {"code": 400},
+                                 "message": "Invitation delivery failed. " + message};
+                    return res.send(response);
+                } else {
+                    var response = {"meta": {"code": 200},
+                                 "message": "Invite delivered to :" + postBody.attendees};    
+                    return res.send(response);
+                }
+            });
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
@@ -318,3 +329,13 @@ function generateConferenceCode() {
         }
     });
 };
+
+/*todo: helper function fwrite additional logic here to format the readable string according */
+function stringifyTimeObject(timeObject) {
+    if(timeObject) {
+        var date = new Date(timeObject.dateTime);
+        return date.toString();
+    } else {
+        return "";
+    }    
+ }
