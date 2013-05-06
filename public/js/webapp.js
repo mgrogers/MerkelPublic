@@ -4,6 +4,7 @@ var CallIn = function () {
 
 CallIn.Conference = Backbone.Model.extend({
     initialize: function() {
+        this.attendees = new CallIn.AttendeeList();
         this.fetch();
         this.on("change", this.onChange, this);
         
@@ -32,13 +33,14 @@ CallIn.Conference = Backbone.Model.extend({
             var T = this;
             $.getJSON('/2013-04-23/conference/get/' + this.get("conferenceCode"), function(data, textStatus, jqXHR) {
                 T.set(data);
+                T.attendees.add(data.attendees);
                 T.trigger("change");
             });
         }
     },
 
     onChange: function() {
-    
+        console.log(this.attendees.toJSON());
     },
 
     beginCall: function() {
@@ -51,6 +53,14 @@ CallIn.Conference = Backbone.Model.extend({
         this.connection.disconnect();
         this.trigger("device:disconnect");
     }
+});
+
+CallIn.Attendee = Backbone.Model.extend({
+    initialize: function() {}    
+});
+
+CallIn.AttendeeList = Backbone.Collection.extend({
+    model: CallIn.Attendee
 });
 
 CallIn.ConferenceView = Backbone.View.extend({
