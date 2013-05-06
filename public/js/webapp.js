@@ -24,6 +24,7 @@ CallIn.Conference = Backbone.Model.extend({
         });
 
         this.on("begin:call", this.beginCall, this);
+        this.on("end:call", this.endCall, this);
     },
 
     sync: function(method, model, options) {
@@ -44,6 +45,11 @@ CallIn.Conference = Backbone.Model.extend({
         this.connection = Twilio.Device.connect({
             conferenceCode: this.get("conferenceCode")
         });
+    },
+
+    endCall: function() {
+        this.connection.disconnect();
+        this.trigger("device:disconnect");
     }
 });
 
@@ -55,6 +61,7 @@ CallIn.ConferenceView = Backbone.View.extend({
         this.model.on("device:ready", this.deviceReady, this);
         this.model.on("device:error", this.deviceError, this);
         this.model.on("device:connect", this.deviceConnect, this);
+        this.model.on("device:disconnect", this.deviceReady, this);
     },
 
     render: function() {
@@ -81,10 +88,18 @@ CallIn.ConferenceView = Backbone.View.extend({
     },
 
     deviceConnect: function() {
-        this.$el.find("#call-status").html("Connected");
+        this.$el.find("#call-status").html('<a href="#" class="btn btn-large btn-error" id="hangup-button">Hang Up</a>');
+        var T = this;
+        this.$el.find("#hangup-button").click(function(event) {
+            T.hangup();
+        });
     },
 
     call: function() {
         this.model.trigger("begin:call");
+    },
+
+    hangup: function() {
+        this.model.trigger("end:call");
     }
 });

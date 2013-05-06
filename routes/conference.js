@@ -188,16 +188,14 @@ exports.get = function(req, res) {
 
     Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
         if(!err && conference) {
-
+            conference_result = JSON.parse(JSON.stringify(conference));
             // Find attendees to the conference
             Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
-                conference.attendees = [];
-
                 if(!err_p && participants) {
-                    conference.attendees = participants;
+                    conference_result.attendees = JSON.parse(JSON.stringify(participants));
                 }
-
-                return res.send(conference);
+                
+                return res.send(JSON.stringify(conference_result));
             });
         } else {
             var response = {message: "Couldn't find the specified conference."};
