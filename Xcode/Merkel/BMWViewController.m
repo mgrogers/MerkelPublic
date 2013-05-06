@@ -35,15 +35,15 @@
     self.trackedViewName = @"Home Screen";
     self.phoneNumberField.delegate = self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(connectedBMW:)
-                                                 name:IDVehicleDidConnectNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(disconnectedBMW:)
-                                                 name:IDVehicleDidDisconnectNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(connectedBMW:)
+//                                                 name:IDVehicleDidConnectNotification
+//                                               object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(disconnectedBMW:)
+//                                                 name:IDVehicleDidDisconnectNotification
+//                                               object:nil];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
     button.backgroundColor = [UIColor clearColor];
@@ -66,9 +66,9 @@
         if (![[PFUser currentUser] objectForKey:@"first_name"]) {
             [self setupNewUserAccount];
         }
-        if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
-            [self setupNewGoogleAccount];
-        }
+//        if (![[BMWGCalendarDataSource sharedDataSource] canAuthorize]) {
+//            [self setupNewGoogleAccount];
+//        }
         [self setupViewForUser];
     }
 }
@@ -82,10 +82,10 @@
 #pragma mark - User Management
 
 - (void)setupNewGoogleAccount {
-    GTMOAuth2ViewControllerTouch *viewController = [[BMWGCalendarDataSource sharedDataSource] authViewControllerWithCompletionHandler:^(GTMOAuth2ViewControllerTouch *viewController, NSError *error) {
-        [viewController.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
-    }];
-    [self presentViewController:viewController animated:YES completion:NULL];
+//    GTMOAuth2ViewControllerTouch *viewController = [[BMWGCalendarDataSource sharedDataSource] authViewControllerWithCompletionHandler:^(GTMOAuth2ViewControllerTouch *viewController, NSError *error) {
+//        [viewController.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+//    }];
+//    [self presentViewController:viewController animated:YES completion:NULL];
 }
 
 
@@ -200,7 +200,7 @@
 
 - (void)logoutButtonPressed:(id)sender {
     [PFUser logOut];
-    [[BMWGCalendarDataSource sharedDataSource] logOut];
+//    [[BMWGCalendarDataSource sharedDataSource] logOut];
     [self presentLoginView];
 }
 
@@ -208,7 +208,7 @@
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
+//    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
@@ -223,7 +223,7 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
+//    [[BMWGCalendarDataSource sharedDataSource] refreshParseAuth];
 }
 
 #pragma mark - View Callbacks
