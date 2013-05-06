@@ -51,7 +51,7 @@ exports.emailAlert = function(req, res) {
     var sender, msgSubject, body;
     if(messageType == 'invite') {
         sender = 'Invite@CallInapp.com';
-        msgSubject = eventTitle + " Call: " + initiator + " at " + startTime;
+        msgSubject = eventTitle + " Call: " + initiator + " on " + startTime;
         body = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
             + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
             + "With code: " + conferenceCode + ".\n";
@@ -80,7 +80,7 @@ exports.emailAlert = function(req, res) {
         }
     });
  }
- 
+
 //todo: write additional logic here to format the readable string according
 function stringifyTimeObject(timeObject) {
     if(timeObject) {
