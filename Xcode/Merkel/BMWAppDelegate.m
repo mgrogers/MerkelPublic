@@ -16,7 +16,7 @@
 #import <NewRelicAgent/NewRelicAgent.h>
 #import <PKRevealController/PKRevealController.h>
 
-@interface BMWAppDelegate () <IDLogAppender, CLLocationManagerDelegate>
+@interface BMWAppDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (strong, nonatomic) PKRevealController *revealController;
@@ -50,7 +50,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
 // Delayed start of external services to speed up app launch.
 - (void)startExternalServices {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[IDLogger defaultLogger] addAppender:self];
+//        [[IDLogger defaultLogger] addAppender:self];
         [TestFlight takeOff:kMerkelTestFlightId];
 #ifndef RELEASE
         [GAI sharedInstance].debug = YES;
@@ -66,10 +66,10 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     });
 }
 
-- (void)appendLoggerEvent:(IDLoggerEvent *)event
-{
-    NSLog(@"%@", event.message);
-}
+//- (void)appendLoggerEvent:(IDLoggerEvent *)event
+//{
+//    NSLog(@"%@", event.message);
+//}
 
 #pragma mark - URL Handling
 
