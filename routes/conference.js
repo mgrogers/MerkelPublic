@@ -6,6 +6,7 @@ var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
 var API_VERSION = '2013-04-23'
 
 var twilio = require('twilio');
+var SendGrid = require('sendgrid').SendGrid;
 var Hashids = require("hashids");
 var hashids = new Hashids("dat salt, yo", MINIMUM_CONFERENCE_CODE_LENGTH, "0123456789");
 
@@ -15,6 +16,14 @@ var mongoose_options = {'auto_reconnect':true};
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71don2tthmm2ceaahdmhog2@ds045507.mongolab.com:45507/heroku_app12018585', mongoose_options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
+
+
+var Email = require('sendgrid').Email;
+var SendGrid = require('sendgrid').SendGrid;
+var kSendGridUser = "app12018585@heroku.com";
+var kSendGridKey = "xtce2l6u";
+//Update this upon app store approval.
+var downloadURL = "http://itunes.com/apps/callinapp"  
 
 var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
@@ -110,16 +119,67 @@ API Call: "/2013-04-23/conference/invite" to send an invite for a conference to 
 exports.invite = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
-
         if(postBody.conferenceCode && postBody.attendees) {
             // Add participants to db
             var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
-            addParticipants(participantsObject);
+            // addParticipants(participantsObject);
 
-            // Send invite to participants
-            // invite blah blah
+            var user, key; 
+            if(!process.env.SENDGRID_USERNAME) {
+                user = kSendGridUser
+            } else {
+               user = process.env.SENDGRID_USERNAME;
+            }
+            if(!process.env.SENDGRID_PASSWORD) {
+                key = kSendGridKey;
+            } else {
+                key = process.env.SENDGRID_PASSWORD;
+            }
+            var sendgrid = new SendGrid(user, key);
 
-            return res.send(participantsObject);
+            var messageType = postBody.messageType;
+            var initiator = postBody.initiator;
+            var conferenceAttendees = [];
+            for (var i = 0; i < postBody.attendees.length; i++) {
+                conferenceAttendees.push(postBody.attendees[i].email);
+            }
+
+            var conferencePhoneNumber = postBody.phoneNumber;
+            var conferenceCode = postBody.conferenceCode;
+            var eventTitle = postBody.title;
+            var startTime = stringifyTimeObject(req.body.start);
+         
+            var sender, msgSubject, body;
+            if(messageType == 'invite') {
+                sender = 'Invite@CallInapp.com';
+                msgSubject = eventTitle + " Call: " + initiator + " on " + startTime;
+                body = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
+                    + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
+                    + "With code: " + conferenceCode + ".\n";
+            } else if (messageType == 'alert') {
+                sender = 'Alert@CallInapp.com';
+                msgSubject = initiator + " is running late for your call: " + eventTitle + "at " + conferenceCode; 
+                body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
+            }
+            var email = new Email({
+                from: sender,
+                replyto: initiator,
+                subject: msgSubject,
+                text: body
+            });
+            email.addTo(conferenceAttendees);
+
+            sendgrid.send(email, function(success, message) {
+                if(!success) {
+                    var response = {"meta": {"code": 400},
+                                 "message": "Invitation delivery failed. " + message};
+                    return res.send(response);
+                } else {
+                    var response = {"meta": {"code": 200},
+                                 "message": "Invite delivered to :" + conferenceAttendees.toString()};    
+                    return res.send(response);
+                }
+            });
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
@@ -268,3 +328,13 @@ function generateConferenceCode() {
         }
     });
 };
+
+/*todo: helper function fwrite additional logic here to format the readable string according */
+function stringifyTimeObject(timeObject) {
+    if(timeObject) {
+        var date = new Date(timeObject.dateTime);
+        return date.toString();
+    } else {
+        return "";
+    }    
+ }
