@@ -12,3 +12,20 @@
         }
     ],
 }
+
+
+
+{
+    "conferenceCode": "9351579103",
+    "phoneNumber": "4086468223",
+    "title": "Scrum",
+    "attendees": [
+        "wes.k.leung@gmail.com"
+    ],
+    "messageType": "invite",
+    "initiator": "wes.k.leung@gmail.com",
+    "start": {
+        "dateTime": "2012-04-23T18:25:43.511Z",
+        "timeZone": "America/Los_Angeles"
+    }
+}

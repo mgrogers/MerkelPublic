@@ -5,7 +5,6 @@
 [attendees] Unique identifier for a conference call. //e.g. ["mjgrogers@gmail.com", "bossmobilewunderkinds@lists.stanford.edu", .....]
 [phoneNumber] Phone number of conference call
 [conferenceCode] Conference code for call
-[event] event json object  {'name': 'event name', 'start':{'datetime': date time object, 'timezone':'Pacific'}  }
 */
 
 var Email = require('sendgrid').Email;
@@ -34,22 +33,20 @@ exports.emailAlert = function(req, res) {
     var conferenceAttendees = req.body.attendees;
     var conferencePhoneNumber = req.body.phoneNumber;
     var conferenceCode = req.body.conferenceCode;
-    var event = req.body.event ? req.body.event: "";
-
-    var startTime = stringifyTimeObject(event);
+    var eventTitle = req.body.title;
+    var startTime = stringifyTimeObject(req.body.start);
  
-
     var sender, msgSubject, body;
     if(messageType == 'invite') {
         sender = 'Invite@CallInapp.com';
-        msgSubject = "Phone cal: " + initiator + " for " + event.name + " at " + startTime;
+        msgSubject = eventTitle + " Call: " + initiator + " at " + startTime;
         body = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
-            + "You may also dial-in: " + conferencePhoneNumber + ".\n" 
+            + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
             + "With code: " + conferenceCode + ".\n";
 
     } else if (messageType == 'alert') {
         sender = 'Alert@CallInapp.com';
-        msgSubject = initiator + " is running late for your call: " + event.name + "at " + conferenceCode; 
+        msgSubject = initiator + " is running late for your call: " + eventTitle + "at " + conferenceCode; 
         body = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
     }
     var email = new Email({
@@ -72,9 +69,12 @@ exports.emailAlert = function(req, res) {
         }
     });
  }
-
+//todo: write additional logic here to format the readable string according
 function stringifyTimeObject(timeObject) {
-    var date = new Date(timeObject.dateTime);
-    //need to write additional logic here to format the readable string according to recipient timezone
-    return date.toString();
+    if(timeObject) {
+        var date = new Date(timeObject.dateTime);
+        return date.toString();
+    } else {
+        return "";
+    }    
  }
