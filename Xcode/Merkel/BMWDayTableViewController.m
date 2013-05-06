@@ -11,10 +11,11 @@
 #import "BMWAPIClient.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
+#import "BMWSlidingCellDelegate.h"
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
 
-@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate>
+@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate>
 
 
 @property (nonatomic, strong) NSArray *testData;
@@ -178,7 +179,8 @@ static NSString * const kInviteMessageType = @"invite";
     cell.endLabel.text = item[@"end"];
      */
     EKEvent *event = [self eventForIndexPath:indexPath];
-    
+    cell.delegate = self;
+    cell.index = indexPath.row;
     cell.textLabel.text = event.title;
     if (event.allDay) {
         cell.startLabel.text = @"All";
@@ -249,7 +251,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 /* Start a conference call */
 -(void)handleLeftSwipe:(id)cellItem {
-    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];    
+    NSInteger index = ((BMWSlidingCell *)cellItem).index;
     [self.tableView beginUpdates];
     
     NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
@@ -263,7 +265,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 /* Send a late text message and email */
 -(void)handleRightSwipe:(id)cellItem {
-    NSUInteger index = [self.calendarEvents indexOfObject:cellItem];
+    NSInteger index = ((BMWSlidingCell *)cellItem).index;
     [self.tableView beginUpdates];
     
     NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
