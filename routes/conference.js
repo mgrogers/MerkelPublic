@@ -131,9 +131,10 @@ exports.invite = function(req, res) {
             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
             var message;
             if(messageType == 'invite') {
-                message = initiator + " invited you to a conference call via CallIn. Download the app here " + downloadURL + " or dial-in at: " + conferencePhoneNumber + conferenceCode; 
+                message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
+                                    + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
-                message = initiator + " is running late to the upcoming " + eventTitle + " conference call, but will join as soon as possible.";
+                message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
             }
             for(var i = 0; i < postBody.attendees.length; i++) {
                 client.sendSms({
