@@ -46,6 +46,9 @@ const float UI_CUES_WIDTH = 100.0f;
     self.textLabel.font = [UIFont defaultFontOfSize:20.0];
     self.textLabel.textColor = [UIColor bmwDarkGrayColor];
     self.textLabel.backgroundColor = [UIColor clearColor];
+    self.textLabel.adjustsFontSizeToFitWidth = YES;
+    self.textLabel.adjustsLetterSpacingToFitWidth = YES;
+    self.textLabel.minimumScaleFactor = 0.5;
     self.startLabel = [self timeTextLabel];
     [self.contentView addSubview:self.startLabel];
     self.endLabel = [self timeTextLabel];
@@ -56,10 +59,7 @@ const float UI_CUES_WIDTH = 100.0f;
     self.verticalBar = [[UIView alloc] init];
     self.verticalBar.backgroundColor = [UIColor bmwLightGrayColor];
     [self.contentView addSubview:self.verticalBar];
-    
     [self setupCueLabels];
-
-  
 }
 
 - (void)setupGestureRecognizers {
@@ -80,8 +80,6 @@ const float UI_CUES_WIDTH = 100.0f;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)layoutSubviews {
