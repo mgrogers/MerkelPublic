@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
-
 @end
 
 @implementation BMWDayDetailViewController
@@ -27,7 +26,6 @@
 static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
-
 
 
 - (void)setEKEvent: (EKEvent*)event {
@@ -114,7 +112,6 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
-
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 self.event.title, @"title",
                                 self.event.startDate, @"startTime",
@@ -131,10 +128,6 @@ static NSString * const kInviteMessageType = @"invite";
         NSLog(@"Error sending message", [error localizedDescription]);
     }];
 }
-
-    
- 
-
 
 - (void)viewDidLoad
 {
@@ -165,6 +158,5 @@ static NSString * const kInviteMessageType = @"invite";
         [attendeeTVC setEventAttendees:self.event.attendees];
     }
 }
-
 
 @end

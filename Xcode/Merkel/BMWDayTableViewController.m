@@ -194,11 +194,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
-
-    
-    
 }
 
 
@@ -317,7 +313,6 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)peoplePickerNavigationControllerDidCancel:
 (ABPeoplePickerNavigationController *)peoplePicker
 {
-    
     [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
