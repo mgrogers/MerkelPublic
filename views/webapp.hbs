@@ -42,18 +42,21 @@ src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
             <hr>
             <div class="row-fluid">
                 <div class="span12">
-                    <div class="participants">
+                    <div class="attendees" id="attendees-container">
                         <ul>
-                            <li>
-                                <div class="participants-content">
-                                    <h4 class="participants-name">Meeting with Merkel team</h4>
-                                    GSB Breakout Room
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
+        </script>
+
+        <script type="text/template" id="attendee-template">
+            <li>
+                <div class="attendees-content">
+                    <h4 class="attendees-name">Meeting with Merkel team</h4>
+                    GSB Breakout Room
+                </div>
+            </li>
         </script>
 
         <div class="container-fluid" id="conference-container">

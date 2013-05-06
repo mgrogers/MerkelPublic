@@ -83,6 +83,10 @@ CallIn.ConferenceView = Backbone.View.extend({
         var template = _.template( $("#conference-template").html(), data);
 
         this.$el.html( template );
+
+        this.attendeesView = new CallIn.AttendeesView({
+            "el": this.$el.find("#attendees-container")
+        });
     },
 
     deviceReady: function() {
@@ -111,5 +115,19 @@ CallIn.ConferenceView = Backbone.View.extend({
 
     hangup: function() {
         this.model.trigger("end:call");
+    }
+});
+
+CallIn.AttendeeView = Backbone.View.extend({
+    tagName: "li",
+    template: _.template($("#attendee-template").html()),
+
+    initialize: function() {
+        this.render();
+    },
+
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
     }
 });

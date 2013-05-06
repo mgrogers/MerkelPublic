@@ -204,6 +204,22 @@ exports.get = function(req, res) {
     });
 };
 
+/*
+API Call: "/2013-04-23/conference/get/:conferenceCode/attendees" to get a conference object
+[conferenceCode] is the conference code of the conference object to get
+*/
+exports.attendees = function(req, res) {
+    var conferenceCode = req.params.conferenceCode;
+
+    Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+        if(!err_p && participants) {
+            return res.send(JSON.stringify(participants));
+        } else {
+            return res.send({message: "Couldn't find the participants, some error occurred."});
+        }
+    });
+}
+
 
 /* 
 API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCode] is passed, that will be the code. Otherwise grab code from phone input.
