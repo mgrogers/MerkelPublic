@@ -22,6 +22,8 @@
 @implementation BMWPhone
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
+static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
+static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 + (instancetype)sharedPhone {
     static BMWPhone *sharedPhone = nil;
@@ -45,7 +47,15 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
                                                               userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error logging into Twilio: %@", [error localizedDescription]);
-        }]; 
+        }];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *number = [defaults stringForKey:kBMWPhoneNumberKey];
+        if (!number) {
+            [defaults setObject:kBMWDefaultPhoneNumber forKey:kBMWPhoneNumberKey];
+            [[BMWAPIClient sharedClient] getPhoneNumberSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [defaults setObject:responseObject[@"number"] forKey:kBMWPhoneNumberKey];
+            } failure:NULL];
+        }
     }
     return self;
 }
@@ -55,12 +65,16 @@ NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceSta
 }
 
 - (BMWPhoneStatus)status {
-    if (self.connection && self.connection.state == TCConnectionStateConnected || self.connection.state == TCConnectionStateConnecting) {
+    if ((self.connection && self.connection.state == TCConnectionStateConnected) || self.connection.state == TCConnectionStateConnecting) {
         return BMWPhoneStatusConnected;
     } else if (self.device != nil) {
         return BMWPhoneStatusReady;
     }
     return BMWPhoneStatusNotReady;
+}
+
+- (NSString *)phoneNumber {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kBMWPhoneNumberKey];
 }
 
 - (void)connectWithConferenceCode:(NSString *)conferenceCode delegate:(id<TCConnectionDelegate>)connectionDelegate {

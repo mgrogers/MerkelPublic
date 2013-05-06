@@ -73,11 +73,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
                                              selector:@selector(eventStoreChanged:)
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
-    [[BMWAPIClient sharedClient] getPhoneNumberSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.phoneNumber = responseObject[@"number"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+    self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
@@ -98,11 +94,11 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 //
 //    [self presentViewController:abvc animated:YES completion:nil];
     
-    ABPeoplePickerNavigationController *picker =
-    [[ABPeoplePickerNavigationController alloc] init];
-    
-    picker.peoplePickerDelegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
+//    ABPeoplePickerNavigationController *picker =
+//    [[ABPeoplePickerNavigationController alloc] init];
+//    
+//    picker.peoplePickerDelegate = self;
+//    [self presentViewController:picker animated:YES completion:nil];
 
     [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
@@ -194,7 +190,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BMWSlidingCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
 
@@ -232,10 +228,10 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 #pragma mark - Calendar Events Handling
 
 - (void)updateTableViewCalendarEvents {
-//    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
-//        self.calendarEvents = events;
-//        [self.tableView reloadData];
-//    }];
+    [[BMWCalendarAccess sharedAccess] getTodaysEventsCompletion:^(NSArray *events, NSError *error) {
+        self.calendarEvents = events;
+        [self.tableView reloadData];
+    }];
 }
 
 - (EKEvent *)eventForIndexPath:(NSIndexPath *)indexPath {

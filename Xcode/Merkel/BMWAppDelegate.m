@@ -34,6 +34,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    self.manager = [[BMWManager alloc] init];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [Parse setApplicationId:kMerkelParseAppId
                   clientKey:KMerkelParseClientKey];
     [PFFacebookUtils initializeWithApplicationId:kMerkelFacebookAppId];
@@ -42,7 +43,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNav"];
     [self.revealController setFrontViewController:frontViewController];
     [BMWAppearances setupAppearance];
-//    [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
+    [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
     return YES;
 }
 
