@@ -43,7 +43,7 @@ src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
             <div class="row-fluid">
                 <div class="span12">
                     <div class="attendees" id="attendees-container">
-                        <ul>
+                        <ul id="attendee-list">
                         </ul>
                     </div>
                 </div>
@@ -51,12 +51,10 @@ src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
         </script>
 
         <script type="text/template" id="attendee-template">
-            <li>
-                <div class="attendees-content">
-                    <h4 class="attendees-name">Meeting with Merkel team</h4>
-                    GSB Breakout Room
-                </div>
-            </li>
+            <div class="attendees-content">
+                <h4 class="attendees-name"><%= displayName %></h4>
+                <%= email %>
+            </div>
         </script>
 
         <div class="container-fluid" id="conference-container">

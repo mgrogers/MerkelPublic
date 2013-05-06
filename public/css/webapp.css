@@ -46,7 +46,7 @@ body {
 }
 
 .attendees li {
-    /*background: #34495e url("../images/todo/todo.png") 92% center no-repeat;*/
+    background: #34495e url("/images/todo/todo.png") 92% center no-repeat;
     background-size: 20px 20px;
     cursor: pointer;
     margin-top: 2px;
@@ -69,17 +69,17 @@ body {
     border-radius: 0 0 6px 6px;
     padding-bottom: 18px; 
 }
-/*
-.attendees li.attendees-done {
-    background: transparent url("../images/todo/done.png") 92% center no-repeat;
+
+.attendees li.attendees-joined {
+    background: transparent url("/images/todo/done.png") 92% center no-repeat;
     background-size: 20px 20px;
     color: #1abc9c; 
 }
 
-.attendees li.attendees-done .todo-name {
+.attendees li.attendees-joined .attendees-name {
     color: #1abc9c; 
 }
-*/
+
 
 .attendees-icon {
     float: left;

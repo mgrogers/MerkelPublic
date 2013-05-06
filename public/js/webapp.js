@@ -4,7 +4,9 @@ var CallIn = function () {
 
 CallIn.Conference = Backbone.Model.extend({
     initialize: function() {
-        this.attendees = new CallIn.AttendeeList();
+        this.attendees = new CallIn.AttendeeList({
+            "conferenceCode": this.get("conferenceCode")
+        });
         this.fetch();
         this.on("change", this.onChange, this);
         
@@ -40,7 +42,6 @@ CallIn.Conference = Backbone.Model.extend({
     },
 
     onChange: function() {
-        console.log(this.attendees.toJSON());
     },
 
     beginCall: function() {
@@ -56,11 +57,15 @@ CallIn.Conference = Backbone.Model.extend({
 });
 
 CallIn.Attendee = Backbone.Model.extend({
-    initialize: function() {}    
+    initialize: function() {
+    }    
 });
 
 CallIn.AttendeeList = Backbone.Collection.extend({
-    model: CallIn.Attendee
+    model: CallIn.Attendee,
+    url: function() {
+        return "/2013-04-23/conference/get/" + this.get("conferenceCode") + "/attendees";
+    }
 });
 
 CallIn.ConferenceView = Backbone.View.extend({
@@ -84,9 +89,18 @@ CallIn.ConferenceView = Backbone.View.extend({
 
         this.$el.html( template );
 
-        this.attendeesView = new CallIn.AttendeesView({
-            "el": this.$el.find("#attendees-container")
-        });
+        this.addAll();
+    },
+
+    addAttendee: function(attendee) {
+        console.log(attendee.toJSON());
+        var view = new CallIn.AttendeeView({model: attendee});
+        this.$el.find("#attendee-list").append(view.render().el);
+    },
+
+    addAll: function() {
+        console.log(this.model.attendees.length);
+        this.model.attendees.each(this.addAttendee, this);
     },
 
     deviceReady: function() {
@@ -119,15 +133,30 @@ CallIn.ConferenceView = Backbone.View.extend({
 });
 
 CallIn.AttendeeView = Backbone.View.extend({
-    tagName: "li",
-    template: _.template($("#attendee-template").html()),
+    tagName: 'li',
 
     initialize: function() {
         this.render();
+
+        this.model.on("change", this.update, this);
     },
 
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+        data = {
+            "displayName": this.model.get("displayName"),
+            "email": this.model.get("email")
+        }
+        var template = _.template( $("#attendee-template").html(), data);
+
+        this.$el.html( template );
         return this;
+    },
+
+    update: function() {
+        if (this.model.get("status") == "active") {
+            this.$el.addClass("attendee-joined");
+        } else {
+            this.$el.removeClass("attendee-joined");
+        }
     }
 });
