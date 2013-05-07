@@ -11,7 +11,7 @@ var express = require('express'),
     newrelic = require('newrelic'),
     url = require('url'),
     kue = require('kue'),
-    redis = require('kue/node_modules/redis'),
+    // redis = require('kue/node_modules/redis'),
     sms = require('./routes/sms'),
     conference = require('./routes/conference');
     webapp = require('./routes/webapp');
@@ -43,7 +43,7 @@ app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
 app.get('/' + API_VERSION + '/conference/get/:conferenceCode', conference.get);
 app.get('/' + API_VERSION + '/conference/get/:conferenceCode/attendees', conference.attendees);
-app.get('/' + API_VERSION + '/conference/invite', conference.invite);
+app.get('/' + API_VERSION + '/conference/invite', conference.emailAlert);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
@@ -51,21 +51,22 @@ app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 
 // POST
 app.post('/' + API_VERSION + '/conference/create', conference.create);
-app.post('/' + API_VERSION + '/conference/invite', conference.invite);
+app.post('/' + API_VERSION + '/conference/invite', conference.emailAlert);
 
-// Kue & Redis for sending SMS
-kue.redis.createClient = function() {
-    var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
-    if (redisUrl.auth) {
-        client.auth(redisUrl.auth.split(":")[1]);
-    }
+
+// // Kue & Redis for sending SMS
+// kue.redis.createClient = function() {
+//     var redisUrl = url.parse(process.env.REDISTOGO_URL || "redis://localhost:6379"), client = redis.createClient(redisUrl.port, redisUrl.hostname);
+//     if (redisUrl.auth) {
+//         client.auth(redisUrl.auth.split(":")[1]);
+//     }
     
-    return client;
-};
+//     return client;
+// };
 
-// wire up Kue (see /active for queue interface)
-app.use(kue.app);
-if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
+// // wire up Kue (see /active for queue interface)
+// app.use(kue.app);
+// if (process.env.REDISTOGO_URL == null) kue.app.listen(8888);
 
 app.listen(app.get('port'));
 console.log("Callin app server listening on port " + app.get('port'));
