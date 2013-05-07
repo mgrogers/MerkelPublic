@@ -112,15 +112,11 @@ exports.create = function(req, res) {
 };
 
 
-/*
-API Call: "/2013-04-23/conference/invite" to send an invite for a conference to someone, data will be in POST data
-[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
-*/
-exports.invite = function(req, res) {
+exports.smsAlert = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
         if(postBody.conferenceCode && postBody.attendees) {
-            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
+            
             var initiator = postBody.initiator;
             var conferencePhoneNumber = postBody.phoneNumber;
             var conferenceCode = postBody.conferenceCode;
@@ -152,6 +148,31 @@ exports.invite = function(req, res) {
                     }
                 });
             }
+        } else {
+            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            return res.send(err);
+        } 
+    } else {
+        var err = {message: "This API is POST only, please POST your invitee data"};
+        return res.send(err);
+    }
+}
+/*
+API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
+[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
+*/
+exports.emailAlert = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        if(postBody.conferenceCode && postBody.attendees) {
+            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
+            var initiator = postBody.initiator;
+            var conferencePhoneNumber = postBody.phoneNumber;
+            var conferenceCode = postBody.conferenceCode;
+            var eventTitle = postBody.title;
+            var startTime = stringifyTimeObject(req.body.start);
+            var messageType = postBody.messageType;
+
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
                 user = kSendGridUser
