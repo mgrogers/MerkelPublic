@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BMWDayTableViewController.h"
-#import "TCConnectionDelegate.h"
-#import "BMWAPIClient.h"
 
-@interface BMWDayDetailViewController : UIViewController <TCConnectionDelegate>
+#import <EventKit/EventKit.h>
+
+@interface BMWDayDetailViewController : UIViewController
 
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *conferenceCode;

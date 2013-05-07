@@ -103,11 +103,16 @@ exports.create = function(req, res) {
         }
         
         var conference = new Conference(conferenceObject);
-        conference.save();
+        conference.save(function(err) {
+            if (!err) {
+                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                addParticipants(participantsObject);
+            }
+            return res.send(conferenceObject);
 
-        var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-        addParticipants(participantsObject);
-        return res.send(conferenceObject);
+        });
+
+        
     });
 };
 
@@ -236,14 +241,14 @@ exports.join = function(req, res) {
                 });
 
                 var conferenceName = conference.id;
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>Sorry, there has been an error.</Say></Response>");
     }
 };
 
@@ -264,25 +269,26 @@ API Call: "/2013-04-23/conference/get/:conferenceCode" to get a conference objec
 exports.get = function(req, res) {
     var conferenceCode = req.params.conferenceCode;
 
-    Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
-        if(!err && conference) {
-
-            // Find attendees to the conference
-            Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
-                conference.attendees = [];
-
-                if(!err_p && participants) {
-                    conference.attendees = participants;
-                }
-
-                return res.send(conference);
-            });
-        } else {
-            var response = {message: "Couldn't find the specified conference."};
-            return res.send(response);
-        }
+    getConferenceObject(conferenceCode, function(result) {
+        res.send(JSON.stringify(result));
     });
 };
+
+/*
+API Call: "/2013-04-23/conference/get/:conferenceCode/attendees" to get a conference object
+[conferenceCode] is the conference code of the conference object to get
+*/
+exports.attendees = function(req, res) {
+    var conferenceCode = req.params.conferenceCode;
+
+    Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+        if(!err_p && participants) {
+            return res.send(JSON.stringify(participants));
+        } else {
+            return res.send({message: "Couldn't find the participants, some error occurred."});
+        }
+    });
+}
 
 
 /* 
@@ -290,7 +296,6 @@ API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCo
 [conferenceCode] conference code of conference to access
  */
 exports.twilio = function(req, res) {
-    console.log(req.query);
     var conferenceCode = req.query.conferenceCode;
 
     // Generate TWiML to join conference
@@ -298,9 +303,9 @@ exports.twilio = function(req, res) {
         return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
     } else {
         if(req.query.From) {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         } else {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         }
     }
 };
@@ -309,14 +314,19 @@ exports.twilio = function(req, res) {
 /* ----- Helper Functions ----- */
 /* Add participants mongoDB, participantsObject includes conferenceCode and array of participants */
 function addParticipants(participantsObject) {
+    console.log(participantsObject);
     if(participantsObject) {
         var conferenceCode = participantsObject.conferenceCode;
 
         // Make sure conference exists
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
+                console.log(participantsObject);
+                console.log(participantsObject.participants.length);
                 // Add participants to conference
-                for(var p in participantsObject.participants) {
+                for(var i = 0; i < participantsObject.participants.length; i++) {
+                    p = participantsObject.participants[i];
+                    console.log(p);
                     var participantObject = {
                         phone: p.phone,
                         email: p.email,
@@ -328,10 +338,31 @@ function addParticipants(participantsObject) {
                     var participant = new Participant(participantObject);
                     participant.save();
                 }
+            } else {
+                console.log(conference);
             }
         });
     }
 };
+
+function getConferenceObject(conferenceCode, callback) {
+    Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+        if(!err && conference) {
+            conference_result = JSON.parse(JSON.stringify(conference));
+            // Find attendees to the conference
+            Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+                if(!err_p && participants) {
+                    conference_result.attendees = JSON.parse(JSON.stringify(participants));
+                }
+                
+                callback(conference_result);
+            });
+        } else {
+            var response = {message: "Couldn't find the specified conference."};
+            callback(response);
+        }
+    });
+}
 
 
 /* Generate a unique code for conference */

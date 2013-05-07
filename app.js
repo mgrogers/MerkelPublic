@@ -14,6 +14,7 @@ var express = require('express'),
     redis = require('kue/node_modules/redis'),
     sms = require('./routes/sms'),
     conference = require('./routes/conference');
+    webapp = require('./routes/webapp');
 
 var app = express();
 
@@ -37,9 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define API URLS and destinations here.
 // GET
 app.get('/', routes.index);
+app.get('/webapp/', webapp.index);
 app.get('/' + API_VERSION + '/conference/capability', conference.capability);
 app.get('/' + API_VERSION + '/conference/create', conference.create);
 app.get('/' + API_VERSION + '/conference/get/:conferenceCode', conference.get);
+app.get('/' + API_VERSION + '/conference/get/:conferenceCode/attendees', conference.attendees);
 app.get('/' + API_VERSION + '/conference/invite', conference.invite);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
