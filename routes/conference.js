@@ -203,8 +203,9 @@ exports.emailAlert = function(req, res) {
                     + "With code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
-                msgSubject = initiator + " is running late for your call: " + eventTitle + "at " + conferenceCode; 
-                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator + " is running late and will be joining the conference call as soon as possible.";
+                msgSubject = initiator + " is running late for your call: " + eventTitle + " at " + conferenceCode; 
+                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
+                        + " is running late and will be joining the conference call, " + conferencePhoneNumber + ",,," + conferenceCode + "# as soon as possible.";
             }
             var email = new Email({
                 from: sender,
