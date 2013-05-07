@@ -26,8 +26,10 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 - (void)callWithDelegate:(id<TCConnectionDelegate>)connectionDelegate
        andConferenceCode: (NSString*) conferenceCode;
 - (void)disconnect;
+- (void)dialConferenceCode:(NSString *)conferenceCode;
 
 @property (readonly) BOOL isReady;
+@property BOOL isSpeakerEnabled;
 @property (readonly) BMWPhoneStatus status;
 @property (readonly) NSString *phoneNumber;
 

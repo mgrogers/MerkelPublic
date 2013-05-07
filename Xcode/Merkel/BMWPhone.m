@@ -12,14 +12,19 @@
 #import "TCConnection.h"
 #import "TCDevice.h"
 
-@interface BMWPhone () <TCDeviceDelegate>
+#import <AudioToolbox/AudioToolbox.h>
+
+@interface BMWPhone () <TCDeviceDelegate, TCConnectionDelegate>
 
 @property (nonatomic, strong) TCDevice *device;
 @property (nonatomic, strong) TCConnection *connection;
+@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
 
 @end
 
 @implementation BMWPhone
+
+@synthesize isSpeakerEnabled = _isSpeakerEnabled;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
@@ -64,6 +69,16 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     return self.device != nil;
 }
 
+- (BOOL)isSpeakerEnabled {
+    return _isSpeakerEnabled;
+}
+
+- (void)setIsSpeakerEnabled:(BOOL)isSpeakerEnabled {
+    _isSpeakerEnabled = isSpeakerEnabled;
+    UInt32 route = (_isSpeakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
+    AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
+}
+
 - (BMWPhoneStatus)status {
     if ((self.connection && self.connection.state == TCConnectionStateConnected) || self.connection.state == TCConnectionStateConnecting) {
         return BMWPhoneStatusConnected;
@@ -83,8 +98,11 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 - (void)connectWithParameters:(NSDictionary *)parameters
                      delegate:(id<TCConnectionDelegate>)connectionDelegate {
-    NSLog(@"%@", [_device.capabilities objectForKey:TCDeviceCapabilityOutgoingKey]);
-    self.connection = [self.device connect:parameters delegate:connectionDelegate];
+    self.connectionDelegate = connectionDelegate;
+    if (self.connection) {
+        [self.connection disconnect];
+    }
+    self.connection = [self.device connect:parameters delegate:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
                                                         object:self
                                                       userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
@@ -113,6 +131,14 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
        andConferenceCode: (NSString*) conferenceCode {
     [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
 }
+
+- (void)dialConferenceCode:(NSString *)conferenceCode {
+    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
+    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, self.phoneNumber, conferenceCode];
+    NSURL *callURL = [NSURL URLWithString:callNumber];
+    [[UIApplication sharedApplication] openURL:callURL];
+}
+
 #pragma mark - TCDeviceDelegate Methods
 
 - (void)device:(TCDevice *)device didStopListeningForIncomingConnections:(NSError *)error {
@@ -129,6 +155,27 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 - (void)deviceDidStartListeningForIncomingConnections:(TCDevice *)device {
     
+}
+
+#pragma mark - TCConnectionDelegate Methods
+
+- (void)connectionDidStartConnecting:(TCConnection *)connection {
+    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+    [self.connectionDelegate connectionDidStartConnecting:connection];
+}
+
+- (void)connectionDidConnect:(TCConnection *)connection {
+    [self.connectionDelegate connectionDidConnect:connection];
+}
+
+- (void)connectionDidDisconnect:(TCConnection *)connection {
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+    [self.connectionDelegate connectionDidDisconnect:connection];
+}
+
+- (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+    [self.connectionDelegate connection:connection didFailWithError:error];
 }
 
 @end
