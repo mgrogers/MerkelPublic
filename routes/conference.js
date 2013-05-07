@@ -234,14 +234,14 @@ exports.join = function(req, res) {
                 });
 
                 var conferenceName = conference.id;
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>Sorry, there has been an error.</Say></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say language='en-gb'>Sorry, there has been an error.</Say></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
     }
 };
 
@@ -296,9 +296,9 @@ exports.twilio = function(req, res) {
         return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
     } else {
         if(req.query.From) {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         } else {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         }
     }
 };
