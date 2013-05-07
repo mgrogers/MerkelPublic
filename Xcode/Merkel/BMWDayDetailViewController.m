@@ -7,10 +7,14 @@
 //
 
 #import "BMWDayDetailViewController.h"
-#import "BMWPhone.h"
-#import "BMWAttendeeTableViewController.h"
 
-@interface BMWDayDetailViewController ()
+#import "BMWAPIClient.h"
+#import "BMWAttendeeTableViewController.h"
+#import "BMWDayTableViewController.h"
+#import "BMWPhone.h"
+#import "TCConnectionDelegate.h"
+
+@interface BMWDayDetailViewController () <TCConnectionDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
@@ -74,6 +78,28 @@ static NSString * const kInviteMessageType = @"invite";
     [[UILabel appearanceWhenContainedIn:[self class], nil] setFont:[UIFont defaultFontOfSize:18.0]];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = self.eventTitle;
+    [self createLabels];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"EmbedAttendee"]) {
+        BMWAttendeeTableViewController *attendeeTVC = segue.destinationViewController;
+        [attendeeTVC setEventAttendees:self.event.attendees];
+    }
+}
+
 -(void)createVisualAssets {
 //    [self addChildViewController:self.attendeeTable];
 //    [self.attendeeTable setEventAttendees:self.event.attendees];
@@ -99,16 +125,16 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
-- (IBAction)joinCallButtonPressed:(id)sender {
-    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
-    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, self.phoneNumber, self.conferenceCode];
-    NSURL *callURL = [NSURL URLWithString:callNumber];
-    [[UIApplication sharedApplication] openURL:callURL];
-//    NSString *codetoCall = self.conferenceCodeLabel.text;
-//    if(codetoCall) {
-//        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-//        [self.joinCallButton setTitle:@"Call in Progress" forState:UIControlStateNormal];
-//    }
+- (IBAction)joinCallButtonPressed:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
+        [[BMWPhone sharedPhone] disconnect];
+    } else {
+        NSString *codetoCall = self.conferenceCodeLabel.text;
+        if(codetoCall) {
+            [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+            [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
@@ -129,34 +155,50 @@ static NSString * const kInviteMessageType = @"invite";
     }];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = self.eventTitle;
-    [self createLabels];
-    
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
-//    button.backgroundColor = [UIColor clearColor];
-//    [button setBackgroundImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] forState:UIControlStateNormal];
-//    UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-//    spacer.width = 10.0;
-//    self.navigationItem.leftBarButtonItems = @[spacer, menuBarButton];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"EmbedAttendee"]) {
-        BMWAttendeeTableViewController *attendeeTVC = segue.destinationViewController;
-        [attendeeTVC setEventAttendees:self.event.attendees];
+- (void)speakerButtonPressed:(id)sender {
+    if (self.navigationItem.rightBarButtonItem.style == UIBarButtonItemStyleBordered) {
+        // Speaker is inactive.
+        [BMWPhone sharedPhone].isSpeakerEnabled = YES;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+    } else {
+        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
     }
+}
+
+#pragma mark - TCConectionDelegate Methods
+
+- (void)connectionDidStartConnecting:(TCConnection *)connection {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    });
+}
+
+- (void)connectionDidConnect:(TCConnection *)connection {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+    });
+    
+}
+
+- (void)connectionDidDisconnect:(TCConnection *)connection {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+    });
+    
+}
+
+- (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+    });
 }
 
 @end
