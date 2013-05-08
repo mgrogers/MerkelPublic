@@ -284,6 +284,49 @@
             </objects>
             <point key="canvasLocation" x="1599" y="595"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="6Dn-Fl-nQU">
+            <objects>
+                <viewController storyboardIdentifier="LoginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KMA-Xs-QsW" customClass="BMWLoginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fyw-mM-U5N">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CallIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="PZ8-qw-gOR"/>
+                                    <constraint firstAttribute="width" constant="159" id="oVa-Tn-WzJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CallIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2x-Pt-9dN">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="XhK-UT-VyG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eNS-lF-jmO" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="1Xi-Ci-N9V"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="trailing" secondItem="eNS-lF-jmO" secondAttribute="trailing" type="default" id="4XZ-zm-Z5u"/>
+                            <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="default" id="7fM-8E-LhN"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="104" id="Yru-Ot-Yk7"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="leading" secondItem="eNS-lF-jmO" secondAttribute="leading" type="default" id="u5t-uq-FOq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="eNS-lF-jmO" id="MCX-Ez-6s0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Cg-an-ld3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="398"/>
+        </scene>
         <!--Day Table View Controller-->
         <scene sceneID="a50-WX-nU8">
             <objects>
@@ -342,6 +385,12 @@
         </class>
         <class className="BMWDayTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
+        </class>
+        <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="BMWViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
