@@ -85,18 +85,18 @@ exports.create = function(req, res) {
         var conferenceObject = {};
         var postBody = req.body;
 
-        if(postBody) {
+        if (postBody) {
             conferenceObject.conferenceCode = hash;
             conferenceObject.status = "inactive";
             conferenceObject.title = postBody.title || "";
             conferenceObject.description = postBody.description || "";
-            if(postBody.start) conferenceObject.start = postBody.start.datetime;
+            if (postBody.start) conferenceObject.start = postBody.start.datetime;
             else conferenceObject.start = "";
-            if(postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
+            if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
             else conferenceObject.timeZone = "";
-            if(postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+            if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
             else conferenceObject.sms = false;
-            if(postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+            if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
             else conferenceObject.email = false;
         } else {
             conferenceObject = {conferenceCode: hash};
@@ -109,50 +109,51 @@ exports.create = function(req, res) {
                 addParticipants(participantsObject);
             }
             return res.send(conferenceObject);
-
-        });
-
-        
+        });   
     });
 };
 
-
 exports.smsAlert = function(req, res) {
-    if(req.method == 'POST') {
+    if (req.method == 'POST') {
         var postBody = req.body;
-        if(postBody.conferenceCode && postBody.attendees) {
-            
-            var initiator = postBody.initiator;
-            var conferencePhoneNumber = postBody.phoneNumber;
-            var conferenceCode = postBody.conferenceCode;
-            var eventTitle = postBody.title;
-            var startTime = stringifyTimeObject(req.body.start);
-            var messageType = postBody.messageType;
+        if (postBody.conferenceCode && postBody.attendees) {
+
+            var initiator = postBody.initiator || "";
+            var conferencePhoneNumber = postBody.phoneNumber || "";
+            var conferenceCode = postBody.conferenceCode || "";
+            var eventTitle = postBody.title || "";
+            var startTime = stringifyTimeObject(postBody.start);
+            var messageType = postBody.messageType || "";
 
             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
             var message;
-            if(messageType == 'invite') {
+            if (messageType == 'invite') {
                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
                 message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
             }
-            for(var i = 0; i < postBody.attendees.length; i++) {
-                client.sendSms({
-                    to: postBody.attendees[i].phone,
-                    from: TWILIO_NUMBER,
-                    body: message
-                }, function(err, responseData) {
-                    if(!err) {
-                        console.log("SMS delivered");
-                        res.send(responseData);
-                    } else {
-                        console.log(err);
-                        console.log("SMS delivery error");
-                        res.send(err);
-                    }
-                });
+
+            for (var i = 0; i < postBody.attendees.length; i++) {
+                var attendeePhoneNumber = postBody.attendees[i].phone;
+                if(attendeePhoneNumber) {
+                    client.sendSms({
+                        to: attendeePhoneNumber,
+                        from: TWILIO_NUMBER,
+                        body: message
+                    }, function(err, responseData) {
+                        if (!err) {
+                            console.log("SMS delivered");
+                            res.send(responseData);
+                        } else {
+                            console.log(err);
+                            console.log("SMS delivery error");
+                            res.send(err);
+                        }
+                    });
+                }
             }
+            return res.send(message: "Finished sending SMS messages.");
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
@@ -170,13 +171,12 @@ exports.emailAlert = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
         if(postBody.conferenceCode && postBody.attendees) {
-            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
-            var initiator = postBody.initiator;
-            var conferencePhoneNumber = postBody.phoneNumber;
-            var conferenceCode = postBody.conferenceCode;
-            var eventTitle = postBody.title;
-            var startTime = stringifyTimeObject(req.body.start);
-            var messageType = postBody.messageType;
+            var initiator = postBody.initiator || "";
+            var conferencePhoneNumber = postBody.phoneNumber || "";
+            var conferenceCode = postBody.conferenceCode || "";
+            var eventTitle = postBody.title || "";
+            var startTime = stringifyTimeObject(postBody.start);
+            var messageType = postBody.messageType || "";
 
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
@@ -190,10 +190,15 @@ exports.emailAlert = function(req, res) {
                 key = process.env.SENDGRID_PASSWORD;
             }
             var sendgrid = new SendGrid(user, key);
+
             var conferenceAttendees = [];
             for (var i = 0; i < postBody.attendees.length; i++) {
-                conferenceAttendees.push(postBody.attendees[i].email);
+                var emailAddress = postBody.attendees[i].email;
+                if (emailAddress) {
+                    conferenceAttendees.push(emailAddress);
+                }                
             } 
+
             var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'Invite@CallInapp.com';
@@ -361,6 +366,7 @@ function addParticipants(participantsObject) {
                         participant.save();
                     }
                 }
+                
             } else {
                 console.log(conference);
             }
