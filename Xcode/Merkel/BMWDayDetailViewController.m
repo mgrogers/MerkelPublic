@@ -138,29 +138,21 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
-    NSMutableArray *attendeesArray = [NSMutableArray array];
-    for (int i = 0; i < [self.event.attendees count]; i++) {
-        EKParticipant *participant = self.event.attendees[i];
-        //how do we get emails?
-        //look up address book
-        //get phone number
-        //todo: move this to AttendeeTableView
-        [attendeesArray addObject:@{@"email":participant.name}];
-    }
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                self.event.title, @"title",
-                                self.event.startDate, @"startTime",
-                                self.phoneNumber, @"phoneNumber",
-                                self.conferenceCode, @"conferenceCode",
-                                self.event.attendees, @"attendees",
-                                kAlertMessageType, @"messageType",
-                                kTestSenderEmailAddress, @"initiator",nil];
-    
-
-    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Alert success with response %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error sending message", [error localizedDescription]);
+    [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
+        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    self.event.title, @"title",
+                                    self.event.startDate, @"startTime",
+                                    self.phoneNumber, @"phoneNumber",
+                                    self.conferenceCode, @"conferenceCode",
+                                    attendees, @"attendees",
+                                    kAlertMessageType, @"messageType",
+                                    kTestSenderEmailAddress, @"initiator",nil];
+        
+        [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Alert success with response %@", responseObject);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error sending message", [error localizedDescription]);
+        }];
     }];
 }
 

@@ -23,6 +23,7 @@
                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (void)createConferenceForCalendarEvent:(EKEvent *)event
+                          attendeesArray:(NSArray *)attendeesArray
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
