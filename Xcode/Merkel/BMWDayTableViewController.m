@@ -272,21 +272,17 @@ static NSString * const kInviteMessageType = @"invite";
     NSString *phoneNumber = self.phoneNumber;
     EKEvent *event = self.calendarEvents[index][@"event"];
 
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                event.title, @"title",
-                                event.startDate, @"startTime",
-                                phoneNumber, @"phoneNumber",
-                                conferenceCode, @"conferenceCode",
-                                event.attendees, @"attendees",
-                                kAlertMessageType, @"messageType",
-                                kTestSenderEmailAddress, @"initiator",nil];
-    
-    [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Alert success with response %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error sending message", [error localizedDescription]);
+    [[BMWCalendarAccess sharedAccess] attendeesForEvent:event withCompletion:^(NSArray *attendees) {
+        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    event.title, @"title",
+                                    event.startDate, @"startTime",
+                                    phoneNumber, @"phoneNumber",
+                                    conferenceCode, @"conferenceCode",
+                                    attendees, @"attendees",
+                                    kAlertMessageType, @"messageType",
+                                    kTestSenderEmailAddress, @"initiator",nil];
         
-        [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"Alert success with response %@", responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error sending message", [error localizedDescription]);
