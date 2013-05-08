@@ -281,7 +281,7 @@ static NSString * const kInviteMessageType = @"invite";
                                 kAlertMessageType, @"messageType",
                                 kTestSenderEmailAddress, @"initiator",nil];
     
-    [[BMWAPIClient sharedClient] sendLateMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Alert success with response %@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error sending message", [error localizedDescription]);

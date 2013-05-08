@@ -3,21 +3,15 @@
     "phoneNumber": "4086468223",
     "title": "Scrum",
     "attendees": [
-
-        {
-            "email": "timgshi@gmail.com",
-            "displayName": "Tim Shi",
-            "phone": "6505551234"
-        },
         {
             "email": "wes.k.leung@gmail.com",
             "displayName": "Wesley Leung",
-            "phone": "3102663121"
+            "phone": "4086468223"
         },
-        {
-            "email": "mjgrogers@gmail.com",
-            "displayName": "Mike Rogers",
-            "phone": "3102663121"
+         {
+            "email": "timgshi@gmail.com",
+            "displayName": "Tim Shi",
+            "phone": "7148789551"
         }
     ],
     
@@ -28,3 +22,4 @@
         "timeZone": "America/Los_Angeles"
     }
 }
+
