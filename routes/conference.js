@@ -116,6 +116,7 @@ exports.create = function(req, res) {
 exports.smsAlert = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
+        console.log(postBody);
         if (postBody.conferenceCode && postBody.attendees) {
 
             var initiator = postBody.initiator || "";
@@ -193,7 +194,7 @@ exports.smsAlert = function(req, res) {
 //                 return res.send(response);
 //             }
 
-//             var attendeePhoneNumber = postBody.to.phone;      
+//             var attendeePhoneNumber = postBody.receiver.phone;      
 //             if (attendeePhoneNumber) {
 //                 client.sendSms({
 //                     to: attendeePhoneNumber,
@@ -207,14 +208,14 @@ exports.smsAlert = function(req, res) {
 //                     }
 //                 });
 //             } else {
-//                 console.log("No phone number for " + postBody.attendees[i].email);
+//                 console.log("Invalid phone number");
 //             }
             
 //             var response = {"meta": {"code": 200},
 //                          "message": "Finished SMS."};
 //             return res.send(response);
 //         } else {
-//             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+//             var err = {message: "Could not invite, did you POST the conferenceCode and receiver number?"};
 //             return res.send(err);
 //         } 
 //     } else {
@@ -222,6 +223,8 @@ exports.smsAlert = function(req, res) {
 //         return res.send(err);
 //     }
 // }
+
+
 /*
 API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
 [Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
