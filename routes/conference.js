@@ -167,6 +167,61 @@ exports.smsAlert = function(req, res) {
         return res.send(err);
     }
 }
+
+// exports.sendSMS = function(req, res) {
+//     if (req.method == 'POST') {
+//         var postBody = req.body;
+//         if (postBody.conferenceCode && postBody.attendees) {
+
+//             var initiator = postBody.initiator || "";
+//             var conferencePhoneNumber = postBody.phoneNumber || "";
+//             var conferenceCode = postBody.conferenceCode || "";
+//             var eventTitle = postBody.title || "";
+//             var startTime = stringifyTimeObject(postBody.start);
+//             var messageType = postBody.messageType || "";
+
+//             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+//             var message;
+//             if (messageType == 'invite') {
+//                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
+//                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
+//             } else if (messageType == 'alert') {
+//                 message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
+//             } else {
+//                 var response = {"meta": {"code": 404},
+//                              "message": "Invalid message type"};
+//                 return res.send(response);
+//             }
+
+//             var attendeePhoneNumber = postBody.to.phone;      
+//             if (attendeePhoneNumber) {
+//                 client.sendSms({
+//                     to: attendeePhoneNumber,
+//                     from: TWILIO_NUMBER,
+//                     body: message
+//                 }, function(err, responseData) {
+//                     if (!err) {
+//                         console.log("SMS delivered for " + attendeePhoneNumber);
+//                     } else {
+//                         console.log(err);
+//                     }
+//                 });
+//             } else {
+//                 console.log("No phone number for " + postBody.attendees[i].email);
+//             }
+            
+//             var response = {"meta": {"code": 200},
+//                          "message": "Finished SMS."};
+//             return res.send(response);
+//         } else {
+//             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+//             return res.send(err);
+//         } 
+//     } else {
+//         var err = {message: "This API is POST only, please POST your invitee data"};
+//         return res.send(err);
+//     }
+// }
 /*
 API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
 [Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
