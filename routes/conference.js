@@ -113,6 +113,36 @@ exports.create = function(req, res) {
     });
 };
 
+exports.phoneConfirmation = function(req, res) {
+    if (req.method == 'POST') {
+        var postBody = req.body;
+        if (postBody.phoneNumber) {
+            var toPhone = postBody.phoneNumber;
+            var code = Math.floor(Math.random() * 9000) + 1000; // Generate random 4 digit number.
+            var message = code + " - your CallIn confirmation code.";
+            var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+            client.sendSms({
+                to: toPhone,
+                from: TWILIO_NUMBER,
+                body: message
+            }, function(err, responseData) {
+                if (!err) {
+                    console.log("SMS delivered for " + toPhone);
+                    return res.send({phoneNumber: toPhone,
+                                     code: code});
+                } else {
+                    console.log(err);
+                    return res.send(400, {error: err,
+                                          reqBody: req.body});
+                }
+            });
+        } else {
+            return res.send(400, {error: "Missing phone number.",
+                                  reqBody: req.body});
+        };
+    };
+};
+
 exports.smsAlert = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
