@@ -153,7 +153,7 @@ exports.smsAlert = function(req, res) {
                     });
                 }
             }
-            return res.send(message: "Finished sending SMS messages.");
+            return res.send({message: "Finished sending SMS messages."});
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
@@ -202,10 +202,10 @@ exports.emailAlert = function(req, res) {
             var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'Invite@CallInapp.com';
-                msgSubject = eventTitle + " Call: " + initiator + " on " + startTime;
+                msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
                 content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
                     + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
-                    + "With code: " + conferenceCode + ".\n";
+                    + "With code: #" + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
                 msgSubject = initiator + " is running late for your call: " + eventTitle + " at " + conferenceCode; 
