@@ -8,6 +8,8 @@
 
 #import "BMWLoginViewController.h"
 
+#import "BMWAPIClient.h"
+
 @interface BMWLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
@@ -15,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *secondField;
 @property (strong, nonatomic) IBOutlet UIButton *primaryNextButton;
 @property (strong, nonatomic) IBOutlet UIButton *secondaryNextButton;
+
+@property (copy, nonatomic) NSString *confirmationCode;
 
 @end
 
@@ -52,7 +56,18 @@
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
-    
+    [self.phoneNumberField resignFirstResponder];
+    NSString *phoneNumber = self.phoneNumberField.text;
+    [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+        self.confirmationCode = responseObject[@"code"];
+        NSLog(@"%@", self.confirmationCode);
+        self.secondField.hidden = NO;
+        self.secondFieldLabel.hidden = NO;
+        self.secondaryNextButton.hidden = NO;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+    }];
 }
 
 - (IBAction)secondaryNextButtonPressed:(UIButton *)sender {

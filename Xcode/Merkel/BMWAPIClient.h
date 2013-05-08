@@ -39,6 +39,6 @@
 
 - (void)sendConfirmationCodeForPhoneNumber:(NSString *)phoneNumber
                                    success:(void (^)(AFHTTPRequestOperation *, id))success
-                                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+                                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
 
 @end
