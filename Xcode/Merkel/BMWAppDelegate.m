@@ -25,8 +25,8 @@
 
 @implementation BMWAppDelegate
 
-static NSString * const kMerkelParseAppId = @"ljgVpGcSO3tJlAFRosuoGhLuWElPbWapt4Wy5uoj";
-static NSString * const KMerkelParseClientKey = @"lH8IHu99HYIF0nMiSd3KIdXe6fs0rnih2UEbHVYq";
+static NSString * const kMerkelParseAppId = @"gKR8uRgo0Ev3jh7elvC74REYwVmz1sH0UJsXy2k8";
+static NSString * const KMerkelParseClientKey = @"cMgnw8vc1LmjOnZQbte67JuDX17iyQIINjH7uGKS";
 static NSString * const kMerkelFacebookAppId = @"258693340932079";
 static NSString * const kMerkelTestFlightId = @"f36a8dc5-1f19-49ad-86e7-d2613ce46b03";
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
