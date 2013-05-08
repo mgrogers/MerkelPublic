@@ -116,8 +116,8 @@ exports.create = function(req, res) {
 exports.phoneConfirmation = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
-        if (body.phoneNumber) {
-            var toPhone = body.phoneNumber;
+        if (postBody.phoneNumber) {
+            var toPhone = postBody.phoneNumber;
             var code = Math.floor(Math.random() * 9000) + 1000; // Generate random 4 digit number.
             var message = code + " - your CallIn confirmation code.";
             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
