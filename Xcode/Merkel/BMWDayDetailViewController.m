@@ -139,20 +139,24 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (IBAction)lateButtonPressed:(id)sender {
     [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
-        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    self.event.title, @"title",
-                                    self.event.startDate, @"startTime",
-                                    self.phoneNumber, @"phoneNumber",
-                                    self.conferenceCode, @"conferenceCode",
-                                    attendees, @"attendees",
-                                    kAlertMessageType, @"messageType",
-                                    kTestSenderEmailAddress, @"initiator",nil];
-        
-        [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Alert success with response %@", responseObject);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error sending message", [error localizedDescription]);
-        }];
+        for (int i = 0; i < [attendees count]; i++) {
+            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
+            
+            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        self.event.title, @"title",
+                                        self.event.startDate, @"startTime",
+                                        self.phoneNumber, @"phoneNumber",
+                                        self.conferenceCode, @"conferenceCode",
+                                        attendeePhone, @"toPhoneNumber",
+                                        kAlertMessageType, @"messageType",
+                                        kTestSenderEmailAddress, @"initiator",nil];
+            
+            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Alert success with response %@", responseObject);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error sending message", [error localizedDescription]);
+            }];
+        }
     }];
 }
 
