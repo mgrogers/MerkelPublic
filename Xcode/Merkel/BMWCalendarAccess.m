@@ -23,6 +23,9 @@
 
 NSString * const BMWCalendarAccessGrantedNotification = @"BMWCalendarAccessGrantedNotification";
 NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDeniedNotification";
+NSString * const kAlertMessageType = @"alert";
+NSString * const kInviteMessageType = @"invite";
+NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 
 + (instancetype)sharedAccess {
     static BMWCalendarAccess *sharedAccess = nil;
@@ -137,6 +140,21 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
             [self.processedEvents addObject:event];
             [self.processedEventDicts addObject:@{@"event": event,
                                                   @"conferenceCode": conferenceCode}];
+            
+            NSDictionary *email_parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        event.title, @"title",
+                                        event.startDate, @"startTime",
+                                        [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
+                                        conferenceCode, @"conferenceCode",
+                                        event.attendees, @"attendees",
+                                        kAlertMessageType, @"messageType",
+                                        kTestSenderEmailAddress, @"initiator",nil];
+            [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:email_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Alert success with response %@", responseObject);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error sending message", [error localizedDescription]);
+            }];
+            
             completion(conferenceCode);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error creating conference: %@", [error localizedDescription]);
