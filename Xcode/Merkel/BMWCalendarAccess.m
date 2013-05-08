@@ -85,6 +85,14 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.store refreshSourcesIfNecessary];
+        for (EKEvent *event in self.processedEvents) {
+            if (![event refresh]) {
+                // The event has been deleted or otherwise invalidated. Remove it from the set.
+                NSInteger index = (NSInteger)[self.processedEvents indexOfObject:event];
+                [self.processedEventDicts removeObjectAtIndex:index];
+                [self.processedEvents removeObject:event];
+            }
+        }
         NSPredicate *predicate = [self.store predicateForEventsWithStartDate:start
                                                                      endDate:end
                                                                    calendars:nil];
@@ -128,7 +136,7 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *conferenceCode = responseObject[@"conferenceCode"];
             NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
-            event.notes = [notes stringByAppendingFormat:@"\n\n%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
+            event.notes = [notes stringByAppendingFormat:@"\n\n%@\nDial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
             NSError *error;
             [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
             if (error) {
