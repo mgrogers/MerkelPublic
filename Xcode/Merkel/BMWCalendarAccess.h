@@ -21,6 +21,7 @@ typedef void(^BMWCalendarAuthorizeCompletion)(BOOL granted, NSError *error);
 + (instancetype)sharedAccess;
 - (void)authorizeCompletion:(BMWCalendarAuthorizeCompletion)completion;
 - (void)getTodaysEventsCompletion:(BMWCalendarEventCompletion)completion;
+- (void)attendeesForEvent:(EKEvent *)event withCompletion:(void (^)(NSArray *attendees))completion;
 
 @property (readonly) BOOL isAuthorized;
 
