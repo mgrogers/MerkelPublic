@@ -295,28 +295,53 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CallIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="66" id="PZ8-qw-gOR"/>
-                                    <constraint firstAttribute="width" constant="159" id="oVa-Tn-WzJ"/>
+                                    <constraint firstAttribute="width" constant="1115" id="sGp-nq-mvD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CallIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2x-Pt-9dN">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to begin, please enter your phone number:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="s2x-Pt-9dN">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="XhK-UT-VyG"/>
+                                    <constraint firstAttribute="height" constant="58" id="EFf-D2-Zfd"/>
+                                    <constraint firstAttribute="width" constant="231" id="afu-YE-edF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyT-V6-epe">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="next, enter the code we just sent:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="f6s-3f-2DP">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="aLk-Uo-9L3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XJd-rh-OdK">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eNS-lF-jmO" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="1Xi-Ci-N9V"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="trailing" secondItem="eNS-lF-jmO" secondAttribute="trailing" type="default" id="4XZ-zm-Z5u"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="qyT-V6-epe" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="1nk-U1-jRH"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="5fB-Ic-83l"/>
                             <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="default" id="7fM-8E-LhN"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="104" id="Yru-Ot-Yk7"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="leading" secondItem="eNS-lF-jmO" secondAttribute="leading" type="default" id="u5t-uq-FOq"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="HFg-Cb-j9t"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="leading" secondItem="f6s-3f-2DP" secondAttribute="leading" type="default" id="RRO-gT-04A"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="107" id="Snt-RD-GNr"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="biu-Fb-UoG"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="166" id="d4W-Bs-KlR"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="qyT-V6-epe" secondAttribute="trailing" type="default" id="fFK-DK-AKi"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="qyT-V6-epe" secondAttribute="leading" type="default" id="rqF-Bi-RIe"/>
                         </constraints>
                     </view>
                     <connections>
