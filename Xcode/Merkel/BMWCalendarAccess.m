@@ -13,8 +13,9 @@
 
 @interface BMWCalendarAccess ()
 
-@property (nonatomic, retain) EKEventStore *store;
+@property (nonatomic, strong) EKEventStore *store;
 @property (readwrite) BOOL isAuthorized;
+@property (nonatomic, strong) NSMutableOrderedSet *processedEvents, *processedEventDicts;
 
 @end
 
@@ -36,6 +37,8 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
     self = [super init];
     if (self) {
         self.store = [[EKEventStore alloc] init];
+        self.processedEvents = [NSMutableOrderedSet orderedSet];
+        self.processedEventDicts = [NSMutableOrderedSet orderedSet];
     }
     return self;
 }
@@ -111,6 +114,11 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
     static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp";
     static const NSInteger kBMWConferenceCodeLength = 10;
     [event refresh];
+    if ([self.processedEvents containsObject:event]) {
+        NSDictionary *eventDict = [self.processedEventDicts objectAtIndex:[self.processedEvents indexOfObject:event]];
+        completion(eventDict[@"conferenceCode"]);
+        return;
+    }
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
     NSLog(@"%@", event.title);
@@ -126,6 +134,9 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
             if (error) {
                 NSLog(@"Event save error: %@", [error localizedDescription]);
             }
+            [self.processedEvents addObject:event];
+            [self.processedEventDicts addObject:@{@"event": event,
+                                                  @"conferenceCode": conferenceCode}];
             completion(conferenceCode);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Error creating conference: %@", [error localizedDescription]);
@@ -136,6 +147,9 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
         if (!code) {
             code = @"";
         }
+        [self.processedEvents addObject:event];
+        [self.processedEventDicts addObject:@{@"event": event,
+                                              @"conferenceCode": code}];
         completion(code);
     }
 }
