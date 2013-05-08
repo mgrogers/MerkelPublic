@@ -241,7 +241,6 @@ exports.emailAlert = function(req, res) {
     }
 };
 
-
 /*
 API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
