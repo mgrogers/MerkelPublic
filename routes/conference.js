@@ -133,27 +133,23 @@ exports.smsAlert = function(req, res) {
             } else if (messageType == 'alert') {
                 message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
             }
-
             for (var i = 0; i < postBody.attendees.length; i++) {
-                var attendeePhoneNumber = postBody.attendees[i].phone;
-                if(attendeePhoneNumber) {
+                var attendeePhoneNumber = postBody.attendees[i].phone;      
+                if (attendeePhoneNumber) {
                     client.sendSms({
                         to: attendeePhoneNumber,
                         from: TWILIO_NUMBER,
                         body: message
                     }, function(err, responseData) {
                         if (!err) {
-                            console.log("SMS delivered");
-                            res.send(responseData);
+                            console.log("SMS delivered for " + attendeePhoneNumber);
                         } else {
                             console.log(err);
-                            console.log("SMS delivery error");
-                            res.send(err);
                         }
                     });
                 }
             }
-            return res.send({message: "Finished sending SMS messages."});
+            return res.send({message: "Finished SMS."});
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
