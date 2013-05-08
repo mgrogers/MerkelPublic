@@ -108,11 +108,13 @@ NSString * const BMWCalendarAccessDeniedNotification = @"BMWCalendarAccessDenied
 }
 
 - (void)getAndSaveConferenceCodeForEvent:(EKEvent *)event completion:(void (^)(NSString *conferenceCode))completion {
-    static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp\n";
+    static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp";
     static const NSInteger kBMWConferenceCodeLength = 10;
     [event refresh];
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
+    NSLog(@"%@", event.title);
+    NSLog(@"%@", event.notes);
     if (range.location == NSNotFound || (range.location == 0 && range.length == 0) || !notes) {
         NSLog(@"Code not found, creating new conference.");
         [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
