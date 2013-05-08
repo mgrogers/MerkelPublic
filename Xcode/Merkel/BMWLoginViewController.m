@@ -13,6 +13,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *secondFieldLabel;
 @property (strong, nonatomic) IBOutlet UITextField *secondField;
+@property (strong, nonatomic) IBOutlet UIButton *primaryNextButton;
+@property (strong, nonatomic) IBOutlet UIButton *secondaryNextButton;
 
 @end
 
@@ -39,11 +41,22 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    self.secondField.hidden = YES;
+    self.secondFieldLabel.hidden = YES;
+    self.secondaryNextButton.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (IBAction)primaryNextButtonPressed:(UIButton *)sender {
+    
+}
+
+- (IBAction)secondaryNextButtonPressed:(UIButton *)sender {
+    
 }
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
