@@ -132,6 +132,10 @@ exports.smsAlert = function(req, res) {
                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
                 message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
+            } else {
+                var response = {"meta": {"code": 404},
+                             "message": "Invalid message type"};
+                return res.send(response);
             }
             for (var i = 0; i < postBody.attendees.length; i++) {
                 var attendeePhoneNumber = postBody.attendees[i].phone;      
@@ -147,9 +151,13 @@ exports.smsAlert = function(req, res) {
                             console.log(err);
                         }
                     });
+                } else {
+                    console.log("No phone number for " + postBody.attendees[i].email);
                 }
             }
-            return res.send({message: "Finished SMS."});
+            var response = {"meta": {"code": 200},
+                         "message": "Finished SMS."};
+            return res.send(response);
         } else {
             var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
@@ -412,3 +420,9 @@ function stringifyTimeObject(timeObject) {
         return "";
     }    
  }
+
+
+
+ // take in phone number, generate 4 digit code. respond with code.
+ // text it as well
+
