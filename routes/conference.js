@@ -146,6 +146,7 @@ exports.phoneConfirmation = function(req, res) {
 exports.smsAlert = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
+        console.log(postBody);
         if (postBody.conferenceCode && postBody.toPhoneNumber) {
 
             var initiator = postBody.initiator || "";
@@ -199,6 +200,7 @@ exports.smsAlert = function(req, res) {
         return res.send(err);
     }
 }
+
 /*
 API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
 [Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
