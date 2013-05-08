@@ -147,7 +147,7 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                                         [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
                                         conferenceCode, @"conferenceCode",
                                         event.attendees, @"attendees",
-                                        kAlertMessageType, @"messageType",
+                                        kInviteMessageType, @"messageType",
                                         kTestSenderEmailAddress, @"initiator",nil];
             [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:email_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Alert success with response %@", responseObject);
