@@ -343,22 +343,23 @@ function addParticipants(participantsObject) {
         // Make sure conference exists
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
-                console.log(participantsObject);
-                console.log(participantsObject.participants.length);
-                // Add participants to conference
-                for(var i = 0; i < participantsObject.participants.length; i++) {
-                    p = participantsObject.participants[i];
-                    console.log(p);
-                    var participantObject = {
-                        phone: p.phone,
-                        email: p.email,
-                        displayName: p.displayName,
-                        conferenceCode: conferenceCode,
-                        status: "inactive"
-                    };
 
-                    var participant = new Participant(participantObject);
-                    participant.save();
+                // Add participants to conference
+                if(participantsObject.participants) {
+                    for(var i = 0; i < participantsObject.participants.length; i++) {
+                        p = participantsObject.participants[i];
+                        console.log(p);
+                        var participantObject = {
+                            phone: p.phone,
+                            email: p.email,
+                            displayName: p.displayName,
+                            conferenceCode: conferenceCode,
+                            status: "inactive"
+                        };
+
+                        var participant = new Participant(participantObject);
+                        participant.save();
+                    }
                 }
             } else {
                 console.log(conference);
