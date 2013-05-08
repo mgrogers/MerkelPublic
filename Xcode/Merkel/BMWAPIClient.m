@@ -64,67 +64,19 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 }
 
 - (void)createConferenceForCalendarEvent:(EKEvent *)event
+                          attendeesArray:(NSArray *)attendeesArray
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-
     static NSString * const kBMWNewConferencePath = @"conference/create";
-    NSMutableArray *attendeeArray = [NSMutableArray array];
-    __block ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, nil);
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        for (EKParticipant *attendee in event.attendees) {
-            NSMutableDictionary *attendeeObject = [@{@"name": attendee.name} mutableCopy];
-            ABRecordRef record = [attendee ABRecordWithAddressBook:addressBook];
-            ABMultiValueRef emailMulti = NULL;
-            ABMultiValueRef phoneMulti = NULL;
-            if (!record) {
-                // we don't have an address book record, so assume the name is also the email.
-                [attendeeObject setObject:attendee.name forKey:@"email"];
-            } else {
-                NSString *nsEmail = nil;
-                NSString *nsPhone = nil;
-                emailMulti = ABRecordCopyValue(record, kABPersonEmailProperty);
-                phoneMulti = ABRecordCopyValue(record, kABPersonPhoneProperty);
-                CFStringRef email = ABMultiValueCopyValueAtIndex(emailMulti, 0);
-                CFStringRef phone = NULL;
-                for (CFIndex i = 0; i < ABMultiValueGetCount(phoneMulti); i++) {
-                    CFStringRef phoneLabel = ABMultiValueCopyLabelAtIndex(phoneMulti, i);
-                    CFComparisonResult comparisonResultIPhone = CFStringCompare(phoneLabel, kABPersonPhoneIPhoneLabel, kCFCompareCaseInsensitive);
-                    CFComparisonResult comparisonResultMobile = CFStringCompare(phoneLabel, kABPersonPhoneMobileLabel, kCFCompareCaseInsensitive);
-                    if (comparisonResultIPhone == kCFCompareEqualTo || comparisonResultMobile == kCFCompareEqualTo) {
-                        phone = ABMultiValueCopyValueAtIndex(phoneMulti, i);
-                    }
-                    CFRelease(phoneLabel);
-                }
-                if (emailMulti != NULL) CFRelease(emailMulti);
-                if (phoneMulti != NULL) CFRelease(phoneMulti);
-                if (email != NULL) {
-                    nsEmail = (__bridge NSString *)email;
-                    [attendeeObject setObject:[nsEmail copy] forKey:@"email"];
-                    CFRelease(email);
-                }
-                if (phone != NULL) {
-                    nsPhone = (__bridge NSString *)phone;
-                    [attendeeObject setObject:[nsPhone copy] forKey:@"phone"];
-                    CFRelease(phone);
-                }
-            }
-            
-            [attendeeArray addObject:attendeeObject];
-        }
-        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    event.title, @"title",
-                                    event.notes, @"description",
-                                    event.startDate, @"start",
-                                    attendeeArray, @"attendees", nil];
-        
-        [self postPath:kBMWNewConferencePath
-            parameters:parameters
-               success:success
-               failure:failure];
-        if (addressBook) {
-            CFRelease(addressBook);
-        }
-    });
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                event.title, @"title",
+                                event.notes, @"description",
+                                event.startDate, @"start",
+                                attendeesArray, @"attendees", nil];
+    [self postPath:kBMWNewConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
 }
 
 - (void)sendEmailMessageWithParameters:(NSDictionary *)parameters

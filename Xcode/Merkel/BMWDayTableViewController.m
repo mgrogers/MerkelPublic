@@ -272,19 +272,26 @@ static NSString * const kInviteMessageType = @"invite";
     NSString *phoneNumber = self.phoneNumber;
     EKEvent *event = self.calendarEvents[index][@"event"];
 
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                event.title, @"title",
-                                event.startDate, @"startTime",
-                                phoneNumber, @"phoneNumber",
-                                conferenceCode, @"conferenceCode",
-                                event.attendees, @"attendees",
-                                kAlertMessageType, @"messageType",
-                                kTestSenderEmailAddress, @"initiator",nil];
+    [[BMWCalendarAccess sharedAccess] attendeesForEvent:event withCompletion:^(NSArray *attendees) {
+        
+        for (int i = 0; i < [attendees count]; i++) {
+            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
     
-    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Alert success with response %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error sending message", [error localizedDescription]);
+            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        event.title, @"title",
+                                        event.startDate, @"startTime",
+                                        phoneNumber, @"phoneNumber",
+                                        conferenceCode, @"conferenceCode",
+                                        attendeePhone, @"toPhoneNumber",
+                                        kAlertMessageType, @"messageType",
+                                        kTestSenderEmailAddress, @"initiator",nil];
+            
+            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Alert success with response %@", responseObject);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error sending message", [error localizedDescription]);
+            }];
+        }
     }];
     
     [self.tableView endUpdates];
