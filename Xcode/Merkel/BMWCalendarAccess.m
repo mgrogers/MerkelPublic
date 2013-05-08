@@ -11,6 +11,8 @@
 #import "BMWAPIClient.h"
 #import "BMWPhone.h"
 
+#import <AddressBook/AddressBook.h>
+
 @interface BMWCalendarAccess ()
 
 @property (nonatomic, strong) EKEventStore *store;
@@ -128,37 +130,40 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     NSLog(@"%@", event.notes);
     if (range.location == NSNotFound || (range.location == 0 && range.length == 0) || !notes) {
         NSLog(@"Code not found, creating new conference.");
-        [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *conferenceCode = responseObject[@"conferenceCode"];
-            NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
-            event.notes = [notes stringByAppendingFormat:@"\n\n%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
-            NSError *error;
-            [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
-            if (error) {
-                NSLog(@"Event save error: %@", [error localizedDescription]);
-            }
-            [self.processedEvents addObject:event];
-            [self.processedEventDicts addObject:@{@"event": event,
-                                                  @"conferenceCode": conferenceCode}];
-            
-            NSDictionary *email_parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        event.title, @"title",
-                                        event.startDate, @"startTime",
-                                        [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
-                                        conferenceCode, @"conferenceCode",
-                                        event.attendees, @"attendees",
-                                        kInviteMessageType, @"messageType",
-                                        kTestSenderEmailAddress, @"initiator",nil];
-            [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:email_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Alert success with response %@", responseObject);
+        [self attendeesForEvent:event withCompletion:^(NSArray *attendees) {
+            [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event
+                                                           attendeesArray:attendees
+                                                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *conferenceCode = responseObject[@"conferenceCode"];
+                NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
+                event.notes = [notes stringByAppendingFormat:@"\n\n%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
+                NSError *error;
+                [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
+                if (error) {
+                    NSLog(@"Event save error: %@", [error localizedDescription]);
+                }
+                [self.processedEvents addObject:event];
+                [self.processedEventDicts addObject:@{@"event": event,
+                 @"conferenceCode": conferenceCode}];
+                
+                NSDictionary *email_parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                  event.title, @"title",
+                                                  event.startDate, @"startTime",
+                                                  [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
+                                                  conferenceCode, @"conferenceCode",
+                                                  event.attendees, @"attendees",
+                                                  kInviteMessageType, @"messageType",
+                                                  kTestSenderEmailAddress, @"initiator",nil];
+                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:email_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"Alert success with response %@", responseObject);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error sending message", [error localizedDescription]);
+                }];
+                completion(conferenceCode);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending message", [error localizedDescription]);
+                NSLog(@"Error creating conference: %@", [error localizedDescription]);
+                completion(@"");
             }];
-            
-            completion(conferenceCode);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error creating conference: %@", [error localizedDescription]);
-            completion(@"");
         }];
     } else {
         NSString *code = [event.notes substringFromIndex:event.notes.length - kBMWConferenceCodeLength];
@@ -170,6 +175,56 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                                               @"conferenceCode": code}];
         completion(code);
     }
+}
+
+- (void)attendeesForEvent:(EKEvent *)event withCompletion:(void (^)(NSArray *attendees))completion {
+    NSMutableArray *attendeeArray = [NSMutableArray array];
+    __block ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, nil);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        for (EKParticipant *attendee in event.attendees) {
+            NSMutableDictionary *attendeeObject = [@{@"name": attendee.name} mutableCopy];
+            ABRecordRef record = [attendee ABRecordWithAddressBook:addressBook];
+            ABMultiValueRef emailMulti = NULL;
+            ABMultiValueRef phoneMulti = NULL;
+            if (!record) {
+                // we don't have an address book record, so assume the name is also the email.
+                [attendeeObject setObject:attendee.name forKey:@"email"];
+            } else {
+                NSString *nsEmail = nil;
+                NSString *nsPhone = nil;
+                emailMulti = ABRecordCopyValue(record, kABPersonEmailProperty);
+                phoneMulti = ABRecordCopyValue(record, kABPersonPhoneProperty);
+                CFStringRef email = ABMultiValueCopyValueAtIndex(emailMulti, 0);
+                CFStringRef phone = NULL;
+                for (CFIndex i = 0; i < ABMultiValueGetCount(phoneMulti); i++) {
+                    CFStringRef phoneLabel = ABMultiValueCopyLabelAtIndex(phoneMulti, i);
+                    CFComparisonResult comparisonResultIPhone = CFStringCompare(phoneLabel, kABPersonPhoneIPhoneLabel, kCFCompareCaseInsensitive);
+                    CFComparisonResult comparisonResultMobile = CFStringCompare(phoneLabel, kABPersonPhoneMobileLabel, kCFCompareCaseInsensitive);
+                    if (comparisonResultIPhone == kCFCompareEqualTo || comparisonResultMobile == kCFCompareEqualTo) {
+                        phone = ABMultiValueCopyValueAtIndex(phoneMulti, i);
+                    }
+                    CFRelease(phoneLabel);
+                }
+                if (emailMulti != NULL) CFRelease(emailMulti);
+                if (phoneMulti != NULL) CFRelease(phoneMulti);
+                if (email != NULL) {
+                    nsEmail = (__bridge NSString *)email;
+                    [attendeeObject setObject:[nsEmail copy] forKey:@"email"];
+                    CFRelease(email);
+                }
+                if (phone != NULL) {
+                    nsPhone = (__bridge NSString *)phone;
+                    [attendeeObject setObject:[nsPhone copy] forKey:@"phone"];
+                    CFRelease(phone);
+                }
+            }
+            [attendeeArray addObject:attendeeObject];
+        }
+        completion(attendeeArray);
+        if (addressBook) {
+            CFRelease(addressBook);
+        }
+    });
 }
 
 @end
