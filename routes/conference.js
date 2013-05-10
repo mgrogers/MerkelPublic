@@ -326,7 +326,7 @@ exports.join = function(req, res) {
 
                 // Simple user tracking - # of conferences each phone number joins
                 SimpleUser.findOne({'phone': fromPhoneNumber}, function(err_s, simpleUser) {
-                    if(!err_s && participant) {
+                    if(!err_s && simpleUser) {
                         simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
 
                         // Mixpanel increment conferencesJoined
