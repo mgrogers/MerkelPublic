@@ -20,9 +20,6 @@
 @property (weak, nonatomic) IBOutlet QBFlatButton *joinCallButton;
 @property (weak, nonatomic) IBOutlet QBFlatButton *lateButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *lateButton;
-
 - (IBAction)lateButtonPressed:(id)sender;
 - (void)startCall;
 - (void)sendInviteMessageAnimated:(BOOL)animated;
