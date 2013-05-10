@@ -11,6 +11,7 @@
     "hbs": "*",
     "imap": "*",
     "linkedin-js": "*",
+    "mixpanel": "*",
     "mongoose": "*",
     "node-parse-api": "*",
     "q": "*",
