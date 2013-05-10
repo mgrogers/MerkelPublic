@@ -17,8 +17,8 @@
 
 @implementation BMWSlidingCell {
     CGPoint _originalCenter;
-    BOOL _deleteOnDragRelease;
-    BOOL _markCompleteOnDragRelease;
+    BOOL _rightDragRelease;
+    BOOL _leftDragRelease;
     
     UILabel *_leftLabel;
     UILabel *_rightLabel;
@@ -108,17 +108,19 @@ const float UI_CUES_WIDTH = 100.0f;
 
 
 #pragma mark - horizontal pan gesture methods
--(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
-    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
-    
-    //checks for horizontal gestures
-    if (fabsf(translation.x) > fabsf(translation.y)) {
-        return YES;
-    }
-    return NO;
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint translation = [gestureRecognizer translationInView:[self superview]];
+        
+        //checks for horizontal gestures
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            return YES;
+        }
+        return NO;
+    } else return NO;
 }
 
--(void)handlePan:(UIPanGestureRecognizer *)recognizer {
+- (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     //if the gesture has just started, record the current center location
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         _originalCenter = self.center;
@@ -128,8 +130,8 @@ const float UI_CUES_WIDTH = 100.0f;
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
-        _markCompleteOnDragRelease = self.frame.origin.x > self.frame.size.width / 8;
+        _rightDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
+        _leftDragRelease = self.frame.origin.x > self.frame.size.width / 8;
         
         // fade the contextual cues
         float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 8);
@@ -137,10 +139,10 @@ const float UI_CUES_WIDTH = 100.0f;
         _rightLabel.alpha = cueAlpha;
         
         // indicate when the item have been pulled far enough to invoke the given action
-        _leftLabel.textColor = _markCompleteOnDragRelease ?
+        _leftLabel.textColor = _leftDragRelease ?
         [UIColor greenColor] : [UIColor whiteColor];
        
-        _rightLabel.textColor = _deleteOnDragRelease ?
+        _rightLabel.textColor = _rightDragRelease ?
          [UIColor redColor] : [UIColor whiteColor];
       
         
@@ -152,7 +154,7 @@ const float UI_CUES_WIDTH = 100.0f;
         CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
                                           self.bounds.size.width, self.bounds.size.height);
         
-        if (!_deleteOnDragRelease) {
+        if (!_rightDragRelease) {
             // if the item is not being deleted, snap back to the original location
             [UIView animateWithDuration:0.2
                              animations:^{
@@ -160,7 +162,7 @@ const float UI_CUES_WIDTH = 100.0f;
                              }
              ];
         }
-        if(!_markCompleteOnDragRelease) {
+        if(!_leftDragRelease) {
             [UIView animateWithDuration:0.2
                              animations:^{
                                  self.frame = originalFrame;
@@ -168,12 +170,12 @@ const float UI_CUES_WIDTH = 100.0f;
              ];
 
         }
-        if(_deleteOnDragRelease) {
+        if(_rightDragRelease) {
             [self.delegate handleRightSwipe:self];
             
 
         }
-        if(_markCompleteOnDragRelease) {
+        if(_leftDragRelease) {
             [self.delegate handleLeftSwipe:self];
 
         }
@@ -182,7 +184,7 @@ const float UI_CUES_WIDTH = 100.0f;
 }
 
 #pragma mark context cues
--(UILabel*) createCueLabel {
+- (UILabel*) createCueLabel {
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectNull];
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont boldSystemFontOfSize:32.0];

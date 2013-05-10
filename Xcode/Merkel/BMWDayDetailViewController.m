@@ -20,8 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *lateButton;
+
 
 @end
 
@@ -50,12 +49,6 @@ static NSString * const kInviteMessageType = @"invite";
     _eventTitle = eventTitle;
 }
 
-//- (BMWAttendeeTableViewController *)attendeeTable {
-//    if (!_attendeeTable) {
-//        _attendeeTable= [[BMWAttendeeTableViewController alloc] init];
-//    }
-//    return _attendeeTable;
-//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -139,20 +132,31 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (IBAction)lateButtonPressed:(id)sender {
     [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
-        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    self.event.title, @"title",
-                                    self.event.startDate, @"startTime",
-                                    self.phoneNumber, @"phoneNumber",
-                                    self.conferenceCode, @"conferenceCode",
-                                    attendees, @"attendees",
-                                    kAlertMessageType, @"messageType",
-                                    kTestSenderEmailAddress, @"initiator",nil];
-        
-        [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Alert success with response %@", responseObject);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error sending message", [error localizedDescription]);
-        }];
+        for (int i = 0; i < [attendees count]; i++) {
+            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+            NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
+            
+            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        self.event.title, @"title",
+                                        self.event.startDate, @"startTime",
+                                        self.phoneNumber, @"phoneNumber",
+                                        self.conferenceCode, @"conferenceCode",
+                                        attendeePhone, @"toPhoneNumber",
+                                        attendeeEmail, @"toEmail",
+                                        kAlertMessageType, @"messageType",
+                                        kTestSenderEmailAddress, @"initiator",nil];
+            
+            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Alert success with response %@", responseObject);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error sending sms message. Attempting email. %@", [error localizedDescription]);
+                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"Alert success with response %@", responseObject);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error sending message %@", [error localizedDescription]);
+                }];
+            }];
+        }
     }];
 }
 
@@ -173,11 +177,13 @@ static NSString * const kInviteMessageType = @"invite";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        
     });
 }
 
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [[BMWPhone sharedPhone] setIsSpeakerEnabled:YES];
         [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
     });
     

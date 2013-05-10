@@ -18,6 +18,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 
+// Mixpanel
+var Mixpanel = require('mixpanel');
+var mixpanel = Mixpanel.init('47eb26b4488113bbb2118b83717c5956');
+
+
 var Email = require('sendgrid').Email;
 var SendGrid = require('sendgrid').SendGrid;
 var kSendGridUser = "app12018585@heroku.com";
@@ -46,8 +51,16 @@ var participantSchema = new Schema({
     status: {type: String, default: "inactive"} // 'active' or 'inactive'
 });
 
+var simpleUserSchema = new Schema({
+    phone: {type: String, default: ""},
+    conferencesAttended: [{
+        conferenceCode: {type: String, default: ""}
+    }]
+})
+
 var Conference = db.model('conference', conferenceSchema);
 var Participant = db.model('participant', participantSchema);
+var SimpleUser = db.model('simpleUser', simpleUserSchema);
 
 
 /* ----- API Calls ----- */
@@ -64,6 +77,9 @@ exports.capability = function(req, res) {
     capability.allowClientOutgoing(TWIML_APP_ID);
 
     var response = {capabilityToken: capability.generate(timeout)};
+
+    mixpanel.track("capability request", {});
+
     return res.send(response);
 };
 
@@ -102,6 +118,13 @@ exports.create = function(req, res) {
             conferenceObject = {conferenceCode: hash};
         }
         
+        // Mixpanel
+        mixpanel.track("conference create", {
+            conferenceCode: hash,
+            conferenceTitle: conferenceObject.title,
+            conferenceDescription: conferenceObject.description
+        });
+
         var conference = new Conference(conferenceObject);
         conference.save(function(err) {
             if (!err) {
@@ -146,8 +169,7 @@ exports.phoneConfirmation = function(req, res) {
 exports.smsAlert = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
-        console.log(postBody);
-        if (postBody.conferenceCode && postBody.attendees) {
+        if (postBody.conferenceCode && postBody.toPhoneNumber) {
 
             var initiator = postBody.initiator || "";
             var conferencePhoneNumber = postBody.phoneNumber || "";
@@ -155,6 +177,7 @@ exports.smsAlert = function(req, res) {
             var eventTitle = postBody.title || "";
             var startTime = stringifyTimeObject(postBody.start);
             var messageType = postBody.messageType || "";
+            var toPhoneNumber = postBody.toPhoneNumber || "";
 
             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
             var message;
@@ -166,94 +189,39 @@ exports.smsAlert = function(req, res) {
             } else {
                 var response = {"meta": {"code": 404},
                              "message": "Invalid message type"};
-                return res.send(response);
+                return res.send(404, response);
             }
-            for (var i = 0; i < postBody.attendees.length; i++) {
-                var attendeePhoneNumber = postBody.attendees[i].phone;      
-                if (attendeePhoneNumber) {
-                    client.sendSms({
-                        to: attendeePhoneNumber,
-                        from: TWILIO_NUMBER,
-                        body: message
-                    }, function(err, responseData) {
-                        if (!err) {
-                            console.log("SMS delivered for " + attendeePhoneNumber);
-                        } else {
-                            console.log(err);
-                        }
-                    });
-                } else {
-                    console.log("No phone number for " + postBody.attendees[i].email);
-                }
-            }
-            var response = {"meta": {"code": 200},
-                         "message": "Finished SMS."};
-            return res.send(response);
+            if (toPhoneNumber) {
+                client.sendSms({
+                    to: toPhoneNumber,
+                    from: TWILIO_NUMBER,
+                    body: message
+                }, function(err, responseData) {
+                    if (!err) {
+                        var response = {"meta": {"code": 200},
+                         "message": "Finished SMS for " + toPhoneNumber};
+                        return res.send(response);
+                    } else {
+                        console.log(err);
+                        var response = {"meta": {"code": 404},
+                        "message": "Error sending sms"};
+                        return res.send(404, response);
+                    }
+                });
+            } else {
+                var response = {"meta": {"code": 404},
+                         "message": "Invalid phone number."};
+                return res.send(404, response);
+            } 
         } else {
-            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
-            return res.send(err);
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and phone number?"};
+            return res.send(400, err);
         } 
     } else {
-        var err = {message: "This API is POST only, please POST your invitee data"};
-        return res.send(err);
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
+        return res.send(400, err);
     }
 }
-
-// exports.sendSMS = function(req, res) {
-//     if (req.method == 'POST') {
-//         var postBody = req.body;
-//         if (postBody.conferenceCode && postBody.attendees) {
-
-//             var initiator = postBody.initiator || "";
-//             var conferencePhoneNumber = postBody.phoneNumber || "";
-//             var conferenceCode = postBody.conferenceCode || "";
-//             var eventTitle = postBody.title || "";
-//             var startTime = stringifyTimeObject(postBody.start);
-//             var messageType = postBody.messageType || "";
-
-//             var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
-//             var message;
-//             if (messageType == 'invite') {
-//                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
-//                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
-//             } else if (messageType == 'alert') {
-//                 message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
-//             } else {
-//                 var response = {"meta": {"code": 404},
-//                              "message": "Invalid message type"};
-//                 return res.send(response);
-//             }
-
-//             var attendeePhoneNumber = postBody.receiver.phone;      
-//             if (attendeePhoneNumber) {
-//                 client.sendSms({
-//                     to: attendeePhoneNumber,
-//                     from: TWILIO_NUMBER,
-//                     body: message
-//                 }, function(err, responseData) {
-//                     if (!err) {
-//                         console.log("SMS delivered for " + attendeePhoneNumber);
-//                     } else {
-//                         console.log(err);
-//                     }
-//                 });
-//             } else {
-//                 console.log("Invalid phone number");
-//             }
-            
-//             var response = {"meta": {"code": 200},
-//                          "message": "Finished SMS."};
-//             return res.send(response);
-//         } else {
-//             var err = {message: "Could not invite, did you POST the conferenceCode and receiver number?"};
-//             return res.send(err);
-//         } 
-//     } else {
-//         var err = {message: "This API is POST only, please POST your invitee data"};
-//         return res.send(err);
-//     }
-// }
-
 
 /*
 API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
@@ -262,13 +230,16 @@ API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference 
 exports.emailAlert = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
-        if(postBody.conferenceCode && postBody.attendees) {
+        console.log(postBody);
+        if(postBody.conferenceCode && postBody.toEmail) {
+
             var initiator = postBody.initiator || "";
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
             var startTime = stringifyTimeObject(postBody.start);
             var messageType = postBody.messageType || "";
+            var toEmail = postBody.toEmail; 
 
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
@@ -283,14 +254,6 @@ exports.emailAlert = function(req, res) {
             }
             var sendgrid = new SendGrid(user, key);
 
-            var conferenceAttendees = [];
-            for (var i = 0; i < postBody.attendees.length; i++) {
-                var emailAddress = postBody.attendees[i].email;
-                if (emailAddress) {
-                    conferenceAttendees.push(emailAddress);
-                }                
-            } 
-
             var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'Invite@CallInapp.com';
@@ -300,36 +263,38 @@ exports.emailAlert = function(req, res) {
                     + "With code: #" + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
-                msgSubject = initiator + " is running late for your call: " + eventTitle + " at " + conferenceCode; 
+                msgSubject = initiator + " is running late to your event: " + eventTitle; 
                 content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
-                        + " is running late and will be joining the conference call, " + conferencePhoneNumber + ",,," + conferenceCode + "# as soon as possible.";
+                        + " is running late and will be joining the call as soon as possible.\n\n"
+                        + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
+                        + "With code: #" + conferenceCode + ".\n";
             }
+
             var email = new Email({
+                to: toEmail,
                 from: sender,
                 replyto: initiator,
                 subject: msgSubject,
                 text: content
             });
-            email.addTo(conferenceAttendees);
-
             sendgrid.send(email, function(success, message) {
                 if(!success) {
-                    var response = {"meta": {"code": 400},
+                    var response = {"meta": {"code": 404},
                                  "message": "Invitation delivery failed. " + message};
-                    return res.send(response);
+                    return res.send(404, response);
                 } else {
                     var response = {"meta": {"code": 200},
-                                 "message": "Invite delivered to :" + conferenceAttendees.toString()};    
+                                 "message": "Invite delivered to :" + toEmail};    
                     return res.send(response);
                 }
             });
         } else {
-            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
-            return res.send(err);
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            return res.send(400, err);
         }
     } else {
-        var err = {message: "This API is POST only, please POST your invitee data"};
-        return res.send(err);
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
+        return res.send(400, err);
     }
 };
 
@@ -356,6 +321,33 @@ exports.join = function(req, res) {
                         participant = new Participant(participantObject);
                         participant.save();
                     }
+                });
+
+
+                // Simple user tracking - # of conferences each phone number joins
+                SimpleUser.findOne({'phone': fromPhoneNumber}, function(err_s, simpleUser) {
+                    if(!err_s && participant) {
+                        simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                        // Mixpanel increment conferencesJoined
+                        mixpanel.people.increment("" + fromPhoneNumber, "conferencesJoined");
+                    } else if(!err_s) {
+                        simpleUser = new SimpleUser({phone: fromPhoneNumber, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                        // Mixpanel create user
+                        mixpanel.people.set("" + fromPhoneNumber, {
+                            conferencesJoined: 1
+                        });
+                    }
+
+                    simpleUser.save();
+                });
+
+
+                // Mixpanel
+                mixpanel.track("conference join", {
+                    conferenceCode: conferenceCode,
+                    phoneNumber: fromPhoneNumber
                 });
 
                 var conferenceName = conference.id;

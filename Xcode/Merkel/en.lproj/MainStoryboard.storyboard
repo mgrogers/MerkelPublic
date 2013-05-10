@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lI2-ju-ciw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lI2-ju-ciw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="U42-vu-rHJ" kind="relationship" relationship="rootViewController" id="R6l-XZ-X3N"/>
+                        <segue destination="U42-vu-rHJ" kind="relationship" relationship="rootViewController" id="dmS-pz-LPK"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hnR-Qq-XD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -121,7 +121,7 @@
         <!--Day Detail View Controller-->
         <scene sceneID="dai-Oe-D3p">
             <objects>
-                <viewController id="IGI-XZ-Asx" customClass="BMWDayDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DayDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IGI-XZ-Asx" customClass="BMWDayDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h04-J1-KSi">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -284,6 +284,155 @@
             </objects>
             <point key="canvasLocation" x="1599" y="595"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="6Dn-Fl-nQU">
+            <objects>
+                <viewController storyboardIdentifier="LoginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KMA-Xs-QsW" customClass="BMWLoginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fyw-mM-U5N">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Callin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1115" id="sGp-nq-mvD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to begin, please enter your phone number:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="s2x-Pt-9dN">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" type="user" id="EFf-D2-Zfd"/>
+                                    <constraint firstAttribute="width" constant="231" id="afu-YE-edF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="phone number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyT-V6-epe">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" type="user" id="7hP-PB-EaE"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KMA-Xs-QsW" id="qzn-QC-SNI"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="next, enter the code we just sent:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="f6s-3f-2DP">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" type="user" id="aLk-Uo-9L3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XJd-rh-OdK">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" type="user" id="qLN-Ad-xug"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KMA-Xs-QsW" id="BeM-j9-ncI"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69y-IG-COB" customClass="QBFlatButton">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" type="user" id="g86-TW-S6P"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="primaryNextButtonPressed:" destination="KMA-Xs-QsW" eventType="touchUpInside" id="6YJ-7I-Wl6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5H-LL-vvh" customClass="QBFlatButton">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" type="user" id="60E-wL-xca"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="secondaryNextButtonPressed:" destination="KMA-Xs-QsW" eventType="touchUpInside" id="Gok-Km-sBY"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="✘" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="69" translatesAutoresizingMaskIntoConstraints="NO" id="jml-nQ-Ay7">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="69" id="A8n-WC-Q7c"/>
+                                    <constraint firstAttribute="height" constant="26" type="user" id="bcu-Vr-AOc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="25"/>
+                                <color key="textColor" red="1" green="0.1079717523" blue="0.19881982919999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="omr-FB-Kio"/>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jml-nQ-Ay7" secondAttribute="trailing" constant="78" id="1wp-hC-nCd"/>
+                            <constraint firstItem="jml-nQ-Ay7" firstAttribute="baseline" secondItem="XJd-rh-OdK" secondAttribute="baseline" type="default" id="42r-gT-kVn"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="trailing" secondItem="qyT-V6-epe" secondAttribute="trailing" type="default" id="4rR-7u-wE4"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" type="user" id="5S9-ZQ-rjI"/>
+                            <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="user" id="7fM-8E-LhN"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="9EO-gu-FqY"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="s2x-Pt-9dN" secondAttribute="bottom" constant="1" type="user" id="9U7-14-ami"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="eNS-lF-jmO" secondAttribute="bottom" constant="9" type="user" id="9XB-JC-VfI"/>
+                            <constraint firstItem="t5H-LL-vvh" firstAttribute="top" secondItem="XJd-rh-OdK" secondAttribute="bottom" constant="7" type="user" id="Abn-UU-qyf"/>
+                            <constraint firstItem="t5H-LL-vvh" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="FQa-bf-kVM"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" type="user" id="JDk-8u-ojq"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="69y-IG-COB" secondAttribute="leading" type="default" id="NOE-df-uzr"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" type="user" id="OcM-9s-KVs"/>
+                            <constraint firstItem="omr-FB-Kio" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="177" type="user" id="Qhx-8r-SeL"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="69y-IG-COB" secondAttribute="bottom" constant="4" type="user" id="a0l-HA-uIA"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="69y-IG-COB" secondAttribute="trailing" type="default" id="bDw-H3-GDw"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="biu-Fb-UoG"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="qyT-V6-epe" secondAttribute="bottom" constant="7" type="user" id="fWp-mU-V06"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" type="user" id="hao-Kn-onA"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" type="user" id="i7m-Qf-FfQ"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="trailing" secondItem="f6s-3f-2DP" secondAttribute="trailing" type="default" id="iPY-0y-fJk"/>
+                            <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="l9p-EJ-rNr"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
+                            <constraint firstItem="jml-nQ-Ay7" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="9" type="user" id="w24-LI-Kmp"/>
+                            <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="qyT-V6-epe" secondAttribute="centerX" type="default" id="xtr-xD-aAD"/>
+                            <constraint firstItem="omr-FB-Kio" firstAttribute="top" secondItem="s2x-Pt-9dN" secondAttribute="bottom" constant="20" type="user" id="xyL-9G-dVx"/>
+                            <constraint firstItem="t5H-LL-vvh" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="ybs-b1-OSw"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="leading" secondItem="qyT-V6-epe" secondAttribute="leading" type="default" id="zyk-kl-yXa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PnI-c7-pO6"/>
+                    <connections>
+                        <outlet property="phoneNumberField" destination="qyT-V6-epe" id="Wfz-JF-ysB"/>
+                        <outlet property="phoneNumberLabel" destination="s2x-Pt-9dN" id="2Yk-tJ-dPU"/>
+                        <outlet property="primaryNextButton" destination="69y-IG-COB" id="2Vl-6H-aYM"/>
+                        <outlet property="secondField" destination="XJd-rh-OdK" id="SUA-F3-q6u"/>
+                        <outlet property="secondFieldCorrectLabel" destination="jml-nQ-Ay7" id="7vj-nt-xGa"/>
+                        <outlet property="secondFieldLabel" destination="f6s-3f-2DP" id="EL8-4q-tl1"/>
+                        <outlet property="secondaryNextButton" destination="t5H-LL-vvh" id="rRG-xb-hE3"/>
+                        <outlet property="spinner" destination="omr-FB-Kio" id="iB7-8h-Lvi"/>
+                        <outlet property="titleLabel" destination="eNS-lF-jmO" id="MCX-Ez-6s0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Cg-an-ld3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="398"/>
+        </scene>
         <!--Day Table View Controller-->
         <scene sceneID="a50-WX-nU8">
             <objects>
@@ -343,6 +492,20 @@
         <class className="BMWDayTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
         </class>
+        <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
+                <relationship kind="outlet" name="secondField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="secondFieldCorrectLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="secondFieldLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="secondaryNextButton" candidateClass="QBFlatButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
         <class className="BMWViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
             <relationships>
@@ -361,6 +524,9 @@
         </class>
         <class className="PKRevealController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
+        </class>
+        <class className="QBFlatButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QBFlatButton.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
