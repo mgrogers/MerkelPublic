@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDate *indicatorStartTime, *indicatorEndTime;
 @property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) NSTimer *animationTimer;
 
 @end
 
@@ -46,10 +47,12 @@
     self.labelColor = [UIColor blackColor];
     self.labelFont = [UIFont systemFontOfSize:14.0];
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    self.indicatorBarView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addSubview:self.indicatorBarView];
     self.meetingDurationView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.meetingDurationView.backgroundColor = self.timeIndicatorColor;
     [self addSubview:self.meetingDurationView];
+    self.indicatorBarView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.indicatorBarView.backgroundColor = [UIColor redColor];
+    [self addSubview:self.indicatorBarView];
     self.indicatorStartLabel = [self createNewLabelAndAddAsSubview];
     self.indicatorEndLabel = [self createNewLabelAndAddAsSubview];
     self.eventStartLabel = [self createNewLabelAndAddAsSubview];
@@ -111,7 +114,7 @@
 }
 
 - (void)layoutSubviews {
-    static const CGFloat kCurrentTimeIndicatorWidthScaleFactor = 0.05;
+    static const CGFloat kCurrentTimeIndicatorWidthScaleFactor = 0.01;
     [super layoutSubviews];
     NSInteger totalMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.indicatorStartTime toDate:self.indicatorEndTime options:0].minute;
     NSInteger eventMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.startTime toDate:self.endTime options:0].minute;
@@ -130,11 +133,36 @@
 }
 
 - (void)startAnimating {
-    
+    static const NSTimeInterval kAnimationTimerInterval = 1.0;
+    self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:kAnimationTimerInterval
+                                                           target:self
+                                                         selector:@selector(animateObjects)
+                                                         userInfo:nil
+                                                          repeats:YES];
+}
+
+- (void)animateObjects {
+    static const NSTimeInterval kAnimationDuration = 0.2;
+    static const CGFloat kCurrentTimeIndicatorWidthScaleFactor = 0.01;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSInteger totalSeconds = [self.calendar components:NSSecondCalendarUnit fromDate:self.indicatorStartTime toDate:self.indicatorEndTime options:0].second;
+        NSInteger currentTimeOffsetSeconds = [self.calendar components:NSSecondCalendarUnit fromDate:self.indicatorStartTime toDate:[NSDate date] options:0].second;
+        CGFloat trackWidth = self.frame.size.width;
+        CGFloat trackHeight = self.frame.size.height;
+        CGFloat currentTimeIndicatorOffsetX = (((CGFloat)currentTimeOffsetSeconds) / totalSeconds) * trackWidth;
+        CGFloat currentTimeIndicatorWidth = trackWidth * kCurrentTimeIndicatorWidthScaleFactor;
+        CGRect currentTimeIndicatorFrame = CGRectMake(currentTimeIndicatorOffsetX - (currentTimeIndicatorWidth / 2), 0.0, currentTimeIndicatorWidth, trackHeight);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:kAnimationDuration animations:^{
+                self.indicatorBarView.frame = currentTimeIndicatorFrame;
+            }];
+        });
+    });
 }
 
 - (void)stopAnimating {
-    
+    [self.animationTimer invalidate];
+    self.animationTimer = nil;
 }
 
 @end

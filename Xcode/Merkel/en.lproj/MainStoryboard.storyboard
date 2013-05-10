@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="U42-vu-rHJ" kind="relationship" relationship="rootViewController" id="fOV-34-kkp"/>
+                        <segue destination="KMA-Xs-QsW" kind="relationship" relationship="rootViewController" id="JER-zx-9hn"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hnR-Qq-XD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -123,7 +123,7 @@
             <objects>
                 <viewController storyboardIdentifier="DayDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IGI-XZ-Asx" customClass="BMWDayDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h04-J1-KSi">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-06-92b">
@@ -260,7 +260,7 @@
             <objects>
                 <tableViewController id="xZn-Xr-oKw" customClass="BMWAttendeeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qiX-DS-fMi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="254"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="298"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -289,7 +289,7 @@
             <objects>
                 <viewController storyboardIdentifier="LoginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KMA-Xs-QsW" customClass="BMWLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fyw-mM-U5N">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Callin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
@@ -381,11 +381,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="omr-FB-Kio"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d41-2B-IP0" customClass="BMWTimeIndicatorView">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="104" type="user" id="4Rh-ww-Nsz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="jml-nQ-Ay7" secondAttribute="trailing" constant="78" id="1wp-hC-nCd"/>
                             <constraint firstItem="jml-nQ-Ay7" firstAttribute="baseline" secondItem="XJd-rh-OdK" secondAttribute="baseline" type="default" id="42r-gT-kVn"/>
+                            <constraint firstAttribute="trailing" secondItem="d41-2B-IP0" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="4G6-UE-qo6"/>
                             <constraint firstItem="69y-IG-COB" firstAttribute="trailing" secondItem="qyT-V6-epe" secondAttribute="trailing" type="default" id="4rR-7u-wE4"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" type="user" id="5S9-ZQ-rjI"/>
                             <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="user" id="7fM-8E-LhN"/>
@@ -395,9 +402,14 @@
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="top" secondItem="XJd-rh-OdK" secondAttribute="bottom" constant="7" type="user" id="Abn-UU-qyf"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="FQa-bf-kVM"/>
                             <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" type="user" id="JDk-8u-ojq"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerY" secondItem="d41-2B-IP0" secondAttribute="centerY" type="user" id="MQS-8U-5JN"/>
+                            <constraint firstItem="d41-2B-IP0" firstAttribute="leading" secondItem="fyw-mM-U5N" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="MUi-u0-AtS"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="69y-IG-COB" secondAttribute="leading" type="default" id="NOE-df-uzr"/>
+                            <constraint firstItem="d41-2B-IP0" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="76" type="user" id="OME-To-169"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" type="user" id="OcM-9s-KVs"/>
+                            <constraint firstItem="eNS-lF-jmO" firstAttribute="centerX" secondItem="s2x-Pt-9dN" secondAttribute="centerX" type="default" id="QEi-ZZ-VLG"/>
                             <constraint firstItem="omr-FB-Kio" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="177" type="user" id="Qhx-8r-SeL"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="d41-2B-IP0" secondAttribute="centerX" type="default" id="WgE-z0-iQU"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="69y-IG-COB" secondAttribute="bottom" constant="4" type="user" id="a0l-HA-uIA"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="69y-IG-COB" secondAttribute="trailing" type="default" id="bDw-H3-GDw"/>
@@ -406,8 +418,6 @@
                             <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" type="user" id="hao-Kn-onA"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" type="user" id="i7m-Qf-FfQ"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="trailing" secondItem="f6s-3f-2DP" secondAttribute="trailing" type="default" id="iPY-0y-fJk"/>
-                            <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="l9p-EJ-rNr"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
                             <constraint firstItem="jml-nQ-Ay7" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="9" type="user" id="w24-LI-Kmp"/>
                             <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="qyT-V6-epe" secondAttribute="centerX" type="default" id="xtr-xD-aAD"/>
@@ -426,6 +436,7 @@
                         <outlet property="secondFieldLabel" destination="f6s-3f-2DP" id="EL8-4q-tl1"/>
                         <outlet property="secondaryNextButton" destination="t5H-LL-vvh" id="rRG-xb-hE3"/>
                         <outlet property="spinner" destination="omr-FB-Kio" id="iB7-8h-Lvi"/>
+                        <outlet property="timeIndicatorView" destination="d41-2B-IP0" id="MAV-mL-94Y"/>
                         <outlet property="titleLabel" destination="eNS-lF-jmO" id="MCX-Ez-6s0"/>
                     </connections>
                 </viewController>
@@ -438,7 +449,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="DayTable" useStoryboardIdentifierAsRestorationIdentifier="YES" id="U42-vu-rHJ" customClass="BMWDayTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xUA-ip-Yr1">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -493,6 +504,8 @@
         <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
             <relationships>
+                <relationship kind="action" name="primaryNextButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="secondaryNextButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="phoneNumberLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
@@ -501,8 +514,12 @@
                 <relationship kind="outlet" name="secondFieldLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="secondaryNextButton" candidateClass="QBFlatButton"/>
                 <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="timeIndicatorView" candidateClass="BMWTimeIndicatorView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
             </relationships>
+        </class>
+        <class className="BMWTimeIndicatorView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWTimeIndicatorView.h"/>
         </class>
         <class className="BMWViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
