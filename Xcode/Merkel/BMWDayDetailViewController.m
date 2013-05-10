@@ -124,6 +124,8 @@ static NSString * const kInviteMessageType = @"invite";
 - (IBAction)joinCallButtonPressed:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
         [[BMWPhone sharedPhone] disconnect];
+        [BMWPhone sharedPhone].currentCallEvent = nil;
+        [BMWPhone sharedPhone].currentCallCode = nil;
     } else {
         [self startCall];
     }
@@ -132,8 +134,10 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)startCall {
     NSString *codetoCall = self.conferenceCodeLabel.text;
     if(codetoCall) {
-        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
         [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
+        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+        [BMWPhone sharedPhone].currentCallEvent = self.event;
+        [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
     }
 }
 

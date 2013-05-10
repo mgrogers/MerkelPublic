@@ -90,6 +90,7 @@ static NSString * const kInviteMessageType = @"invite";
         self.loginVC.loginDelegate = self;
         [self presentViewController:self.loginVC animated:NO completion:NULL];
     }
+    [self deviceStatusChanged:nil];
 }
 
 - (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
@@ -103,7 +104,7 @@ static NSString * const kInviteMessageType = @"invite";
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Call" style:UIBarButtonItemStyleDone target:self action:@selector(endCallButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [spinner startAnimating];
@@ -141,6 +142,19 @@ static NSString * const kInviteMessageType = @"invite";
 //    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
     
+}
+
+- (void)currentCallButtonPressed {
+    EKEvent *event = [BMWPhone sharedPhone].currentCallEvent;
+    NSString *conferenceCode = [BMWPhone sharedPhone].currentCallCode;
+    if (event && conferenceCode) {
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+    }
 }
 
 - (void)endCallButtonPressed {
