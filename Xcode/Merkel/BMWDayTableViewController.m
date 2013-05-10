@@ -18,7 +18,6 @@
 
 @interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate>
 
-
 @property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
 @property (nonatomic, strong) NSArray *selectedPeople;
@@ -32,6 +31,7 @@ static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
 static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
+static const NSInteger kTableCellRowHeight = 88;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -40,8 +40,6 @@ static NSString * const kInviteMessageType = @"invite";
     }
     return self;
 }
-
-
 
 - (NSArray *)testData {
     if (!_testData) {
@@ -173,12 +171,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
-    /*
-    NSDictionary *item = self.testData[indexPath.row];
-    cell.textLabel.text = item[@"title"];
-    cell.startLabel.text = item[@"start"];
-    cell.endLabel.text = item[@"end"];
-     */
+
     EKEvent *event = [self eventForIndexPath:indexPath];
     cell.delegate = self;
     cell.index = indexPath.row;
@@ -201,7 +194,7 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 88;
+    return kTableCellRowHeight;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -213,14 +206,12 @@ static NSString * const kInviteMessageType = @"invite";
     
     if (indexPath) {
         if ([segue.identifier isEqualToString:@"Show Detail"]) {
-       
             EKEvent *event = [self eventForIndexPath:indexPath];
             NSString *eventTitle = event.title;
             NSString *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
             NSString *phoneNumber = self.phoneNumber;
 
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
-            
                 [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
                 [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
                 [segue.destinationViewController performSelector:@selector(setConferenceCode:) withObject:conferenceCode];

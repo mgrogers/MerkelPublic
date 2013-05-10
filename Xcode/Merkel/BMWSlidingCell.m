@@ -19,7 +19,6 @@
     CGPoint _originalCenter;
     BOOL _rightDragRelease;
     BOOL _leftDragRelease;
-    
     UILabel *_leftLabel;
     UILabel *_rightLabel;
     
@@ -92,7 +91,7 @@ const float UI_CUES_WIDTH = 100.0f;
     textLabelFrame.origin.y += 3.0;
     textLabelFrame.size.width = CGRectGetWidth(bounds) - kTextLabelOffset;
     self.textLabel.frame = textLabelFrame;
-    CGRect timeLabelFrame = CGRectMake(5.0, 10.0, kTextLabelOffset - 10.0, 15.0);
+    CGRect timeLabelFrame = CGRectMake(5.0, 30.0, kTextLabelOffset - 10.0, 15.0);
     self.startLabel.frame = timeLabelFrame;
     timeLabelFrame.origin.y += 15.0;
     self.endLabel.frame = timeLabelFrame;
@@ -101,7 +100,6 @@ const float UI_CUES_WIDTH = 100.0f;
     
     _leftLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                   UI_CUES_WIDTH, self.bounds.size.height);
-    
     _rightLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
                                    UI_CUES_WIDTH, self.bounds.size.height);
 }
@@ -144,42 +142,34 @@ const float UI_CUES_WIDTH = 100.0f;
        
         _rightLabel.textColor = _rightDragRelease ?
          [UIColor yellowColor] : [UIColor whiteColor];
-      
-        
     }
-    
     // check flags
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         // the frame this cell would have had before being dragged
         CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
                                           self.bounds.size.width, self.bounds.size.height);
-        
         if (!_rightDragRelease) {
             // if the item is not being deleted, snap back to the original location
-            [UIView animateWithDuration:0.2
+            [UIView animateWithDuration:0.3
                              animations:^{
                                  self.frame = originalFrame;
                              }
              ];
         }
         if(!_leftDragRelease) {
-            [UIView animateWithDuration:0.2
+            [UIView animateWithDuration:0.3
                              animations:^{
                                  self.frame = originalFrame;
-                             }
+                            }
              ];
-
         }
         if(_rightDragRelease) {
             [self.delegate handleRightSwipe:self];
-            
-
         }
         if(_leftDragRelease) {
             [self.delegate handleLeftSwipe:self];
 
         }
-        
     }
 }
 
@@ -195,13 +185,13 @@ const float UI_CUES_WIDTH = 100.0f;
 - (void)setupCueLabels {
     _leftLabel = [self createCueLabel];
     _leftLabel.text = @"Join";
-    _leftLabel.font = [UIFont boldFontOfSize:20.0];
+    _leftLabel.font = [UIFont boldFontOfSize:24.0];
     _leftLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:_leftLabel];
     
     _rightLabel = [self createCueLabel];
     _rightLabel.text = @"Late";
-    _rightLabel.font = [UIFont boldFontOfSize:20.0];
+    _rightLabel.font = [UIFont boldFontOfSize:24.0];
     
     _rightLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_rightLabel];
