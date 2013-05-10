@@ -354,10 +354,12 @@ exports.join = function(req, res) {
                 return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
+                // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
     } else {
+        // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
         return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
     }
 };
