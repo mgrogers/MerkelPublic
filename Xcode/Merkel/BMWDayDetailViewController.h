@@ -16,4 +16,5 @@
 @property (nonatomic, strong) NSString *conferenceCode;
 @property (nonatomic, strong) NSString *eventTitle;
 @property (nonatomic, strong) EKEvent *event;
+@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 @end

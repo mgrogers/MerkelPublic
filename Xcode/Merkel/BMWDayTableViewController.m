@@ -9,6 +9,7 @@
 #import "BMWDayTableViewController.h"
 
 #import "BMWAPIClient.h"
+#import "BMWDayDetailViewController.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
 #import "BMWSlidingCellDelegate.h"
@@ -252,15 +253,14 @@ static NSString * const kInviteMessageType = @"invite";
 /* Start a conference call */
 -(void)handleLeftSwipe:(id)cellItem {
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
-    [self.tableView beginUpdates];
-    
-    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
-    NSString *phoneNumber = self.phoneNumber;
-    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
-    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, phoneNumber, conferenceCode];
-    NSURL *callURL = [NSURL URLWithString:callNumber];
-    [[UIApplication sharedApplication] openURL:callURL];
-    [self.tableView endUpdates];
+    BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+    EKEvent *event = self.calendarEvents[index][@"event"];
+    dayDetailVC.event = event;
+    dayDetailVC.eventTitle = event.title;
+    dayDetailVC.conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    dayDetailVC.phoneNumber = self.phoneNumber;
+    [self.navigationController pushViewController:dayDetailVC animated:YES];
+    [dayDetailVC.joinCallButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 /* Send a late text message and email */
@@ -276,7 +276,7 @@ static NSString * const kInviteMessageType = @"invite";
         
         for (int i = 0; i < [attendees count]; i++) {
             NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
-    
+ 
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                         event.title, @"title",
                                         event.startDate, @"startTime",
