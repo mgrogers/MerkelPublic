@@ -166,7 +166,7 @@ exports.smsAlert = function(req, res) {
             } else {
                 var response = {"meta": {"code": 404},
                              "message": "Invalid message type"};
-                return res.send(response);
+                return res.send(404, response);
             }
             if (toPhoneNumber) {
                 client.sendSms({
@@ -182,21 +182,21 @@ exports.smsAlert = function(req, res) {
                         console.log(err);
                         var response = {"meta": {"code": 404},
                         "message": "Error sending sms"};
-                        return res.send(response);
+                        return res.send(404, response);
                     }
                 });
             } else {
                 var response = {"meta": {"code": 404},
                          "message": "Invalid phone number."};
-                return res.send(response);
+                return res.send(404, response);
             } 
         } else {
             var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and phone number?"};
-            return res.send(err);
+            return res.send(400, err);
         } 
     } else {
         var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
-        return res.send(err);
+        return res.send(400, err);
     }
 }
 
@@ -258,7 +258,7 @@ exports.emailAlert = function(req, res) {
                 if(!success) {
                     var response = {"meta": {"code": 404},
                                  "message": "Invitation delivery failed. " + message};
-                    return res.send(response);
+                    return res.send(404, response);
                 } else {
                     var response = {"meta": {"code": 200},
                                  "message": "Invite delivered to :" + toEmail};    
@@ -267,11 +267,11 @@ exports.emailAlert = function(req, res) {
             });
         } else {
             var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
-            return res.send(err);
+            return res.send(400, err);
         }
     } else {
         var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
-        return res.send(err);
+        return res.send(400, err);
     }
 };
 
