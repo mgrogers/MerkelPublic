@@ -252,32 +252,15 @@ static NSString * const kInviteMessageType = @"invite";
 
 /* Start a conference call */
 -(void)handleLeftSwipe:(id)cellItem {
-    BMWSlidingCell *cell = (BMWSlidingCell *)cellItem;
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
-    
     BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
-    
-    EKEvent *event = self.calendarEvents[index];
-
+    EKEvent *event = self.calendarEvents[index][@"event"];
     dayDetailVC.event = event;
     dayDetailVC.eventTitle = event.title;
     dayDetailVC.conferenceCode = self.calendarEvents[index][@"conferenceCode"];
     dayDetailVC.phoneNumber = self.phoneNumber;
-    
     [self.navigationController pushViewController:dayDetailVC animated:YES];
-//    [self performSegueWithIdentifier:@"Show Detail" sender:cell];
-    
-   
-//    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
-//    NSString *phoneNumber = self.phoneNumber;
-//    static NSString * const kJoinCallURLString = @"tel:%@,,,%@#";
-//    NSString *callNumber = [NSString stringWithFormat:kJoinCallURLString, phoneNumber, conferenceCode];
-//    NSURL *callURL = [NSURL URLWithString:callNumber];
-//    [[UIApplication sharedApplication] openURL:callURL];
-    
-    
-    
-
+    [dayDetailVC.joinCallButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 /* Send a late text message and email */
