@@ -24,6 +24,7 @@
 
 @property (copy, nonatomic) NSString *confirmationCode;
 @property BOOL isInEmailMode;
+@property BOOL isInRetryMode;
 
 @end
 
@@ -84,40 +85,53 @@
     _isInEmailMode = YES;
     self.primaryNextButton.enabled = NO;
     self.secondFieldCorrectLabel.hidden = YES;
-    self.secondFieldLabel.text = @"One last thing, please enter your email";
-    self.secondField.text = @"";
-    self.secondField.placeholder = @"email";
+    [self.secondField resignFirstResponder];
     self.secondField.keyboardType = UIKeyboardTypeEmailAddress;
-    [self.secondField becomeFirstResponder];
-    self.secondaryNextButton.enabled = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.secondField.alpha = 0.0;
+        self.secondFieldLabel.alpha = 0.0;
+        self.secondaryNextButton.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        self.secondFieldLabel.text = @"One last thing, please enter your email";
+        self.secondField.text = @"";
+        self.secondField.placeholder = @"email";
+        self.secondaryNextButton.enabled = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.secondaryNextButton.alpha = 1.0;
+            self.secondFieldLabel.alpha = 1.0;
+            self.secondField.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [self.secondField becomeFirstResponder];
+        }];
+    }];
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
-    [self.phoneNumberField resignFirstResponder];
-    NSString *phoneNumber = self.phoneNumberField.text;
-    // Remove the hyphens from the phone number.
-    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    self.primaryNextButton.enabled = NO;
-    self.primaryNextButton.titleLabel.text = @"Submitting...";
-    [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.primaryNextButton.enabled = YES;
-        [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
-        self.confirmationCode = [responseObject[@"code"] stringValue];
-        NSLog(@"%@", self.confirmationCode);
-        self.secondField.hidden = NO;
-        self.secondFieldLabel.hidden = NO;
-        self.secondaryNextButton.hidden = NO;
-        [self.secondField becomeFirstResponder];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Verification code sending error: %@", error);
-        self.primaryNextButton.enabled = YES;
-        [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
-        self.secondField.hidden = NO;
-        self.secondFieldLabel.hidden = NO;
-        self.secondaryNextButton.hidden = NO;
-        [self.secondField becomeFirstResponder];
-        self.confirmationCode = @"1234";
-    }];
+    if (!_isInRetryMode) {
+        [self.phoneNumberField resignFirstResponder];
+        NSString *phoneNumber = self.phoneNumberField.text;
+        // Remove the hyphens from the phone number.
+        phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        self.primaryNextButton.enabled = NO;
+        self.primaryNextButton.titleLabel.text = @"Submitting...";
+        [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            self.primaryNextButton.enabled = YES;
+            [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+            self.confirmationCode = [responseObject[@"code"] stringValue];
+            NSLog(@"%@", self.confirmationCode);
+            self.secondField.hidden = NO;
+            self.secondFieldLabel.hidden = NO;
+            self.secondaryNextButton.hidden = NO;
+            [self.secondField becomeFirstResponder];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Verification code sending error: %@", error);
+            self.phoneNumberLabel.text = @"Unfortunately there was an error. Please resend.";
+            self.primaryNextButton.enabled = YES;
+            [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+        }];
+    } else {
+        [self signIn];
+    }
 }
 
 - (IBAction)secondaryNextButtonPressed:(UIButton *)sender {
@@ -162,7 +176,10 @@
                     [self configureForSuccessfulSignin:YES];
                 } else {
                     NSLog(@"%@", error);
-                    [self configureForLoading:NO];
+                    self.phoneNumberLabel.text = @"We're sorry, there was an error. Please try again.";
+                    [self.primaryNextButton setTitle:@"Retry" forState:UIControlStateNormal];
+                    self.primaryNextButton.hidden = NO;
+                    [self.spinner stopAnimating];
                 }
             }];
         }
@@ -185,6 +202,8 @@
 }
 
 - (void)configureForSuccessfulSignin:(BOOL)isNewUser {
+    _isInRetryMode = NO;
+    _isInEmailMode = NO;
     [self.spinner stopAnimating];
     if (isNewUser) {
         self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
