@@ -19,7 +19,6 @@
 
 @interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate, BMWLoginDelegate>
 
-@property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
 @property (nonatomic, strong) NSArray *selectedPeople;
 @property (nonatomic, copy) NSString *phoneNumber;
@@ -30,7 +29,6 @@
 @implementation BMWDayTableViewController
 
 static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
-static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
 static const NSInteger kTableCellRowHeight = 88;
@@ -41,18 +39,6 @@ static const NSInteger kTableCellRowHeight = 88;
 
     }
     return self;
-}
-
-- (NSArray *)testData {
-    if (!_testData) {
-        _testData = @[@{@"title": @"Daily Scrum",
-                        @"start": @"10:30am",
-                        @"end": @"11:30am"},
-                      @{@"title": @"Lunch Break",
-                        @"start": @"11:45am",
-                        @"end": @"12:30pm"},];
-    }
-    return _testData;
 }
 
 - (void)viewDidLoad {
