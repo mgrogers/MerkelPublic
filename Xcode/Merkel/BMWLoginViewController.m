@@ -107,7 +107,7 @@
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
-    if (!_isInRetryMode) {
+    if (!_isInRetryMode && ![PFUser currentUser]) {
         [self.phoneNumberField resignFirstResponder];
         NSString *phoneNumber = self.phoneNumberField.text;
         // Remove the hyphens from the phone number.
@@ -129,6 +129,8 @@
             self.primaryNextButton.enabled = YES;
             [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
         }];
+    } else if ([PFUser currentUser]) {
+        [self signinComplete];
     } else {
         [self signIn];
     }
@@ -217,6 +219,10 @@
     self.secondFieldLabel.hidden = YES;
     self.secondField.hidden = YES;
     self.secondaryNextButton.hidden = YES;
+}
+
+- (void)signinComplete {
+    [self.loginDelegate loginVCDidLogin:self];
 }
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
