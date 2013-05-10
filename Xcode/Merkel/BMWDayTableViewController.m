@@ -102,7 +102,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
