@@ -47,6 +47,7 @@
     self.labelColor = [UIColor blackColor];
     self.labelFont = [UIFont systemFontOfSize:14.0];
     self.dateFormatter = [[NSDateFormatter alloc] init];
+    [self.dateFormatter setDateFormat:@"h a"];
     self.meetingDurationView = [[UIView alloc] initWithFrame:CGRectZero];
     self.meetingDurationView.backgroundColor = self.timeIndicatorColor;
     [self addSubview:self.meetingDurationView];
@@ -54,9 +55,13 @@
     self.indicatorBarView.backgroundColor = [UIColor redColor];
     [self addSubview:self.indicatorBarView];
     self.indicatorStartLabel = [self createNewLabelAndAddAsSubview];
+    self.indicatorStartLabel.textAlignment = NSTextAlignmentLeft;
     self.indicatorEndLabel = [self createNewLabelAndAddAsSubview];
+    self.indicatorEndLabel.textAlignment = NSTextAlignmentRight;
     self.eventStartLabel = [self createNewLabelAndAddAsSubview];
+    self.eventStartLabel.textAlignment = NSTextAlignmentLeft;
     self.eventEndLabel = [self createNewLabelAndAddAsSubview];
+    self.eventEndLabel.textAlignment = NSTextAlignmentRight;
 }
 
 - (UILabel *)createNewLabelAndAddAsSubview {
@@ -96,12 +101,16 @@
 
 - (void)setStartTime:(NSDate *)startTime {
     _startTime = startTime;
+    self.eventStartLabel.text = [self.dateFormatter stringFromDate:startTime];
     self.indicatorStartTime = [self dateWithHourDelta:-2 fromDate:startTime];
+    self.indicatorStartLabel.text = [self.dateFormatter stringFromDate:self.indicatorStartTime];
 }
 
 - (void)setEndTime:(NSDate *)endTime {
     _endTime = endTime;
+    self.eventEndLabel.text = [self.dateFormatter stringFromDate:endTime];
     self.indicatorEndTime = [self dateWithHourDelta:2 fromDate:endTime];
+    self.indicatorEndLabel.text = [self.dateFormatter stringFromDate:self.indicatorEndTime];
 }
 
 - (NSDate *)dateWithHourDelta:(NSInteger)hourDelta fromDate:(NSDate *)fromDate {
