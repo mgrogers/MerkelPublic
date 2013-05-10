@@ -111,8 +111,22 @@
 }
 
 - (void)layoutSubviews {
+    static const CGFloat kCurrentTimeIndicatorWidthScaleFactor = 0.05;
     [super layoutSubviews];
-    
+    NSInteger totalMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.indicatorStartTime toDate:self.indicatorEndTime options:0].minute;
+    NSInteger eventMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.startTime toDate:self.endTime options:0].minute;
+    NSInteger eventOffsetMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.indicatorStartTime toDate:self.startTime options:0].minute;
+    NSInteger currentTimeOffsetMinutes = [self.calendar components:NSMinuteCalendarUnit fromDate:self.indicatorStartTime toDate:[NSDate date] options:0].minute;
+    CGFloat trackWidth = self.frame.size.width;
+    CGFloat trackHeight = self.frame.size.height;
+    CGFloat eventOffsetX = (((CGFloat)eventOffsetMinutes) / totalMinutes) * trackWidth;
+    CGFloat currentTimeIndicatorOffsetX = (((CGFloat)currentTimeOffsetMinutes) / totalMinutes) * trackWidth;
+    CGFloat eventWidth = (((CGFloat)eventMinutes) / totalMinutes) * trackWidth;
+    CGRect eventFrame = CGRectMake(eventOffsetX, 0.0, eventWidth, trackHeight);
+    self.meetingDurationView.frame = eventFrame;
+    CGFloat currentTimeIndicatorWidth = trackWidth * kCurrentTimeIndicatorWidthScaleFactor;
+    CGRect currentTimeIndicatorFrame = CGRectMake(currentTimeIndicatorOffsetX - (currentTimeIndicatorWidth / 2), 0.0, currentTimeIndicatorWidth, trackHeight);
+    self.indicatorBarView.frame = currentTimeIndicatorFrame;
 }
 
 - (void)startAnimating {
