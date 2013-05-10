@@ -12,13 +12,15 @@
 
 @interface BMWDayDetailViewController : UIViewController
 
-@property (nonatomic, strong) NSString *phoneNumber;
-@property (nonatomic, strong) NSString *conferenceCode;
-@property (nonatomic, strong) NSString *eventTitle;
+@property (nonatomic, copy) NSString *phoneNumber;
+@property (nonatomic, copy) NSString *conferenceCode;
+@property (nonatomic, copy) NSString *eventTitle;
 @property (nonatomic, strong) EKEvent *event;
 @property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
-
 - (IBAction)lateButtonPressed:(id)sender;
+- (void)startCall;
+- (void)sendInviteMessageAnimated:(BOOL)animated;
+
 @end

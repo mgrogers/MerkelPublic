@@ -14,13 +14,16 @@
 #import "BMWPhone.h"
 #import "TCConnectionDelegate.h"
 
-@interface BMWDayDetailViewController () <TCConnectionDelegate>
+#import <MessageUI/MessageUI.h>
+
+@interface BMWDayDetailViewController () <TCConnectionDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 
+@property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
 
 @end
 
@@ -80,6 +83,20 @@ static NSString * const kInviteMessageType = @"invite";
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [BMWPhone sharedPhone].connectionDelegate = self;
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        if ([BMWPhone sharedPhone].isSpeakerEnabled) {
+            self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        }
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -121,13 +138,32 @@ static NSString * const kInviteMessageType = @"invite";
 - (IBAction)joinCallButtonPressed:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
         [[BMWPhone sharedPhone] disconnect];
+        [BMWPhone sharedPhone].currentCallEvent = nil;
+        [BMWPhone sharedPhone].currentCallCode = nil;
     } else {
-        NSString *codetoCall = self.conferenceCodeLabel.text;
-        if(codetoCall) {
-            [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-            [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
-        }
+        [self startCall];
     }
+}
+
+- (void)startCall {
+    NSString *codetoCall = self.conferenceCodeLabel.text;
+    if(codetoCall) {
+        [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
+        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+        [BMWPhone sharedPhone].currentCallEvent = self.event;
+        [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
+    }
+}
+
+- (void)sendInviteMessageAnimated:(BOOL)animated {
+    static NSString * const kInviteMessage = @"Hi, please join me in a conference call through CallinApp.";
+    NSString *body = [kInviteMessage stringByAppendingFormat:@" %@,,,%@#", self.phoneNumber, self.conferenceCode];
+    self.messageComposeVC = [[MFMessageComposeViewController alloc] init];
+    self.messageComposeVC.body = body;
+    self.messageComposeVC.messageComposeDelegate = self;
+    [self presentViewController:self.messageComposeVC animated:animated completion:^{
+        
+    }];
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
@@ -201,11 +237,18 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
+        NSLog(@"Connection failure: %@", error);
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = NO;
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
         [BMWPhone sharedPhone].isSpeakerEnabled = NO;
     });
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self startCall];
+    }];
 }
 
 @end

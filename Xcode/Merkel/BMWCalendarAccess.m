@@ -90,7 +90,7 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.store refreshSourcesIfNecessary];
-        for (EKEvent *event in self.processedEvents) {
+        for (EKEvent *event in [self.processedEvents copy]) {
             if (![event refresh]) {
                 // The event has been deleted or otherwise invalidated. Remove it from the set.
                 NSInteger index = (NSInteger)[self.processedEvents indexOfObject:event];
@@ -106,7 +106,7 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
         NSMutableArray *filteredEvents = [NSMutableArray array];
         for (EKEvent *event in events) {
             if (event.birthdayPersonID == -1) {
-                if(event.attendees.count && event.calendar.allowsContentModifications) {
+                if((event.attendees.count || [event.title isEqualToString:@"Quick Call"]) && event.calendar.allowsContentModifications) {
                     NSMutableDictionary *eventWithCode = [@{@"event": event,
                                                           @"conferenceCode": @""} mutableCopy];
                     [filteredEvents addObject:eventWithCode];
@@ -120,6 +120,25 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(filteredEvents, nil);
         });
+    });
+}
+
+- (void)createQuickEventWithCompletion:(void (^)(EKEvent *event, NSString *conferenceCode))completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        EKEvent *newEvent = [EKEvent eventWithEventStore:self.store];
+        newEvent.calendar = [self.store defaultCalendarForNewEvents];
+        newEvent.title = @"Quick Call";
+        newEvent.startDate = [NSDate date];
+        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+        dateComponents.minute = 30;
+        newEvent.endDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+        NSError *error;
+        [self.store saveEvent:newEvent span:EKSpanThisEvent error:&error];
+        [self getAndSaveConferenceCodeForEvent:newEvent completion:^(NSString *conferenceCode) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(newEvent, conferenceCode);
+            });
+        }];
     });
 }
 

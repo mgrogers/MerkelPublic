@@ -93,6 +93,7 @@
 		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
 		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
 		4BACDD0E173D0E9100150192 /* BMWTimeIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BACDD0D173D0E9100150192 /* BMWTimeIndicatorView.m */; };
+		4BACDD10173D6CE100150192 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BACDD0F173D6CE100150192 /* MessageUI.framework */; };
 		4BB5E0CF173CA7CB00AD7B77 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */; };
 		4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0D1173CC2B300AD7B77 /* NSString+Validator.m */; };
 		4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
@@ -272,6 +273,7 @@
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4BACDD0C173D0E9100150192 /* BMWTimeIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWTimeIndicatorView.h; sourceTree = "<group>"; };
 		4BACDD0D173D0E9100150192 /* BMWTimeIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWTimeIndicatorView.m; sourceTree = "<group>"; };
+		4BACDD0F173D6CE100150192 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4BB5E0CD173CA7CB00AD7B77 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
 		4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
 		4BB5E0D0173CC2B300AD7B77 /* NSString+Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validator.h"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BACDD10173D6CE100150192 /* MessageUI.framework in Frameworks */,
 				4BA3383E16D1947400A2CD24 /* MobileCoreServices.framework in Frameworks */,
 				4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */,
 				2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */,
@@ -464,6 +467,7 @@
 		4B77FDFA16C6F2AF00426018 = {
 			isa = PBXGroup;
 			children = (
+				4BACDD0F173D6CE100150192 /* MessageUI.framework */,
 				4BE0B9F51727AA2900A2FFD8 /* EventKit.framework */,
 				4B77FE0F16C6F2AF00426018 /* Merkel */,
 				4B77FE3316C6F2AF00426018 /* MerkelTests */,
@@ -541,8 +545,8 @@
 				4BE26267171D382E004F742F /* BMWAppearances.m */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
-				4B2E69C2173A5E4300889482 /* BMWLoginViewController.h */,
 				4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */,
+				4B2E69C2173A5E4300889482 /* BMWLoginViewController.h */,
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
 				2B1504441723494500957F8A /* BMWDayDetailViewController.h */,
@@ -1059,7 +1063,7 @@
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1119,7 +1123,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
