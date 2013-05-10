@@ -39,8 +39,9 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+#pragma mark - UIViewController Methods
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
 	self.view.backgroundColor = [UIColor bmwLightBlueColor];
@@ -67,6 +68,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - View Setup
+
 - (void)configureFlatButton:(QBFlatButton *)button {
     button.faceColor = [UIColor bmwDarkBlueColor];
     [button setFaceColor:[UIColor bmwDarkBlueColor] forState:UIControlStateNormal];
@@ -81,12 +84,15 @@
     textField.font = [UIFont boldFontOfSize:textField.font.pointSize];
 }
 
+#pragma mark - View Configuration Modes
+
 - (void)setupSecondaryTextForEmail {
     _isInEmailMode = YES;
     self.primaryNextButton.enabled = NO;
     self.secondFieldCorrectLabel.hidden = YES;
     [self.secondField resignFirstResponder];
     self.secondField.keyboardType = UIKeyboardTypeEmailAddress;
+    self.secondField.returnKeyType = UIReturnKeyGo;
     [UIView animateWithDuration:0.5 animations:^{
         self.secondField.alpha = 0.0;
         self.secondFieldLabel.alpha = 0.0;
@@ -105,6 +111,89 @@
         }];
     }];
 }
+- (void)setSecondFieldCorrect:(BOOL)isCorrect {
+    static NSString * const kIncorrectSymbol = @"✘";
+    static NSString * const kCorrectSymbol = @"✓";
+    if (isCorrect) {
+        self.secondFieldCorrectLabel.textColor = [UIColor greenColor];
+        self.secondFieldCorrectLabel.text = kCorrectSymbol;
+    } else {
+        self.secondFieldCorrectLabel.textColor = [UIColor redColor];
+        self.secondFieldCorrectLabel.text = kIncorrectSymbol;
+    }
+}
+
+- (void)configureForLoading:(BOOL)isLoading {
+    if (isLoading) {
+        self.phoneNumberLabel.text = @"please wait while we sign you in...";
+        [self.spinner startAnimating];
+    } else {
+        self.phoneNumberLabel.text = @"";
+        [self.spinner stopAnimating];
+    }
+    self.phoneNumberField.hidden = isLoading;
+    self.primaryNextButton.hidden = isLoading;
+    self.secondFieldLabel.hidden = isLoading;
+    self.secondField.hidden = isLoading;
+    self.secondaryNextButton.hidden = isLoading;
+}
+
+- (void)configureForSuccessfulSignin:(BOOL)isNewUser {
+    _isInRetryMode = NO;
+    _isInEmailMode = NO;
+    [self.spinner stopAnimating];
+    if (isNewUser) {
+        self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
+    } else {
+        self.phoneNumberLabel.text = @"Welcome back!";
+    }
+    [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
+    self.primaryNextButton.enabled = YES;
+    self.primaryNextButton.hidden = NO;
+    self.phoneNumberField.hidden = YES;
+    self.secondFieldLabel.hidden = YES;
+    self.secondField.hidden = YES;
+    self.secondaryNextButton.hidden = YES;
+}
+
+#pragma mark - Sign In Methods
+
+- (void)signIn {
+    NSString *phoneNumber = [self.phoneNumberField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    NSString *email = self.secondField.text;
+    [self configureForLoading:YES];
+    [PFUser logInWithUsernameInBackground:email password:phoneNumber block:^(PFUser *user, NSError *error) {
+        if (!error) {
+            NSLog(@"Logged in user: %@", user.username);
+            [self configureForSuccessfulSignin:NO];
+        } else {
+            NSLog(@"%@", error);
+            PFUser *newUser = [PFUser user];
+            newUser.username = email;
+            newUser.email = email;
+            newUser.password = phoneNumber;
+            [newUser setObject:phoneNumber forKey:@"phone"];
+            [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@"New user: %@", newUser.username);
+                    [self configureForSuccessfulSignin:YES];
+                } else {
+                    NSLog(@"%@", error);
+                    self.phoneNumberLabel.text = @"We're sorry, there was an error. Please try again.";
+                    [self.primaryNextButton setTitle:@"Retry" forState:UIControlStateNormal];
+                    self.primaryNextButton.hidden = NO;
+                    [self.spinner stopAnimating];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)signinComplete {
+    [self.loginDelegate loginVCDidLogin:self];
+}
+
+#pragma mark - Button Action Handlers
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
     if (!_isInRetryMode && ![PFUser currentUser]) {
@@ -145,85 +234,7 @@
     }
 }
 
-- (void)setSecondFieldCorrect:(BOOL)isCorrect {
-    static NSString * const kIncorrectSymbol = @"✘";
-    static NSString * const kCorrectSymbol = @"✓";
-    if (isCorrect) {
-        self.secondFieldCorrectLabel.textColor = [UIColor greenColor];
-        self.secondFieldCorrectLabel.text = kCorrectSymbol;
-    } else {
-        self.secondFieldCorrectLabel.textColor = [UIColor redColor];
-        self.secondFieldCorrectLabel.text = kIncorrectSymbol;
-    }
-}
-
-- (void)signIn {
-    NSString *phoneNumber = [self.phoneNumberField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    NSString *email = self.secondField.text;
-    [self configureForLoading:YES];
-    [PFUser logInWithUsernameInBackground:email password:phoneNumber block:^(PFUser *user, NSError *error) {
-        if (!error) {
-            NSLog(@"Logged in user: %@", user.username);
-            [self configureForSuccessfulSignin:NO];
-        } else {
-            NSLog(@"%@", error);
-            PFUser *newUser = [PFUser user];
-            newUser.username = email;
-            newUser.email = email;
-            newUser.password = phoneNumber;
-            [newUser setObject:phoneNumber forKey:@"phone"];
-            [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    NSLog(@"New user: %@", newUser.username);
-                    [self configureForSuccessfulSignin:YES];
-                } else {
-                    NSLog(@"%@", error);
-                    self.phoneNumberLabel.text = @"We're sorry, there was an error. Please try again.";
-                    [self.primaryNextButton setTitle:@"Retry" forState:UIControlStateNormal];
-                    self.primaryNextButton.hidden = NO;
-                    [self.spinner stopAnimating];
-                }
-            }];
-        }
-    }];
-}
-
-- (void)configureForLoading:(BOOL)isLoading {
-    if (isLoading) {
-        self.phoneNumberLabel.text = @"please wait while we sign you in...";
-        [self.spinner startAnimating];
-    } else {
-        self.phoneNumberLabel.text = @"";
-        [self.spinner stopAnimating];
-    }
-    self.phoneNumberField.hidden = isLoading;
-    self.primaryNextButton.hidden = isLoading;
-    self.secondFieldLabel.hidden = isLoading;
-    self.secondField.hidden = isLoading;
-    self.secondaryNextButton.hidden = isLoading;
-}
-
-- (void)configureForSuccessfulSignin:(BOOL)isNewUser {
-    _isInRetryMode = NO;
-    _isInEmailMode = NO;
-    [self.spinner stopAnimating];
-    if (isNewUser) {
-        self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
-    } else {
-        self.phoneNumberLabel.text = @"Welcome back!";
-    }
-    [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
-    self.primaryNextButton.enabled = YES;
-    self.primaryNextButton.hidden = NO;
-    self.phoneNumberField.hidden = YES;
-    self.secondFieldLabel.hidden = YES;
-    self.secondField.hidden = YES;
-    self.secondaryNextButton.hidden = YES;
-}
-
-- (void)signinComplete {
-    [self.loginDelegate loginVCDidLogin:self];
-}
+#pragma mark - Keyboard Management
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
     [self.phoneNumberField resignFirstResponder];
@@ -250,11 +261,13 @@
     }];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return YES;
-}
+#pragma mark - UITextFieldDelegate Methods
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.secondField && _isInEmailMode) {
+        [self secondaryNextButtonPressed:self.secondaryNextButton];
+    }
+    return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
