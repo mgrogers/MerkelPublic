@@ -251,8 +251,9 @@ static NSString * const kInviteMessageType = @"invite";
 #pragma mark - UITableViewDataDelegate protocol methods
 
 /* Start a conference call */
--(void)handleLeftSwipe:(id)cellItem {
+- (void)handleLeftSwipe:(id)cellItem {
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
+    [self.tableView beginUpdates];
     BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
     EKEvent *event = self.calendarEvents[index][@"event"];
     dayDetailVC.event = event;
@@ -261,39 +262,20 @@ static NSString * const kInviteMessageType = @"invite";
     dayDetailVC.phoneNumber = self.phoneNumber;
     [self.navigationController pushViewController:dayDetailVC animated:YES];
     [dayDetailVC.joinCallButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [self.tableView endUpdates];
 }
 
 /* Send a late text message and email */
--(void)handleRightSwipe:(id)cellItem {
+- (void)handleRightSwipe:(id)cellItem {
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
     [self.tableView beginUpdates];
-    
-    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
-    NSString *phoneNumber = self.phoneNumber;
+    BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
     EKEvent *event = self.calendarEvents[index][@"event"];
-
-    [[BMWCalendarAccess sharedAccess] attendeesForEvent:event withCompletion:^(NSArray *attendees) {
-        
-        for (int i = 0; i < [attendees count]; i++) {
-            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
- 
-            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        event.title, @"title",
-                                        event.startDate, @"startTime",
-                                        phoneNumber, @"phoneNumber",
-                                        conferenceCode, @"conferenceCode",
-                                        attendeePhone, @"toPhoneNumber",
-                                        kAlertMessageType, @"messageType",
-                                        kTestSenderEmailAddress, @"initiator",nil];
-            
-            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Alert success with response %@", responseObject);
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending message", [error localizedDescription]);
-            }];
-        }
-    }];
-    
+    dayDetailVC.event = event;
+    dayDetailVC.eventTitle = event.title;
+    dayDetailVC.conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    dayDetailVC.phoneNumber = self.phoneNumber;
+    [dayDetailVC lateButtonPressed:dayDetailVC.lateButton];
     [self.tableView endUpdates];
 }
 
