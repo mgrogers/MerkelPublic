@@ -11,6 +11,8 @@
 #import "BMWAPIClient.h"
 #import "QBFlatButton.h"
 
+#import <EventKit/EventKit.h>
+
 @interface BMWLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *phoneNumberLabel;
@@ -25,6 +27,8 @@
 @property (copy, nonatomic) NSString *confirmationCode;
 @property BOOL isInEmailMode;
 @property BOOL isInRetryMode;
+@property (nonatomic, strong) EKEventStore *eventStore;
+@property BOOL isCalendarAccessGranted;
 
 @end
 
@@ -141,19 +145,30 @@
 - (void)configureForSuccessfulSignin:(BOOL)isNewUser {
     _isInRetryMode = NO;
     _isInEmailMode = NO;
-    [self.spinner stopAnimating];
-    if (isNewUser) {
-        self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
-    } else {
-        self.phoneNumberLabel.text = @"Welcome back!";
-    }
-    [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
-    self.primaryNextButton.enabled = YES;
-    self.primaryNextButton.hidden = NO;
-    self.phoneNumberField.hidden = YES;
-    self.secondFieldLabel.hidden = YES;
-    self.secondField.hidden = YES;
-    self.secondaryNextButton.hidden = YES;
+    __block BOOL blockGranted;
+    self.eventStore = [[EKEventStore alloc] init];
+    [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        blockGranted = granted;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _isCalendarAccessGranted = blockGranted;
+            [self.spinner stopAnimating];
+            if (isNewUser) {
+                self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
+            } else {
+                self.phoneNumberLabel.text = @"Welcome back!";
+            }
+            [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
+            self.primaryNextButton.enabled = _isCalendarAccessGranted;
+            self.primaryNextButton.hidden = NO;
+            self.phoneNumberField.hidden = YES;
+            self.secondFieldLabel.hidden = _isCalendarAccessGranted;
+            self.secondField.hidden = YES;
+            self.secondaryNextButton.hidden = YES;
+            if (!_isCalendarAccessGranted) {
+                self.secondFieldLabel.text = @"Please enable calendar access in privacy settings.";
+            }
+        });
+    }];
 }
 
 #pragma mark - Sign In Methods
@@ -181,6 +196,7 @@
                     NSLog(@"%@", error);
                     self.phoneNumberLabel.text = @"We're sorry, there was an error. Please try again.";
                     [self.primaryNextButton setTitle:@"Retry" forState:UIControlStateNormal];
+                    self.primaryNextButton.enabled = YES;
                     self.primaryNextButton.hidden = NO;
                     [self.spinner stopAnimating];
                 }

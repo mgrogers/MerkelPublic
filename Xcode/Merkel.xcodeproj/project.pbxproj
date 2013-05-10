@@ -92,6 +92,7 @@
 		4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384316D1948700A2CD24 /* Social.framework */; };
 		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
 		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
+		4BACDD0E173D0E9100150192 /* BMWTimeIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BACDD0D173D0E9100150192 /* BMWTimeIndicatorView.m */; };
 		4BB5E0CF173CA7CB00AD7B77 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */; };
 		4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0D1173CC2B300AD7B77 /* NSString+Validator.m */; };
 		4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
@@ -269,6 +270,8 @@
 		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BACDD0C173D0E9100150192 /* BMWTimeIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWTimeIndicatorView.h; sourceTree = "<group>"; };
+		4BACDD0D173D0E9100150192 /* BMWTimeIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWTimeIndicatorView.m; sourceTree = "<group>"; };
 		4BB5E0CD173CA7CB00AD7B77 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
 		4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
 		4BB5E0D0173CC2B300AD7B77 /* NSString+Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validator.h"; sourceTree = "<group>"; };
@@ -561,6 +564,8 @@
 				4B3702681723405F00ACAAED /* BMWAPIClient.m */,
 				4BE0B9F11727A9AE00A2FFD8 /* BMWCalendarAccess.h */,
 				4BE0B9F21727A9AE00A2FFD8 /* BMWCalendarAccess.m */,
+				4BACDD0C173D0E9100150192 /* BMWTimeIndicatorView.h */,
+				4BACDD0D173D0E9100150192 /* BMWTimeIndicatorView.m */,
 				4B37026617233E2100ACAAED /* Twilio */,
 				4BEED18316DC14500019312B /* ConnectedDrive */,
 				4B77FE1016C6F2AF00426018 /* Supporting Files */,
@@ -931,6 +936,7 @@
 				4B2E69C4173A5E4300889482 /* BMWLoginViewController.m in Sources */,
 				4BB5E0CF173CA7CB00AD7B77 /* QBFlatButton.m in Sources */,
 				4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */,
+				4BACDD0E173D0E9100150192 /* BMWTimeIndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,7 +1059,7 @@
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1113,7 +1119,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
