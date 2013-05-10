@@ -74,6 +74,7 @@ static const NSInteger kTableCellRowHeight = 88;
         self.loginVC.loginDelegate = self;
         [self presentViewController:self.loginVC animated:NO completion:NULL];
     }
+    [self deviceStatusChanged:nil];
 }
 
 - (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
@@ -85,9 +86,9 @@ static const NSInteger kTableCellRowHeight = 88;
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Call" style:UIBarButtonItemStyleDone target:self action:@selector(endCallButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [spinner startAnimating];
@@ -96,6 +97,21 @@ static const NSInteger kTableCellRowHeight = 88;
 }
 
 - (void)callButtonPressed {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    __weak UIActivityIndicatorView *wkSpinner = spinner;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [[BMWCalendarAccess sharedAccess] createQuickEventWithCompletion:^(EKEvent *event, NSString *conferenceCode) {
+        [wkSpinner stopAnimating];
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+//        [dayDetailVC startCall];
+        [dayDetailVC sendInviteMessageAnimated:NO];
+    }];
 //    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
 //
 //
@@ -107,9 +123,22 @@ static const NSInteger kTableCellRowHeight = 88;
 //    picker.peoplePickerDelegate = self;
 //    [self presentViewController:picker animated:YES completion:nil];
 
-    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+//    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
     
+}
+
+- (void)currentCallButtonPressed {
+    EKEvent *event = [BMWPhone sharedPhone].currentCallEvent;
+    NSString *conferenceCode = [BMWPhone sharedPhone].currentCallCode;
+    if (event && conferenceCode) {
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+    }
 }
 
 - (void)endCallButtonPressed {
