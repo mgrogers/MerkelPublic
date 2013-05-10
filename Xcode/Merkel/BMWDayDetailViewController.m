@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *lateButton;
+
 
 @end
 
@@ -155,11 +155,11 @@ static NSString * const kInviteMessageType = @"invite";
             [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Alert success with response %@", responseObject);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending sms message. Attempting email.", [error localizedDescription]);
+                NSLog(@"Error sending sms message. Attempting email. %@", [error localizedDescription]);
                 [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSLog(@"Alert success with response %@", responseObject);
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"Error sending message", [error localizedDescription]);
+                    NSLog(@"Error sending message %@", [error localizedDescription]);
                 }];
             }];
         }
