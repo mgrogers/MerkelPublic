@@ -8,6 +8,8 @@
 
 #import "BMWTimeIndicatorView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface BMWTimeIndicatorView ()
 
 @property (readwrite) BMWTimeIndicatorState indicatorState;
@@ -40,11 +42,14 @@
 }
 
 - (void)sharedInitializer {
+    // Set up default values.
     _indicatorState = BMWTimeIndicatorStateBeforeEvent;
     self.calendar = [NSCalendar currentCalendar];
-    self.trackColor = [UIColor whiteColor];
+    self.trackColor = [UIColor clearColor];
     self.timeIndicatorColor = [UIColor redColor];
     self.labelColor = [UIColor blackColor];
+    self.borderColor = [UIColor blackColor];
+    self.borderWidth = 1.0;
     self.labelFont = [UIFont systemFontOfSize:14.0];
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"h a"];
@@ -100,6 +105,16 @@
     self.indicatorBarView.backgroundColor = timeIndicatorColor;
 }
 
+- (void)setBorderColor:(UIColor *)borderColor {
+    _borderColor = borderColor;
+    self.layer.borderColor = _borderColor.CGColor;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+    _borderWidth = borderWidth;
+    self.layer.borderWidth = _borderWidth;
+}
+
 - (void)setStartTime:(NSDate *)startTime {
     _startTime = startTime;
     self.eventStartLabel.text = [self.dateFormatter stringFromDate:startTime];
@@ -146,13 +161,15 @@
     [self positionLabel:self.indicatorEndLabel withRightSideAtX:trackWidth];
 }
 
+static const CGFloat kPadding = 2.0;
+
 - (void)positionLabel:(UILabel *)label atXOffset:(CGFloat)xOffset {
     CGFloat trackHeight = self.frame.size.height;
     CGSize textSize = [label.text sizeWithFont:label.font];
     CGRect labelFrame = CGRectZero;
     labelFrame.size = textSize;
     label.frame = labelFrame;
-    label.center = CGPointMake(xOffset + (textSize.width / 2.0), (trackHeight / 2.0) + (textSize.height / 2.0));
+    label.center = CGPointMake(xOffset + (textSize.width / 2.0) + kPadding, (trackHeight / 2.0) + (textSize.height / 2.0) - kPadding);
 }
 
 - (void)positionLabel:(UILabel *)label withRightSideAtX:(CGFloat)x {
@@ -161,7 +178,7 @@
     CGRect labelFrame = CGRectZero;
     labelFrame.size = textSize;
     label.frame = labelFrame;
-    label.center = CGPointMake(x - (textSize.width / 2.0), (trackHeight / 2.0) + (textSize.height / 2.0));
+    label.center = CGPointMake(x - (textSize.width / 2.0) - kPadding, (trackHeight / 2.0) + (textSize.height / 2.0) - kPadding);
 }
 
 - (void)startAnimating {
