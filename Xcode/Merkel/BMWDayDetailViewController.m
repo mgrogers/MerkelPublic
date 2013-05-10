@@ -74,7 +74,7 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = self.eventTitle;
+    self.title = @"Event Detail";
     [self createLabels];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -91,13 +91,6 @@ static NSString * const kInviteMessageType = @"invite";
         BMWAttendeeTableViewController *attendeeTVC = segue.destinationViewController;
         [attendeeTVC setEventAttendees:self.event.attendees];
     }
-}
-
--(void)createVisualAssets {
-//    [self addChildViewController:self.attendeeTable];
-//    [self.attendeeTable setEventAttendees:self.event.attendees];
-//    [self.view addSubview:self.attendeeTable.tableView];
-//    [self.attendeeTable didMoveToParentViewController:self];
 }
 
 -(void)createLabels {

@@ -24,7 +24,6 @@
     
 }
 
-
 const float UI_CUES_MARGIN = 10.0f;
 const float UI_CUES_WIDTH = 100.0f;
 
@@ -87,11 +86,11 @@ const float UI_CUES_WIDTH = 100.0f;
     const CGFloat kBarHeight = 1.0;
     CGRect bounds = self.contentView.bounds;
     CGRect textLabelFrame = self.textLabel.frame;
-    textLabelFrame.origin.x = kTextLabelOffset;
+    textLabelFrame.origin.x = kTextLabelOffset + 5.0;
     textLabelFrame.origin.y += 3.0;
-    textLabelFrame.size.width = CGRectGetWidth(bounds) - kTextLabelOffset;
+    textLabelFrame.size.width = CGRectGetWidth(bounds) - kTextLabelOffset - 15.0;
     self.textLabel.frame = textLabelFrame;
-    CGRect timeLabelFrame = CGRectMake(5.0, 30.0, kTextLabelOffset - 10.0, 15.0);
+    CGRect timeLabelFrame = CGRectMake(5.0, 30.0, kTextLabelOffset - 15.0, 15.0);
     self.startLabel.frame = timeLabelFrame;
     timeLabelFrame.origin.y += 15.0;
     self.endLabel.frame = timeLabelFrame;

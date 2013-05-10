@@ -113,7 +113,6 @@
 - (void)setupViewForUser {
     PFUser *curUser = [PFUser currentUser];
     
-    
     if (![curUser objectForKey:@"first_name"]) {
         return;
     }
