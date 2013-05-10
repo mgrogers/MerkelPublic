@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *secondFieldLabel;
+@property (strong, nonatomic) IBOutlet UILabel *secondFieldCorrectLabel;
 @property (strong, nonatomic) IBOutlet UITextField *secondField;
 @property (strong, nonatomic) IBOutlet QBFlatButton *primaryNextButton;
 @property (strong, nonatomic) IBOutlet QBFlatButton *secondaryNextButton;
@@ -47,9 +48,10 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    self.secondField.hidden = YES;
-    self.secondFieldLabel.hidden = YES;
-    self.secondaryNextButton.hidden = YES;
+    self.secondField.hidden = NO;
+    self.secondFieldLabel.hidden = NO;
+    self.secondaryNextButton.hidden = NO;
+    self.secondFieldCorrectLabel.hidden = NO;
     [self configureFlatButton:self.primaryNextButton];
     [self configureFlatButton:self.secondaryNextButton];
     [self configureTextField:self.phoneNumberField];
@@ -78,7 +80,12 @@
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
     [self.phoneNumberField resignFirstResponder];
     NSString *phoneNumber = self.phoneNumberField.text;
+    // Remove the hyphens from the phone number.
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    self.primaryNextButton.enabled = NO;
+    self.primaryNextButton.titleLabel.text = @"Submitting...";
     [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.primaryNextButton.enabled = YES;
         [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
         self.confirmationCode = responseObject[@"code"];
         NSLog(@"%@", self.confirmationCode);
@@ -86,12 +93,25 @@
         self.secondFieldLabel.hidden = NO;
         self.secondaryNextButton.hidden = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.primaryNextButton.enabled = YES;
         [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
     }];
 }
 
 - (IBAction)secondaryNextButtonPressed:(UIButton *)sender {
     
+}
+
+- (void)setSecondFieldCorrect:(BOOL)isCorrect {
+    static NSString * const kIncorrectSymbol = @"✘";
+    static NSString * const kCorrectSymbol = @"✓";
+    if (isCorrect) {
+        self.secondFieldCorrectLabel.textColor = [UIColor greenColor];
+        self.secondFieldCorrectLabel.text = kCorrectSymbol;
+    } else {
+        self.secondFieldCorrectLabel.textColor = [UIColor redColor];
+        self.secondFieldCorrectLabel.text = kIncorrectSymbol;
+    }
 }
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
@@ -163,6 +183,12 @@
             range.length = 2;
             textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@""];
             return NO;
+        }
+    } else if (textField == self.secondField) {
+        if ([textField.text isEqualToString:@"123"] && [string isEqualToString:@"4"]) {
+            [self setSecondFieldCorrect:YES];
+        } else {
+            [self setSecondFieldCorrect:NO];
         }
     }
     return YES;

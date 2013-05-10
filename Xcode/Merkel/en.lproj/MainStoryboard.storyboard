@@ -302,7 +302,7 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="to begin, please enter your phone number:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="s2x-Pt-9dN">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="EFf-D2-Zfd"/>
+                                    <constraint firstAttribute="height" constant="58" type="user" id="EFf-D2-Zfd"/>
                                     <constraint firstAttribute="width" constant="231" id="afu-YE-edF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
@@ -311,7 +311,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="phone number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyT-V6-epe">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="7hP-PB-EaE"/>
+                                    <constraint firstAttribute="height" constant="30" type="user" id="7hP-PB-EaE"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -322,7 +322,7 @@
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="next, enter the code we just sent:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="f6s-3f-2DP">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="51" id="aLk-Uo-9L3"/>
+                                    <constraint firstAttribute="height" constant="51" type="user" id="aLk-Uo-9L3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -330,7 +330,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XJd-rh-OdK">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="qLN-Ad-xug"/>
+                                    <constraint firstAttribute="height" constant="30" type="user" id="qLN-Ad-xug"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -341,7 +341,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69y-IG-COB" customClass="QBFlatButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="g86-TW-S6P"/>
+                                    <constraint firstAttribute="height" constant="40" type="user" id="g86-TW-S6P"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Next">
@@ -357,7 +357,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5H-LL-vvh" customClass="QBFlatButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="60E-wL-xca"/>
+                                    <constraint firstAttribute="height" constant="40" type="user" id="60E-wL-xca"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Next">
@@ -371,26 +371,43 @@
                                     <action selector="secondaryNextButtonPressed:" destination="KMA-Xs-QsW" eventType="touchUpInside" id="Gok-Km-sBY"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="✘" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="69" translatesAutoresizingMaskIntoConstraints="NO" id="jml-nQ-Ay7">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="69" id="A8n-WC-Q7c"/>
+                                    <constraint firstAttribute="height" constant="26" type="user" id="bcu-Vr-AOc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="25"/>
+                                <color key="textColor" red="1" green="0.1079717523" blue="0.19881982919999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jml-nQ-Ay7" secondAttribute="trailing" constant="78" id="1wp-hC-nCd"/>
+                            <constraint firstItem="jml-nQ-Ay7" firstAttribute="baseline" secondItem="XJd-rh-OdK" secondAttribute="baseline" type="default" id="42r-gT-kVn"/>
                             <constraint firstItem="69y-IG-COB" firstAttribute="trailing" secondItem="qyT-V6-epe" secondAttribute="trailing" type="default" id="4rR-7u-wE4"/>
-                            <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="default" id="7fM-8E-LhN"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" type="user" id="5S9-ZQ-rjI"/>
+                            <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="user" id="7fM-8E-LhN"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="9EO-gu-FqY"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="s2x-Pt-9dN" secondAttribute="bottom" constant="1" type="user" id="9U7-14-ami"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="eNS-lF-jmO" secondAttribute="bottom" constant="9" type="user" id="9XB-JC-VfI"/>
+                            <constraint firstItem="t5H-LL-vvh" firstAttribute="top" secondItem="XJd-rh-OdK" secondAttribute="bottom" constant="7" type="user" id="Abn-UU-qyf"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="Bxb-pG-CX8"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="FQa-bf-kVM"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" id="JDk-8u-ojq"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" type="user" id="JDk-8u-ojq"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="69y-IG-COB" secondAttribute="leading" type="default" id="NOE-df-uzr"/>
-                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" id="OcM-9s-KVs"/>
-                            <constraint firstAttribute="bottom" secondItem="t5H-LL-vvh" secondAttribute="bottom" constant="129" id="Sr5-rn-rJP"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" type="user" id="OcM-9s-KVs"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="69y-IG-COB" secondAttribute="bottom" constant="4" type="user" id="a0l-HA-uIA"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="69y-IG-COB" secondAttribute="trailing" type="default" id="bDw-H3-GDw"/>
-                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="biu-Fb-UoG"/>
-                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" id="hao-Kn-onA"/>
-                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" id="i7m-Qf-FfQ"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="biu-Fb-UoG"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="qyT-V6-epe" secondAttribute="bottom" constant="7" type="user" id="fWp-mU-V06"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" type="user" id="hao-Kn-onA"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" type="user" id="i7m-Qf-FfQ"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="trailing" secondItem="f6s-3f-2DP" secondAttribute="trailing" type="default" id="iPY-0y-fJk"/>
                             <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
-                            <constraint firstItem="XJd-rh-OdK" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="rOs-HO-e3F"/>
+                            <constraint firstItem="jml-nQ-Ay7" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="9" type="user" id="w24-LI-Kmp"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="ybs-b1-OSw"/>
                             <constraint firstItem="69y-IG-COB" firstAttribute="leading" secondItem="qyT-V6-epe" secondAttribute="leading" type="default" id="zyk-kl-yXa"/>
                         </constraints>
@@ -400,6 +417,7 @@
                         <outlet property="phoneNumberField" destination="qyT-V6-epe" id="Wfz-JF-ysB"/>
                         <outlet property="primaryNextButton" destination="69y-IG-COB" id="2Vl-6H-aYM"/>
                         <outlet property="secondField" destination="XJd-rh-OdK" id="SUA-F3-q6u"/>
+                        <outlet property="secondFieldCorrectLabel" destination="jml-nQ-Ay7" id="7vj-nt-xGa"/>
                         <outlet property="secondFieldLabel" destination="f6s-3f-2DP" id="EL8-4q-tl1"/>
                         <outlet property="secondaryNextButton" destination="t5H-LL-vvh" id="rRG-xb-hE3"/>
                         <outlet property="titleLabel" destination="eNS-lF-jmO" id="MCX-Ez-6s0"/>
@@ -476,6 +494,7 @@
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
                 <relationship kind="outlet" name="secondField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="secondFieldCorrectLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="secondFieldLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="secondaryNextButton" candidateClass="QBFlatButton"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
