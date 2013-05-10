@@ -14,13 +14,16 @@
 #import "BMWPhone.h"
 #import "TCConnectionDelegate.h"
 
-@interface BMWDayDetailViewController () <TCConnectionDelegate>
+#import <MessageUI/MessageUI.h>
+
+@interface BMWDayDetailViewController () <TCConnectionDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 
+@property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
 
 @end
 
@@ -134,6 +137,17 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
+- (void)sendInviteMessageAnimated:(BOOL)animated {
+    static NSString * const kInviteMessage = @"Hi, please join me in a conference call through CallinApp.";
+    NSString *body = [kInviteMessage stringByAppendingFormat:@" %@,,,%@#", self.phoneNumber, self.conferenceCode];
+    self.messageComposeVC = [[MFMessageComposeViewController alloc] init];
+    self.messageComposeVC.body = body;
+    self.messageComposeVC.messageComposeDelegate = self;
+    [self presentViewController:self.messageComposeVC animated:animated completion:^{
+        
+    }];
+}
+
 - (IBAction)lateButtonPressed:(id)sender {
     [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
         for (int i = 0; i < [attendees count]; i++) {
@@ -211,6 +225,12 @@ static NSString * const kInviteMessageType = @"invite";
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
         [BMWPhone sharedPhone].isSpeakerEnabled = NO;
     });
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self startCall];
+    }];
 }
 
 @end

@@ -21,5 +21,6 @@
 
 - (IBAction)lateButtonPressed:(id)sender;
 - (void)startCall;
+- (void)sendInviteMessageAnimated:(BOOL)animated;
 
 @end

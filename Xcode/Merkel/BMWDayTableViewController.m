@@ -124,7 +124,8 @@ static NSString * const kInviteMessageType = @"invite";
         dayDetailVC.conferenceCode = conferenceCode;
         dayDetailVC.phoneNumber = self.phoneNumber;
         [self.navigationController pushViewController:dayDetailVC animated:YES];
-        [dayDetailVC startCall];
+//        [dayDetailVC startCall];
+        [dayDetailVC sendInviteMessageAnimated:NO];
     }];
 //    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
 //
