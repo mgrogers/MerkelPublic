@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="U42-vu-rHJ" kind="relationship" relationship="rootViewController" id="fOV-34-kkp"/>
+                        <segue destination="U42-vu-rHJ" kind="relationship" relationship="rootViewController" id="540-41-NG9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hnR-Qq-XD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -389,6 +389,7 @@
                             <constraint firstItem="69y-IG-COB" firstAttribute="trailing" secondItem="qyT-V6-epe" secondAttribute="trailing" type="default" id="4rR-7u-wE4"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" type="user" id="5S9-ZQ-rjI"/>
                             <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="user" id="7fM-8E-LhN"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="7qf-8x-PQ9"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="9EO-gu-FqY"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="s2x-Pt-9dN" secondAttribute="bottom" constant="1" type="user" id="9U7-14-ami"/>
                             <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="eNS-lF-jmO" secondAttribute="bottom" constant="9" type="user" id="9XB-JC-VfI"/>
@@ -396,7 +397,6 @@
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="FQa-bf-kVM"/>
                             <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" type="user" id="JDk-8u-ojq"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="69y-IG-COB" secondAttribute="leading" type="default" id="NOE-df-uzr"/>
-                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" type="user" id="OcM-9s-KVs"/>
                             <constraint firstItem="omr-FB-Kio" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="177" type="user" id="Qhx-8r-SeL"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="69y-IG-COB" secondAttribute="bottom" constant="4" type="user" id="a0l-HA-uIA"/>
@@ -406,11 +406,10 @@
                             <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" type="user" id="hao-Kn-onA"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" type="user" id="i7m-Qf-FfQ"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="trailing" secondItem="f6s-3f-2DP" secondAttribute="trailing" type="default" id="iPY-0y-fJk"/>
-                            <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="l9p-EJ-rNr"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="iqH-iR-atR"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
-                            <constraint firstItem="jml-nQ-Ay7" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="9" type="user" id="w24-LI-Kmp"/>
                             <constraint firstItem="omr-FB-Kio" firstAttribute="centerX" secondItem="qyT-V6-epe" secondAttribute="centerX" type="default" id="xtr-xD-aAD"/>
+                            <constraint firstAttribute="bottom" secondItem="jml-nQ-Ay7" secondAttribute="bottom" constant="179" id="xva-j1-5q6"/>
                             <constraint firstItem="omr-FB-Kio" firstAttribute="top" secondItem="s2x-Pt-9dN" secondAttribute="bottom" constant="20" type="user" id="xyL-9G-dVx"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="ybs-b1-OSw"/>
                             <constraint firstItem="69y-IG-COB" firstAttribute="leading" secondItem="qyT-V6-epe" secondAttribute="leading" type="default" id="zyk-kl-yXa"/>
@@ -493,6 +492,8 @@
         <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
             <relationships>
+                <relationship kind="action" name="primaryNextButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="secondaryNextButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="phoneNumberLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
