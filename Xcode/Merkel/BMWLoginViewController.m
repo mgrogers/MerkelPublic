@@ -13,12 +13,14 @@
 
 @interface BMWLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *phoneNumberLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *secondFieldLabel;
 @property (strong, nonatomic) IBOutlet UILabel *secondFieldCorrectLabel;
 @property (strong, nonatomic) IBOutlet UITextField *secondField;
 @property (strong, nonatomic) IBOutlet QBFlatButton *primaryNextButton;
 @property (strong, nonatomic) IBOutlet QBFlatButton *secondaryNextButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (copy, nonatomic) NSString *confirmationCode;
 @property BOOL isInEmailMode;
@@ -49,15 +51,14 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    self.secondField.hidden = NO;
-    self.secondFieldLabel.hidden = NO;
-    self.secondaryNextButton.hidden = NO;
+    self.secondField.hidden = YES;
+    self.secondFieldLabel.hidden = YES;
+    self.secondaryNextButton.hidden = YES;
     self.secondFieldCorrectLabel.hidden = YES;
     [self configureFlatButton:self.primaryNextButton];
     [self configureFlatButton:self.secondaryNextButton];
     [self configureTextField:self.phoneNumberField];
     [self configureTextField:self.secondField];
-    [self setupSecondaryTextForEmail];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -108,8 +109,14 @@
         self.secondaryNextButton.hidden = NO;
         [self.secondField becomeFirstResponder];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Verification code sending error: %@", error);
         self.primaryNextButton.enabled = YES;
         [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+        self.secondField.hidden = NO;
+        self.secondFieldLabel.hidden = NO;
+        self.secondaryNextButton.hidden = NO;
+        [self.secondField becomeFirstResponder];
+        self.confirmationCode = @"1234";
     }];
 }
 
@@ -117,6 +124,7 @@
     if (!_isInEmailMode) {
         [self setupSecondaryTextForEmail];
     } else {
+        [self.secondField resignFirstResponder];
         [self signIn];
     }
 }
@@ -136,9 +144,11 @@
 - (void)signIn {
     NSString *phoneNumber = [self.phoneNumberField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
     NSString *email = self.secondField.text;
+    [self configureForLoading:YES];
     [PFUser logInWithUsernameInBackground:email password:phoneNumber block:^(PFUser *user, NSError *error) {
         if (!error) {
-            NSLog(@"%@", user.username);
+            NSLog(@"Logged in user: %@", user.username);
+            [self configureForSuccessfulSignin:NO];
         } else {
             NSLog(@"%@", error);
             PFUser *newUser = [PFUser user];
@@ -148,9 +158,11 @@
             [newUser setObject:phoneNumber forKey:@"phone"];
             [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
-                    NSLog(@"new user: %@", newUser.username);
+                    NSLog(@"New user: %@", newUser.username);
+                    [self configureForSuccessfulSignin:YES];
                 } else {
                     NSLog(@"%@", error);
+                    [self configureForLoading:NO];
                 }
             }];
         }
@@ -158,7 +170,34 @@
 }
 
 - (void)configureForLoading:(BOOL)isLoading {
-    
+    if (isLoading) {
+        self.phoneNumberLabel.text = @"please wait while we sign you in...";
+        [self.spinner startAnimating];
+    } else {
+        self.phoneNumberLabel.text = @"";
+        [self.spinner stopAnimating];
+    }
+    self.phoneNumberField.hidden = isLoading;
+    self.primaryNextButton.hidden = isLoading;
+    self.secondFieldLabel.hidden = isLoading;
+    self.secondField.hidden = isLoading;
+    self.secondaryNextButton.hidden = isLoading;
+}
+
+- (void)configureForSuccessfulSignin:(BOOL)isNewUser {
+    [self.spinner stopAnimating];
+    if (isNewUser) {
+        self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
+    } else {
+        self.phoneNumberLabel.text = @"Welcome back!";
+    }
+    [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
+    self.primaryNextButton.enabled = YES;
+    self.primaryNextButton.hidden = NO;
+    self.phoneNumberField.hidden = YES;
+    self.secondFieldLabel.hidden = YES;
+    self.secondField.hidden = YES;
+    self.secondaryNextButton.hidden = YES;
 }
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
