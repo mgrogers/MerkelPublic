@@ -177,11 +177,13 @@ static NSString * const kInviteMessageType = @"invite";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        
     });
 }
 
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [[BMWPhone sharedPhone] setIsSpeakerEnabled:YES];
         [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
     });
     
