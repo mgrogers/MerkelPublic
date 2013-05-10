@@ -11,8 +11,6 @@
 #import "BMWAPIClient.h"
 #import "QBFlatButton.h"
 
-#import "BMWTimeIndicatorView.h"
-
 #import <EventKit/EventKit.h>
 
 @interface BMWLoginViewController () <UITextFieldDelegate>
@@ -25,7 +23,6 @@
 @property (strong, nonatomic) IBOutlet QBFlatButton *primaryNextButton;
 @property (strong, nonatomic) IBOutlet QBFlatButton *secondaryNextButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
-@property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
 
 @property (copy, nonatomic) NSString *confirmationCode;
 @property BOOL isInEmailMode;
@@ -54,14 +51,6 @@
 	self.view.backgroundColor = [UIColor bmwLightBlueColor];
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
     [self.view addGestureRecognizer:tapGR];
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    components.minute = -30;
-    self.timeIndicatorView = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectMake(20.0, 60.0, 280.0, 30.0)];
-    [self.view addSubview:self.timeIndicatorView];
-    self.timeIndicatorView.startTime = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
-    components.minute = 5;
-    self.timeIndicatorView.endTime = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
-    [self.timeIndicatorView startAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
