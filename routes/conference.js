@@ -51,8 +51,16 @@ var participantSchema = new Schema({
     status: {type: String, default: "inactive"} // 'active' or 'inactive'
 });
 
+var simpleUserSchema = new Schema({
+    phone: {type: String, default: ""},
+    conferencesAttended: [{
+        conferenceCode: {type: String, default: ""}
+    }]
+})
+
 var Conference = db.model('conference', conferenceSchema);
 var Participant = db.model('participant', participantSchema);
+var SimpleUser = db.model('simpleUser', simpleUserSchema);
 
 
 /* ----- API Calls ----- */
@@ -318,6 +326,26 @@ exports.join = function(req, res) {
                         participant = new Participant(participantObject);
                         participant.save();
                     }
+                });
+
+
+                // Simple user tracking - # of conferences each phone number joins
+                SimpleUser.findOne({'phone': fromPhoneNumber}, function(err_s, simpleUser) {
+                    if(!err_s && participant) {
+                        simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                        // Mixpanel increment conferencesJoined
+                        mixpanel.people.increment("" + fromPhoneNumber, "conferencesJoined");
+                    } else if(!err_s) {
+                        simpleUser = new SimpleUser({phone: fromPhoneNumber, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                        // Mixpanel create user
+                        mixpanel.people.set("" + fromPhoneNumber, {
+                            conferencesJoined: 1
+                        });
+                    }
+
+                    simpleUser.save();
                 });
 
 
