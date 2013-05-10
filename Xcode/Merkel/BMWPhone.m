@@ -41,7 +41,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 -(id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": ([PFUser currentUser].username) ? [PFUser currentUser].username : [NSNull null]};
+        NSDictionary *params = @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ? [[PFUser currentUser] objectForKey:@"phone"] : [NSNull null]};
        
         
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {

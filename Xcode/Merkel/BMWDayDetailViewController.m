@@ -122,11 +122,15 @@ static NSString * const kInviteMessageType = @"invite";
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
         [[BMWPhone sharedPhone] disconnect];
     } else {
-        NSString *codetoCall = self.conferenceCodeLabel.text;
-        if(codetoCall) {
-            [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-            [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
-        }
+        [self startCall];
+    }
+}
+
+- (void)startCall {
+    NSString *codetoCall = self.conferenceCodeLabel.text;
+    if(codetoCall) {
+        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+        [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
     }
 }
 
@@ -201,7 +205,8 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
+        NSLog(@"Connection failure: %@", error);
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = NO;
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
         [BMWPhone sharedPhone].isSpeakerEnabled = NO;

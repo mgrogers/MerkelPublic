@@ -123,6 +123,25 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     });
 }
 
+- (void)createQuickEventWithCompletion:(void (^)(EKEvent *event, NSString *conferenceCode))completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        EKEvent *newEvent = [EKEvent eventWithEventStore:self.store];
+        newEvent.calendar = [self.store defaultCalendarForNewEvents];
+        newEvent.title = @"Quick Call";
+        newEvent.startDate = [NSDate date];
+        NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+        dateComponents.minute = 30;
+        newEvent.endDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+        NSError *error;
+        [self.store saveEvent:newEvent span:EKSpanThisEvent error:&error];
+        [self getAndSaveConferenceCodeForEvent:newEvent completion:^(NSString *conferenceCode) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(newEvent, conferenceCode);
+            });
+        }];
+    });
+}
+
 - (void)getAndSaveConferenceCodeForEvent:(EKEvent *)event completion:(void (^)(NSString *conferenceCode))completion {
     static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp";
     static const NSInteger kBMWConferenceCodeLength = 10;

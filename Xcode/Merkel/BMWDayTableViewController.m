@@ -112,6 +112,20 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (void)callButtonPressed {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    __weak UIActivityIndicatorView *wkSpinner = spinner;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [[BMWCalendarAccess sharedAccess] createQuickEventWithCompletion:^(EKEvent *event, NSString *conferenceCode) {
+        [wkSpinner stopAnimating];
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+        [dayDetailVC startCall];
+    }];
 //    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
 //
 //
@@ -123,7 +137,7 @@ static NSString * const kInviteMessageType = @"invite";
 //    picker.peoplePickerDelegate = self;
 //    [self presentViewController:picker animated:YES completion:nil];
 
-    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+//    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
     
     
 }
