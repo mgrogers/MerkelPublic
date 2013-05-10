@@ -130,11 +130,11 @@ const float UI_CUES_WIDTH = 100.0f;
     if (recognizer.state == UIGestureRecognizerStateChanged) {
         CGPoint translation = [recognizer translationInView:self];
         self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        _rightDragRelease = self.frame.origin.x < -self.frame.size.width / 8;
-        _leftDragRelease = self.frame.origin.x > self.frame.size.width / 8;
+        _rightDragRelease = self.frame.origin.x < -self.frame.size.width / 4 ;
+        _leftDragRelease = self.frame.origin.x > self.frame.size.width / 4;
         
         // fade the contextual cues
-        float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 8);
+        float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 4);
         _leftLabel.alpha = cueAlpha;
         _rightLabel.alpha = cueAlpha;
         
@@ -195,13 +195,13 @@ const float UI_CUES_WIDTH = 100.0f;
 - (void)setupCueLabels {
     _leftLabel = [self createCueLabel];
     _leftLabel.text = @"Join";
-    _leftLabel.font = [UIFont defaultFontOfSize:20.0];
+    _leftLabel.font = [UIFont boldFontOfSize:20.0];
     _leftLabel.textAlignment = NSTextAlignmentRight;
     [self addSubview:_leftLabel];
     
     _rightLabel = [self createCueLabel];
     _rightLabel.text = @"Late";
-    _rightLabel.font = [UIFont defaultFontOfSize:20.0];
+    _rightLabel.font = [UIFont boldFontOfSize:20.0];
     
     _rightLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:_rightLabel];
