@@ -146,7 +146,6 @@ exports.phoneConfirmation = function(req, res) {
 exports.smsAlert = function(req, res) {
     if (req.method == 'POST') {
         var postBody = req.body;
-        console.log(postBody);
         if (postBody.conferenceCode && postBody.toPhoneNumber) {
 
             var initiator = postBody.initiator || "";
@@ -209,13 +208,15 @@ exports.emailAlert = function(req, res) {
     if(req.method == 'POST') {
         var postBody = req.body;
         console.log(postBody);
-        if(postBody.conferenceCode && postBody.attendees) {
+        if(postBody.conferenceCode && postBody.toEmail) {
+
             var initiator = postBody.initiator || "";
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
             var startTime = stringifyTimeObject(postBody.start);
             var messageType = postBody.messageType || "";
+            var toEmail = postBody.toEmail; 
 
             var user, key; 
             if(!process.env.SENDGRID_USERNAME) {
@@ -230,14 +231,6 @@ exports.emailAlert = function(req, res) {
             }
             var sendgrid = new SendGrid(user, key);
 
-            var conferenceAttendees = [];
-            for (var i = 0; i < postBody.attendees.length; i++) {
-                var emailAddress = postBody.attendees[i].email;
-                if (emailAddress) {
-                    conferenceAttendees.push(emailAddress);
-                }                
-            } 
-
             var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'Invite@CallInapp.com';
@@ -247,18 +240,20 @@ exports.emailAlert = function(req, res) {
                     + "With code: #" + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
-                msgSubject = initiator + " is running late for your call: " + eventTitle + " at " + conferenceCode; 
+                msgSubject = initiator + " is running late to your event: " + eventTitle; 
                 content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
-                        + " is running late and will be joining the conference call, " + conferencePhoneNumber + ",,," + conferenceCode + "# as soon as possible.";
+                        + " is running late and will be joining the call as soon as possible.\n\n"
+                        + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
+                        + "With code: #" + conferenceCode + ".\n";
             }
+
             var email = new Email({
+                to: toEmail,
                 from: sender,
                 replyto: initiator,
                 subject: msgSubject,
                 text: content
             });
-            email.addTo(conferenceAttendees);
-
             sendgrid.send(email, function(success, message) {
                 if(!success) {
                     var response = {"meta": {"code": 400},
@@ -266,7 +261,7 @@ exports.emailAlert = function(req, res) {
                     return res.send(response);
                 } else {
                     var response = {"meta": {"code": 200},
-                                 "message": "Invite delivered to :" + conferenceAttendees.toString()};    
+                                 "message": "Invite delivered to :" + toEmail};    
                     return res.send(response);
                 }
             });
