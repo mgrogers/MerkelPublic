@@ -14,13 +14,14 @@
 #import "BMWPhone.h"
 #import "TCConnectionDelegate.h"
 
+
 @interface BMWDayDetailViewController () <TCConnectionDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timer;
 
 @end
 
@@ -78,6 +79,8 @@ static NSString * const kInviteMessageType = @"invite";
     [self createLabels];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self configureFlatButton:self.joinCallButton];
+    [self configureFlatButton:self.lateButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,13 +104,13 @@ static NSString * const kInviteMessageType = @"invite";
         self.eventDateLabel.text = @"All Day";
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"EEEE, MMMM dd";
+        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
         NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
         self.eventDateLabel.text = monthString;
         self.eventDateLabel.numberOfLines = 0;
-        self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
+//        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
     }
 }
 
@@ -162,6 +165,18 @@ static NSString * const kInviteMessageType = @"invite";
         [BMWPhone sharedPhone].isSpeakerEnabled = NO;
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
     }
+}
+
+#pragma mark - View Setup
+
+- (void)configureFlatButton:(QBFlatButton *)button {
+    button.faceColor = [UIColor bmwDarkBlueColor];
+    [button setFaceColor:[UIColor bmwDarkBlueColor] forState:UIControlStateNormal];
+    [button setFaceColor:[UIColor bmwDisabledGrayColor] forState:UIControlStateDisabled];
+    button.margin = 0.0;
+    button.radius = 5.0;
+    button.depth = 0.0;
+    button.enabled = NO;
 }
 
 #pragma mark - TCConectionDelegate Methods

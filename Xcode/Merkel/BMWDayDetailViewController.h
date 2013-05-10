@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import <EventKit/EventKit.h>
+#import "QBFlatButton.h"
 
 @interface BMWDayDetailViewController : UIViewController
 
@@ -16,9 +17,9 @@
 @property (nonatomic, strong) NSString *conferenceCode;
 @property (nonatomic, strong) NSString *eventTitle;
 @property (nonatomic, strong) EKEvent *event;
-@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *lateButton;
-
+@property (weak, nonatomic) IBOutlet QBFlatButton *joinCallButton;
+@property (weak, nonatomic) IBOutlet QBFlatButton *lateButton;
 
 - (IBAction)lateButtonPressed:(id)sender;
+
 @end
