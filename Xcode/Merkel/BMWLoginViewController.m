@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet QBFlatButton *secondaryNextButton;
 
 @property (copy, nonatomic) NSString *confirmationCode;
+@property BOOL isInEmailMode;
 
 @end
 
@@ -48,14 +49,15 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    self.secondField.hidden = YES;
-    self.secondFieldLabel.hidden = YES;
-    self.secondaryNextButton.hidden = YES;
+    self.secondField.hidden = NO;
+    self.secondFieldLabel.hidden = NO;
+    self.secondaryNextButton.hidden = NO;
     self.secondFieldCorrectLabel.hidden = YES;
     [self configureFlatButton:self.primaryNextButton];
     [self configureFlatButton:self.secondaryNextButton];
     [self configureTextField:self.phoneNumberField];
     [self configureTextField:self.secondField];
+    [self setupSecondaryTextForEmail];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -75,6 +77,18 @@
 
 - (void)configureTextField:(UITextField *)textField {
     textField.font = [UIFont boldFontOfSize:textField.font.pointSize];
+}
+
+- (void)setupSecondaryTextForEmail {
+    _isInEmailMode = YES;
+    self.primaryNextButton.enabled = NO;
+    self.secondFieldCorrectLabel.hidden = YES;
+    self.secondFieldLabel.text = @"One last thing, please enter your email";
+    self.secondField.text = @"";
+    self.secondField.placeholder = @"email";
+    self.secondField.keyboardType = UIKeyboardTypeEmailAddress;
+    [self.secondField becomeFirstResponder];
+    self.secondaryNextButton.enabled = NO;
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
@@ -100,7 +114,11 @@
 }
 
 - (IBAction)secondaryNextButtonPressed:(UIButton *)sender {
-    
+    if (!_isInEmailMode) {
+        [self setupSecondaryTextForEmail];
+    } else {
+        [self signIn];
+    }
 }
 
 - (void)setSecondFieldCorrect:(BOOL)isCorrect {
@@ -113,6 +131,34 @@
         self.secondFieldCorrectLabel.textColor = [UIColor redColor];
         self.secondFieldCorrectLabel.text = kIncorrectSymbol;
     }
+}
+
+- (void)signIn {
+    NSString *phoneNumber = [self.phoneNumberField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    NSString *email = self.secondField.text;
+    [PFUser logInWithUsernameInBackground:email password:phoneNumber block:^(PFUser *user, NSError *error) {
+        if (!error) {
+            NSLog(@"%@", user.username);
+        } else {
+            NSLog(@"%@", error);
+            PFUser *newUser = [PFUser user];
+            newUser.username = email;
+            newUser.email = email;
+            newUser.password = phoneNumber;
+            [newUser setObject:phoneNumber forKey:@"phone"];
+            [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    NSLog(@"new user: %@", newUser.username);
+                } else {
+                    NSLog(@"%@", error);
+                }
+            }];
+        }
+    }];
+}
+
+- (void)configureForLoading:(BOOL)isLoading {
+    
 }
 
 - (void)screenTapped:(UITapGestureRecognizer *)tapGR {
@@ -186,20 +232,25 @@
             return NO;
         }
     } else if (textField == self.secondField) {
-        if (range.length == 1 && range.location == 3) {
-            self.secondFieldCorrectLabel.hidden = YES;
-            return YES;
-        }
-        if (range.length == 0 && range.location == 3) {
-            self.secondFieldCorrectLabel.hidden = NO;
-            NSString *enteredCode = [textField.text stringByAppendingString:string];
-            BOOL isCorrect = [enteredCode isEqualToString:self.confirmationCode];
-            [self setSecondFieldCorrect:isCorrect];
-            self.secondaryNextButton.enabled = isCorrect;
-            return YES;
-        }
-        if (range.location == 4) {
-            return NO;
+        if (!_isInEmailMode) {
+            if (range.length == 1 && range.location == 3) {
+                self.secondFieldCorrectLabel.hidden = YES;
+                return YES;
+            }
+            if (range.length == 0 && range.location == 3) {
+                self.secondFieldCorrectLabel.hidden = NO;
+                NSString *enteredCode = [textField.text stringByAppendingString:string];
+                BOOL isCorrect = [enteredCode isEqualToString:self.confirmationCode];
+                [self setSecondFieldCorrect:isCorrect];
+                self.secondaryNextButton.enabled = isCorrect;
+                return YES;
+            }
+            if (range.location == 4) {
+                return NO;
+            }
+        } else {
+            NSString *enteredEmail = [textField.text stringByReplacingCharactersInRange:range withString:string];
+            self.secondaryNextButton.enabled = [enteredEmail isValidEmail];
         }
     }
     return YES;
