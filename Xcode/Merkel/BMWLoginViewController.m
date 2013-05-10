@@ -9,14 +9,15 @@
 #import "BMWLoginViewController.h"
 
 #import "BMWAPIClient.h"
+#import "QBFlatButton.h"
 
 @interface BMWLoginViewController () <UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *secondFieldLabel;
 @property (strong, nonatomic) IBOutlet UITextField *secondField;
-@property (strong, nonatomic) IBOutlet UIButton *primaryNextButton;
-@property (strong, nonatomic) IBOutlet UIButton *secondaryNextButton;
+@property (strong, nonatomic) IBOutlet QBFlatButton *primaryNextButton;
+@property (strong, nonatomic) IBOutlet QBFlatButton *secondaryNextButton;
 
 @property (copy, nonatomic) NSString *confirmationCode;
 
@@ -36,7 +37,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.view.backgroundColor = [UIColor bmwDarkBlueColor];
+    self.navigationController.navigationBarHidden = YES;
+	self.view.backgroundColor = [UIColor bmwLightBlueColor];
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(screenTapped:)];
     [self.view addGestureRecognizer:tapGR];
 }
@@ -48,11 +50,23 @@
     self.secondField.hidden = YES;
     self.secondFieldLabel.hidden = YES;
     self.secondaryNextButton.hidden = YES;
+    [self configureFlatButton:self.primaryNextButton];
+    [self configureFlatButton:self.secondaryNextButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)configureFlatButton:(QBFlatButton *)button {
+    CGRect frame = button.frame;
+    frame.size.height += 20.0;
+    button.frame = frame;
+    button.faceColor = [UIColor bmwDarkBlueColor];
+    button.margin = 0.0;
+    button.radius = 5.0;
+    button.depth = 0.0;
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {

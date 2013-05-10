@@ -292,9 +292,8 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="CallIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Callin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNS-lF-jmO">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="PZ8-qw-gOR"/>
                                     <constraint firstAttribute="width" constant="1115" id="sGp-nq-mvD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="60"/>
@@ -332,7 +331,7 @@
                                     <outlet property="delegate" destination="KMA-Xs-QsW" id="BeM-j9-ncI"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69y-IG-COB">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69y-IG-COB" customClass="QBFlatButton">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="0rz-5e-Vsk"/>
                                 </constraints>
@@ -348,7 +347,7 @@
                                     <action selector="primaryNextButtonPressed:" destination="KMA-Xs-QsW" eventType="touchUpInside" id="6YJ-7I-Wl6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5H-LL-vvh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5H-LL-vvh" customClass="QBFlatButton">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CbW-zY-bXp"/>
                                 </constraints>
