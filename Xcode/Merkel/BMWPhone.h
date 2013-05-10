@@ -34,5 +34,6 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 @property (readonly) NSString *phoneNumber;
 @property (nonatomic, strong) EKEvent *currentCallEvent;
 @property (nonatomic, copy) NSString *currentCallCode;
+@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
 
 @end

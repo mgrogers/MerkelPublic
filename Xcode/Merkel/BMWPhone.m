@@ -18,7 +18,6 @@
 
 @property (nonatomic, strong) TCDevice *device;
 @property (nonatomic, strong) TCConnection *connection;
-@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
 
 @end
 

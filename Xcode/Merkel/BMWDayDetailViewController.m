@@ -83,6 +83,20 @@ static NSString * const kInviteMessageType = @"invite";
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [BMWPhone sharedPhone].connectionDelegate = self;
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        if ([BMWPhone sharedPhone].isSpeakerEnabled) {
+            self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        }
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
