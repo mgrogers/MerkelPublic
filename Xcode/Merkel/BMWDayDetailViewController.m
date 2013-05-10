@@ -139,7 +139,8 @@ static NSString * const kInviteMessageType = @"invite";
 - (IBAction)lateButtonPressed:(id)sender {
     [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
         for (int i = 0; i < [attendees count]; i++) {
-            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
+            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+            NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                         self.event.title, @"title",
@@ -147,13 +148,19 @@ static NSString * const kInviteMessageType = @"invite";
                                         self.phoneNumber, @"phoneNumber",
                                         self.conferenceCode, @"conferenceCode",
                                         attendeePhone, @"toPhoneNumber",
+                                        attendeeEmail, @"toEmail",
                                         kAlertMessageType, @"messageType",
                                         kTestSenderEmailAddress, @"initiator",nil];
             
             [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Alert success with response %@", responseObject);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending message", [error localizedDescription]);
+                NSLog(@"Error sending sms message. Attempting email.", [error localizedDescription]);
+                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"Alert success with response %@", responseObject);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error sending message", [error localizedDescription]);
+                }];
             }];
         }
     }];
