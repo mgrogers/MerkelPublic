@@ -13,6 +13,7 @@
 #import "BMWDayTableViewController.h"
 #import "BMWPhone.h"
 #import "TCConnectionDelegate.h"
+#import "BMWTimeIndicatorView.h"
 
 #import <MessageUI/MessageUI.h>
 
@@ -21,7 +22,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timer;
+@property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
 
 @property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
 
@@ -29,10 +32,8 @@
 
 @implementation BMWDayDetailViewController
 
-static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
-
 
 - (void)setEKEvent: (EKEvent*)event {
     _event = event;
@@ -76,11 +77,43 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = self.eventTitle;
+    self.view.backgroundColor = [UIColor bmwLightBlueColor];
+    self.title = @"Event Detail";
+    self.eventTitleLabel.text = self.eventTitle;
+    [self.eventTitleLabel setFont:[UIFont boldFontOfSize:24.0]];
+    
+    self.eventTitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.eventTitleLabel.adjustsLetterSpacingToFitWidth = YES;
+    self.eventTitleLabel.minimumScaleFactor = 0.5;
+
     [self createLabels];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self configureFlatButton:self.joinCallButton withColor:[UIColor redColor]];
+    [self configureFlatButton:self.lateButton withColor:[UIColor redColor]];
+
+
+    [self loadTimeIndicatorView];
+    [self loadLineSeparatorView];
+}
+
+- (void)loadLineSeparatorView {
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 280, self.view.bounds.size.width, 1)];
+    lineView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:lineView];
+}
+
+- (void)loadTimeIndicatorView {    
+    self.timeIndicatorView = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectMake(40.0, 60.0, 240.0, 30.0)];
+    self.timeIndicatorView.borderColor = [UIColor clearColor];
+    self.timeIndicatorView.trackColor = [UIColor whiteColor];
+    self.timeIndicatorView.labelColor = [UIColor clearColor];
+    self.timeIndicatorView.labelFontColor = [UIColor bmwLightGrayColor];
+    self.timeIndicatorView.startTime = self.event.startDate;
+    self.timeIndicatorView.endTime = self.event.endDate;
+    [self.view addSubview:self.timeIndicatorView];
+    [self.timeIndicatorView startAnimating];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,13 +143,6 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
--(void)createVisualAssets {
-//    [self addChildViewController:self.attendeeTable];
-//    [self.attendeeTable setEventAttendees:self.event.attendees];
-//    [self.view addSubview:self.attendeeTable.tableView];
-//    [self.attendeeTable didMoveToParentViewController:self];
-}
-
 -(void)createLabels {
     self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
     self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
@@ -125,13 +151,13 @@ static NSString * const kInviteMessageType = @"invite";
         self.eventDateLabel.text = @"All Day";
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"EEEE, MMMM dd";
+        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
         NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
         self.eventDateLabel.text = monthString;
         self.eventDateLabel.numberOfLines = 0;
-        self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
+//        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
     }
 }
 
@@ -180,7 +206,7 @@ static NSString * const kInviteMessageType = @"invite";
                                         attendeePhone, @"toPhoneNumber",
                                         attendeeEmail, @"toEmail",
                                         kAlertMessageType, @"messageType",
-                                        kTestSenderEmailAddress, @"initiator",nil];
+                                        [PFUser currentUser].email, @"initiator",nil];
             
             [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Alert success with response %@", responseObject);
@@ -205,6 +231,17 @@ static NSString * const kInviteMessageType = @"invite";
         [BMWPhone sharedPhone].isSpeakerEnabled = NO;
         self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
     }
+}
+
+#pragma mark - View Setup
+
+- (void)configureFlatButton:(QBFlatButton *)button withColor:(UIColor*)color {
+    button.faceColor = color;
+    [button setFaceColor:color forState:UIControlStateNormal];
+    [button setFaceColor:[UIColor bmwDisabledGrayColor] forState:UIControlStateDisabled];
+    button.margin = 0.0;
+    button.radius = 5.0;
+    button.depth = 0.0;
 }
 
 #pragma mark - TCConectionDelegate Methods

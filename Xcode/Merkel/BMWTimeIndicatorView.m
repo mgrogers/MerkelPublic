@@ -13,7 +13,7 @@
 @interface BMWTimeIndicatorView ()
 
 @property (readwrite) BMWTimeIndicatorState indicatorState;
-@property (nonatomic, strong) UIView *indicatorBarView, *meetingDurationView;
+@property (nonatomic, strong) UIView *indicatorBarView, *meetingDurationView, *meetingDurationBackgroundView;
 @property (nonatomic, strong) UILabel *indicatorStartLabel, *indicatorEndLabel, *eventStartLabel, *eventEndLabel;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDate *indicatorStartTime, *indicatorEndTime;
@@ -56,6 +56,9 @@
     self.meetingDurationView = [[UIView alloc] initWithFrame:CGRectZero];
     self.meetingDurationView.backgroundColor = self.timeIndicatorColor;
     self.meetingDurationView.alpha = 0.3;
+    self.meetingDurationBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.meetingDurationBackgroundView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.meetingDurationBackgroundView];
     [self addSubview:self.meetingDurationView];
     self.indicatorBarView = [[UIView alloc] initWithFrame:CGRectZero];
     self.indicatorBarView.backgroundColor = self.timeIndicatorColor;
@@ -85,6 +88,15 @@
     self.indicatorEndLabel.font = labelFont;
     self.eventStartLabel.font = labelFont;
     self.eventEndLabel.font = labelFont;
+    
+}
+
+- (void)setLabelFontColor:(UIColor *)labelFontColor {
+    _labelFontColor = labelFontColor;
+    self.indicatorStartLabel.textColor = labelFontColor;
+    self.indicatorEndLabel.textColor = labelFontColor;
+    self.eventStartLabel.textColor = labelFontColor;
+    self.eventEndLabel.textColor = labelFontColor;
 }
 
 - (void)setLabelColor:(UIColor *)labelColor {
@@ -117,23 +129,26 @@
 
 - (void)setStartTime:(NSDate *)startTime {
     _startTime = startTime;
+    [self.dateFormatter setDateFormat:@"h"];
     self.eventStartLabel.text = [self.dateFormatter stringFromDate:startTime];
     self.indicatorStartTime = [self dateWithHourDelta:-2 fromDate:startTime];
+    [self.dateFormatter setDateFormat:@"h a"];
     self.indicatorStartLabel.text = [self.dateFormatter stringFromDate:self.indicatorStartTime];
 }
 
 - (void)setEndTime:(NSDate *)endTime {
     _endTime = endTime;
+    [self.dateFormatter setDateFormat:@"h"];
     self.eventEndLabel.text = [self.dateFormatter stringFromDate:endTime];
     self.indicatorEndTime = [self dateWithHourDelta:2 fromDate:endTime];
+    [self.dateFormatter setDateFormat:@"h a"];
     self.indicatorEndLabel.text = [self.dateFormatter stringFromDate:self.indicatorEndTime];
 }
 
 - (NSDate *)dateWithHourDelta:(NSInteger)hourDelta fromDate:(NSDate *)fromDate {
     NSDateComponents *dateComponents = [self.calendar components:NSMinuteCalendarUnit fromDate:fromDate];
-    NSInteger minuteDelta = 60 - dateComponents.minute;
     dateComponents.hour = hourDelta;
-    dateComponents.minute = minuteDelta;
+    dateComponents.minute = 0;
     NSDate *newDate = [self.calendar dateByAddingComponents:dateComponents toDate:fromDate options:0];
     return newDate;
 }
@@ -152,6 +167,8 @@
     CGFloat eventWidth = (((CGFloat)eventMinutes) / totalMinutes) * trackWidth;
     CGRect eventFrame = CGRectMake(eventOffsetX, 0.0, eventWidth, trackHeight);
     self.meetingDurationView.frame = eventFrame;
+    self.meetingDurationBackgroundView.frame = eventFrame;
+    
     CGFloat currentTimeIndicatorWidth = trackWidth * kCurrentTimeIndicatorWidthScaleFactor;
     CGRect currentTimeIndicatorFrame = CGRectMake(currentTimeIndicatorOffsetX - (currentTimeIndicatorWidth / 2), 0.0, currentTimeIndicatorWidth, trackHeight);
     self.indicatorBarView.frame = currentTimeIndicatorFrame;
