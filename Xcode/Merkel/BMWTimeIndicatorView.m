@@ -43,16 +43,17 @@
     _indicatorState = BMWTimeIndicatorStateBeforeEvent;
     self.calendar = [NSCalendar currentCalendar];
     self.trackColor = [UIColor whiteColor];
-    self.timeIndicatorColor = [UIColor greenColor];
+    self.timeIndicatorColor = [UIColor redColor];
     self.labelColor = [UIColor blackColor];
     self.labelFont = [UIFont systemFontOfSize:14.0];
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"h a"];
     self.meetingDurationView = [[UIView alloc] initWithFrame:CGRectZero];
     self.meetingDurationView.backgroundColor = self.timeIndicatorColor;
+    self.meetingDurationView.alpha = 0.3;
     [self addSubview:self.meetingDurationView];
     self.indicatorBarView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.indicatorBarView.backgroundColor = [UIColor redColor];
+    self.indicatorBarView.backgroundColor = self.timeIndicatorColor;
     [self addSubview:self.indicatorBarView];
     self.indicatorStartLabel = [self createNewLabelAndAddAsSubview];
     self.indicatorStartLabel.textAlignment = NSTextAlignmentLeft;
@@ -139,6 +140,28 @@
     CGFloat currentTimeIndicatorWidth = trackWidth * kCurrentTimeIndicatorWidthScaleFactor;
     CGRect currentTimeIndicatorFrame = CGRectMake(currentTimeIndicatorOffsetX - (currentTimeIndicatorWidth / 2), 0.0, currentTimeIndicatorWidth, trackHeight);
     self.indicatorBarView.frame = currentTimeIndicatorFrame;
+    [self positionLabel:self.indicatorStartLabel atXOffset:0.0];
+    [self positionLabel:self.eventStartLabel withRightSideAtX:eventOffsetX];
+    [self positionLabel:self.eventEndLabel atXOffset:eventOffsetX+eventWidth];
+    [self positionLabel:self.indicatorEndLabel withRightSideAtX:trackWidth];
+}
+
+- (void)positionLabel:(UILabel *)label atXOffset:(CGFloat)xOffset {
+    CGFloat trackHeight = self.frame.size.height;
+    CGSize textSize = [label.text sizeWithFont:label.font];
+    CGRect labelFrame = CGRectZero;
+    labelFrame.size = textSize;
+    label.frame = labelFrame;
+    label.center = CGPointMake(xOffset + (textSize.width / 2.0), (trackHeight / 2.0) + (textSize.height / 2.0));
+}
+
+- (void)positionLabel:(UILabel *)label withRightSideAtX:(CGFloat)x {
+    CGFloat trackHeight = self.frame.size.height;
+    CGSize textSize = [label.text sizeWithFont:label.font];
+    CGRect labelFrame = CGRectZero;
+    labelFrame.size = textSize;
+    label.frame = labelFrame;
+    label.center = CGPointMake(x - (textSize.width / 2.0), (trackHeight / 2.0) + (textSize.height / 2.0));
 }
 
 - (void)startAnimating {

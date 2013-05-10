@@ -56,6 +56,8 @@
     [self.view addGestureRecognizer:tapGR];
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.minute = -30;
+    self.timeIndicatorView = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectMake(20.0, 60.0, 280.0, 30.0)];
+    [self.view addSubview:self.timeIndicatorView];
     self.timeIndicatorView.startTime = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
     components.minute = 5;
     self.timeIndicatorView.endTime = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:[NSDate date] options:0];
