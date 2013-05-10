@@ -14,5 +14,6 @@
 + (instancetype)bmwDarkBlueColor;
 + (instancetype)bmwDarkGrayColor;
 + (instancetype)bmwLightGrayColor;
++ (instancetype)bmwDisabledGrayColor;
 
 @end

@@ -52,6 +52,8 @@
     self.secondaryNextButton.hidden = YES;
     [self configureFlatButton:self.primaryNextButton];
     [self configureFlatButton:self.secondaryNextButton];
+    [self configureTextField:self.phoneNumberField];
+    [self configureTextField:self.secondField];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -60,13 +62,17 @@
 }
 
 - (void)configureFlatButton:(QBFlatButton *)button {
-    CGRect frame = button.frame;
-    frame.size.height += 20.0;
-    button.frame = frame;
     button.faceColor = [UIColor bmwDarkBlueColor];
+    [button setFaceColor:[UIColor bmwDarkBlueColor] forState:UIControlStateNormal];
+    [button setFaceColor:[UIColor bmwDisabledGrayColor] forState:UIControlStateDisabled];
     button.margin = 0.0;
     button.radius = 5.0;
     button.depth = 0.0;
+    button.enabled = NO;
+}
+
+- (void)configureTextField:(UITextField *)textField {
+    textField.font = [UIFont boldFontOfSize:textField.font.pointSize];
 }
 
 - (IBAction)primaryNextButtonPressed:(UIButton *)sender {
@@ -121,6 +127,44 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.phoneNumberField) {
+        // Adding last digit; enable next button.
+        if (range.location == 11 && range.length == 0) {
+            self.primaryNextButton.enabled = YES;
+        }
+        
+        // The user is deleting the last digit; disable next button.
+        if (range.location == 11 && range.length == 1) {
+            self.primaryNextButton.enabled = NO;
+        }
+        
+        // All digits entered
+        if (range.location == 12) {
+            return NO;
+        }
+        
+        // Reject appending non-digit characters
+        if (range.length == 0 &&
+            ![[NSCharacterSet decimalDigitCharacterSet] characterIsMember:[string characterAtIndex:0]]) {
+            return NO;
+        }
+        
+        // Auto-add hyphen before appending 4rd or 7th digit
+        if (range.length == 0 &&
+            (range.location == 3 || range.location == 7)) {
+            textField.text = [NSString stringWithFormat:@"%@-%@", textField.text, string];
+            return NO;
+        }
+        
+        // Delete hyphen when deleting its trailing digit
+        if (range.length == 1 &&
+            (range.location == 4 || range.location == 8))  {
+            range.location--;
+            range.length = 2;
+            textField.text = [textField.text stringByReplacingCharactersInRange:range withString:@""];
+            return NO;
+        }
+    }
     return YES;
 }
 

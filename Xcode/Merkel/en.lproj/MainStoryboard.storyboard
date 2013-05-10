@@ -309,8 +309,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="phone number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyT-V6-epe">
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="phone number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qyT-V6-epe">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7hP-PB-EaE"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="KMA-Xs-QsW" id="qzn-QC-SNI"/>
@@ -324,8 +328,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XJd-rh-OdK">
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XJd-rh-OdK">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="qLN-Ad-xug"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="KMA-Xs-QsW" id="BeM-j9-ncI"/>
@@ -333,7 +341,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69y-IG-COB" customClass="QBFlatButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="0rz-5e-Vsk"/>
+                                    <constraint firstAttribute="height" constant="40" id="g86-TW-S6P"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Next">
@@ -349,7 +357,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5H-LL-vvh" customClass="QBFlatButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="CbW-zY-bXp"/>
+                                    <constraint firstAttribute="height" constant="40" id="60E-wL-xca"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Next">
@@ -370,19 +378,19 @@
                             <constraint firstItem="eNS-lF-jmO" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="20" symbolic="YES" type="default" id="7fM-8E-LhN"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="9EO-gu-FqY"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="trailing" secondItem="XJd-rh-OdK" secondAttribute="trailing" type="default" id="FQa-bf-kVM"/>
-                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="198" id="K9B-L2-5zS"/>
+                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="99" id="JDk-8u-ojq"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="leading" secondItem="69y-IG-COB" secondAttribute="leading" type="default" id="NOE-df-uzr"/>
-                            <constraint firstItem="f6s-3f-2DP" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="QZ3-bN-kQ3"/>
-                            <constraint firstItem="s2x-Pt-9dN" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="107" id="Snt-RD-GNr"/>
-                            <constraint firstAttribute="bottom" secondItem="t5H-LL-vvh" secondAttribute="bottom" constant="141" id="UBy-Jt-HGU"/>
+                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="239" id="OcM-9s-KVs"/>
+                            <constraint firstAttribute="bottom" secondItem="t5H-LL-vvh" secondAttribute="bottom" constant="129" id="Sr5-rn-rJP"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="leading" secondItem="s2x-Pt-9dN" secondAttribute="leading" type="default" id="XSd-Jh-hPZ"/>
                             <constraint firstItem="f6s-3f-2DP" firstAttribute="trailing" secondItem="69y-IG-COB" secondAttribute="trailing" type="default" id="bDw-H3-GDw"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="top" secondItem="f6s-3f-2DP" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="biu-Fb-UoG"/>
-                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="166" id="d4W-Bs-KlR"/>
+                            <constraint firstItem="69y-IG-COB" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="195" id="hao-Kn-onA"/>
+                            <constraint firstItem="qyT-V6-epe" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="158" id="i7m-Qf-FfQ"/>
                             <constraint firstItem="XJd-rh-OdK" firstAttribute="trailing" secondItem="f6s-3f-2DP" secondAttribute="trailing" type="default" id="iPY-0y-fJk"/>
                             <constraint firstItem="s2x-Pt-9dN" firstAttribute="centerX" secondItem="eNS-lF-jmO" secondAttribute="centerX" type="default" id="lM2-qm-wts"/>
                             <constraint firstItem="qyT-V6-epe" firstAttribute="trailing" secondItem="s2x-Pt-9dN" secondAttribute="trailing" type="default" id="lXD-1M-5o0"/>
-                            <constraint firstItem="f6s-3f-2DP" firstAttribute="top" secondItem="fyw-mM-U5N" secondAttribute="top" constant="242" id="vuk-fx-Irp"/>
+                            <constraint firstItem="XJd-rh-OdK" firstAttribute="centerX" secondItem="fyw-mM-U5N" secondAttribute="centerX" type="default" id="rOs-HO-e3F"/>
                             <constraint firstItem="t5H-LL-vvh" firstAttribute="leading" secondItem="XJd-rh-OdK" secondAttribute="leading" type="default" id="ybs-b1-OSw"/>
                             <constraint firstItem="69y-IG-COB" firstAttribute="leading" secondItem="qyT-V6-epe" secondAttribute="leading" type="default" id="zyk-kl-yXa"/>
                         </constraints>
@@ -439,6 +447,63 @@
         <image name="bmwLogo.png" width="45" height="45"/>
         <image name="charger.png" width="75" height="163"/>
     </resources>
+    <classes>
+        <class className="BMWAttendeeTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWAttendeeTableViewController.h"/>
+        </class>
+        <class className="BMWDayDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="conferenceCodeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="eventTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="joinCallButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="lateButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="BMWDayTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewCell.h"/>
+        </class>
+        <class className="BMWDayTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
+        </class>
+        <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="primaryNextButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="secondaryNextButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
+                <relationship kind="outlet" name="secondField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="secondFieldLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="secondaryNextButton" candidateClass="QBFlatButton"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="BMWViewController" superclassName="GAITrackedViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bmwLogoView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="chargerView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="phoneNumberValidator" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="userLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PKRevealController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
+        </class>
+        <class className="QBFlatButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/QBFlatButton.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

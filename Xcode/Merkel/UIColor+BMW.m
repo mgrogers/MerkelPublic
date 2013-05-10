@@ -38,4 +38,9 @@
     return [self colorFromHexString:kBMWLightGrayColor];
 }
 
++ (instancetype)bmwDisabledGrayColor {
+    static NSString * const kBMWDisabledGrayColor = @"#B3B0B1";
+    return [self colorFromHexString:kBMWDisabledGrayColor];
+}
+
 @end
