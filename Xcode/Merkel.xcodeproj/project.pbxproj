@@ -24,6 +24,7 @@
 		2B8FB3ED16ED32B500AC5A95 /* BMWLinkedInProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8FB3EC16ED32B400AC5A95 /* BMWLinkedInProfile.m */; };
 		2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
+		4B2E69C4173A5E4300889482 /* BMWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */; };
 		4B319AB616ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
 		4B319AB716ED333000F888FC /* iconFlag.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB316ED333000F888FC /* iconFlag.png */; };
 		4B319AB816ED333000F888FC /* iconMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B319AB416ED333000F888FC /* iconMan.png */; };
@@ -91,6 +92,8 @@
 		4BA3384416D1948700A2CD24 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384316D1948700A2CD24 /* Social.framework */; };
 		4BA3384616D1948D00A2CD24 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384516D1948D00A2CD24 /* StoreKit.framework */; };
 		4BA3384816D1949200A2CD24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */; };
+		4BB5E0CF173CA7CB00AD7B77 /* QBFlatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */; };
+		4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5E0D1173CC2B300AD7B77 /* NSString+Validator.m */; };
 		4BBDFE70171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
 		4BBDFE71171D39810083D4BC /* UIColor+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */; };
 		4BBDFE74171D3D840083D4BC /* UIFont+BMW.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */; };
@@ -193,6 +196,8 @@
 		2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCellDelegate.h; sourceTree = "<group>"; };
 		2BD4CB70172DF1C100687647 /* BMWAttendeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeTableViewController.h; sourceTree = "<group>"; };
 		2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeTableViewController.m; sourceTree = "<group>"; };
+		4B2E69C2173A5E4300889482 /* BMWLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWLoginViewController.h; sourceTree = "<group>"; };
+		4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWLoginViewController.m; sourceTree = "<group>"; };
 		4B319AB316ED333000F888FC /* iconFlag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconFlag.png; sourceTree = "<group>"; };
 		4B319AB416ED333000F888FC /* iconMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconMan.png; sourceTree = "<group>"; };
 		4B319AB516ED333000F888FC /* iconNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconNote.png; sourceTree = "<group>"; };
@@ -264,6 +269,10 @@
 		4BA3384316D1948700A2CD24 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4BA3384516D1948D00A2CD24 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4BA3384716D1949200A2CD24 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BB5E0CD173CA7CB00AD7B77 /* QBFlatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBFlatButton.h; sourceTree = "<group>"; };
+		4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBFlatButton.m; sourceTree = "<group>"; };
+		4BB5E0D0173CC2B300AD7B77 /* NSString+Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validator.h"; sourceTree = "<group>"; };
+		4BB5E0D1173CC2B300AD7B77 /* NSString+Validator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Validator.m"; sourceTree = "<group>"; };
 		4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BMW.h"; sourceTree = "<group>"; };
 		4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BMW.m"; sourceTree = "<group>"; };
 		4BBDFE72171D3D840083D4BC /* UIFont+BMW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+BMW.h"; sourceTree = "<group>"; };
@@ -515,16 +524,22 @@
 			isa = PBXGroup;
 			children = (
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
+				4BB5E0CD173CA7CB00AD7B77 /* QBFlatButton.h */,
+				4BB5E0CE173CA7CB00AD7B77 /* QBFlatButton.m */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
 				4BBDFE6E171D39810083D4BC /* UIColor+BMW.h */,
 				4BBDFE6F171D39810083D4BC /* UIColor+BMW.m */,
 				4BBDFE72171D3D840083D4BC /* UIFont+BMW.h */,
 				4BBDFE73171D3D840083D4BC /* UIFont+BMW.m */,
+				4BB5E0D0173CC2B300AD7B77 /* NSString+Validator.h */,
+				4BB5E0D1173CC2B300AD7B77 /* NSString+Validator.m */,
 				4BE26266171D382E004F742F /* BMWAppearances.h */,
 				4BE26267171D382E004F742F /* BMWAppearances.m */,
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
+				4B2E69C2173A5E4300889482 /* BMWLoginViewController.h */,
+				4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */,
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
 				2B1504441723494500957F8A /* BMWDayDetailViewController.h */,
@@ -913,6 +928,9 @@
 				2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */,
 				4BE0B9F31727A9AE00A2FFD8 /* BMWCalendarAccess.m in Sources */,
 				2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */,
+				4B2E69C4173A5E4300889482 /* BMWLoginViewController.m in Sources */,
+				4BB5E0CF173CA7CB00AD7B77 /* QBFlatButton.m in Sources */,
+				4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,7 +1053,7 @@
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1095,7 +1113,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

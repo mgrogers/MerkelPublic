@@ -18,6 +18,11 @@
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
++ (instancetype)bmwLightBlueColor {
+    static NSString * const kBMWLightBlueColor = @"#16A6D5";
+    return [self colorFromHexString:kBMWLightBlueColor];
+}
+
 + (instancetype)bmwDarkBlueColor {
     static NSString * const kBMWDarkBlueColor = @"#23303D";
     return [self colorFromHexString:kBMWDarkBlueColor];
@@ -31,6 +36,11 @@
 + (instancetype)bmwLightGrayColor {
     static NSString * const kBMWLightGrayColor = @"#B3B3B3";
     return [self colorFromHexString:kBMWLightGrayColor];
+}
+
++ (instancetype)bmwDisabledGrayColor {
+    static NSString * const kBMWDisabledGrayColor = @"#B3B0B1";
+    return [self colorFromHexString:kBMWDisabledGrayColor];
 }
 
 @end

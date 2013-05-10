@@ -82,9 +82,7 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 - (void)sendEmailMessageWithParameters:(NSDictionary *)parameters
                              success:(void (^)(AFHTTPRequestOperation *, id))success
                              failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-    
     static NSString * const kBMWEmailConferencePath = @"conference/email";
-    
     [self postPath:kBMWEmailConferencePath
         parameters:parameters
            success:success
@@ -94,9 +92,7 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 - (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
                               success:(void (^)(AFHTTPRequestOperation *, id))success
                               failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
-    
     static NSString * const kBMWSMSConferencePath = @"conference/sms";
-    
     [self postPath:kBMWSMSConferencePath
         parameters:parameters
            success:success
@@ -110,6 +106,17 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
        parameters:nil
           success:success
           failure:failure];
+}
+
+- (void)sendConfirmationCodeForPhoneNumber:(NSString *)phoneNumber
+                                   success:(void (^)(AFHTTPRequestOperation *, id))success
+                                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    static NSString * const kBMWPhoneConfirmationConferencePath = @"conference/phoneConfirmation";
+    NSDictionary *parameters = @{@"phoneNumber": phoneNumber};
+    [self postPath:kBMWPhoneConfirmationConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
 }
 
 @end
