@@ -48,10 +48,10 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    self.secondField.hidden = NO;
-    self.secondFieldLabel.hidden = NO;
-    self.secondaryNextButton.hidden = NO;
-    self.secondFieldCorrectLabel.hidden = NO;
+    self.secondField.hidden = YES;
+    self.secondFieldLabel.hidden = YES;
+    self.secondaryNextButton.hidden = YES;
+    self.secondFieldCorrectLabel.hidden = YES;
     [self configureFlatButton:self.primaryNextButton];
     [self configureFlatButton:self.secondaryNextButton];
     [self configureTextField:self.phoneNumberField];
@@ -87,11 +87,12 @@
     [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.primaryNextButton.enabled = YES;
         [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
-        self.confirmationCode = responseObject[@"code"];
+        self.confirmationCode = [responseObject[@"code"] stringValue];
         NSLog(@"%@", self.confirmationCode);
         self.secondField.hidden = NO;
         self.secondFieldLabel.hidden = NO;
         self.secondaryNextButton.hidden = NO;
+        [self.secondField becomeFirstResponder];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.primaryNextButton.enabled = YES;
         [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
@@ -185,10 +186,20 @@
             return NO;
         }
     } else if (textField == self.secondField) {
-        if ([textField.text isEqualToString:@"123"] && [string isEqualToString:@"4"]) {
-            [self setSecondFieldCorrect:YES];
-        } else {
-            [self setSecondFieldCorrect:NO];
+        if (range.length == 1 && range.location == 3) {
+            self.secondFieldCorrectLabel.hidden = YES;
+            return YES;
+        }
+        if (range.length == 0 && range.location == 3) {
+            self.secondFieldCorrectLabel.hidden = NO;
+            NSString *enteredCode = [textField.text stringByAppendingString:string];
+            BOOL isCorrect = [enteredCode isEqualToString:self.confirmationCode];
+            [self setSecondFieldCorrect:isCorrect];
+            self.secondaryNextButton.enabled = isCorrect;
+            return YES;
+        }
+        if (range.location == 4) {
+            return NO;
         }
     }
     return YES;
