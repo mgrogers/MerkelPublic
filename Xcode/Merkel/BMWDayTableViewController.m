@@ -200,6 +200,9 @@ static NSString * const kInviteMessageType = @"invite";
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 88;
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSIndexPath *indexPath = nil;

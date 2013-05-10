@@ -143,7 +143,7 @@ const float UI_CUES_WIDTH = 100.0f;
         [UIColor greenColor] : [UIColor whiteColor];
        
         _rightLabel.textColor = _rightDragRelease ?
-         [UIColor redColor] : [UIColor whiteColor];
+         [UIColor yellowColor] : [UIColor whiteColor];
       
         
     }
