@@ -191,11 +191,11 @@ exports.smsAlert = function(req, res) {
                 return res.send(response);
             } 
         } else {
-            var err = {message: "Could not invite, did you POST the conferenceCode and phone number?"};
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and phone number?"};
             return res.send(err);
         } 
     } else {
-        var err = {message: "This API is POST only, please POST your invitee data"};
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
         return res.send(err);
     }
 }
@@ -256,7 +256,7 @@ exports.emailAlert = function(req, res) {
             });
             sendgrid.send(email, function(success, message) {
                 if(!success) {
-                    var response = {"meta": {"code": 400},
+                    var response = {"meta": {"code": 404},
                                  "message": "Invitation delivery failed. " + message};
                     return res.send(response);
                 } else {
@@ -266,11 +266,11 @@ exports.emailAlert = function(req, res) {
                 }
             });
         } else {
-            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
             return res.send(err);
         }
     } else {
-        var err = {message: "This API is POST only, please POST your invitee data"};
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
         return res.send(err);
     }
 };

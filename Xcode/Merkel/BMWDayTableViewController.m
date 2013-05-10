@@ -276,7 +276,7 @@ static NSString * const kInviteMessageType = @"invite";
         
         for (int i = 0; i < [attendees count]; i++) {
             NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
-    
+ 
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                         event.title, @"title",
                                         event.startDate, @"startTime",
