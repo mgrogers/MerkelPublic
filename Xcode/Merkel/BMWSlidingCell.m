@@ -108,17 +108,19 @@ const float UI_CUES_WIDTH = 100.0f;
 
 
 #pragma mark - horizontal pan gesture methods
--(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
-    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
-    
-    //checks for horizontal gestures
-    if (fabsf(translation.x) > fabsf(translation.y)) {
-        return YES;
-    }
-    return NO;
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint translation = [gestureRecognizer translationInView:[self superview]];
+        
+        //checks for horizontal gestures
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            return YES;
+        }
+        return NO;
+    } else return NO;
 }
 
--(void)handlePan:(UIPanGestureRecognizer *)recognizer {
+- (void)handlePan:(UIPanGestureRecognizer *)recognizer {
     //if the gesture has just started, record the current center location
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         _originalCenter = self.center;
@@ -182,7 +184,7 @@ const float UI_CUES_WIDTH = 100.0f;
 }
 
 #pragma mark context cues
--(UILabel*) createCueLabel {
+- (UILabel*) createCueLabel {
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectNull];
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont boldSystemFontOfSize:32.0];

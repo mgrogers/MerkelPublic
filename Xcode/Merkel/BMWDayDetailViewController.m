@@ -49,12 +49,6 @@ static NSString * const kInviteMessageType = @"invite";
     _eventTitle = eventTitle;
 }
 
-//- (BMWAttendeeTableViewController *)attendeeTable {
-//    if (!_attendeeTable) {
-//        _attendeeTable= [[BMWAttendeeTableViewController alloc] init];
-//    }
-//    return _attendeeTable;
-//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
