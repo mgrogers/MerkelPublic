@@ -16,6 +16,8 @@
 #import <NewRelicAgent/NewRelicAgent.h>
 #import <PKRevealController/PKRevealController.h>
 
+#import "BMWTimeIndicatorView.h"
+
 @interface BMWAppDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -44,6 +46,8 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
     [self.revealController setFrontViewController:frontViewController];
     [BMWAppearances setupAppearance];
     [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
+    BMWTimeIndicatorView *timeIndicator = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectZero];
+    timeIndicator.startTime = [NSDate date];
     return YES;
 }
 

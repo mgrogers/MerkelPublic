@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIView *indicatorBarView, *meetingDurationView;
 @property (nonatomic, strong) UILabel *indicatorStartLabel, *indicatorEndLabel, *eventStartLabel, *eventEndLabel;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) NSDate *indicatorStartTime, *indicatorEndTime;
+@property (nonatomic, strong) NSCalendar *calendar;
 
 @end
 
@@ -38,6 +40,7 @@
 
 - (void)sharedInitializer {
     _indicatorState = BMWTimeIndicatorStateBeforeEvent;
+    self.calendar = [NSCalendar currentCalendar];
     self.trackColor = [UIColor whiteColor];
     self.timeIndicatorColor = [UIColor greenColor];
     self.labelColor = [UIColor blackColor];
@@ -86,6 +89,25 @@
 - (void)setTimeIndicatorColor:(UIColor *)timeIndicatorColor {
     _timeIndicatorColor = timeIndicatorColor;
     self.indicatorBarView.backgroundColor = timeIndicatorColor;
+}
+
+- (void)setStartTime:(NSDate *)startTime {
+    _startTime = startTime;
+    self.indicatorStartTime = [self dateWithHourDelta:-2 fromDate:startTime];
+}
+
+- (void)setEndTime:(NSDate *)endTime {
+    _endTime = endTime;
+    self.indicatorEndTime = [self dateWithHourDelta:2 fromDate:endTime];
+}
+
+- (NSDate *)dateWithHourDelta:(NSInteger)hourDelta fromDate:(NSDate *)fromDate {
+    NSDateComponents *dateComponents = [self.calendar components:NSMinuteCalendarUnit fromDate:fromDate];
+    NSInteger minuteDelta = 60 - dateComponents.minute;
+    dateComponents.hour = hourDelta;
+    dateComponents.minute = minuteDelta;
+    NSDate *newDate = [self.calendar dateByAddingComponents:dateComponents toDate:fromDate options:0];
+    return newDate;
 }
 
 - (void)layoutSubviews {
