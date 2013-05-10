@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *joinCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *lateButton;
 
 @end
