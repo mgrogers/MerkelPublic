@@ -18,6 +18,11 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 
+// Mixpanel
+var Mixpanel = require('mixpanel');
+var mixpanel = Mixpanel.init('47eb26b4488113bbb2118b83717c5956');
+
+
 var Email = require('sendgrid').Email;
 var SendGrid = require('sendgrid').SendGrid;
 var kSendGridUser = "app12018585@heroku.com";
@@ -46,8 +51,16 @@ var participantSchema = new Schema({
     status: {type: String, default: "inactive"} // 'active' or 'inactive'
 });
 
+var simpleUserSchema = new Schema({
+    phone: {type: String, default: ""},
+    conferencesAttended: [{
+        conferenceCode: {type: String, default: ""}
+    }]
+})
+
 var Conference = db.model('conference', conferenceSchema);
 var Participant = db.model('participant', participantSchema);
+var SimpleUser = db.model('simpleUser', simpleUserSchema);
 
 
 /* ----- API Calls ----- */
@@ -64,6 +77,9 @@ exports.capability = function(req, res) {
     capability.allowClientOutgoing(TWIML_APP_ID);
 
     var response = {capabilityToken: capability.generate(timeout)};
+
+    mixpanel.track("capability request", {});
+
     return res.send(response);
 };
 
@@ -102,6 +118,13 @@ exports.create = function(req, res) {
             conferenceObject = {conferenceCode: hash};
         }
         
+        // Mixpanel
+        mixpanel.track("conference create", {
+            conferenceCode: hash,
+            conferenceTitle: conferenceObject.title,
+            conferenceDescription: conferenceObject.description
+        });
+
         var conference = new Conference(conferenceObject);
         conference.save(function(err) {
             if (!err) {
@@ -298,6 +321,33 @@ exports.join = function(req, res) {
                         participant = new Participant(participantObject);
                         participant.save();
                     }
+                });
+
+
+                // Simple user tracking - # of conferences each phone number joins
+                SimpleUser.findOne({'phone': fromPhoneNumber}, function(err_s, simpleUser) {
+                    if(!err_s && participant) {
+                        simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                        // Mixpanel increment conferencesJoined
+                        mixpanel.people.increment("" + fromPhoneNumber, "conferencesJoined");
+                    } else if(!err_s) {
+                        simpleUser = new SimpleUser({phone: fromPhoneNumber, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                        // Mixpanel create user
+                        mixpanel.people.set("" + fromPhoneNumber, {
+                            conferencesJoined: 1
+                        });
+                    }
+
+                    simpleUser.save();
+                });
+
+
+                // Mixpanel
+                mixpanel.track("conference join", {
+                    conferenceCode: conferenceCode,
+                    phoneNumber: fromPhoneNumber
                 });
 
                 var conferenceName = conference.id;

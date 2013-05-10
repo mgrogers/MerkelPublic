@@ -9,6 +9,7 @@
 #import "BMWDayTableViewController.h"
 
 #import "BMWAPIClient.h"
+#import "BMWLoginViewController.h"
 #import "BMWDayDetailViewController.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
@@ -16,12 +17,13 @@
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
 
-@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate>
+@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate, BMWLoginDelegate>
 
 @property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
 @property (nonatomic, strong) NSArray *selectedPeople;
 @property (nonatomic, copy) NSString *phoneNumber;
+@property (nonatomic, strong) BMWLoginViewController *loginVC;
 
 @end
 
@@ -77,6 +79,22 @@ static const NSInteger kTableCellRowHeight = 88;
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
     self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (![PFUser currentUser]) {
+        self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
+        self.loginVC.loginDelegate = self;
+        [self presentViewController:self.loginVC animated:NO completion:NULL];
+    }
+}
+
+- (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.loginVC = nil;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
