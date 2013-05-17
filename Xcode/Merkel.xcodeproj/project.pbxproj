@@ -467,8 +467,6 @@
 		4B77FDFA16C6F2AF00426018 = {
 			isa = PBXGroup;
 			children = (
-				4BACDD0F173D6CE100150192 /* MessageUI.framework */,
-				4BE0B9F51727AA2900A2FFD8 /* EventKit.framework */,
 				4B77FE0F16C6F2AF00426018 /* Merkel */,
 				4B77FE3316C6F2AF00426018 /* MerkelTests */,
 				4B77FE0816C6F2AF00426018 /* Frameworks */,
@@ -489,6 +487,8 @@
 		4B77FE0816C6F2AF00426018 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BACDD0F173D6CE100150192 /* MessageUI.framework */,
+				4BE0B9F51727AA2900A2FFD8 /* EventKit.framework */,
 				2B4ACF8A1727A5F80011E557 /* AddressBook.framework */,
 				2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */,
 				4B37026017233D0000ACAAED /* AVFoundation.framework */,

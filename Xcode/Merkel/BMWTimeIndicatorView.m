@@ -134,6 +134,7 @@
     self.indicatorStartTime = [self dateWithHourDelta:-2 fromDate:startTime];
     [self.dateFormatter setDateFormat:@"h a"];
     self.indicatorStartLabel.text = [self.dateFormatter stringFromDate:self.indicatorStartTime];
+    [self updateIndicatorState];
 }
 
 - (void)setEndTime:(NSDate *)endTime {
@@ -143,6 +144,7 @@
     self.indicatorEndTime = [self dateWithHourDelta:2 fromDate:endTime];
     [self.dateFormatter setDateFormat:@"h a"];
     self.indicatorEndLabel.text = [self.dateFormatter stringFromDate:self.indicatorEndTime];
+    [self updateIndicatorState];
 }
 
 - (NSDate *)dateWithHourDelta:(NSInteger)hourDelta fromDate:(NSDate *)fromDate {
@@ -222,6 +224,17 @@ static const CGFloat kPadding = 2.0;
             [UIView animateWithDuration:kAnimationDuration animations:^{
                 self.indicatorBarView.frame = currentTimeIndicatorFrame;
             }];
+            [UIView animateWithDuration:kAnimationDuration
+                                  delay:0.0
+                                options:UIViewAnimationOptionAllowUserInteraction
+                             animations:^{
+                self.indicatorBarView.frame = currentTimeIndicatorFrame;
+            }
+                             completion:^(BOOL finished) {
+                if (finished) {
+                    [self.indicatorDelegate timeIndicatorView:self didMoveIndicatorRect:currentTimeIndicatorFrame];
+                }
+            }];
         });
     });
 }
@@ -229,6 +242,37 @@ static const CGFloat kPadding = 2.0;
 - (void)stopAnimating {
     [self.animationTimer invalidate];
     self.animationTimer = nil;
+}
+
+- (void)updateIndicatorState {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        BMWTimeIndicatorState newState;
+        NSComparisonResult comparisonResult = [((NSDate *)[NSDate date]) compare:self.startTime];
+        switch (comparisonResult) {
+            case NSOrderedSame:
+                newState = BMWTimeIndicatorStateDuringEvent;
+                break;
+            case NSOrderedAscending:
+                newState = BMWTimeIndicatorStateBeforeEvent;
+                break;
+            case NSOrderedDescending:
+                if ([((NSDate *)[NSDate date]) compare:self.endTime] == NSOrderedDescending) {
+                    newState = BMWTimeIndicatorStateAfterEvent;
+                } else {
+                    newState = BMWTimeIndicatorStateDuringEvent;
+                }
+                break;
+            default:
+                newState = BMWTimeIndicatorStateBeforeEvent;
+                break;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (newState != _indicatorState) {
+                [self.indicatorDelegate timeIndicatorView:self didChangeIndicatorState:newState];
+            }
+            _indicatorState = newState;
+        });
+    });
 }
 
 @end
