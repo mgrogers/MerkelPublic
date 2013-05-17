@@ -61,6 +61,8 @@
 		4B49EBEF17462D7D004E538C /* speaker-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBEB17462D7D004E538C /* speaker-active@2x.png */; };
 		4B49EBF017462D7D004E538C /* speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBEC17462D7D004E538C /* speaker.png */; };
 		4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBED17462D7D004E538C /* speaker@2x.png */; };
+		4B49EBF417462E3E004E538C /* speaker-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBF217462E3E004E538C /* speaker-disabled.png */; };
+		4B49EBF517462E3E004E538C /* speaker-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBF317462E3E004E538C /* speaker-disabled@2x.png */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
 		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
@@ -242,6 +244,8 @@
 		4B49EBEB17462D7D004E538C /* speaker-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker-active@2x.png"; path = "Resources/Images/speaker-active@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B49EBEC17462D7D004E538C /* speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speaker.png; path = Resources/Images/speaker.png; sourceTree = SOURCE_ROOT; };
 		4B49EBED17462D7D004E538C /* speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker@2x.png"; path = "Resources/Images/speaker@2x.png"; sourceTree = SOURCE_ROOT; };
+		4B49EBF217462E3E004E538C /* speaker-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker-disabled.png"; path = "Resources/Images/speaker-disabled.png"; sourceTree = SOURCE_ROOT; };
+		4B49EBF317462E3E004E538C /* speaker-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker-disabled@2x.png"; path = "Resources/Images/speaker-disabled@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B77FE0916C6F2AF00426018 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B77FE0B16C6F2AF00426018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -657,6 +661,8 @@
 				4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */,
 				4B49EBEA17462D7D004E538C /* speaker-active.png */,
 				4B49EBEB17462D7D004E538C /* speaker-active@2x.png */,
+				4B49EBF217462E3E004E538C /* speaker-disabled.png */,
+				4B49EBF317462E3E004E538C /* speaker-disabled@2x.png */,
 				4B49EBEC17462D7D004E538C /* speaker.png */,
 				4B49EBED17462D7D004E538C /* speaker@2x.png */,
 			);
@@ -860,6 +866,8 @@
 				4B49EBEF17462D7D004E538C /* speaker-active@2x.png in Resources */,
 				4B49EBF017462D7D004E538C /* speaker.png in Resources */,
 				4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */,
+				4B49EBF417462E3E004E538C /* speaker-disabled.png in Resources */,
+				4B49EBF517462E3E004E538C /* speaker-disabled@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
