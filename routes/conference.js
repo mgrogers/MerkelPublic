@@ -185,7 +185,7 @@ exports.smsAlert = function(req, res) {
                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
-                message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
+                message = "From CallinApp: " + initiator + " is running late to your upcoming conference '" + eventTitle + "'";
             } else {
                 var response = {"meta": {"code": 404},
                              "message": "Invalid message type"};
@@ -260,14 +260,14 @@ exports.emailAlert = function(req, res) {
                 msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
                 content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
                     + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
-                    + "With code: #" + conferenceCode + ".\n";
+                    + "With code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
                 msgSubject = initiator + " is running late to your event: " + eventTitle; 
                 content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
                         + " is running late and will be joining the call as soon as possible.\n\n"
                         + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
-                        + "With code: #" + conferenceCode + ".\n";
+                        + "With code: " + conferenceCode + ".\n";
             }
 
             var email = new Email({
@@ -351,10 +351,10 @@ exports.join = function(req, res) {
                 });
 
                 var conferenceName = conference.id;
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to call in. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to call in. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
                 // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
