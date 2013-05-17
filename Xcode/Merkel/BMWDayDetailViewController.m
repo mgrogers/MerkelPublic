@@ -272,7 +272,7 @@ static NSString * const kInviteMessageType = @"invite";
     [button setFaceColor:[UIColor bmwDisabledGrayColor] forState:UIControlStateDisabled];
     button.margin = 0.0;
     button.radius = 5.0;
-    button.depth = 0.0;
+    button.depth = 2.0;
 }
 
 #pragma mark - TCConectionDelegate Methods
