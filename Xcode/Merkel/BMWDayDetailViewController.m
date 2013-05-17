@@ -77,6 +77,10 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 42.0, 41.0)];
+    [button setImage:[UIImage imageNamed:@"back-arrow.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.view.backgroundColor = [UIColor bmwLightBlueColor];
     self.title = @"Event Detail";
     self.eventTitleLabel.text = self.eventTitle;
@@ -95,6 +99,10 @@ static NSString * const kInviteMessageType = @"invite";
 
     [self loadTimeIndicatorView];
     [self loadLineSeparatorView];
+}
+
+- (void)backButtonPressed {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)loadLineSeparatorView {

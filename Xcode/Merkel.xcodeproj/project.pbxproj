@@ -71,6 +71,8 @@
 		4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
 		4B77FE3816C6F2AF00426018 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B77FE3616C6F2AF00426018 /* InfoPlist.strings */; };
 		4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE3A16C6F2AF00426018 /* MerkelTests.m */; };
+		4B7A855C17461E0D002DEFBC /* back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855A17461E0D002DEFBC /* back-arrow.png */; };
+		4B7A855D17461E0D002DEFBC /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */; };
 		4B80DF3416E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
 		4B80DF3516E2E2F000676BC9 /* BMWGCalendarEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */; };
 		4B80DF4016E2FDBA00676BC9 /* BMWHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80DF3F16E2FDB900676BC9 /* BMWHomeView.m */; };
@@ -251,6 +253,8 @@
 		4B77FE3716C6F2AF00426018 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4B77FE3916C6F2AF00426018 /* MerkelTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MerkelTests.h; sourceTree = "<group>"; };
 		4B77FE3A16C6F2AF00426018 /* MerkelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MerkelTests.m; sourceTree = "<group>"; };
+		4B7A855A17461E0D002DEFBC /* back-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow.png"; path = "Resources/Images/back-arrow.png"; sourceTree = SOURCE_ROOT; };
+		4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "Resources/Images/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B80DF3216E2E2F000676BC9 /* BMWGCalendarEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWGCalendarEvent.h; path = Merkel/BMWGCalendarEvent.h; sourceTree = "<group>"; };
 		4B80DF3316E2E2F000676BC9 /* BMWGCalendarEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BMWGCalendarEvent.m; path = Merkel/BMWGCalendarEvent.m; sourceTree = "<group>"; };
 		4B80DF3E16E2FDB900676BC9 /* BMWHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMWHomeView.h; path = Merkel/BMWHomeView.h; sourceTree = "<group>"; };
@@ -641,6 +645,8 @@
 				4B319AB316ED333000F888FC /* iconFlag.png */,
 				4B319AB416ED333000F888FC /* iconMan.png */,
 				4B319AB516ED333000F888FC /* iconNote.png */,
+				4B7A855A17461E0D002DEFBC /* back-arrow.png */,
+				4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -836,6 +842,8 @@
 				4B47582017378150004434FD /* dtmf_star.wav in Resources */,
 				4B47582117378150004434FD /* incoming.wav in Resources */,
 				4B47582217378150004434FD /* outgoing.wav in Resources */,
+				4B7A855C17461E0D002DEFBC /* back-arrow.png in Resources */,
+				4B7A855D17461E0D002DEFBC /* back-arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
