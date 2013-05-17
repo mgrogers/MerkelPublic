@@ -210,7 +210,8 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     __block ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, nil);
     ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
         for (EKParticipant *attendee in event.attendees) {
-            NSMutableDictionary *attendeeObject = [@{@"name": attendee.name} mutableCopy];
+            NSString *name = (attendee.name) ? attendee.name : @"";
+            NSMutableDictionary *attendeeObject = [@{@"name": name} mutableCopy];
             ABRecordRef record = [attendee ABRecordWithAddressBook:addressBook];
             ABMultiValueRef emailMulti = NULL;
             ABMultiValueRef phoneMulti = NULL;
@@ -238,6 +239,9 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                 if (email != NULL) {
                     nsEmail = (__bridge NSString *)email;
                     [attendeeObject setObject:[nsEmail copy] forKey:@"email"];
+                    if (((NSString *)attendeeObject[@"name"]).length == 0) {
+                        attendeeObject[@"name"] = [nsEmail copy];
+                    }
                     CFRelease(email);
                 }
                 if (phone != NULL) {
