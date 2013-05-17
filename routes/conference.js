@@ -185,7 +185,7 @@ exports.smsAlert = function(req, res) {
                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
-                message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
+                message = "From CallinApp: " + initiator + " is running late to your upcoming conference '" + eventTitle + "'";
             } else {
                 var response = {"meta": {"code": 404},
                              "message": "Invalid message type"};
