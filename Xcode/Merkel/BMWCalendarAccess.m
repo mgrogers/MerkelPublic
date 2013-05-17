@@ -217,7 +217,7 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
             ABMultiValueRef phoneMulti = NULL;
             if (!record) {
                 // we don't have an address book record, so assume the name is also the email.
-                [attendeeObject setObject:attendee.name forKey:@"email"];
+                [attendeeObject setObject:name forKey:@"email"];
             } else {
                 NSString *nsEmail = nil;
                 NSString *nsPhone = nil;

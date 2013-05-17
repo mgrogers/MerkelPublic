@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSDate *indicatorStartTime, *indicatorEndTime;
 @property (nonatomic, strong) NSCalendar *calendar;
-@property (nonatomic, strong) NSTimer *animationTimer;
+@property (nonatomic, strong) NSTimer *animationTimer, *flashTimer;
 
 @end
 
@@ -170,10 +170,15 @@
     CGRect eventFrame = CGRectMake(eventOffsetX, 0.0, eventWidth, trackHeight);
     self.meetingDurationView.frame = eventFrame;
     self.meetingDurationBackgroundView.frame = eventFrame;
-    
     CGFloat currentTimeIndicatorWidth = trackWidth * kCurrentTimeIndicatorWidthScaleFactor;
     CGRect currentTimeIndicatorFrame = CGRectMake(currentTimeIndicatorOffsetX - (currentTimeIndicatorWidth / 2), 0.0, currentTimeIndicatorWidth, trackHeight);
     self.indicatorBarView.frame = currentTimeIndicatorFrame;
+    if (CGRectGetMaxX(currentTimeIndicatorFrame) < CGRectGetMinX(self.bounds) ||
+       CGRectGetMinX(currentTimeIndicatorFrame) > CGRectGetMaxX(self.bounds)) {
+        self.indicatorBarView.hidden = YES;
+    } else {
+        self.indicatorBarView.hidden = NO;
+    }
     [self positionLabel:self.indicatorStartLabel atXOffset:0.0];
     [self positionLabel:self.eventStartLabel withRightSideAtX:eventOffsetX];
     [self positionLabel:self.eventEndLabel atXOffset:eventOffsetX+eventWidth];
@@ -207,6 +212,11 @@ static const CGFloat kPadding = 2.0;
                                                          selector:@selector(animateObjects)
                                                          userInfo:nil
                                                           repeats:YES];
+    self.flashTimer = [NSTimer scheduledTimerWithTimeInterval:kAnimationTimerInterval
+                                                       target:self
+                                                     selector:@selector(animateFlash)
+                                                     userInfo:nil
+                                                      repeats:YES];
 }
 
 - (void)animateObjects {
@@ -228,7 +238,13 @@ static const CGFloat kPadding = 2.0;
                                   delay:0.0
                                 options:UIViewAnimationOptionAllowUserInteraction
                              animations:^{
-                self.indicatorBarView.frame = currentTimeIndicatorFrame;
+                 self.indicatorBarView.frame = currentTimeIndicatorFrame;
+                 if (CGRectGetMaxX(currentTimeIndicatorFrame) < CGRectGetMinX(self.bounds) ||
+                     CGRectGetMinX(currentTimeIndicatorFrame) > CGRectGetMaxX(self.bounds)) {
+                     self.indicatorBarView.hidden = YES;
+                 } else {
+                     self.indicatorBarView.hidden = NO;
+                 }
             }
                              completion:^(BOOL finished) {
                 if (finished) {
@@ -239,9 +255,21 @@ static const CGFloat kPadding = 2.0;
     });
 }
 
+- (void)animateFlash {
+    static const NSTimeInterval kAnimationDuration = 0.2;
+    [UIView animateWithDuration:kAnimationDuration delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        self.indicatorBarView.alpha = (self.indicatorBarView.alpha == 1.0) ? 0.2 : 1.0;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
 - (void)stopAnimating {
     [self.animationTimer invalidate];
     self.animationTimer = nil;
+    [self.flashTimer invalidate];
+    self.flashTimer = nil;
+    self.indicatorBarView.alpha = 1.0;
 }
 
 - (void)updateIndicatorState {

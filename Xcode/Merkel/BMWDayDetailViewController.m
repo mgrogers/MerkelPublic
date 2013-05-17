@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timer;
 @property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
 @property (strong, nonatomic) UIBarButtonItem *speakerButton, *activeSpeakerButton;
-
 @property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
 
 @end
