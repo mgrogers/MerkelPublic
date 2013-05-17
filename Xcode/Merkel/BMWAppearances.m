@@ -21,7 +21,9 @@
     [appearance setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [appearance setBackgroundColor:[UIColor bmwLightBlueColor]];
     [appearance setTitleTextAttributes:@{UITextAttributeFont: [UIFont boldFontOfSize:kTitleFontSize],
-                                         UITextAttributeTextColor: [UIColor whiteColor]}];
+                                         UITextAttributeTextColor: [UIColor whiteColor],
+                                         UITextAttributeTextShadowColor: [UIColor whiteColor],
+                                         UITextAttributeTextShadowOffset: @0}];
 }
 
 @end
