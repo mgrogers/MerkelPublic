@@ -43,10 +43,10 @@ static const NSInteger kTableCellRowHeight = 88;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"My Day";
     [self.tableView registerClass:[BMWSlidingCell class] forCellReuseIdentifier:kBMWSlidingCellIdentifier];
     self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.title = @"My Day";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
     button.backgroundColor = [UIColor clearColor];
