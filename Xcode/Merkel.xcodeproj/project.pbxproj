@@ -57,6 +57,10 @@
 		4B47582017378150004434FD /* dtmf_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581117378150004434FD /* dtmf_star.wav */; };
 		4B47582117378150004434FD /* incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581217378150004434FD /* incoming.wav */; };
 		4B47582217378150004434FD /* outgoing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4B47581317378150004434FD /* outgoing.wav */; };
+		4B49EBEE17462D7D004E538C /* speaker-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBEA17462D7D004E538C /* speaker-active.png */; };
+		4B49EBEF17462D7D004E538C /* speaker-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBEB17462D7D004E538C /* speaker-active@2x.png */; };
+		4B49EBF017462D7D004E538C /* speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBEC17462D7D004E538C /* speaker.png */; };
+		4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBED17462D7D004E538C /* speaker@2x.png */; };
 		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
 		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
@@ -234,6 +238,10 @@
 		4B47581117378150004434FD /* dtmf_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dtmf_star.wav; path = Resources/Sounds/dtmf_star.wav; sourceTree = SOURCE_ROOT; };
 		4B47581217378150004434FD /* incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = incoming.wav; path = Resources/Sounds/incoming.wav; sourceTree = SOURCE_ROOT; };
 		4B47581317378150004434FD /* outgoing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = outgoing.wav; path = Resources/Sounds/outgoing.wav; sourceTree = SOURCE_ROOT; };
+		4B49EBEA17462D7D004E538C /* speaker-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker-active.png"; path = "Resources/Images/speaker-active.png"; sourceTree = SOURCE_ROOT; };
+		4B49EBEB17462D7D004E538C /* speaker-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker-active@2x.png"; path = "Resources/Images/speaker-active@2x.png"; sourceTree = SOURCE_ROOT; };
+		4B49EBEC17462D7D004E538C /* speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = speaker.png; path = Resources/Images/speaker.png; sourceTree = SOURCE_ROOT; };
+		4B49EBED17462D7D004E538C /* speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "speaker@2x.png"; path = "Resources/Images/speaker@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B77FE0516C6F2AF00426018 /* Merkel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Merkel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B77FE0916C6F2AF00426018 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B77FE0B16C6F2AF00426018 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -647,6 +655,10 @@
 				4B319AB516ED333000F888FC /* iconNote.png */,
 				4B7A855A17461E0D002DEFBC /* back-arrow.png */,
 				4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */,
+				4B49EBEA17462D7D004E538C /* speaker-active.png */,
+				4B49EBEB17462D7D004E538C /* speaker-active@2x.png */,
+				4B49EBEC17462D7D004E538C /* speaker.png */,
+				4B49EBED17462D7D004E538C /* speaker@2x.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -844,6 +856,10 @@
 				4B47582217378150004434FD /* outgoing.wav in Resources */,
 				4B7A855C17461E0D002DEFBC /* back-arrow.png in Resources */,
 				4B7A855D17461E0D002DEFBC /* back-arrow@2x.png in Resources */,
+				4B49EBEE17462D7D004E538C /* speaker-active.png in Resources */,
+				4B49EBEF17462D7D004E538C /* speaker-active@2x.png in Resources */,
+				4B49EBF017462D7D004E538C /* speaker.png in Resources */,
+				4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
