@@ -174,19 +174,28 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                 [self.processedEventDicts addObject:@{@"event": event,
                  @"conferenceCode": conferenceCode}];
                 
-                NSDictionary *email_parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                      
+                for (int i = 0; i < [attendees count]; i++) {
+                    NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+                    NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
+                      
+                    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                                   event.title, @"title",
                                                   event.startDate, @"startTime",
                                                   [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
                                                   conferenceCode, @"conferenceCode",
-                                                  event.attendees, @"attendees",
+                                                  attendeePhone, @"toPhoneNumber",
+                                                  attendeeEmail, @"toEmail",
                                                   kInviteMessageType, @"messageType",
-                                                  kTestSenderEmailAddress, @"initiator",nil];
-                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:email_parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSLog(@"Alert success with response %@", responseObject);
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"Error sending message", [error localizedDescription]);
-                }];
+                                                  [PFUser currentUser].email, @"initiator",nil];
+                      
+                    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          NSLog(@"Email success with response %@", responseObject);
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          NSLog(@"Error sending email message. Attempting email. %@", [error localizedDescription]);
+                    }];
+                }
+                                                                      
                 completion(conferenceCode);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error creating conference: %@", [error localizedDescription]);
