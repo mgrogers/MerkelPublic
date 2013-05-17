@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
     BMWPhoneStatusConnected
 };
 
-@class TCDevice;
+@class TCDevice, EKEvent;
 @protocol TCConnectionDelegate;
 
 @interface BMWPhone : NSObject
@@ -32,5 +32,8 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 @property BOOL isSpeakerEnabled;
 @property (readonly) BMWPhoneStatus status;
 @property (readonly) NSString *phoneNumber;
+@property (nonatomic, strong) EKEvent *currentCallEvent;
+@property (nonatomic, copy) NSString *currentCallCode;
+@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
 
 @end

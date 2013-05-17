@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger, BMWTimeIndicatorState) {
 
 @protocol BMWTimeIndicatorViewDelegate
 
+@optional
 - (void)timeIndicatorView:(BMWTimeIndicatorView *)indicatorView didMoveIndicatorRect:(CGRect)rect;
 - (void)timeIndicatorView:(BMWTimeIndicatorView *)indicatorView didChangeIndicatorState:(BMWTimeIndicatorState)indicatorState;
 
@@ -25,11 +26,12 @@ typedef NS_ENUM(NSInteger, BMWTimeIndicatorState) {
 
 @interface BMWTimeIndicatorView : UIView
 
-@property (nonatomic, strong) UIColor *trackColor, *timeIndicatorColor, *labelColor, *borderColor;
+@property (nonatomic, strong) UIColor *trackColor, *timeIndicatorColor, *labelColor, *borderColor, *labelFontColor;
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic, strong) NSDate *startTime, *endTime;
 @property (nonatomic, strong) UIFont *labelFont;
 @property (readonly) BMWTimeIndicatorState indicatorState;
+@property (nonatomic, weak) id <BMWTimeIndicatorViewDelegate> indicatorDelegate;
 
 - (void)startAnimating;
 - (void)stopAnimating;
