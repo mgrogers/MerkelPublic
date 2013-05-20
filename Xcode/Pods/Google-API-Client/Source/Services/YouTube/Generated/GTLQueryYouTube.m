@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLQueryYouTube (31 custom class methods, 33 custom properties)
+//   GTLQueryYouTube (33 custom class methods, 42 custom properties)
 
 #import "GTLQueryYouTube.h"
 
@@ -38,6 +38,7 @@
 #import "GTLYouTubeLiveBroadcastList.h"
 #import "GTLYouTubeLiveStream.h"
 #import "GTLYouTubeLiveStreamList.h"
+#import "GTLYouTubePlayerListResponse.h"
 #import "GTLYouTubePlaylist.h"
 #import "GTLYouTubePlaylistItem.h"
 #import "GTLYouTubePlaylistItemListResponse.h"
@@ -51,12 +52,14 @@
 
 @implementation GTLQueryYouTube
 
-@dynamic broadcastStatus, categoryId, channelId, fields, forChannelId, hl, home,
-         identifier, maxResults, mine, mySubscribers, onBehalfOf, order,
-         pageToken, part, playlistId, publishedAfter, publishedBefore, q,
-         regionCode, relatedToVideoId, streamId, topicId, type, videoCaption,
+@dynamic broadcastStatus, categoryId, channelId, channelType, fields,
+         forChannelId, forContentOwner, forMine, hl, home, identifier, itag,
+         managedByMe, maxResults, mine, mySubscribers, onBehalfOf,
+         onBehalfOfContentOwner, order, pageToken, part, playlistId,
+         publishedAfter, publishedBefore, q, rating, regionCode,
+         relatedToVideoId, safeSearch, streamId, topicId, type, videoCaption,
          videoCategoryId, videoDefinition, videoDimension, videoDuration,
-         videoEmbeddable, videoId, videoLicense, videoSyndicated;
+         videoEmbeddable, videoId, videoLicense, videoSyndicated, videoType;
 
 + (NSDictionary *)parameterNameMap {
   NSDictionary *map =
@@ -228,6 +231,18 @@
   query.bodyObject = object;
   query.part = part;
   query.expectedObjectClass = [GTLYouTubeLiveStream class];
+  return query;
+}
+
+#pragma mark -
+#pragma mark "players" methods
+// These create a GTLQueryYouTube object.
+
++ (id)queryForPlayersListWithPart:(NSString *)part {
+  NSString *methodName = @"youtube.players.list";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubePlayerListResponse class];
   return query;
 }
 
@@ -416,6 +431,15 @@
   query.identifier = identifier;
   query.part = part;
   query.expectedObjectClass = [GTLYouTubeVideoListResponse class];
+  return query;
+}
+
++ (id)queryForVideosRateWithIdentifier:(NSString *)identifier
+                                rating:(NSString *)rating {
+  NSString *methodName = @"youtube.videos.rate";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  query.rating = rating;
   return query;
 }
 

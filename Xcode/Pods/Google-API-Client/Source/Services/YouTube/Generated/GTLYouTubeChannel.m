@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,11 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeChannel (0 custom class methods, 8 custom properties)
+//   GTLYouTubeChannel (0 custom class methods, 9 custom properties)
 
 #import "GTLYouTubeChannel.h"
 
+#import "GTLYouTubeChannelBrandingSettings.h"
 #import "GTLYouTubeChannelContentDetails.h"
 #import "GTLYouTubeChannelSnippet.h"
 #import "GTLYouTubeChannelStatistics.h"
@@ -42,8 +43,8 @@
 //
 
 @implementation GTLYouTubeChannel
-@dynamic contentDetails, ETag, identifier, kind, snippet, statistics, status,
-         topicDetails;
+@dynamic brandingSettings, contentDetails, ETag, identifier, kind, snippet,
+         statistics, status, topicDetails;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
