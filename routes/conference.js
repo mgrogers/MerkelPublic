@@ -34,6 +34,7 @@ var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
+    creationDate: {type: Date, default: ""},
     status: {type: String, default: "inactive"},
     title: {type: String, default: ""},
     description: {type: String, default: ""},
@@ -106,7 +107,7 @@ var conferenceSchema = new Schema({
 exports.create = function(req, res) {
     var postBody = req.body;
 
-    Conference.find({'title':postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conferences) {
+    Conference.find({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conferences) {
         if(err) {
             return res.send(400, {error: err,
                                           reqBody: req.body});
@@ -129,6 +130,8 @@ exports.create = function(req, res) {
                         conferenceObject.conferenceCode = hash;
                         conferenceObject.status = "inactive";
                         conferenceObject.title = postBody.title || "";
+                        conferenceObject.creatorId = postBody.initiator || "";
+                        conferenceObject.creationDate = postBody.creationDate || "";
                         conferenceObject.description = postBody.description || "";
                         if (postBody.start) conferenceObject.start = postBody.start.datetime;
                         else conferenceObject.start = "";
