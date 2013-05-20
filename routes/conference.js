@@ -34,6 +34,7 @@ var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
+    creationDate: {type: Date, default: ""},
     status: {type: String, default: "inactive"},
     title: {type: String, default: ""},
     description: {type: String, default: ""},
@@ -88,51 +89,82 @@ exports.capability = function(req, res) {
 API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
+
+var conferenceSchema = new Schema({
+    conferenceCode: {type: String, default: ""},
+    eventId: {type: String, default: ""},
+    creatorId: {type: String, default: ""},
+    status: {type: String, default: "inactive"},
+    title: {type: String, default: ""},
+    description: {type: String, default: ""},
+    start: {type: Date, default: ""},
+    timeZone: {type: String, default: "America/Los_Angeles"},
+    sms: {type: Boolean, default: false},
+    email: {type: Boolean, default: false} // 'active' or 'inactive'
+});
+
+
 exports.create = function(req, res) {
-    Conference.find(function(err, conferences) {
-        var hash = 0;
-        if (!err) {
-            var numConferences = conferences.length;
-            hash = hashids.encrypt(numConferences);
+    var postBody = req.body;
+
+    Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
+        if(err) {
+            return res.send(400, {error: err,
+                                          reqBody: req.body});
         } else {
-            hash = hashids.encrypt(0);
-        }
+            console.log(conference);
+            if(!conference) {
+                Conference.find(function(err, conferences) {
+                    var hash = 0;
+                    if (!err) {
+                        var numConferences = conferences.length;
+                        hash = hashids.encrypt(numConferences);
+                    } else {
+                        hash = hashids.encrypt(0);
+                    }
 
-        var conferenceObject = {};
-        var postBody = req.body;
+                    var conferenceObject = {};
+                    var postBody = req.body;
 
-        if (postBody) {
-            conferenceObject.conferenceCode = hash;
-            conferenceObject.status = "inactive";
-            conferenceObject.title = postBody.title || "";
-            conferenceObject.description = postBody.description || "";
-            if (postBody.start) conferenceObject.start = postBody.start.datetime;
-            else conferenceObject.start = "";
-            if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
-            else conferenceObject.timeZone = "";
-            if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
-            else conferenceObject.sms = false;
-            if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
-            else conferenceObject.email = false;
-        } else {
-            conferenceObject = {conferenceCode: hash};
-        }
-        
-        // Mixpanel
-        mixpanel.track("conference create", {
-            conferenceCode: hash,
-            conferenceTitle: conferenceObject.title,
-            conferenceDescription: conferenceObject.description
-        });
+                    if (postBody) {
+                        conferenceObject.conferenceCode = hash;
+                        conferenceObject.status = "inactive";
+                        conferenceObject.title = postBody.title || "";
+                        conferenceObject.creatorId = postBody.initiator || "";
+                        conferenceObject.creationDate = postBody.creationDate || "";
+                        conferenceObject.description = postBody.description || "";
+                        if (postBody.start) conferenceObject.start = postBody.start.datetime;
+                        else conferenceObject.start = "";
+                        if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
+                        else conferenceObject.timeZone = "";
+                        if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+                        else conferenceObject.sms = false;
+                        if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+                        else conferenceObject.email = false;
+                    } else {
+                        conferenceObject = {conferenceCode: hash};
+                    }
+                    
+                    // Mixpanel
+                    mixpanel.track("conference create", {
+                        conferenceCode: hash,
+                        conferenceTitle: conferenceObject.title,
+                        conferenceDescription: conferenceObject.description
+                    });
 
-        var conference = new Conference(conferenceObject);
-        conference.save(function(err) {
-            if (!err) {
-                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-                addParticipants(participantsObject);
+                    var conference = new Conference(conferenceObject);
+                    conference.save(function(err) {
+                        if (!err) {
+                            var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                            addParticipants(participantsObject);
+                        }
+                        return res.send(conferenceObject);
+                    });   
+                });
+            } else {
+                return res.send(conference);
             }
-            return res.send(conferenceObject);
-        });   
+        }
     });
 };
 
