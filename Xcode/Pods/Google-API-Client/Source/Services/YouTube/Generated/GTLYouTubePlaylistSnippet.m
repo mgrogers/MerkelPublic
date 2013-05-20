@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,10 @@
 //   https://developers.google.com/youtube/v3
 // Classes:
 //   GTLYouTubePlaylistSnippet (0 custom class methods, 5 custom properties)
-//   GTLYouTubePlaylistSnippetThumbnails (0 custom class methods, 0 custom properties)
 
 #import "GTLYouTubePlaylistSnippet.h"
 
-#import "GTLYouTubeThumbnail.h"
+#import "GTLYouTubeThumbnailDetails.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -46,20 +45,6 @@
     [NSDictionary dictionaryWithObject:@"description"
                                 forKey:@"descriptionProperty"];
   return map;
-}
-
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLYouTubePlaylistSnippetThumbnails
-//
-
-@implementation GTLYouTubePlaylistSnippetThumbnails
-
-+ (Class)classForAdditionalProperties {
-  return [GTLYouTubeThumbnail class];
 }
 
 @end
