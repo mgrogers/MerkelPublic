@@ -15,6 +15,7 @@
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
 #import <PKRevealController/PKRevealController.h>
+#import <Mixpanel/Mixpanel.h>
 
 @interface BMWAppDelegate () <CLLocationManagerDelegate>
 
@@ -31,6 +32,7 @@ static NSString * const kMerkelFacebookAppId = @"258693340932079";
 static NSString * const kMerkelTestFlightId = @"f36a8dc5-1f19-49ad-86e7-d2613ce46b03";
 static NSString * const kMerkelGoogleAnalyticsId = @"UA-38584812-1";
 static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cdfb7f3b65";
+static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    self.manager = [[BMWManager alloc] init];
@@ -63,6 +65,7 @@ static NSString * const kMerkelNewRelicId = @"AAe8898c710601196e5d8a89850374f1cd
         [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
 //        [self startSignificantChangeUpdates];
         [BMWPhone sharedPhone];
+        [Mixpanel sharedInstanceWithToken:kMerkelMixpanelId];
     });
 }
 
