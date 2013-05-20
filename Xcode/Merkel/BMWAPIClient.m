@@ -72,6 +72,8 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
                                 event.title, @"title",
                                 event.notes, @"description",
                                 event.startDate, @"start",
+                                event.creationDate, @"creationDate",
+                                [PFUser currentUser].email, @"initiator",
                                 attendeesArray, @"attendees", nil];
     [self postPath:kBMWNewConferencePath
         parameters:parameters
