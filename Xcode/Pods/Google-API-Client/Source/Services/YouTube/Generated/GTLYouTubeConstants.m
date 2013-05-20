@@ -43,13 +43,29 @@ NSString * const kGTLYouTubeBroadcastStatusLive      = @"live";
 NSString * const kGTLYouTubeBroadcastStatusTesting   = @"testing";
 NSString * const kGTLYouTubeBroadcastStatusUpcoming  = @"upcoming";
 
+// ChannelType
+NSString * const kGTLYouTubeChannelTypeAny  = @"any";
+NSString * const kGTLYouTubeChannelTypeShow = @"show";
+
 // Order
 NSString * const kGTLYouTubeOrderAlphabetical = @"alphabetical";
 NSString * const kGTLYouTubeOrderDate         = @"date";
 NSString * const kGTLYouTubeOrderRating       = @"rating";
 NSString * const kGTLYouTubeOrderRelevance    = @"relevance";
+NSString * const kGTLYouTubeOrderTitle        = @"title";
 NSString * const kGTLYouTubeOrderUnread       = @"unread";
+NSString * const kGTLYouTubeOrderVideoCount   = @"videoCount";
 NSString * const kGTLYouTubeOrderViewCount    = @"viewCount";
+
+// Rating
+NSString * const kGTLYouTubeRatingDislike = @"dislike";
+NSString * const kGTLYouTubeRatingLike    = @"like";
+NSString * const kGTLYouTubeRatingNone    = @"none";
+
+// SafeSearch
+NSString * const kGTLYouTubeSafeSearchModerate = @"moderate";
+NSString * const kGTLYouTubeSafeSearchNone     = @"none";
+NSString * const kGTLYouTubeSafeSearchStrict   = @"strict";
 
 // VideoCaption
 NSString * const kGTLYouTubeVideoCaptionAny           = @"any";
@@ -84,3 +100,8 @@ NSString * const kGTLYouTubeVideoLicenseYoutube        = @"youtube";
 // VideoSyndicated
 NSString * const kGTLYouTubeVideoSyndicatedAny  = @"any";
 NSString * const kGTLYouTubeVideoSyndicatedTrue = @"true";
+
+// VideoType
+NSString * const kGTLYouTubeVideoTypeAny     = @"any";
+NSString * const kGTLYouTubeVideoTypeEpisode = @"episode";
+NSString * const kGTLYouTubeVideoTypeMovie   = @"movie";
