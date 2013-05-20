@@ -107,13 +107,13 @@ var conferenceSchema = new Schema({
 exports.create = function(req, res) {
     var postBody = req.body;
 
-    Conference.find({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conferences) {
+    Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
                                           reqBody: req.body});
         } else {
-            console.log(conferences);
-            if(conferences.length == 0) {
+            console.log(conference);
+            if(!conference) {
                 Conference.find(function(err, conferences) {
                     var hash = 0;
                     if (!err) {
@@ -162,7 +162,7 @@ exports.create = function(req, res) {
                     });   
                 });
             } else {
-                return res.send(conferences[0]);
+                return res.send(conference);
             }
         }
     });
