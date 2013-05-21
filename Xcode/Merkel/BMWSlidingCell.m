@@ -72,6 +72,9 @@ const float UI_CUES_WIDTH = 100.0f;
     label.font = [UIFont defaultFontOfSize:14.0];
     label.backgroundColor = [UIColor clearColor];
     label.textAlignment = NSTextAlignmentRight;
+    label.adjustsFontSizeToFitWidth = YES;
+    label.adjustsLetterSpacingToFitWidth = YES;
+    label.minimumScaleFactor = 0.5;
     return label;
 }
 
@@ -90,9 +93,9 @@ const float UI_CUES_WIDTH = 100.0f;
     textLabelFrame.origin.y += 3.0;
     textLabelFrame.size.width = CGRectGetWidth(bounds) - kTextLabelOffset - 15.0;
     self.textLabel.frame = textLabelFrame;
-    CGRect timeLabelFrame = CGRectMake(5.0, 30.0, kTextLabelOffset - 15.0, 15.0);
+    CGRect timeLabelFrame = CGRectMake(5.0, 30.0, kTextLabelOffset - 15.0, 16.0);
     self.startLabel.frame = timeLabelFrame;
-    timeLabelFrame.origin.y += 15.0;
+    timeLabelFrame.origin.y += 16.0;
     self.endLabel.frame = timeLabelFrame;
     self.bottomBar.frame = CGRectMake(0.0, CGRectGetHeight(bounds) - kBarHeight, CGRectGetWidth(bounds), kBarHeight);
     self.verticalBar.frame = CGRectMake(kTextLabelOffset - 3.0, 0.0, 1.0, CGRectGetHeight(bounds));
