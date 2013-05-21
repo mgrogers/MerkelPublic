@@ -50,6 +50,7 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
 
 // Delayed start of external services to speed up app launch.
 - (void)startExternalServices {
+    [Mixpanel sharedInstanceWithToken:kMerkelMixpanelId];
     dispatch_async(dispatch_get_main_queue(), ^{
 //        [[IDLogger defaultLogger] addAppender:self];
         [TestFlight takeOff:kMerkelTestFlightId];
@@ -64,7 +65,6 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
         [NewRelicAgent startWithApplicationToken:kMerkelNewRelicId];
 //        [self startSignificantChangeUpdates];
         [BMWPhone sharedPhone];
-        [Mixpanel sharedInstanceWithToken:kMerkelMixpanelId];
     });
 }
 

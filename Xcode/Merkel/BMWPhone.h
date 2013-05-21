@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
 
 @property (readonly) BOOL isReady;
 @property (nonatomic, getter = isSpeakerEnabled) BOOL speakerEnabled;
+@property (nonatomic, getter = isMuted) BOOL muted;
 @property (readonly) BMWPhoneStatus status;
 @property (readonly) NSString *phoneNumber;
 @property (nonatomic, strong) EKEvent *currentCallEvent;
