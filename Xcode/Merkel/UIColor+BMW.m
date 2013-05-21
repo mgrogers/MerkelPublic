@@ -33,6 +33,11 @@
     return [self colorFromHexString:kBMWGreenColor];
 }
 
++ (instancetype)bmwDarkGreenColor {
+    static NSString * const kBMWDarkGreenColor = @"#27AE60";
+    return [self colorFromHexString:kBMWDarkGreenColor];
+}
+
 + (instancetype)bmwLightBlueColor {
     static NSString * const kBMWLightBlueColor = @"#16A6D5";
     return [self colorFromHexString:kBMWLightBlueColor];

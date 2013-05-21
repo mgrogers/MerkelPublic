@@ -12,7 +12,7 @@
 
 @interface BMWMenuTableViewController ()
 
-@property (nonatomic, strong) QBFlatButton *logoutButton;
+@property (nonatomic, strong) QBFlatButton *logoutButton, *feedbackButton;
 
 @end
 
@@ -42,6 +42,15 @@
     self.logoutButton.depth = 4.0;
     self.logoutButton.margin = 4.0;
     [self.logoutButton setTitle:@"Log out" forState:UIControlStateNormal];
+    [self.logoutButton addTarget:self action:@selector(logoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.feedbackButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
+    [self.feedbackButton setFaceColor:[UIColor bmwGreenColor]];
+    [self.feedbackButton setSideColor:[UIColor bmwDarkGreenColor]];
+    self.feedbackButton.radius = 2.0;
+    self.feedbackButton.depth = 4.0;
+    self.feedbackButton.margin = 4.0;
+    [self.feedbackButton setTitle:@"Send Feedback" forState:UIControlStateNormal];
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidLoad {
@@ -51,6 +60,7 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.scrollEnabled = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.allowsSelection = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,7 +76,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 static NSString * const kMyNumberText = @"My Number: ";
@@ -90,62 +100,22 @@ static NSString * const kMyNumberText = @"My Number: ";
             self.logoutButton.frame = buttonFrame;
             [cell.contentView addSubview:self.logoutButton];
             break;
+        case 2:
+            self.feedbackButton.frame = buttonFrame;
+            [cell.contentView addSubview:self.feedbackButton];
+            break;
         default:
             break;
     }
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)logoutButtonPressed {
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+- (void)feedbackButtonPressed {
+    [TestFlight openFeedbackView];
 }
 
 @end

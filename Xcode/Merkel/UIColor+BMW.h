@@ -13,6 +13,7 @@
 + (instancetype)bmwRedColor;
 + (instancetype)bmwDarkRedColor;
 + (instancetype)bmwGreenColor;
++ (instancetype)bmwDarkGreenColor;
 + (instancetype)bmwLightBlueColor;
 + (instancetype)bmwDarkBlueColor;
 + (instancetype)bmwDarkGrayColor;
