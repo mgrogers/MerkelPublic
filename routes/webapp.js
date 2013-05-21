@@ -1,5 +1,6 @@
-/*
- * GET home page.
+/* ----- API call ----- */
+ /* API call: bossmobilewunderkinds.herokuapp.com/webapp/?conferenceCode= 
+ [conferenceCode] active conference code for an event 
  */
 
 var twilio = require('twilio');
