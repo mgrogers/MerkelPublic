@@ -35,24 +35,6 @@
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
 
-- (void)setEKEvent: (EKEvent*)event {
-    _event = event;
-}
-
-- (void)setPhoneNumber:(NSString *)phoneNumber
-{
-    _phoneNumber = phoneNumber;
-}
-
-- (void)setConferenceCode:(NSString *)conferenceCode
-{
-    _conferenceCode = conferenceCode;
-}
-
--(void)setEventTitle:(NSString *)eventTitle {
-    _eventTitle = eventTitle;
-}
-
 - (UIBarButtonItem *)speakerButton {
     if (!_speakerButton) {
         _speakerButton = [[UIBarButtonItem alloc] initWithCustomView:[self speakerButtonWithImageName:@"speaker.png"]];
@@ -174,27 +156,8 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
--(void)createLabels {
-    self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
-    self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
-    
-    if(self.event.allDay) {
-        self.eventDateLabel.text = @"All Day";
-    } else {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
-        NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
-        self.eventDateLabel.text = monthString;
-        self.eventDateLabel.numberOfLines = 0;
-        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-//        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
-    }
-}
-
 - (IBAction)joinCallButtonPressed:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
-        [[BMWPhone sharedPhone] disconnect];
         [BMWPhone sharedPhone].currentCallEvent = nil;
         [BMWPhone sharedPhone].currentCallCode = nil;
     } else {
@@ -276,6 +239,24 @@ static NSString * const kInviteMessageType = @"invite";
     button.margin = 0.0;
     button.radius = 5.0;
     button.depth = 2.0;
+}
+
+-(void)createLabels {
+    self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
+    self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
+    
+    if(self.event.allDay) {
+        self.eventDateLabel.text = @"All Day";
+    } else {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
+        NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
+        self.eventDateLabel.text = monthString;
+        self.eventDateLabel.numberOfLines = 0;
+        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        //        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
+    }
 }
 
 #pragma mark - TCConectionDelegate Methods

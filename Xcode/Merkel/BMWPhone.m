@@ -128,6 +128,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 - (void)callWithDelegate:(id<TCConnectionDelegate>)connectionDelegate
        andConferenceCode: (NSString*) conferenceCode {
+    [self disconnect];
     [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
 }
 
