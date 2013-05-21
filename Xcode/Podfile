@@ -4,4 +4,6 @@ pod 'AFNetworking', '~> 1.1.0'
 pod 'PKRevealController', '~> 1.0b2'
 pod 'NewRelicAgent', '~> 1.309.0'
 pod 'Mixpanel', '~> 2.0.0'
+pod 'KGStatusBar', '~> 1.0'
+pod 'Reachability', '~> 3.1.0'
 

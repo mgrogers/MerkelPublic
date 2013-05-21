@@ -1,22 +1,28 @@
 PODS:
   - AFNetworking (1.1.0)
+  - KGStatusBar (1.0)
   - Mixpanel (2.0.0)
   - NewRelicAgent (1.309.0)
   - PKRevealController (1.0b2)
+  - Reachability (3.1.0)
   - TestFlightSDK (1.2.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.1.0)
+  - KGStatusBar (~> 1.0)
   - Mixpanel (~> 2.0.0)
   - NewRelicAgent (~> 1.309.0)
   - PKRevealController (~> 1.0b2)
+  - Reachability (~> 3.1.0)
   - TestFlightSDK (~> 1.2.4.beta)
 
 SPEC CHECKSUMS:
   AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
+  KGStatusBar: e47f19745f6aeb0fabe37e8360df26bf87b1e2ff
   Mixpanel: d456c27f7520e22784a15d0bcd9d5c287080b0cd
   NewRelicAgent: 3caf67341dd34afff1a224aace0bd053c0f7fd5d
   PKRevealController: 631e6a3db833a0c660203c2dba0963109549ec8a
+  Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
   TestFlightSDK: 96d7400f844599dd02677bf8d34f8bdfe3f9b33c
 
 COCOAPODS: 0.19.1

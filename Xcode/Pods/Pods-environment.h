@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 1
 #define COCOAPODS_VERSION_PATCH_AFNetworking 0
 
+// KGStatusBar
+#define COCOAPODS_POD_AVAILABLE_KGStatusBar
+#define COCOAPODS_VERSION_MAJOR_KGStatusBar 1
+#define COCOAPODS_VERSION_MINOR_KGStatusBar 0
+#define COCOAPODS_VERSION_PATCH_KGStatusBar 0
+
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel
 #define COCOAPODS_VERSION_MAJOR_Mixpanel 2
@@ -30,6 +36,12 @@
 // so we were not able to define version macros.
 // Please contact the author.
 // Version: 1.0b2.
+
+// Reachability
+#define COCOAPODS_POD_AVAILABLE_Reachability
+#define COCOAPODS_VERSION_MAJOR_Reachability 3
+#define COCOAPODS_VERSION_MINOR_Reachability 1
+#define COCOAPODS_VERSION_PATCH_Reachability 0
 
 // TestFlightSDK
 #define COCOAPODS_POD_AVAILABLE_TestFlightSDK
