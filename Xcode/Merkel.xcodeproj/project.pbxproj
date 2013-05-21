@@ -139,6 +139,7 @@
 		4BE0B9F31727A9AE00A2FFD8 /* BMWCalendarAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE0B9F21727A9AE00A2FFD8 /* BMWCalendarAccess.m */; };
 		4BE0B9F41727A9AE00A2FFD8 /* BMWCalendarAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE0B9F21727A9AE00A2FFD8 /* BMWCalendarAccess.m */; };
 		4BE0B9F61727AA2900A2FFD8 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE0B9F51727AA2900A2FFD8 /* EventKit.framework */; };
+		4BE14EBD174B83AA006C111A /* BMWMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE14EBC174B83AA006C111A /* BMWMenuTableViewController.m */; };
 		4BE26268171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
 		4BE26269171D382E004F742F /* BMWAppearances.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE26267171D382E004F742F /* BMWAppearances.m */; };
 		4BF95F6116F518C60058F182 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF95F6016F518C60058F182 /* CoreTelephony.framework */; };
@@ -293,6 +294,8 @@
 		4BE0B9F11727A9AE00A2FFD8 /* BMWCalendarAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWCalendarAccess.h; sourceTree = "<group>"; };
 		4BE0B9F21727A9AE00A2FFD8 /* BMWCalendarAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWCalendarAccess.m; sourceTree = "<group>"; };
 		4BE0B9F51727AA2900A2FFD8 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		4BE14EBB174B83A9006C111A /* BMWMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWMenuTableViewController.h; sourceTree = "<group>"; };
+		4BE14EBC174B83AA006C111A /* BMWMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWMenuTableViewController.m; sourceTree = "<group>"; };
 		4BE26266171D382E004F742F /* BMWAppearances.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAppearances.h; sourceTree = "<group>"; };
 		4BE26267171D382E004F742F /* BMWAppearances.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAppearances.m; sourceTree = "<group>"; };
 		4BF95F6016F518C60058F182 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -484,6 +487,8 @@
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
+				4BE14EBB174B83A9006C111A /* BMWMenuTableViewController.h */,
+				4BE14EBC174B83AA006C111A /* BMWMenuTableViewController.m */,
 				4B8B3250174B72580046DE41 /* KGStatusBar+BMWNotifications.h */,
 				4B8B3251174B72580046DE41 /* KGStatusBar+BMWNotifications.m */,
 				4B8B324D174B18880046DE41 /* BMWAnalytics.h */,
@@ -860,6 +865,7 @@
 				4BACDD0E173D0E9100150192 /* BMWTimeIndicatorView.m in Sources */,
 				4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */,
 				4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */,
+				4BE14EBD174B83AA006C111A /* BMWMenuTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,7 +980,7 @@
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1034,7 +1040,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
