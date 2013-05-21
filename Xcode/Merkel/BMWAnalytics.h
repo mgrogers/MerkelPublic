@@ -10,6 +10,7 @@
 
 @interface BMWAnalytics : NSObject
 
++ (void)mixpanelTrackUser:(NSString *)username;
 + (void)mixpanelTrackLoggedInUser:(NSString *)username;
 + (void)mixpanelTrackSpeakerButtonClick:(BOOL)isActive;
 + (void)mixpanelTrackMuteButtonClick:(BOOL)isActive;

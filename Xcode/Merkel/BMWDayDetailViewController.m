@@ -259,9 +259,11 @@ static NSString * const kInviteMessageType = @"invite";
         // Speaker is inactive.
         [BMWPhone sharedPhone].speakerEnabled = YES;
         self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:YES];
     } else {
         [BMWPhone sharedPhone].speakerEnabled = NO;
         self.navigationItem.rightBarButtonItem = self.speakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:NO];
     }
 }
 

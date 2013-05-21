@@ -17,6 +17,11 @@ static NSString * const kBMWMixpanelSpeakerButtonClicked = @"Speaker Button Clic
 static NSString * const kBMWMixpanelMuteButtonClicked = @"Mute Button Clicked";
 static NSString * const kBMWMixpanelVOIPFailure = @"VOIP Failure";
 
++ (void)mixpanelTrackUser:(NSString *)username {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:username];
+}
+
 + (void)mixpanelTrackLoggedInUser:(NSString *)username {
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:username];
