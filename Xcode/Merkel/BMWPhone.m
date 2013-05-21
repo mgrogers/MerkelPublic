@@ -13,6 +13,7 @@
 #import "TCDevice.h"
 
 #import <AudioToolbox/AudioToolbox.h>
+#import "Reachability.h"
 
 @interface BMWPhone () <TCDeviceDelegate, TCConnectionDelegate>
 
@@ -39,11 +40,13 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     return sharedPhone;
 }
 
--(id)init {
+- (id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ? [[PFUser currentUser] objectForKey:@"phone"] : [NSNull null]};
-       
-        
+        [self configureReachability];
+        NSDictionary *params =
+            @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ?
+                                [[PFUser currentUser] objectForKey:@"phone"] :
+                                [NSNull null]};
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *capabilityToken = responseObject[@"capabilityToken"];
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
@@ -63,6 +66,30 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
         }
     }
     return self;
+}
+
+- (void)configureReachability {
+    NSString *apiHost = [[[BMWAPIClient sharedClient] baseURL] host];
+    Reachability *reach = [Reachability reachabilityWithHostname:apiHost];
+    __block BOOL shouldHideNotificationView = NO;
+    reach.reachableBlock = ^(Reachability *reach) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [KGStatusBar bmwShowNetworkConnectionAvailable];
+            shouldHideNotificationView = YES;
+            const double kDelayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDelayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                if (shouldHideNotificationView) [KGStatusBar dismiss];
+            });
+        });
+    };
+    reach.unreachableBlock = ^(Reachability *reach) {
+        shouldHideNotificationView = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [KGStatusBar bmwShowNetworkConnectionUnavailable];
+        });
+    };
+    [reach startNotifier];
 }
 
 - (BOOL)isReady {

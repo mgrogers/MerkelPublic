@@ -45,7 +45,6 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
     [self.revealController setFrontViewController:frontViewController];
     [BMWAppearances setupAppearance];
     [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
-    [[KGStatusBar sharedView] showWithStatus:@"Error" barColor:[UIColor bmwRedColor] textColor:[UIColor whiteColor]];
     return YES;
 }
 
