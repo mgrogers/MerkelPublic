@@ -81,21 +81,15 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 42.0, 41.0)];
-    [button setImage:[UIImage imageNamed:@"back-arrow.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 42.0, 41.0)];
+    [backButton setImage:[UIImage imageNamed:@"back-arrow.png"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.view.backgroundColor = [UIColor bmwLightBlueColor];
     self.title = @"Event Detail";
-    self.eventTitleLabel.text = self.eventTitle;
-    [self.eventTitleLabel setFont:[UIFont boldFontOfSize:24.0]];
-    self.eventTitleLabel.adjustsFontSizeToFitWidth = YES;
-    self.eventTitleLabel.adjustsLetterSpacingToFitWidth = YES;
-    self.eventTitleLabel.minimumScaleFactor = 0.5;
-    [self createLabels];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
     self.navigationItem.rightBarButtonItem = self.speakerButton;
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self setupLabels];
     [self configureFlatButton:self.joinCallButton withColor:[UIColor redColor]];
     [self configureFlatButton:self.lateButton withColor:[UIColor redColor]];
     [self createAndAddTimeIndicatorView];
@@ -114,6 +108,7 @@ static NSString * const kInviteMessageType = @"invite";
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
     }
+    [self configureLabels];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -134,11 +129,6 @@ static NSString * const kInviteMessageType = @"invite";
     button.depth = 2.0;
 }
 
--(void)createLabels {
-    self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
-    self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
-}
-
 - (void)createAndAddTimeIndicatorView {
     self.timeIndicatorView = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectMake(40.0, 60.0, 240.0, 30.0)];
     self.timeIndicatorView.borderColor = [UIColor clearColor];
@@ -157,7 +147,20 @@ static NSString * const kInviteMessageType = @"invite";
     [self.view addSubview:lineView];
 }
 
+- (void)setupLabels {
+    [self.eventTitleLabel setFont:[UIFont boldFontOfSize:24.0]];
+    self.eventTitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.eventTitleLabel.adjustsLetterSpacingToFitWidth = YES;
+    self.eventTitleLabel.minimumScaleFactor = 0.5;
+}
+
 #pragma mark - UI Updates
+
+- (void)configureLabels {
+    self.eventTitleLabel.text = self.eventTitle;
+    self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
+    self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
+}
 
 - (void)synchronizeUI {
     
