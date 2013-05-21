@@ -21,9 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timer;
 @property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
 @property (strong, nonatomic) UIBarButtonItem *speakerButton, *activeSpeakerButton;
 @property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
@@ -139,19 +137,6 @@ static NSString * const kInviteMessageType = @"invite";
 -(void)createLabels {
     self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
     self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
-    
-    if(self.event.allDay) {
-        self.eventDateLabel.text = @"All Day";
-    } else {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
-        NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
-        self.eventDateLabel.text = monthString;
-        self.eventDateLabel.numberOfLines = 0;
-        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        //        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
-    }
 }
 
 - (void)createAndAddTimeIndicatorView {
