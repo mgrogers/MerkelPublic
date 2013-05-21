@@ -172,6 +172,12 @@ static NSString * const kInviteMessageType = @"invite";
     [self.view addSubview:lineView];
 }
 
+#pragma mark - UI Updates
+
+- (void)synchronizeUI {
+    
+}
+
 #pragma mark - Button Handlers
 
 - (void)backButtonPressed {
