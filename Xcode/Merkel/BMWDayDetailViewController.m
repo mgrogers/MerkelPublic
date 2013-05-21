@@ -144,7 +144,6 @@ static NSString * const kInviteMessageType = @"invite";
     self.timeIndicatorView.endTime = self.event.endDate;
     [self.view addSubview:self.timeIndicatorView];
     [self.timeIndicatorView startAnimating];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
