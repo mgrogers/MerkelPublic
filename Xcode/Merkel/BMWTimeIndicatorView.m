@@ -115,6 +115,7 @@
 - (void)setTimeIndicatorColor:(UIColor *)timeIndicatorColor {
     _timeIndicatorColor = timeIndicatorColor;
     self.indicatorBarView.backgroundColor = timeIndicatorColor;
+    self.meetingDurationView.backgroundColor = timeIndicatorColor;
 }
 
 - (void)setBorderColor:(UIColor *)borderColor {
