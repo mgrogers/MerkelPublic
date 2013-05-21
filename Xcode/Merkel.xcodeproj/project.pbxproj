@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1504451723494500957F8A /* BMWDayDetailViewController.m */; };
-		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
 		2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */; };
@@ -55,7 +54,6 @@
 		4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBED17462D7D004E538C /* speaker@2x.png */; };
 		4B49EBF417462E3E004E538C /* speaker-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBF217462E3E004E538C /* speaker-disabled.png */; };
 		4B49EBF517462E3E004E538C /* speaker-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B49EBF317462E3E004E538C /* speaker-disabled@2x.png */; };
-		4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		4B77FE0A16C6F2AF00426018 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0916C6F2AF00426018 /* UIKit.framework */; };
 		4B77FE0C16C6F2AF00426018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0B16C6F2AF00426018 /* Foundation.framework */; };
 		4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B77FE0D16C6F2AF00426018 /* CoreGraphics.framework */; };
@@ -162,8 +160,6 @@
 		299F765672A2407E8FF33FE1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		2B1504441723494500957F8A /* BMWDayDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWDayDetailViewController.h; sourceTree = "<group>"; };
 		2B1504451723494500957F8A /* BMWDayDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWDayDetailViewController.m; sourceTree = "<group>"; };
-		2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMWAppKit.framework; path = Frameworks/BMWAppKit.framework; sourceTree = "<group>"; };
-		2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BMWAppKitResources.bundle; path = Frameworks/BMWAppKitResources.bundle; sourceTree = "<group>"; };
 		2B1A359E16D1B67D00A3B339 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		2B4ACF871727A5260011E557 /* BMWAddressBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAddressBookViewController.h; sourceTree = "<group>"; };
@@ -355,7 +351,6 @@
 				4B77FE2F16C6F2AF00426018 /* UIKit.framework in Frameworks */,
 				4B77FE3016C6F2AF00426018 /* Foundation.framework in Frameworks */,
 				4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */,
-				4B754B1516E554D400DA594D /* BMWAppKit.framework in Frameworks */,
 				4BFB654716F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
 				4B37025817233CAD00ACAAED /* libTwilioClient.a in Frameworks */,
 				4B37025D17233CC300ACAAED /* libcrypto.a in Frameworks */,
@@ -456,8 +451,6 @@
 				4BBEF1BC16D1BD760080F6E5 /* Google Analytics */,
 				2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */,
 				2B1A359E16D1B67D00A3B339 /* ImageIO.framework */,
-				2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */,
-				2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */,
 				4BBEF1BD16D1BE8D0080F6E5 /* CoreData.framework */,
 				4BA3382C16D1942700A2CD24 /* Parse.framework */,
 				4B77FE0916C6F2AF00426018 /* UIKit.framework */,
@@ -715,7 +708,6 @@
 			files = (
 				4B77FE1416C6F2AF00426018 /* InfoPlist.strings in Resources */,
 				4B77FE2316C6F2AF00426018 /* MainStoryboard.storyboard in Resources */,
-				2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */,
 				4B319AB616ED333000F888FC /* iconFlag.png in Resources */,
 				4B319AB816ED333000F888FC /* iconMan.png in Resources */,
 				4B319ABA16ED333000F888FC /* iconNote.png in Resources */,
