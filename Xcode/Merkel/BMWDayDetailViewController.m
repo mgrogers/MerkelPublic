@@ -163,7 +163,17 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (void)synchronizeUI {
-    
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        if ([BMWPhone sharedPhone].isSpeakerEnabled) {
+            self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
+        } else {
+            self.navigationItem.rightBarButtonItem = self.speakerButton;
+        }
+    } else {
+        self.navigationItem.rightBarButtonItem = self.speakerButton;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
 }
 
 #pragma mark - Button Handlers
@@ -176,6 +186,7 @@ static NSString * const kInviteMessageType = @"invite";
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
         [BMWPhone sharedPhone].currentCallEvent = nil;
         [BMWPhone sharedPhone].currentCallCode = nil;
+        [[BMWPhone sharedPhone] disconnect];
     } else {
         [self startCall];
     }
@@ -216,13 +227,12 @@ static NSString * const kInviteMessageType = @"invite";
     if (self.navigationItem.rightBarButtonItem == self.speakerButton) {
         // Speaker is inactive.
         [BMWPhone sharedPhone].speakerEnabled = YES;
-        self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
         [BMWAnalytics mixpanelTrackSpeakerButtonClick:YES];
     } else {
         [BMWPhone sharedPhone].speakerEnabled = NO;
-        self.navigationItem.rightBarButtonItem = self.speakerButton;
         [BMWAnalytics mixpanelTrackSpeakerButtonClick:NO];
     }
+    [self synchronizeUI];
 }
 
 #pragma mark - Phone Actions
