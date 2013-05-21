@@ -70,6 +70,7 @@
 		4B7A855C17461E0D002DEFBC /* back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855A17461E0D002DEFBC /* back-arrow.png */; };
 		4B7A855D17461E0D002DEFBC /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */; };
 		4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8B324E174B18880046DE41 /* BMWAnalytics.m */; };
+		4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8B3251174B72580046DE41 /* KGStatusBar+BMWNotifications.m */; };
 		4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
 		4BA3382E16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
 		4BA3383016D1944C00A2CD24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */; };
@@ -232,6 +233,8 @@
 		4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "Resources/Images/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B8B324D174B18880046DE41 /* BMWAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAnalytics.h; sourceTree = "<group>"; };
 		4B8B324E174B18880046DE41 /* BMWAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAnalytics.m; sourceTree = "<group>"; };
+		4B8B3250174B72580046DE41 /* KGStatusBar+BMWNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KGStatusBar+BMWNotifications.h"; sourceTree = "<group>"; };
+		4B8B3251174B72580046DE41 /* KGStatusBar+BMWNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KGStatusBar+BMWNotifications.m"; sourceTree = "<group>"; };
 		4BA3382C16D1942700A2CD24 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		4BA3382F16D1944C00A2CD24 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4BA3383116D1945100A2CD24 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -481,6 +484,8 @@
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
+				4B8B3250174B72580046DE41 /* KGStatusBar+BMWNotifications.h */,
+				4B8B3251174B72580046DE41 /* KGStatusBar+BMWNotifications.m */,
 				4B8B324D174B18880046DE41 /* BMWAnalytics.h */,
 				4B8B324E174B18880046DE41 /* BMWAnalytics.m */,
 				4BB5E0CD173CA7CB00AD7B77 /* QBFlatButton.h */,
@@ -854,6 +859,7 @@
 				4BB5E0D2173CC2B300AD7B77 /* NSString+Validator.m in Sources */,
 				4BACDD0E173D0E9100150192 /* BMWTimeIndicatorView.m in Sources */,
 				4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */,
+				4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -968,7 +974,7 @@
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1028,7 +1034,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
