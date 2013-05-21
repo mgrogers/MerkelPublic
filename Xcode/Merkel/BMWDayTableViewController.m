@@ -72,6 +72,7 @@ static const NSInteger kTableCellRowHeight = 88;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
     button.backgroundColor = [UIColor clearColor];
+    [button addTarget:self action:@selector(menuButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] forState:UIControlStateNormal];
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -92,13 +93,17 @@ static const NSInteger kTableCellRowHeight = 88;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (![PFUser currentUser]) {
-        self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
-        self.loginVC.loginDelegate = self;
-        [self presentViewController:self.loginVC animated:NO completion:NULL];
+        [self presentLoginViewAnimated:NO];
     } else {
         [BMWAnalytics mixpanelTrackUser:[PFUser currentUser].username];
     }
     [self synchronizePhoneStatusUI];
+}
+
+- (void)presentLoginViewAnimated:(BOOL)animated {
+    self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
+    self.loginVC.loginDelegate = self;
+    [self presentViewController:self.loginVC animated:animated completion:NULL];
 }
 
 - (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
@@ -130,6 +135,11 @@ static const NSInteger kTableCellRowHeight = 88;
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     }
+}
+
+- (void)menuButtonPressed {
+    PKRevealController *revealController = (PKRevealController *)self.navigationController.revealController;
+    [revealController showViewController:revealController.leftViewController];
 }
 
 - (void)callButtonPressed {
