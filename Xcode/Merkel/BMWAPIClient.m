@@ -8,7 +8,7 @@
 
 #import "BMWAPIClient.h"
 
-#import <AFNetworking/AFJSONRequestOperation.h>
+#import "AFJSONRequestOperation.h"
 
 @interface EKAttendee : EKParticipant
 
