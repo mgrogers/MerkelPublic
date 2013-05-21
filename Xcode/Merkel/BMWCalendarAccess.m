@@ -174,27 +174,29 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                 [self.processedEventDicts addObject:@{@"event": event,
                  @"conferenceCode": conferenceCode}];
                 
-                                                                      
-                for (int i = 0; i < [attendees count]; i++) {
-                    NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
-                    NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
-                      
-                    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                  event.title, @"title",
-                                                  event.startDate, @"startTime",
-                                                  [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
-                                                  conferenceCode, @"conferenceCode",
-                                                  attendeePhone, @"toPhoneNumber",
-                                                  attendeeEmail, @"toEmail",
-                                                  kInviteMessageType, @"messageType",
-                                                  [PFUser currentUser].email, @"initiator",nil];
-                      
-                    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          NSLog(@"Email success with response %@", responseObject);
-                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          NSLog(@"Error sending email message. Attempting email. %@", [error localizedDescription]);
-                    }];
-                }
+                                                                      if (responseObject[@"isNew"]) {
+                                                                    
+                    for (int i = 0; i < [attendees count]; i++) {
+                        NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+                        NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
+                          
+                        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                      event.title, @"title",
+                                                      event.startDate, @"startTime",
+                                                      [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
+                                                      conferenceCode, @"conferenceCode",
+                                                      attendeePhone, @"toPhoneNumber",
+                                                      attendeeEmail, @"toEmail",
+                                                      kInviteMessageType, @"messageType",
+                                                      [PFUser currentUser].email, @"initiator",nil];
+                          
+                        [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                              NSLog(@"Email success with response %@", responseObject);
+                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              NSLog(@"Error sending email message. Attempting email. %@", [error localizedDescription]);
+                        }];
+                    }
+                                                                      }
                                                                       
                 completion(conferenceCode);
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
