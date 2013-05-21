@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) TCDevice *device;
 @property (nonatomic, strong) TCConnection *connection;
+@property (nonatomic, strong) Reachability *apiReachability;
 
 @end
 
@@ -70,9 +71,9 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 - (void)configureReachability {
     NSString *apiHost = [[[BMWAPIClient sharedClient] baseURL] host];
-    Reachability *reach = [Reachability reachabilityWithHostname:apiHost];
+    self.apiReachability = [Reachability reachabilityWithHostname:apiHost];
     __block BOOL shouldHideNotificationView = NO;
-    reach.reachableBlock = ^(Reachability *reach) {
+    self.apiReachability.reachableBlock = ^(Reachability *reach) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [KGStatusBar bmwShowNetworkConnectionAvailable];
             shouldHideNotificationView = YES;
@@ -83,17 +84,17 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
             });
         });
     };
-    reach.unreachableBlock = ^(Reachability *reach) {
+    self.apiReachability.unreachableBlock = ^(Reachability *reach) {
         shouldHideNotificationView = NO;
         dispatch_async(dispatch_get_main_queue(), ^{
             [KGStatusBar bmwShowNetworkConnectionUnavailable];
         });
     };
-    [reach startNotifier];
+    [self.apiReachability startNotifier];
 }
 
 - (BOOL)isReady {
-    return self.device != nil;
+    return self.device != nil && self.apiReachability.isReachable;
 }
 
 - (BOOL)isSpeakerEnabled {
