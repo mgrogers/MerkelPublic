@@ -371,56 +371,6 @@
             <point key="canvasLocation" x="632" y="411"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="BMWAttendeeTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWAttendeeTableViewController.h"/>
-        </class>
-        <class className="BMWDayDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="joinCallButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="lateButtonPressed:"/>
-                <relationship kind="outlet" name="conferenceCodeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="conferencePhoneNumber" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="eventTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="joinCallButton" candidateClass="QBFlatButton"/>
-                <relationship kind="outlet" name="lateButton" candidateClass="QBFlatButton"/>
-                <relationship kind="outlet" name="timeIndicatorView" candidateClass="BMWTimeIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="BMWDayTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWDayTableViewController.h"/>
-        </class>
-        <class className="BMWLoginViewController" superclassName="GAITrackedViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWLoginViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="phoneNumberField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="phoneNumberLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="primaryNextButton" candidateClass="QBFlatButton"/>
-                <relationship kind="outlet" name="secondField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="secondFieldCorrectLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="secondFieldLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="secondaryNextButton" candidateClass="QBFlatButton"/>
-                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="BMWTimeIndicatorView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMWTimeIndicatorView.h"/>
-        </class>
-        <class className="GAITrackedViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PKRevealController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PKRevealController.h"/>
-        </class>
-        <class className="QBFlatButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QBFlatButton.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
