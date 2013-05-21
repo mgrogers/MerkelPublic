@@ -77,6 +77,7 @@
     self.stringLabel.hidden = NO;
     self.stringLabel.text = labelText;
     self.stringLabel.textColor = textColor;
+    self.stringLabel.shadowOffset = CGSizeMake(0.0, 0.0);
     [UIView animateWithDuration:0.4 animations:^{
         self.stringLabel.alpha = 1.0;
     }];

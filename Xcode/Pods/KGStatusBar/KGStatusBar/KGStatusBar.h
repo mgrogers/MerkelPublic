@@ -14,5 +14,7 @@
 + (void)showErrorWithStatus:(NSString*)status;
 + (void)showSuccessWithStatus:(NSString*)status;
 + (void)dismiss;
++ (KGStatusBar*)sharedView;
+- (void)showWithStatus:(NSString *)status barColor:(UIColor*)barColor textColor:(UIColor*)textColor;
 
 @end
