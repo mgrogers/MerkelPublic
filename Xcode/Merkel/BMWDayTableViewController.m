@@ -93,17 +93,17 @@ static const NSInteger kTableCellRowHeight = 88;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (![PFUser currentUser]) {
-        [self presentLoginView];
+        [self presentLoginViewAnimated:NO];
     } else {
         [BMWAnalytics mixpanelTrackUser:[PFUser currentUser].username];
     }
     [self synchronizePhoneStatusUI];
 }
 
-- (void)presentLoginView {
+- (void)presentLoginViewAnimated:(BOOL)animated {
     self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
     self.loginVC.loginDelegate = self;
-    [self presentViewController:self.loginVC animated:NO completion:NULL];
+    [self presentViewController:self.loginVC animated:animated completion:NULL];
 }
 
 - (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {

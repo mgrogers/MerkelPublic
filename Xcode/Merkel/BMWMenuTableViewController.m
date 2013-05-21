@@ -8,6 +8,8 @@
 
 #import "BMWMenuTableViewController.h"
 
+#import "BMWDayTableViewController.h"
+
 #import <QBFlatButton.h>
 
 @interface BMWMenuTableViewController ()
@@ -44,8 +46,8 @@
     [self.logoutButton setTitle:@"Log out" forState:UIControlStateNormal];
     [self.logoutButton addTarget:self action:@selector(logoutButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     self.feedbackButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
-    [self.feedbackButton setFaceColor:[UIColor bmwGreenColor]];
-    [self.feedbackButton setSideColor:[UIColor bmwDarkGreenColor]];
+    [self.feedbackButton setFaceColor:[UIColor bmwYellowColor]];
+    [self.feedbackButton setSideColor:[UIColor bmwDarkYellowColor]];
     self.feedbackButton.radius = 2.0;
     self.feedbackButton.depth = 4.0;
     self.feedbackButton.margin = 4.0;
@@ -71,6 +73,10 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -81,8 +87,7 @@
 
 static NSString * const kMyNumberText = @"My Number: ";
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.textLabel.textColor = [UIColor whiteColor];
@@ -111,7 +116,16 @@ static NSString * const kMyNumberText = @"My Number: ";
 }
 
 - (void)logoutButtonPressed {
-    
+    [self.revealController showViewController:self.revealController.frontViewController
+                                     animated:YES
+                                   completion:^(BOOL finished) {
+        if (finished) {
+            UINavigationController *navCon = (UINavigationController *)self.revealController.frontViewController;
+            BMWDayTableViewController *dayTVC = (BMWDayTableViewController *)navCon.visibleViewController;
+            [PFUser logOut];
+            [dayTVC presentLoginViewAnimated:YES];
+        }
+    }];
 }
 
 - (void)feedbackButtonPressed {

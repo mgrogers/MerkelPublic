@@ -11,6 +11,6 @@
 
 @interface BMWDayTableViewController : UITableViewController
 
-- (void)presentLoginView;
+- (void)presentLoginViewAnimated:(BOOL)animated;
 
 @end
