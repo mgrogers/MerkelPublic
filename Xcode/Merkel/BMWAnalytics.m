@@ -15,6 +15,9 @@
 static NSString * const kBMWMixpanelLogin = @"User Login";
 static NSString * const kBMWMixpanelSpeakerButtonClicked = @"Speaker Button Clicked";
 static NSString * const kBMWMixpanelMuteButtonClicked = @"Mute Button Clicked";
+static NSString * const kBMWMixpanelVOIPDial = @"VOIP Dial";
+static NSString * const kBMWMixpanelPhoneDial = @"Phone Dial";
+static NSString * const kBMWMixpanelVOIPCall = @"VOIP Call";
 static NSString * const kBMWMixpanelVOIPFailure = @"VOIP Failure";
 
 + (void)mixpanelTrackUser:(NSString *)username {
@@ -38,6 +41,22 @@ static NSString * const kBMWMixpanelVOIPFailure = @"VOIP Failure";
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:kBMWMixpanelMuteButtonClicked
          properties:@{@"isActive": [NSNumber numberWithBool:isActive]}];
+}
+
++ (void)mixpanelTrackVOIPDial {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:kBMWMixpanelVOIPDial];
+}
+
++ (void)mixpanelTrackPhoneDial {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:kBMWMixpanelPhoneDial];
+}
+
++ (void)mixpanelTrackVOIPCall:(NSTimeInterval)duration {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:kBMWMixpanelVOIPCall
+         properties:@{@"duration": [NSNumber numberWithFloat:duration]}];
 }
 
 + (void)mixpanelTrackVOIPFailure:(NSError *)error {

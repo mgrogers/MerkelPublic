@@ -14,6 +14,9 @@
 + (void)mixpanelTrackLoggedInUser:(NSString *)username;
 + (void)mixpanelTrackSpeakerButtonClick:(BOOL)isActive;
 + (void)mixpanelTrackMuteButtonClick:(BOOL)isActive;
++ (void)mixpanelTrackVOIPDial;
++ (void)mixpanelTrackPhoneDial;
++ (void)mixpanelTrackVOIPCall:(NSTimeInterval)duration;
 + (void)mixpanelTrackVOIPFailure:(NSError *)error;
 
 @end
