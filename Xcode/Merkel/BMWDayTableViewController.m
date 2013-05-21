@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray *selectedPeople;
 @property (nonatomic, copy) NSString *phoneNumber;
 @property (nonatomic, strong) BMWLoginViewController *loginVC;
+@property (nonatomic, strong) QBFlatButton *callStatusButton;
 
 @end
 
@@ -40,6 +41,25 @@ static const NSInteger kTableCellRowHeight = 88;
     }
     return self;
 }
+
+#pragma mark - Lazy Instantiation Methods
+
+- (QBFlatButton *)callStatusButton {
+    if (!_callStatusButton) {
+        _callStatusButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
+        _callStatusButton.frame = CGRectMake(0.0, 0.0, 70.0, 30.0);
+        _callStatusButton.faceColor = [UIColor greenColor];
+        _callStatusButton.sideColor = [UIColor greenColor];
+        _callStatusButton.margin = 0.0;
+        _callStatusButton.radius = 5.0;
+        _callStatusButton.depth = 2.0;
+        _callStatusButton.titleLabel.font = [UIFont boldFontOfSize:12.0];
+        [_callStatusButton setTitle:@"Quick Call" forState:UIControlStateNormal];
+    }
+    return _callStatusButton;
+}
+
+#pragma mark - UIViewController Methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,6 +114,7 @@ static const NSInteger kTableCellRowHeight = 88;
 - (void)synchronizePhoneStatusUI {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.callStatusButton];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
