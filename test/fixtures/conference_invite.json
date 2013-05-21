@@ -1,14 +1,25 @@
 {
     "conferenceCode": "9351579103",
+    "phoneNumber": "4086468223",
+    "title": "Scrum",
     "attendees": [
         {
-            "email": "taylor@taylorsavage.com",
-            "displayName": "Taylor Savage",
-            "phone": "3102663121"
+            "email": "wes.k.leung@gmail.com",
+            "displayName": "Wesley Leung",
+            "phone": "4086468223"
         },
-        {
-            "email": "tim@apple.com",
-            "displayName": "Tim Cook"
+         {
+            "email": "timgshi@gmail.com",
+            "displayName": "Tim Shi",
+            "phone": "7148789551"
         }
-    ]
+    ],
+    
+    "messageType": "invite",
+    "initiator": "wes.k.leung@gmail.com",
+    "start": {
+        "dateTime": "2012-04-23T18:25:43.511Z",
+        "timeZone": "America/Los_Angeles"
+    }
 }
+

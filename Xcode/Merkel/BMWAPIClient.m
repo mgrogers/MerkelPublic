@@ -8,7 +8,7 @@
 
 #import "BMWAPIClient.h"
 
-#import <AFNetworking/AFJSONRequestOperation.h>`
+#import "AFJSONRequestOperation.h"
 
 @interface EKAttendee : EKParticipant
 
@@ -64,39 +64,52 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
 }
 
 - (void)createConferenceForCalendarEvent:(EKEvent *)event
+                          attendeesArray:(NSArray *)attendeesArray
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    
     static NSString * const kBMWNewConferencePath = @"conference/create";
-    NSMutableArray *attendeeArray = [NSMutableArray array];
-//    ABAddressBookRef addressBook = ABAddressBookCreate();
-//    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        for (EKParticipant *attendee in event.attendees) {
-            NSMutableDictionary *attendeeObject = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                            attendee.name, @"name", nil];
-//            ABRecordRef record = [attendee ABRecordWithAddressBook:addressBook];
-//            if (record) {
-//                CFStringRef email = ABRecordCopyValue(record, kABPersonEmailProperty);
-//                NSString *nsEmail = (__bridge NSString *)email;
-//                [attendeeObject setObject:nsEmail forKey:@"email"];
-//                CFRelease(email);
-//            }
-            [attendeeArray addObject:attendeeObject];
-        }
-        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    event.title, @"title",
-                                    event.notes, @"description",
-                                    event.startDate, @"start",
-                                    attendeeArray, @"attendees", nil];
-        
-        [self postPath:kBMWNewConferencePath
-            parameters:parameters
-               success:success
-               failure:failure];
-//    });
-//    if (addressBook) {
-//        CFRelease(addressBook);
-//    }
+    
+    NSNumber *isQuickCall = [NSNumber numberWithBool:NO];
+    if ([event.title isEqual: @"Quick Call"]) isQuickCall = [NSNumber numberWithBool:YES];
+
+    NSObject *eventNotes = event.notes;
+    if (!eventNotes) {
+        eventNotes = [NSNull null];
+    }
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                event.title, @"title",
+                                event.startDate, @"startTime",
+                                event.creationDate, @"creationDate",
+                                attendeesArray, @"attendees",
+                                [PFUser currentUser].email, @"initiator",
+                                isQuickCall, @"isQuickCall",
+                                eventNotes, @"description", nil];
+    
+    [self postPath:kBMWNewConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
+}
+
+- (void)sendEmailMessageWithParameters:(NSDictionary *)parameters
+                             success:(void (^)(AFHTTPRequestOperation *, id))success
+                             failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    static NSString * const kBMWEmailConferencePath = @"conference/email";
+    [self postPath:kBMWEmailConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
+}
+
+- (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
+                              success:(void (^)(AFHTTPRequestOperation *, id))success
+                              failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    static NSString * const kBMWSMSConferencePath = @"conference/sms";
+    [self postPath:kBMWSMSConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
 }
 
 - (void)getPhoneNumberSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -106,6 +119,17 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
        parameters:nil
           success:success
           failure:failure];
+}
+
+- (void)sendConfirmationCodeForPhoneNumber:(NSString *)phoneNumber
+                                   success:(void (^)(AFHTTPRequestOperation *, id))success
+                                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure {
+    static NSString * const kBMWPhoneConfirmationConferencePath = @"conference/phoneConfirmation";
+    NSDictionary *parameters = @{@"phoneNumber": phoneNumber};
+    [self postPath:kBMWPhoneConfirmationConferencePath
+        parameters:parameters
+           success:success
+           failure:failure];
 }
 
 @end

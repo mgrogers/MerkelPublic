@@ -11,10 +11,12 @@
     "hbs": "*",
     "imap": "*",
     "linkedin-js": "*",
+    "mixpanel": "*",
     "mongoose": "*",
     "node-parse-api": "*",
     "q": "*",
     "request": "*",
+    "sendgrid": "0.2.1",
     "twilio": "*",
     "kue": "*",
     "redis": "*"

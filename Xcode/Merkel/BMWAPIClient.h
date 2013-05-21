@@ -23,10 +23,23 @@
                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (void)createConferenceForCalendarEvent:(EKEvent *)event
+                          attendeesArray:(NSArray *)attendeesArray
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 - (void)getPhoneNumberSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (void)sendEmailMessageWithParameters:(NSDictionary *)parameters
+                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
+                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (void)sendConfirmationCodeForPhoneNumber:(NSString *)phoneNumber
+                                   success:(void (^)(AFHTTPRequestOperation *, id))success
+                                   failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
 
 @end

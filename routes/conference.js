@@ -6,6 +6,7 @@ var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
 var API_VERSION = '2013-04-23'
 
 var twilio = require('twilio');
+var SendGrid = require('sendgrid').SendGrid;
 var Hashids = require("hashids");
 var hashids = new Hashids("dat salt, yo", MINIMUM_CONFERENCE_CODE_LENGTH, "0123456789");
 
@@ -16,14 +17,28 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_app12018585:8la71
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
+
+// Mixpanel
+var Mixpanel = require('mixpanel');
+var mixpanel = Mixpanel.init('47eb26b4488113bbb2118b83717c5956');
+
+
+var Email = require('sendgrid').Email;
+var SendGrid = require('sendgrid').SendGrid;
+var kSendGridUser = "app12018585@heroku.com";
+var kSendGridKey = "xtce2l6u";
+//Update this upon app store approval.
+var downloadURL = "http://itunes.com/apps/callinapp"  
+
 var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
+    creationDate: {type: Date, default: ""},
     status: {type: String, default: "inactive"},
     title: {type: String, default: ""},
     description: {type: String, default: ""},
-    start: {type: Date, default: ""},
+    startTime: {type: Date, default: ""},
     timeZone: {type: String, default: "America/Los_Angeles"},
     sms: {type: Boolean, default: false},
     email: {type: Boolean, default: false} // 'active' or 'inactive'
@@ -37,8 +52,16 @@ var participantSchema = new Schema({
     status: {type: String, default: "inactive"} // 'active' or 'inactive'
 });
 
+var simpleUserSchema = new Schema({
+    phone: {type: String, default: ""},
+    conferencesAttended: [{
+        conferenceCode: {type: String, default: ""}
+    }]
+})
+
 var Conference = db.model('conference', conferenceSchema);
 var Participant = db.model('participant', participantSchema);
+var SimpleUser = db.model('simpleUser', simpleUserSchema);
 
 
 /* ----- API Calls ----- */
@@ -55,6 +78,9 @@ exports.capability = function(req, res) {
     capability.allowClientOutgoing(TWIML_APP_ID);
 
     var response = {capabilityToken: capability.generate(timeout)};
+
+    mixpanel.track("capability request", {});
+
     return res.send(response);
 };
 
@@ -63,78 +89,234 @@ exports.capability = function(req, res) {
 API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
+
 exports.create = function(req, res) {
-    Conference.find(function(err, conferences) {
-        var hash = 0;
-        if (!err) {
-            var numConferences = conferences.length;
-            hash = hashids.encrypt(numConferences);
+    var postBody = req.body;
+    Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
+        if(err) {
+            return res.send(400, {error: err,
+                                          reqBody: req.body});
         } else {
-            hash = hashids.encrypt(0);
-        }
+            console.log(conference);
+            if(!conference) {
+                Conference.find(function(err, conferences) {
+                    var hash = 0;
+                    if (!err) {
+                        var numConferences = conferences.length;
+                        hash = hashids.encrypt(numConferences);
+                    } else {
+                        hash = hashids.encrypt(0);
+                    }
 
-        var conferenceObject = {};
-        var postBody = req.body;
+                    var conferenceObject = {};
+                    var postBody = req.body;
 
-        if(postBody) {
-            conferenceObject.conferenceCode = hash;
-            conferenceObject.status = "inactive";
-            conferenceObject.title = postBody.title || "";
-            conferenceObject.description = postBody.description || "";
-            if(postBody.start) conferenceObject.start = postBody.start.datetime;
-            else conferenceObject.start = "";
-            if(postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
-            else conferenceObject.timeZone = "";
-            if(postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
-            else conferenceObject.sms = false;
-            if(postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
-            else conferenceObject.email = false;
-        } else {
-            conferenceObject = {conferenceCode: hash};
-        }
-        
-        var conference = new Conference(conferenceObject);
-        conference.save(function(err) {
-            if (!err) {
-                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-                addParticipants(participantsObject);
+                    if (postBody) {
+                        conferenceObject.conferenceCode = hash;
+                        conferenceObject.status = "inactive";
+                        conferenceObject.title = postBody.title || "";
+                        conferenceObject.creatorId = postBody.initiator || "";
+                        conferenceObject.creationDate = postBody.creationDate || "";
+                        conferenceObject.description = postBody.description || "";
+                        conferenceObject.startTime = postBody.startTime || "";
+                        if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+                        else conferenceObject.sms = false;
+                        if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+                        else conferenceObject.email = false;
+                    } else {
+                        conferenceObject = {conferenceCode: hash};
+                    }
+                    
+                    // Mixpanel
+                    mixpanel.track("conference create", {
+                        conferenceCode: hash,
+                        conferenceTitle: conferenceObject.title,
+                        conferenceDescription: conferenceObject.description
+                    });
+
+                    var conference = new Conference(conferenceObject);
+                    if (postBody.isQuickCall == 1) {
+                        return res.send(conferenceObject);
+                    } else {
+                        conference.save(function(err) {
+                            if (!err) {
+                                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                                addParticipants(participantsObject);
+                            }
+                            conferenceObject.isNew = true;
+                            return res.send(conferenceObject);
+                        });  
+                    } 
+                });
+            } else {
+                conference.isNew = false;
+                return res.send(conference);
             }
-            return res.send(conferenceObject);
-
-        });
-
-        
+        }
     });
 };
 
-
-/*
-API Call: "/2013-04-23/conference/invite" to send an invite for a conference to someone, data will be in POST data
-[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
-*/
-exports.invite = function(req, res) {
-    if(req.method == 'POST') {
+exports.phoneConfirmation = function(req, res) {
+    if (req.method == 'POST') {
         var postBody = req.body;
-
-        if(postBody.conferenceCode && postBody.attendees) {
-            // Add participants to db
-            var participantsObject = {conferenceCode: postBody.conferenceCode, participants: postBody.attendees}
-            addParticipants(participantsObject);
-
-            // Send invite to participants
-            // invite blah blah
-
-            return res.send(participantsObject);
+        if (postBody.phoneNumber) {
+            var toPhone = postBody.phoneNumber;
+            var code = Math.floor(Math.random() * 9000) + 1000; // Generate random 4 digit number.
+            var message = code + " - your CallIn confirmation code.";
+            var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+            client.sendSms({
+                to: toPhone,
+                from: TWILIO_NUMBER,
+                body: message
+            }, function(err, responseData) {
+                if (!err) {
+                    console.log("SMS delivered for " + toPhone);
+                    return res.send({phoneNumber: toPhone,
+                                     code: code});
+                } else {
+                    console.log(err);
+                    return res.send(400, {error: err,
+                                          reqBody: req.body});
+                }
+            });
         } else {
-            var err = {message: "Could not invite, did you POST the conferenceCode and array of invitees?"};
-            return res.send(err);
-        }
-    } else {
-        var err = {message: "This API is POST only, please POST your invitee data"};
-        return res.send(err);
-    }
+            return res.send(400, {error: "Missing phone number.",
+                                  reqBody: req.body});
+        };
+    };
 };
 
+exports.smsAlert = function(req, res) {
+    if (req.method == 'POST') {
+        var postBody = req.body;
+        if (postBody.conferenceCode && postBody.toPhoneNumber) {
+
+            var initiator = postBody.initiator || "";
+            var conferencePhoneNumber = postBody.phoneNumber || "";
+            var conferenceCode = postBody.conferenceCode || "";
+            var eventTitle = postBody.title || "";
+            var startTime = stringifyTimeObject(postBody.startTime);
+            var messageType = postBody.messageType || "";
+            var toPhoneNumber = postBody.toPhoneNumber || "";
+
+            var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+            var message;
+            if (messageType == 'invite') {
+                message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
+                                    + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
+            } else if (messageType == 'alert') {
+                message = "From CallinApp: " + initiator + " is running late to your upcoming conference '" + eventTitle + "'";
+            } else {
+                var response = {"meta": {"code": 404},
+                             "message": "Invalid message type"};
+                return res.send(404, response);
+            }
+            if (toPhoneNumber) {
+                client.sendSms({
+                    to: toPhoneNumber,
+                    from: TWILIO_NUMBER,
+                    body: message
+                }, function(err, responseData) {
+                    if (!err) {
+                        var response = {"meta": {"code": 200},
+                         "message": "Finished SMS for " + toPhoneNumber};
+                        return res.send(response);
+                    } else {
+                        console.log(err);
+                        var response = {"meta": {"code": 404},
+                        "message": "Error sending sms"};
+                        return res.send(404, response);
+                    }
+                });
+            } else {
+                var response = {"meta": {"code": 404},
+                         "message": "Invalid phone number."};
+                return res.send(404, response);
+            } 
+        } else {
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and phone number?"};
+            return res.send(400, err);
+        } 
+    } else {
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
+        return res.send(400, err);
+    }
+}
+
+/*
+API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference to someone, data will be in POST data
+[Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
+*/
+exports.emailAlert = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        console.log(postBody);
+        if(postBody.conferenceCode && postBody.toEmail) {
+
+            var initiator = postBody.initiator || "";
+            var conferencePhoneNumber = postBody.phoneNumber || "";
+            var conferenceCode = postBody.conferenceCode || "";
+            var eventTitle = postBody.title || "";
+            var startTime = stringifyTimeObject(postBody.startTime);
+            var messageType = postBody.messageType || "";
+            var toEmail = postBody.toEmail; 
+
+            var user, key; 
+            if(!process.env.SENDGRID_USERNAME) {
+                user = kSendGridUser
+            } else {
+               user = process.env.SENDGRID_USERNAME;
+            }
+            if(!process.env.SENDGRID_PASSWORD) {
+                key = kSendGridKey;
+            } else {
+                key = process.env.SENDGRID_PASSWORD;
+            }
+            var sendgrid = new SendGrid(user, key);
+
+            var sender, msgSubject, content;
+            if(messageType == 'invite') {
+                sender = 'Invite@CallInapp.com';
+                msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
+                content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
+                    + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
+                    + "With code: " + conferenceCode + ".\n";
+            } else if (messageType == 'alert') {
+                sender = 'Alert@CallInapp.com';
+                msgSubject = initiator + " is running late to your event: " + eventTitle; 
+                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
+                        + " is running late and will be joining the call as soon as possible.\n\n"
+                        + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
+                        + "With code: " + conferenceCode + ".\n";
+            }
+
+            var email = new Email({
+                to: toEmail,
+                from: sender,
+                replyto: initiator,
+                subject: msgSubject,
+                text: content
+            });
+            sendgrid.send(email, function(success, message) {
+                if(!success) {
+                    var response = {"meta": {"code": 404},
+                                 "message": "Invitation delivery failed. " + message};
+                    return res.send(404, response);
+                } else {
+                    var response = {"meta": {"code": 200},
+                                 "message": "Invite delivered to :" + toEmail};    
+                    return res.send(response);
+                }
+            });
+        } else {
+            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
+            return res.send(400, err);
+        }
+    } else {
+        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
+        return res.send(400, err);
+    }
+};
 
 /*
 API Call: "/2013-04-23/conference/join" to join a conference
@@ -161,15 +343,44 @@ exports.join = function(req, res) {
                     }
                 });
 
+
+                // Simple user tracking - # of conferences each phone number joins
+                SimpleUser.findOne({'phone': fromPhoneNumber}, function(err_s, simpleUser) {
+                    if(!err_s && simpleUser) {
+                        simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                        // Mixpanel increment conferencesJoined
+                        mixpanel.people.increment("" + fromPhoneNumber, "conferencesJoined");
+                    } else if(!err_s) {
+                        simpleUser = new SimpleUser({phone: fromPhoneNumber, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                        // Mixpanel create user
+                        mixpanel.people.set("" + fromPhoneNumber, {
+                            conferencesJoined: 1
+                        });
+                    }
+
+                    simpleUser.save();
+                });
+
+
+                // Mixpanel
+                mixpanel.track("conference join", {
+                    conferenceCode: conferenceCode,
+                    phoneNumber: fromPhoneNumber
+                });
+
                 var conferenceName = conference.id;
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
+                // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
     } else {
-        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say>Sorry, there has been an error.</Say></Response>");
+        // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
     }
 };
 
@@ -224,9 +435,9 @@ exports.twilio = function(req, res) {
         return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
     } else {
         if(req.query.From) {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         } else {
-            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say>Please enter the conference code.</Say></Gather></Response>");
+            return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
         }
     }
 };
@@ -242,23 +453,25 @@ function addParticipants(participantsObject) {
         // Make sure conference exists
         Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
             if(!err && conference) {
-                console.log(participantsObject);
-                console.log(participantsObject.participants.length);
-                // Add participants to conference
-                for(var i = 0; i < participantsObject.participants.length; i++) {
-                    p = participantsObject.participants[i];
-                    console.log(p);
-                    var participantObject = {
-                        phone: p.phone,
-                        email: p.email,
-                        displayName: p.displayName,
-                        conferenceCode: conferenceCode,
-                        status: "inactive"
-                    };
 
-                    var participant = new Participant(participantObject);
-                    participant.save();
+                // Add participants to conference
+                if(participantsObject.participants) {
+                    for(var i = 0; i < participantsObject.participants.length; i++) {
+                        p = participantsObject.participants[i];
+                        console.log(p);
+                        var participantObject = {
+                            phone: p.phone,
+                            email: p.email,
+                            displayName: p.displayName,
+                            conferenceCode: conferenceCode,
+                            status: "inactive"
+                        };
+
+                        var participant = new Participant(participantObject);
+                        participant.save();
+                    }
                 }
+                
             } else {
                 console.log(conference);
             }
@@ -299,3 +512,19 @@ function generateConferenceCode() {
         }
     });
 };
+
+/*todo: helper function fwrite additional logic here to format the readable string according */
+function stringifyTimeObject(timeObject) {
+    if(timeObject) {
+        var date = new Date(timeObject.dateTime);
+        return date.toString();
+    } else {
+        return "";
+    }    
+ }
+
+
+
+ // take in phone number, generate 4 digit code. respond with code.
+ // text it as well
+
