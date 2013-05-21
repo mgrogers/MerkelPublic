@@ -94,6 +94,7 @@ static NSString * const kInviteMessageType = @"invite";
     [self configureFlatButton:self.lateButton withColor:[UIColor bmwRedColor]];
     [self createAndAddTimeIndicatorView];
     [self createAndAddLineSeparatorView];
+    [self synchronizeUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -135,6 +136,7 @@ static NSString * const kInviteMessageType = @"invite";
     self.timeIndicatorView.borderColor = [UIColor clearColor];
     self.timeIndicatorView.trackColor = [UIColor whiteColor];
     self.timeIndicatorView.labelColor = [UIColor clearColor];
+    self.timeIndicatorView.timeIndicatorColor = [UIColor bmwGreenColor];
     self.timeIndicatorView.labelFontColor = [UIColor bmwLightGrayColor];
     self.timeIndicatorView.startTime = self.event.startDate;
     self.timeIndicatorView.endTime = self.event.endDate;
@@ -165,6 +167,15 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)synchronizeUI {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        if([BMWPhone sharedPhone].currentCallEvent) {
+            if ([BMWPhone sharedPhone].currentCallEvent != self.event) {
+                [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateDisabled];
+                self.joinCallButton.enabled = NO;
+            }
+        }
+        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+        [self.joinCallButton setFaceColor:[UIColor bmwRedColor] forState:UIControlStateNormal];
+        [self.joinCallButton setNeedsDisplay];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         if ([BMWPhone sharedPhone].isSpeakerEnabled) {
             self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
@@ -177,7 +188,14 @@ static NSString * const kInviteMessageType = @"invite";
             [self.lateButton setTitle:@"Mute" forState:UIControlStateNormal];
         }
         self.lateButton.enabled = YES;
+        
+        
     } else {
+        self.joinCallButton.enabled = YES;
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+        [self.joinCallButton setFaceColor:[UIColor bmwGreenColor] forState:UIControlStateNormal];
+        [self.joinCallButton setNeedsDisplay];
+
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [self.lateButton setTitle:@"I'm Late" forState:UIControlStateNormal];
@@ -200,6 +218,7 @@ static NSString * const kInviteMessageType = @"invite";
         [BMWPhone sharedPhone].currentCallEvent = nil;
         [BMWPhone sharedPhone].currentCallCode = nil;
         [[BMWPhone sharedPhone] disconnect];
+        [self synchronizeUI];
     } else {
         [self startCall];
     }
@@ -294,20 +313,16 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[BMWPhone sharedPhone] setSpeakerEnabled:YES];
-        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
         [self synchronizeUI];
     });
-    
 }
 
 - (void)connectionDidDisconnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         [BMWPhone sharedPhone].speakerEnabled = NO;
         [BMWPhone sharedPhone].muted = NO;
         [self synchronizeUI];
     });
-    
 }
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
