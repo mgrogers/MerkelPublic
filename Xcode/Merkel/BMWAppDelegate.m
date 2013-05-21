@@ -43,6 +43,8 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
     self.revealController = (PKRevealController *)self.window.rootViewController;
     UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNav"];
     [self.revealController setFrontViewController:frontViewController];
+    UITableViewController *menuTVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuTVC"];
+    [self.revealController setLeftViewController:menuTVC];
     [BMWAppearances setupAppearance];
     [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
     return YES;
