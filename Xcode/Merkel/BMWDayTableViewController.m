@@ -72,6 +72,7 @@ static const NSInteger kTableCellRowHeight = 88;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
     button.backgroundColor = [UIColor clearColor];
+    [button addTarget:self action:@selector(menuButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] forState:UIControlStateNormal];
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -130,6 +131,11 @@ static const NSInteger kTableCellRowHeight = 88;
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
     }
+}
+
+- (void)menuButtonPressed {
+    PKRevealController *revealController = (PKRevealController *)self.navigationController.revealController;
+    [revealController showViewController:revealController.leftViewController];
 }
 
 - (void)callButtonPressed {

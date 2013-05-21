@@ -21,4 +21,5 @@
     #import "BMWAnalytics.h"
     #import <KGStatusBar/KGStatusBar.h>
     #import "KGStatusBar+BMWNotifications.h"
+    #import "PKRevealController.h"
 #endif
