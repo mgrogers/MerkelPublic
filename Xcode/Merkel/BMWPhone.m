@@ -24,6 +24,7 @@
 @implementation BMWPhone
 
 @synthesize speakerEnabled = _speakerEnabled;
+@synthesize muted = _muted;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
@@ -76,6 +77,17 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     _speakerEnabled = isSpeakerEnabled;
     UInt32 route = (_speakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
     AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
+}
+
+- (BOOL)isMuted {
+    if (self.connection) {
+        return self.connection.muted;
+    }
+    return NO;
+}
+
+- (void)setMuted:(BOOL)muted {
+    self.connection.muted = muted;
 }
 
 - (BMWPhoneStatus)status {

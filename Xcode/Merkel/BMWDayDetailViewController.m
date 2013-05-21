@@ -109,6 +109,7 @@ static NSString * const kInviteMessageType = @"invite";
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
     }
     [self configureLabels];
+    [self synchronizeUI];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -170,9 +171,21 @@ static NSString * const kInviteMessageType = @"invite";
         } else {
             self.navigationItem.rightBarButtonItem = self.speakerButton;
         }
+        if ([BMWPhone sharedPhone].isMuted) {
+            [self.lateButton setTitle:@"Unmute" forState:UIControlStateNormal];
+        } else {
+            [self.lateButton setTitle:@"Mute" forState:UIControlStateNormal];
+        }
+        self.lateButton.enabled = YES;
     } else {
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
+        [self.lateButton setTitle:@"I'm Late" forState:UIControlStateNormal];
+        if (self.event.attendees.count < 1) {
+            self.lateButton.enabled = NO;
+        } else {
+            self.lateButton.enabled = YES;
+        }
     }
 }
 
@@ -193,34 +206,40 @@ static NSString * const kInviteMessageType = @"invite";
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
-    [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
-        for (int i = 0; i < [attendees count]; i++) {
-            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
-            NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
-            
-            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        self.event.title, @"title",
-                                        self.event.startDate, @"startTime",
-                                        self.phoneNumber, @"phoneNumber",
-                                        self.conferenceCode, @"conferenceCode",
-                                        attendeePhone, @"toPhoneNumber",
-                                        attendeeEmail, @"toEmail",
-                                        kAlertMessageType, @"messageType",
-                                        [PFUser currentUser].email, @"initiator",nil];
-            
-            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Alert success with response %@", responseObject);
-                self.lateButton.enabled = NO;
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending sms message. Attempting email. %@", [error localizedDescription]);
-                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        BOOL currentMuteStatus = [BMWPhone sharedPhone].isMuted;
+        [BMWPhone sharedPhone].muted = !currentMuteStatus;
+        [self synchronizeUI];
+    } else {
+        [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
+            for (int i = 0; i < [attendees count]; i++) {
+                NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+                NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
+                
+                NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                            self.event.title, @"title",
+                                            self.event.startDate, @"startTime",
+                                            self.phoneNumber, @"phoneNumber",
+                                            self.conferenceCode, @"conferenceCode",
+                                            attendeePhone, @"toPhoneNumber",
+                                            attendeeEmail, @"toEmail",
+                                            kAlertMessageType, @"messageType",
+                                            [PFUser currentUser].email, @"initiator",nil];
+                
+                [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSLog(@"Alert success with response %@", responseObject);
+                    self.lateButton.enabled = NO;
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"Error sending message %@", [error localizedDescription]);
+                    NSLog(@"Error sending sms message. Attempting email. %@", [error localizedDescription]);
+                    [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        NSLog(@"Alert success with response %@", responseObject);
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        NSLog(@"Error sending message %@", [error localizedDescription]);
+                    }];
                 }];
-            }];
-        }
-    }];
+            }
+        }];
+    }
 }
 
 - (void)speakerButtonPressed:(id)sender {
@@ -270,8 +289,8 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[BMWPhone sharedPhone] setSpeakerEnabled:YES];
-        self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
         [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+        [self synchronizeUI];
     });
     
 }
@@ -279,9 +298,9 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)connectionDidDisconnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
-        self.navigationItem.rightBarButtonItem = self.speakerButton;
-        self.navigationItem.rightBarButtonItem.enabled = NO;
         [BMWPhone sharedPhone].speakerEnabled = NO;
+        [BMWPhone sharedPhone].muted = NO;
+        [self synchronizeUI];
     });
     
 }
@@ -293,6 +312,8 @@ static NSString * const kInviteMessageType = @"invite";
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
         [BMWPhone sharedPhone].speakerEnabled = NO;
+        [BMWPhone sharedPhone].muted = NO;
+        [self synchronizeUI];
     });
 }
 
