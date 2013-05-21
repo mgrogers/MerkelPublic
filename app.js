@@ -11,9 +11,10 @@ var express = require('express'),
     newrelic = require('newrelic'),
     url = require('url'),
     kue = require('kue'),
+    raven = require('raven'),
     // redis = require('kue/node_modules/redis'),
     sms = require('./routes/sms'),
-    conference = require('./routes/conference');
+    conference = require('./routes/conference'),
     webapp = require('./routes/webapp');
 
 var app = express();
@@ -34,7 +35,7 @@ app.use(express.session({
 app.use(app.router);
 app.use(express.errorHandler());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(raven.middleware.express(process.env.SENTRY_DSN || 'https://b711c48f3bc64b5aad61ea0aea49fc98:3d7677e9ed2b4534813c26715f9bb090@app.getsentry.com/8650'));
 // Define API URLS and destinations here.
 // GET
 app.get('/', routes.index);
