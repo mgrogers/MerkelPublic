@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2B1504461723494500957F8A /* BMWDayDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1504451723494500957F8A /* BMWDayDetailViewController.m */; };
-		2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359116D1B5D300A3B339 /* BMWAppKit.framework */; };
 		2B1A359416D1B5D400A3B339 /* BMWAppKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2B1A359216D1B5D300A3B339 /* BMWAppKitResources.bundle */; };
 		2B1A359F16D1B67D00A3B339 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A359E16D1B67D00A3B339 /* ImageIO.framework */; };
 		2B1A35A116D1B68400A3B339 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1A35A016D1B68400A3B339 /* ExternalAccessory.framework */; };
@@ -341,7 +340,6 @@
 				4B77FE0E16C6F2AF00426018 /* CoreGraphics.framework in Frameworks */,
 				4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */,
 				4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */,
-				2B1A359316D1B5D300A3B339 /* BMWAppKit.framework in Frameworks */,
 				4BFB654616F660A5009E199D /* libGoogleAnalytics.a in Frameworks */,
 				4B37025717233CAD00ACAAED /* libTwilioClient.a in Frameworks */,
 				4B37025C17233CC300ACAAED /* libcrypto.a in Frameworks */,
