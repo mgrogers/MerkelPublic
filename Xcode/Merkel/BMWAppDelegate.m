@@ -11,7 +11,6 @@
 #import "BMWAppearances.h"
 #import "BMWCalendarAccess.h"
 #import "BMWPhone.h"
-#import "BMWManager.h"
 #import "BMWViewController.h"
 #import <NewRelicAgent/NewRelicAgent.h>
 #import <PKRevealController/PKRevealController.h>
