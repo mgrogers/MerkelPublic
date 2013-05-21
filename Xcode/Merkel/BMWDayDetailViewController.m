@@ -90,8 +90,8 @@ static NSString * const kInviteMessageType = @"invite";
     self.navigationItem.rightBarButtonItem = self.speakerButton;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [self setupLabels];
-    [self configureFlatButton:self.joinCallButton withColor:[UIColor redColor]];
-    [self configureFlatButton:self.lateButton withColor:[UIColor redColor]];
+    [self configureFlatButton:self.joinCallButton withColor:[UIColor bmwGreenColor]];
+    [self configureFlatButton:self.lateButton withColor:[UIColor bmwRedColor]];
     [self createAndAddTimeIndicatorView];
     [self createAndAddLineSeparatorView];
 }
@@ -307,7 +307,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Connection failure: %@", error);
+        NSLog(@"VOIP connection failure: %@", error);
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
