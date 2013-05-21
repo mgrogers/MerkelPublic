@@ -34,6 +34,7 @@ var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
+    creationDate: {type: Date, default: ""},
     status: {type: String, default: "inactive"},
     title: {type: String, default: ""},
     description: {type: String, default: ""},
@@ -88,51 +89,82 @@ exports.capability = function(req, res) {
 API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
+
+var conferenceSchema = new Schema({
+    conferenceCode: {type: String, default: ""},
+    eventId: {type: String, default: ""},
+    creatorId: {type: String, default: ""},
+    status: {type: String, default: "inactive"},
+    title: {type: String, default: ""},
+    description: {type: String, default: ""},
+    start: {type: Date, default: ""},
+    timeZone: {type: String, default: "America/Los_Angeles"},
+    sms: {type: Boolean, default: false},
+    email: {type: Boolean, default: false} // 'active' or 'inactive'
+});
+
+
 exports.create = function(req, res) {
-    Conference.find(function(err, conferences) {
-        var hash = 0;
-        if (!err) {
-            var numConferences = conferences.length;
-            hash = hashids.encrypt(numConferences);
+    var postBody = req.body;
+
+    Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
+        if(err) {
+            return res.send(400, {error: err,
+                                          reqBody: req.body});
         } else {
-            hash = hashids.encrypt(0);
-        }
+            console.log(conference);
+            if(!conference) {
+                Conference.find(function(err, conferences) {
+                    var hash = 0;
+                    if (!err) {
+                        var numConferences = conferences.length;
+                        hash = hashids.encrypt(numConferences);
+                    } else {
+                        hash = hashids.encrypt(0);
+                    }
 
-        var conferenceObject = {};
-        var postBody = req.body;
+                    var conferenceObject = {};
+                    var postBody = req.body;
 
-        if (postBody) {
-            conferenceObject.conferenceCode = hash;
-            conferenceObject.status = "inactive";
-            conferenceObject.title = postBody.title || "";
-            conferenceObject.description = postBody.description || "";
-            if (postBody.start) conferenceObject.start = postBody.start.datetime;
-            else conferenceObject.start = "";
-            if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
-            else conferenceObject.timeZone = "";
-            if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
-            else conferenceObject.sms = false;
-            if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
-            else conferenceObject.email = false;
-        } else {
-            conferenceObject = {conferenceCode: hash};
-        }
-        
-        // Mixpanel
-        mixpanel.track("conference create", {
-            conferenceCode: hash,
-            conferenceTitle: conferenceObject.title,
-            conferenceDescription: conferenceObject.description
-        });
+                    if (postBody) {
+                        conferenceObject.conferenceCode = hash;
+                        conferenceObject.status = "inactive";
+                        conferenceObject.title = postBody.title || "";
+                        conferenceObject.creatorId = postBody.initiator || "";
+                        conferenceObject.creationDate = postBody.creationDate || "";
+                        conferenceObject.description = postBody.description || "";
+                        if (postBody.start) conferenceObject.start = postBody.start.datetime;
+                        else conferenceObject.start = "";
+                        if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
+                        else conferenceObject.timeZone = "";
+                        if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+                        else conferenceObject.sms = false;
+                        if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+                        else conferenceObject.email = false;
+                    } else {
+                        conferenceObject = {conferenceCode: hash};
+                    }
+                    
+                    // Mixpanel
+                    mixpanel.track("conference create", {
+                        conferenceCode: hash,
+                        conferenceTitle: conferenceObject.title,
+                        conferenceDescription: conferenceObject.description
+                    });
 
-        var conference = new Conference(conferenceObject);
-        conference.save(function(err) {
-            if (!err) {
-                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-                addParticipants(participantsObject);
+                    var conference = new Conference(conferenceObject);
+                    conference.save(function(err) {
+                        if (!err) {
+                            var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                            addParticipants(participantsObject);
+                        }
+                        return res.send(conferenceObject);
+                    });   
+                });
+            } else {
+                return res.send(conference);
             }
-            return res.send(conferenceObject);
-        });   
+        }
     });
 };
 
@@ -185,7 +217,7 @@ exports.smsAlert = function(req, res) {
                 message = initiator + " invited you to a conference call via Callin. Download the app " + downloadURL 
                                     + " or dial-in at: " + conferencePhoneNumber + ",,," + conferenceCode + "#";
             } else if (messageType == 'alert') {
-                message = "From CallinApp:" + initiator + " is running late to your upcoming conference " + eventTitle;
+                message = "From CallinApp: " + initiator + " is running late to your upcoming conference '" + eventTitle + "'";
             } else {
                 var response = {"meta": {"code": 404},
                              "message": "Invalid message type"};
@@ -260,14 +292,14 @@ exports.emailAlert = function(req, res) {
                 msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
                 content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
                     + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
-                    + "With code: #" + conferenceCode + ".\n";
+                    + "With code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'Alert@CallInapp.com';
                 msgSubject = initiator + " is running late to your event: " + eventTitle; 
                 content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
                         + " is running late and will be joining the call as soon as possible.\n\n"
                         + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
-                        + "With code: #" + conferenceCode + ".\n";
+                        + "With code: " + conferenceCode + ".\n";
             }
 
             var email = new Email({
@@ -351,10 +383,10 @@ exports.join = function(req, res) {
                 });
 
                 var conferenceName = conference.id;
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to call in. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceName + "</Conference></Dial></Response>");
             } else {
                 // Prompt for conference code again
-                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to call in. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
+                return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Welcome to Call In. You will now be entered into the conference.</Say><Dial><Conference>" + conferenceCode + "</Conference></Dial></Response>");
                 // return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Sorry, there has been an error.</Say></Response>");
             }
         });
