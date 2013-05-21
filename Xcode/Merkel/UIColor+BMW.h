@@ -11,6 +11,7 @@
 @interface UIColor (BMW)
 
 + (instancetype)bmwRedColor;
++ (instancetype)bmwDarkRedColor;
 + (instancetype)bmwGreenColor;
 + (instancetype)bmwLightBlueColor;
 + (instancetype)bmwDarkBlueColor;

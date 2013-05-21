@@ -8,30 +8,49 @@
 
 #import "BMWMenuTableViewController.h"
 
+#import <QBFlatButton.h>
+
 @interface BMWMenuTableViewController ()
+
+@property (nonatomic, strong) QBFlatButton *logoutButton;
 
 @end
 
 @implementation BMWMenuTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self sharedInitializer];
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self sharedInitializer];
+    }
+    return self;
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)sharedInitializer {
+    self.logoutButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
+    [self.logoutButton setFaceColor:[UIColor bmwRedColor]];
+    [self.logoutButton setSideColor:[UIColor bmwDarkRedColor]];
+    self.logoutButton.radius = 2.0;
+    self.logoutButton.depth = 4.0;
+    self.logoutButton.margin = 4.0;
+    [self.logoutButton setTitle:@"Log out" forState:UIControlStateNormal];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    self.tableView.backgroundColor = [UIColor bmwLightBlueColor];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.scrollEnabled = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,27 +61,38 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 2;
 }
+
+static NSString * const kMyNumberText = @"My Number: ";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont boldFontOfSize:18.0];
+    CGRect buttonFrame = CGRectInset(cell.contentView.frame, 5.0, 5.0);
+    buttonFrame.size.width = 270.0;
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = kMyNumberText;
+            if ([[PFUser currentUser] objectForKey:@"phone"]) {
+                cell.textLabel.text = [cell.textLabel.text stringByAppendingString:[[PFUser currentUser] objectForKey:@"phone"]];
+            }
+            break;
+        case 1:
+            self.logoutButton.frame = buttonFrame;
+            [cell.contentView addSubview:self.logoutButton];
+            break;
+        default:
+            break;
+    }
     return cell;
 }
 
