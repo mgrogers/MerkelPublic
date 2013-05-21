@@ -131,8 +131,6 @@ static const NSInteger kTableCellRowHeight = 88;
 //    [self presentViewController:picker animated:YES completion:nil];
 
 //    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
-    
-    
 }
 
 - (void)currentCallButtonPressed {
@@ -151,9 +149,7 @@ static const NSInteger kTableCellRowHeight = 88;
 - (void)endCallButtonPressed {
     [[BMWPhone sharedPhone] disconnect];
     
-    
     // const CGFloat kTitleFontSize = 10.0;
-    
     // UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 30.0, 19.0)];
     // UILabel *title_text = [[UILabel alloc] init];
     // title_text.text = @"Create";
@@ -226,7 +222,7 @@ static const NSInteger kTableCellRowHeight = 88;
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -282,7 +278,7 @@ static const NSInteger kTableCellRowHeight = 88;
     [self updateTableViewCalendarEvents];
 }
 
-#pragma mark - UITableViewDataDelegate protocol methods
+#pragma mark - BMWSlidingCellDelegate protocol methods
 
 /* Start a conference call */
 - (void)handleLeftSwipe:(id)cellItem {
