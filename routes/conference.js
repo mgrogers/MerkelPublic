@@ -319,6 +319,151 @@ exports.emailAlert = function(req, res) {
 };
 
 /*
+API Call: "/2013-4-23/conference/joined" to notify the server
+that you have joined a conference call, primarily for VoIP calls
+[Post Body conferenceCode]: the conference code that the attendee joined
+[Post Body attendee]: the attendee info object of the person that joined.
+    This can include any information that is relevant, and may look like:
+        {
+            "displayName": "",
+            "phone": "15551234567",
+            "email": "bill@gmail.com"
+        }
+    The joined method will try to find the attendee in the database,
+    and if it can't, will add a new one to the call
+*/
+exports.joined = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        var conferenceCode = postBody.conferenceCode
+        if (conferenceCode) {
+            Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+                console.log("Searched for conference " + conferenceCode);
+                if(!err && conference) {
+                    attendee = postBody.attendee;
+                    console.log("Found conference");
+                    console.log(postBody);
+
+                    var searchCriteria = [];
+                    if (attendee.phone) {
+                        searchCriteria.push({'phone': attendee.phone});
+                    }
+                    if (attendee.displayName) {
+                        searchCriteria.push({"displayName": attendee.displayName});
+                    }
+                    if (attendee.email) {
+                        searchCriteria.push({"email": attendee.email});
+                    }
+
+                    // Change participant designated by "attendee.phone" or "attendee.email" or "attendee.displayName" status to 'active'
+                    // If participant doesn't exist, add new participant
+                    Participant.findOne({
+                                            'conferenceCode': conferenceCode,
+                                            $or: searchCriteria
+                                        }, 
+                                        function(err_p, participant) {
+                        if(!err_p && participant) {
+                            console.log("Found participant");
+                            participant.status = 'active';
+                            participant.save();
+                        } else {
+                            console.log("Didn't find participant");
+                            if (attendee.phone || attendee.email || attendee.displayName) {
+                                var participantObject = {phone: attendee.phone, 
+                                                        conferenceCode: conferenceCode, 
+                                                        displayName: attendee.displayName,
+                                                        email: attendee.email, 
+                                                        status: "active"};
+                                participant = new Participant(participantObject);
+                                participant.save();
+                            } 
+                        }
+                    });
+
+
+                    // Simple user tracking - # of conferences each phone number joins
+                    SimpleUser.findOne({'phone': attendee.phone}, function(err_s, simpleUser) {
+                        if(!err_s && simpleUser) {
+                            simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                            // Mixpanel increment conferencesJoined
+                            mixpanel.people.increment("" + attendee.phone, "conferencesJoined");
+                        } else if(!err_s) {
+                            simpleUser = new SimpleUser({phone: attendee.phone, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                            // Mixpanel create user
+                            mixpanel.people.set("" + attendee.phone, {
+                                conferencesJoined: 1
+                            });
+                        }
+
+                        simpleUser.save();
+                    });
+
+
+                    // Mixpanel
+                    mixpanel.track("conference join", {
+                        conferenceCode: conferenceCode,
+                        phoneNumber: attendee.phone
+                    });
+
+                    var conferenceName = conference.id;
+                    return res.send("Success");
+                } else {
+                    return res.send("Failure - no conference");
+                }
+            });
+        }
+    }
+}
+
+exports.left = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        var conferenceCode = postBody.conferenceCode
+        if (conferenceCode) {
+            Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+                console.log("Searched for conference " + conferenceCode);
+                if(!err && conference) {
+                    attendee = postBody.attendee;
+                    console.log("Found conference");
+                    console.log(postBody);
+
+                    // Change participant designated by "attendee.phone" or "attendee.email" or "attendee.displayName" status to 'active'
+                    // If participant doesn't exist, add new participant
+                    var searchCriteria = [];
+                    if (attendee.phone) {
+                        searchCriteria.push({'phone': attendee.phone});
+                    }
+                    if (attendee.displayName) {
+                        searchCriteria.push({"displayName": attendee.displayName});
+                    }
+                    if (attendee.email) {
+                        searchCriteria.push({"email": attendee.email});
+                    }
+
+                    Participant.findOne({
+                                            'conferenceCode': conferenceCode,
+                                            $or: searchCriteria
+                                        }, 
+                                        function(err_p, participant) {
+                        if(!err_p && participant) {
+                            console.log("Found participant");
+                            participant.status = 'inactive';
+                            participant.save();
+                        }
+                    });
+
+                    return res.send("Success");
+                } else {
+                    return res.send("Failure - no conference");
+                }
+            });
+        }
+    }
+}
+
+/*
 API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
 */

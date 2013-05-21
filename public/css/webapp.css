@@ -24,7 +24,13 @@ body {
     padding-top: 5px;
 }
 
-.title #call-status {
+.centered {
+    float-left: auto;
+    float-right: auto;
+    text-align: center;
+}
+
+#call-status {
     text-align: center;
 }
 

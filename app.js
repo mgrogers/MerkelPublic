@@ -54,6 +54,8 @@ app.post('/' + API_VERSION + '/conference/create', conference.create);
 app.post('/' + API_VERSION + '/conference/email', conference.emailAlert);
 app.post('/' + API_VERSION + '/conference/sms', conference.smsAlert);
 app.post('/' + API_VERSION + '/conference/phoneConfirmation', conference.phoneConfirmation);
+app.post('/' + API_VERSION + '/conference/joined', conference.joined);
+app.post('/' + API_VERSION + '/conference/left', conference.left);
 
 // // Kue & Redis for sending SMS
 // kue.redis.createClient = function() {
