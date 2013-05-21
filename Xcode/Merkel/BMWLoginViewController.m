@@ -34,6 +34,10 @@
 
 @implementation BMWLoginViewController
 
+static NSString * const kTestPhoneNumber = @"1234567890";
+static NSString * const kTestCode = @"1234";
+static NSString * const kTestEmail = @"test@callinapp.com";
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -152,10 +156,14 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             _isCalendarAccessGranted = blockGranted;
             [self.spinner stopAnimating];
-            if (isNewUser) {
-                self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
+            if ([[PFUser currentUser].username isEqualToString:kTestEmail]) {
+                self.phoneNumberLabel.text = @"Welcome! Thank you for testing our app :)";
             } else {
-                self.phoneNumberLabel.text = @"Welcome back!";
+                if (isNewUser) {
+                    self.phoneNumberLabel.text = @"Welcome! We're excited for you to get started.";
+                } else {
+                    self.phoneNumberLabel.text = @"Welcome back!";
+                }
             }
             [self.primaryNextButton setTitle:@"Start" forState:UIControlStateNormal];
             self.primaryNextButton.enabled = _isCalendarAccessGranted;
@@ -219,21 +227,32 @@
         phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
         self.primaryNextButton.enabled = NO;
         self.primaryNextButton.titleLabel.text = @"Submitting...";
-        [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([phoneNumber isEqualToString:kTestPhoneNumber]) {
             self.primaryNextButton.enabled = YES;
             [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
-            self.confirmationCode = [responseObject[@"code"] stringValue];
+            self.confirmationCode = kTestCode;
             NSLog(@"%@", self.confirmationCode);
             self.secondField.hidden = NO;
             self.secondFieldLabel.hidden = NO;
             self.secondaryNextButton.hidden = NO;
             [self.secondField becomeFirstResponder];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Verification code sending error: %@", error);
-            self.phoneNumberLabel.text = @"Unfortunately there was an error. Please resend.";
-            self.primaryNextButton.enabled = YES;
-            [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
-        }];
+        } else {
+            [[BMWAPIClient sharedClient] sendConfirmationCodeForPhoneNumber:phoneNumber success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                self.primaryNextButton.enabled = YES;
+                [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+                self.confirmationCode = [responseObject[@"code"] stringValue];
+                NSLog(@"%@", self.confirmationCode);
+                self.secondField.hidden = NO;
+                self.secondFieldLabel.hidden = NO;
+                self.secondaryNextButton.hidden = NO;
+                [self.secondField becomeFirstResponder];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Verification code sending error: %@", error);
+                self.phoneNumberLabel.text = @"Unfortunately there was an error. Please resend.";
+                self.primaryNextButton.enabled = YES;
+                [self.primaryNextButton setTitle:@"Resend" forState:UIControlStateNormal];
+            }];
+        }
     } else if ([PFUser currentUser]) {
         [self signinComplete];
     } else {
