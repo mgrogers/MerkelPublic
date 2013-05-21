@@ -135,6 +135,7 @@ static NSString * const kInviteMessageType = @"invite";
     self.timeIndicatorView.borderColor = [UIColor clearColor];
     self.timeIndicatorView.trackColor = [UIColor whiteColor];
     self.timeIndicatorView.labelColor = [UIColor clearColor];
+    self.timeIndicatorView.timeIndicatorColor = [UIColor bmwGreenColor];
     self.timeIndicatorView.labelFontColor = [UIColor bmwLightGrayColor];
     self.timeIndicatorView.startTime = self.event.startDate;
     self.timeIndicatorView.endTime = self.event.endDate;
