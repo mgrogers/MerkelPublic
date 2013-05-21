@@ -68,13 +68,24 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     static NSString * const kBMWNewConferencePath = @"conference/create";
+    
+    NSNumber *isQuickCall = [NSNumber numberWithBool:NO];
+    if ([event.title isEqual: @"Quick Call"]) isQuickCall = [NSNumber numberWithBool:YES];
+
+    NSObject *eventNotes = event.notes;
+    if (!eventNotes) {
+        eventNotes = [NSNull null];
+    }
+
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 event.title, @"title",
-                                event.notes, @"description",
-                                event.startDate, @"start",
+                                event.startDate, @"startTime",
                                 event.creationDate, @"creationDate",
+                                attendeesArray, @"attendees",
                                 [PFUser currentUser].email, @"initiator",
-                                attendeesArray, @"attendees", nil];
+                                isQuickCall, @"isQuickCall",
+                                eventNotes, @"description", nil];
+    
     [self postPath:kBMWNewConferencePath
         parameters:parameters
            success:success
