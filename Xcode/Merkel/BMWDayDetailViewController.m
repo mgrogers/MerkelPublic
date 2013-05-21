@@ -279,9 +279,14 @@ static NSString * const kInviteMessageType = @"invite";
     NSString *codetoCall = self.conferenceCodeLabel.text;
     if(codetoCall) {
         [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
-        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-        [BMWPhone sharedPhone].currentCallEvent = self.event;
-        [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
+        if ([BMWPhone sharedPhone].isReady) {
+            [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+            [BMWPhone sharedPhone].currentCallEvent = self.event;
+            [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
+        } else {
+            NSString *dialString = [NSString stringWithFormat:@"tel:%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, codetoCall];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:dialString]];
+        }
     }
 }
 
