@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BMWCalendarAccess.h"
 
-@interface BMWDayTableViewController : UITableViewController 
+@interface BMWDayTableViewController : UITableViewController
+
+- (void)presentLoginView;
 
 @end
