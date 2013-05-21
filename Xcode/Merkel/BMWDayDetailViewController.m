@@ -25,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
 @property (strong, nonatomic) UIBarButtonItem *speakerButton, *activeSpeakerButton;
 @property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
+@property (strong, nonatomic) NSDate *callStartDate;
 
 @end
 
@@ -218,6 +219,8 @@ static NSString * const kInviteMessageType = @"invite";
         [BMWPhone sharedPhone].currentCallEvent = nil;
         [BMWPhone sharedPhone].currentCallCode = nil;
         [[BMWPhone sharedPhone] disconnect];
+        NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:self.callStartDate];
+        [BMWAnalytics mixpanelTrackVOIPCall:duration];
         [self synchronizeUI];
     } else {
         [self startCall];
@@ -281,9 +284,11 @@ static NSString * const kInviteMessageType = @"invite";
         [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
         if ([BMWPhone sharedPhone].isReady) {
             [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+            self.callStartDate = [NSDate date];
             [BMWPhone sharedPhone].currentCallEvent = self.event;
             [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
         } else {
+            [BMWAnalytics mixpanelTrackPhoneDial];
             NSString *dialString = [NSString stringWithFormat:@"tel:%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, codetoCall];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:dialString]];
         }
