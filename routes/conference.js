@@ -38,7 +38,7 @@ var conferenceSchema = new Schema({
     status: {type: String, default: "inactive"},
     title: {type: String, default: ""},
     description: {type: String, default: ""},
-    start: {type: Date, default: ""},
+    startTime: {type: Date, default: ""},
     timeZone: {type: String, default: "America/Los_Angeles"},
     sms: {type: Boolean, default: false},
     email: {type: Boolean, default: false} // 'active' or 'inactive'
@@ -90,23 +90,8 @@ API Call: "/2013-04-23/conference/create" to generate a new conference, data for
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
 
-var conferenceSchema = new Schema({
-    conferenceCode: {type: String, default: ""},
-    eventId: {type: String, default: ""},
-    creatorId: {type: String, default: ""},
-    status: {type: String, default: "inactive"},
-    title: {type: String, default: ""},
-    description: {type: String, default: ""},
-    start: {type: Date, default: ""},
-    timeZone: {type: String, default: "America/Los_Angeles"},
-    sms: {type: Boolean, default: false},
-    email: {type: Boolean, default: false} // 'active' or 'inactive'
-});
-
-
 exports.create = function(req, res) {
     var postBody = req.body;
-
     Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
@@ -133,10 +118,7 @@ exports.create = function(req, res) {
                         conferenceObject.creatorId = postBody.initiator || "";
                         conferenceObject.creationDate = postBody.creationDate || "";
                         conferenceObject.description = postBody.description || "";
-                        if (postBody.start) conferenceObject.start = postBody.start.datetime;
-                        else conferenceObject.start = "";
-                        if (postBody.start) conferenceObject.timeZone = postBody.start.timeZone;
-                        else conferenceObject.timeZone = "";
+                        conferenceObject.startTime = postBody.startTime || "";
                         if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
                         else conferenceObject.sms = false;
                         if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
@@ -153,15 +135,21 @@ exports.create = function(req, res) {
                     });
 
                     var conference = new Conference(conferenceObject);
-                    conference.save(function(err) {
-                        if (!err) {
-                            var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-                            addParticipants(participantsObject);
-                        }
+                    if (postBody.isQuickCall == 1) {
                         return res.send(conferenceObject);
-                    });   
+                    } else {
+                        conference.save(function(err) {
+                            if (!err) {
+                                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                                addParticipants(participantsObject);
+                            }
+                            conferenceObject.isNew = true;
+                            return res.send(conferenceObject);
+                        });  
+                    } 
                 });
             } else {
+                conference.isNew = false;
                 return res.send(conference);
             }
         }
@@ -207,7 +195,7 @@ exports.smsAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.start);
+            var startTime = stringifyTimeObject(postBody.startTime);
             var messageType = postBody.messageType || "";
             var toPhoneNumber = postBody.toPhoneNumber || "";
 
@@ -269,7 +257,7 @@ exports.emailAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.start);
+            var startTime = stringifyTimeObject(postBody.startTime);
             var messageType = postBody.messageType || "";
             var toEmail = postBody.toEmail; 
 

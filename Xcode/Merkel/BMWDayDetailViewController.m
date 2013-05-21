@@ -310,7 +310,6 @@ static NSString * const kInviteMessageType = @"invite";
         [[BMWPhone sharedPhone] setSpeakerEnabled:YES];
         [self synchronizeUI];
     });
-    
 }
 
 - (void)connectionDidDisconnect:(TCConnection *)connection {

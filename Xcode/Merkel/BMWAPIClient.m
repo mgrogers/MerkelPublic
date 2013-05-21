@@ -68,13 +68,27 @@ static NSString * const kBMWAPIClientBaseURLString = @"http://api.callinapp.com/
                                  success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     static NSString * const kBMWNewConferencePath = @"conference/create";
+    
+//    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+//    
+//    if (event.title) [parameters setObject:event.title forKey:@"title"];
+//    if (event.startDate) [parameters setObject:event.startDate forKey:@"startTime"];
+//    if (event.creationDate) [parameters setObject:event.creationDate forKey:@"creationDate"];
+//    if (attendeesArray) [parameters setObject:attendeesArray forKey:@"attendees"];
+//    if ([PFUser currentUser].email) [parameters setObject:[PFUser currentUser].email forKey:@"initiator"];
+//    if (event.notes) [parameters setObject:event.notes forKey:@"description"];
+    NSNumber *isQuickCall = [NSNumber numberWithBool:NO];
+    if ([event.title isEqual: @"Quick Call"]) isQuickCall = [NSNumber numberWithBool:YES];
+    
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 event.title, @"title",
-                                event.notes, @"description",
-                                event.startDate, @"start",
+                                event.startDate, @"startTime",
                                 event.creationDate, @"creationDate",
+                                attendeesArray, @"attendees",
                                 [PFUser currentUser].email, @"initiator",
-                                attendeesArray, @"attendees", nil];
+                                isQuickCall, @"isQuickCall",
+                                event.notes, @"description", nil];
+    
     [self postPath:kBMWNewConferencePath
         parameters:parameters
            success:success
