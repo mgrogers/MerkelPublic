@@ -73,18 +73,25 @@ static const NSInteger kTableCellRowHeight = 88;
         self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
         self.loginVC.loginDelegate = self;
         [self presentViewController:self.loginVC animated:NO completion:NULL];
+    } else {
+        [BMWAnalytics mixpanelTrackUser:[PFUser currentUser].username];
     }
-    [self deviceStatusChanged:nil];
+    [self synchronizePhoneStatusUI];
 }
 
 - (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
     [self dismissViewControllerAnimated:YES completion:^{
         self.loginVC = nil;
         [self.tableView reloadData];
+        [BMWAnalytics mixpanelTrackLoggedInUser:[PFUser currentUser].username];
     }];
 }
 
 - (void)deviceStatusChanged:(NSNotification *)notification {
+    [self synchronizePhoneStatusUI];
+}
+
+- (void)synchronizePhoneStatusUI {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {

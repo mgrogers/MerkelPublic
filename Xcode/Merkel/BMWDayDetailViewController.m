@@ -257,11 +257,13 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)speakerButtonPressed:(id)sender {
     if (self.navigationItem.rightBarButtonItem == self.speakerButton) {
         // Speaker is inactive.
-        [BMWPhone sharedPhone].isSpeakerEnabled = YES;
+        [BMWPhone sharedPhone].speakerEnabled = YES;
         self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:YES];
     } else {
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
         self.navigationItem.rightBarButtonItem = self.speakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:NO];
     }
 }
 
@@ -287,7 +289,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[BMWPhone sharedPhone] setIsSpeakerEnabled:YES];
+        [[BMWPhone sharedPhone] setSpeakerEnabled:YES];
         self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
         [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
     });
@@ -299,7 +301,7 @@ static NSString * const kInviteMessageType = @"invite";
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
     });
     
 }
@@ -310,7 +312,7 @@ static NSString * const kInviteMessageType = @"invite";
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
     });
 }
 

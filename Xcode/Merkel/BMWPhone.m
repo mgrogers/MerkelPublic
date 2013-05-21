@@ -23,7 +23,7 @@
 
 @implementation BMWPhone
 
-@synthesize isSpeakerEnabled = _isSpeakerEnabled;
+@synthesize speakerEnabled = _speakerEnabled;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
@@ -69,12 +69,12 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 }
 
 - (BOOL)isSpeakerEnabled {
-    return _isSpeakerEnabled;
+    return _speakerEnabled;
 }
 
-- (void)setIsSpeakerEnabled:(BOOL)isSpeakerEnabled {
-    _isSpeakerEnabled = isSpeakerEnabled;
-    UInt32 route = (_isSpeakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
+- (void)setSpeakerEnabled:(BOOL)isSpeakerEnabled {
+    _speakerEnabled = isSpeakerEnabled;
+    UInt32 route = (_speakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
     AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
 }
 
@@ -175,6 +175,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     [self.connectionDelegate connection:connection didFailWithError:error];
+    [BMWAnalytics mixpanelTrackVOIPFailure:error];
 }
 
 @end

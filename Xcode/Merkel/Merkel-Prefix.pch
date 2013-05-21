@@ -18,4 +18,5 @@
     #import "UIColor+BMW.h"
     #import "UIFont+BMW.h"
     #import "NSString+Validator.h"
+    #import "BMWAnalytics.h"
 #endif
