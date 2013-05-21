@@ -48,10 +48,10 @@ static const NSInteger kTableCellRowHeight = 88;
     if (!_callStatusButton) {
         _callStatusButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
         _callStatusButton.frame = CGRectMake(0.0, 0.0, 70.0, 30.0);
-        _callStatusButton.faceColor = [UIColor greenColor];
-        _callStatusButton.sideColor = [UIColor greenColor];
+        _callStatusButton.faceColor = [UIColor bmwGreenColor];
+        _callStatusButton.sideColor = [UIColor bmwGreenColor];
         _callStatusButton.margin = 0.0;
-        _callStatusButton.radius = 5.0;
+        _callStatusButton.radius = 2.0;
         _callStatusButton.depth = 2.0;
         _callStatusButton.titleLabel.font = [UIFont boldFontOfSize:12.0];
         [_callStatusButton setTitle:@"Quick Call" forState:UIControlStateNormal];
@@ -63,7 +63,9 @@ static const NSInteger kTableCellRowHeight = 88;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"My Day";
+    self.title = @"Today";
+    self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.showsVerticalScrollIndicator = NO;
     [self.tableView registerClass:[BMWSlidingCell class] forCellReuseIdentifier:kBMWSlidingCellIdentifier];
     self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -113,10 +115,16 @@ static const NSInteger kTableCellRowHeight = 88;
 
 - (void)synchronizePhoneStatusUI {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+        [self.callStatusButton setTitle:@"Quick Call" forState:UIControlStateNormal];
+        [self.callStatusButton removeTarget:self action:@selector(currentCallButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callStatusButton addTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.callStatusButton];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
+        [self.callStatusButton setTitle:@"In Call" forState:UIControlStateNormal];
+        [self.callStatusButton removeTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callStatusButton addTarget:self action:@selector(currentCallButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [spinner startAnimating];
