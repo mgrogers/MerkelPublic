@@ -195,7 +195,7 @@ exports.smsAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.startTime);
+            var startTime = postBody.startTime;
             var messageType = postBody.messageType || "";
             var toPhoneNumber = postBody.toPhoneNumber || "";
 
@@ -257,7 +257,7 @@ exports.emailAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.startTime);
+            var startTime = postBody.startTime;
             var messageType = postBody.messageType || "";
             var toEmail = postBody.toEmail; 
 
