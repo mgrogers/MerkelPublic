@@ -13,23 +13,27 @@
 #import "BMWDayTableViewController.h"
 #import "BMWPhone.h"
 #import "TCConnectionDelegate.h"
+#import "BMWTimeIndicatorView.h"
 
-@interface BMWDayDetailViewController () <TCConnectionDelegate>
+#import <MessageUI/MessageUI.h>
+
+@interface BMWDayDetailViewController () <TCConnectionDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *conferencePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *conferenceCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *lateButton;
+@property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timer;
+@property (strong, nonatomic) IBOutlet BMWTimeIndicatorView *timeIndicatorView;
+@property (strong, nonatomic) UIBarButtonItem *speakerButton, *activeSpeakerButton;
+@property (strong, nonatomic) MFMessageComposeViewController *messageComposeVC;
 
 @end
 
 @implementation BMWDayDetailViewController
 
-static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
-
 
 - (void)setEKEvent: (EKEvent*)event {
     _event = event;
@@ -49,12 +53,28 @@ static NSString * const kInviteMessageType = @"invite";
     _eventTitle = eventTitle;
 }
 
-//- (BMWAttendeeTableViewController *)attendeeTable {
-//    if (!_attendeeTable) {
-//        _attendeeTable= [[BMWAttendeeTableViewController alloc] init];
-//    }
-//    return _attendeeTable;
-//}
+- (UIBarButtonItem *)speakerButton {
+    if (!_speakerButton) {
+        _speakerButton = [[UIBarButtonItem alloc] initWithCustomView:[self speakerButtonWithImageName:@"speaker.png"]];
+    }
+    return _speakerButton;
+}
+
+- (UIBarButtonItem *)activeSpeakerButton {
+    if (!_activeSpeakerButton) {
+        _activeSpeakerButton = [[UIBarButtonItem alloc] initWithCustomView:[self speakerButtonWithImageName:@"speaker-active.png"]];
+    }
+    return _activeSpeakerButton;
+}
+
+- (UIButton *)speakerButtonWithImageName:(NSString *)imageName {
+    static const CGRect kSpeakerButtonFrame = {{0.0, 0.0}, {50.0, 25.0}};
+    UIButton *button = [[UIButton alloc] initWithFrame:kSpeakerButtonFrame];
+    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(speakerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    return button;
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,11 +99,66 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = self.eventTitle;
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 42.0, 41.0)];
+    [button setImage:[UIImage imageNamed:@"back-arrow.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.view.backgroundColor = [UIColor bmwLightBlueColor];
+    self.title = @"Event Detail";
+    self.eventTitleLabel.text = self.eventTitle;
+    [self.eventTitleLabel setFont:[UIFont boldFontOfSize:24.0]];
+    
+    self.eventTitleLabel.adjustsFontSizeToFitWidth = YES;
+    self.eventTitleLabel.adjustsLetterSpacingToFitWidth = YES;
+    self.eventTitleLabel.minimumScaleFactor = 0.5;
+
     [self createLabels];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Speaker" style:UIBarButtonItemStyleBordered target:self action:@selector(speakerButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = self.speakerButton;
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self configureFlatButton:self.joinCallButton withColor:[UIColor redColor]];
+    [self configureFlatButton:self.lateButton withColor:[UIColor redColor]];
+
+
+    [self loadTimeIndicatorView];
+    [self loadLineSeparatorView];
+}
+
+- (void)backButtonPressed {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)loadLineSeparatorView {
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 280, self.view.bounds.size.width, 1)];
+    lineView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:lineView];
+}
+
+- (void)loadTimeIndicatorView {    
+    self.timeIndicatorView = [[BMWTimeIndicatorView alloc] initWithFrame:CGRectMake(40.0, 60.0, 240.0, 30.0)];
+    self.timeIndicatorView.borderColor = [UIColor clearColor];
+    self.timeIndicatorView.trackColor = [UIColor whiteColor];
+    self.timeIndicatorView.labelColor = [UIColor clearColor];
+    self.timeIndicatorView.labelFontColor = [UIColor bmwLightGrayColor];
+    self.timeIndicatorView.startTime = self.event.startDate;
+    self.timeIndicatorView.endTime = self.event.endDate;
+    [self.view addSubview:self.timeIndicatorView];
+    [self.timeIndicatorView startAnimating];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [BMWPhone sharedPhone].connectionDelegate = self;
+    if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
+        [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        if ([BMWPhone sharedPhone].isSpeakerEnabled) {
+            self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        }
+    } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,13 +174,6 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
--(void)createVisualAssets {
-//    [self addChildViewController:self.attendeeTable];
-//    [self.attendeeTable setEventAttendees:self.event.attendees];
-//    [self.view addSubview:self.attendeeTable.tableView];
-//    [self.attendeeTable didMoveToParentViewController:self];
-}
-
 -(void)createLabels {
     self.conferencePhoneNumber.text = [NSString stringWithFormat:@"%@", self.phoneNumber];
     self.conferenceCodeLabel.text = [NSString stringWithFormat:@"%@", self.conferenceCode];
@@ -114,32 +182,52 @@ static NSString * const kInviteMessageType = @"invite";
         self.eventDateLabel.text = @"All Day";
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat=@"EEEE, MMMM dd";
+        dateFormatter.dateFormat=@"EEEE, MMMM dd \n HH:mm";
         NSString * monthString = [[dateFormatter stringFromDate:self.event.startDate] capitalizedString];
         self.eventDateLabel.text = monthString;
         self.eventDateLabel.numberOfLines = 0;
-        self.eventTimeLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.eventDateLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
+//        self.eventTimeLabel.text = [dateFormatter stringFromDate:self.event.startDate];
     }
 }
 
 - (IBAction)joinCallButtonPressed:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"End Call"]) {
         [[BMWPhone sharedPhone] disconnect];
+        [BMWPhone sharedPhone].currentCallEvent = nil;
+        [BMWPhone sharedPhone].currentCallCode = nil;
     } else {
-        NSString *codetoCall = self.conferenceCodeLabel.text;
-        if(codetoCall) {
-            [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
-            [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
-        }
+        [self startCall];
     }
+}
+
+- (void)startCall {
+    NSString *codetoCall = self.conferenceCodeLabel.text;
+    if(codetoCall) {
+        [self.joinCallButton setTitle:@"Joining" forState:UIControlStateNormal];
+        [[BMWPhone sharedPhone] callWithDelegate:self andConferenceCode:codetoCall];
+        [BMWPhone sharedPhone].currentCallEvent = self.event;
+        [BMWPhone sharedPhone].currentCallCode = self.conferenceCode;
+    }
+}
+
+- (void)sendInviteMessageAnimated:(BOOL)animated {
+    static NSString * const kInviteMessage = @"Hi, please join me in a conference call through CallinApp.";
+    NSString *body = [kInviteMessage stringByAppendingFormat:@" %@,,,%@#", self.phoneNumber, self.conferenceCode];
+    self.messageComposeVC = [[MFMessageComposeViewController alloc] init];
+    self.messageComposeVC.body = body;
+    self.messageComposeVC.messageComposeDelegate = self;
+    [self presentViewController:self.messageComposeVC animated:animated completion:^{
+        
+    }];
 }
 
 - (IBAction)lateButtonPressed:(id)sender {
     [[BMWCalendarAccess sharedAccess] attendeesForEvent:self.event withCompletion:^(NSArray *attendees) {
         for (int i = 0; i < [attendees count]; i++) {
-            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
+            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+            NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
             
             NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                         self.event.title, @"title",
@@ -147,27 +235,47 @@ static NSString * const kInviteMessageType = @"invite";
                                         self.phoneNumber, @"phoneNumber",
                                         self.conferenceCode, @"conferenceCode",
                                         attendeePhone, @"toPhoneNumber",
+                                        attendeeEmail, @"toEmail",
                                         kAlertMessageType, @"messageType",
-                                        kTestSenderEmailAddress, @"initiator",nil];
+                                        [PFUser currentUser].email, @"initiator",nil];
             
             [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Alert success with response %@", responseObject);
+                self.lateButton.enabled = NO;
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending message", [error localizedDescription]);
+                NSLog(@"Error sending sms message. Attempting email. %@", [error localizedDescription]);
+                [[BMWAPIClient sharedClient] sendEmailMessageWithParameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"Alert success with response %@", responseObject);
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error sending message %@", [error localizedDescription]);
+                }];
             }];
         }
     }];
 }
 
 - (void)speakerButtonPressed:(id)sender {
-    if (self.navigationItem.rightBarButtonItem.style == UIBarButtonItemStyleBordered) {
+    if (self.navigationItem.rightBarButtonItem == self.speakerButton) {
         // Speaker is inactive.
-        [BMWPhone sharedPhone].isSpeakerEnabled = YES;
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        [BMWPhone sharedPhone].speakerEnabled = YES;
+        self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:YES];
     } else {
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
+        self.navigationItem.rightBarButtonItem = self.speakerButton;
+        [BMWAnalytics mixpanelTrackSpeakerButtonClick:NO];
     }
+}
+
+#pragma mark - View Setup
+
+- (void)configureFlatButton:(QBFlatButton *)button withColor:(UIColor*)color {
+    button.faceColor = color;
+    [button setFaceColor:color forState:UIControlStateNormal];
+    [button setFaceColor:[UIColor bmwDisabledGrayColor] forState:UIControlStateDisabled];
+    button.margin = 0.0;
+    button.radius = 5.0;
+    button.depth = 2.0;
 }
 
 #pragma mark - TCConectionDelegate Methods
@@ -181,6 +289,8 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (void)connectionDidConnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [[BMWPhone sharedPhone] setSpeakerEnabled:YES];
+        self.navigationItem.rightBarButtonItem = self.activeSpeakerButton;
         [self.joinCallButton setTitle:@"End Call" forState:UIControlStateNormal];
     });
     
@@ -189,20 +299,27 @@ static NSString * const kInviteMessageType = @"invite";
 - (void)connectionDidDisconnect:(TCConnection *)connection {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
     });
     
 }
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.joinCallButton setTitle:@"Connecting" forState:UIControlStateNormal];
+        NSLog(@"Connection failure: %@", error);
+        [self.joinCallButton setTitle:@"Join Call" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = self.speakerButton;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
-        [BMWPhone sharedPhone].isSpeakerEnabled = NO;
+        [BMWPhone sharedPhone].speakerEnabled = NO;
     });
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self startCall];
+    }];
 }
 
 @end

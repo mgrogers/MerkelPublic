@@ -18,13 +18,12 @@
 
 @property (nonatomic, strong) TCDevice *device;
 @property (nonatomic, strong) TCConnection *connection;
-@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
 
 @end
 
 @implementation BMWPhone
 
-@synthesize isSpeakerEnabled = _isSpeakerEnabled;
+@synthesize speakerEnabled = _speakerEnabled;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
@@ -41,7 +40,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 -(id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": ([PFUser currentUser].username) ? [PFUser currentUser].username : [NSNull null]};
+        NSDictionary *params = @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ? [[PFUser currentUser] objectForKey:@"phone"] : [NSNull null]};
        
         
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -70,12 +69,12 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 }
 
 - (BOOL)isSpeakerEnabled {
-    return _isSpeakerEnabled;
+    return _speakerEnabled;
 }
 
-- (void)setIsSpeakerEnabled:(BOOL)isSpeakerEnabled {
-    _isSpeakerEnabled = isSpeakerEnabled;
-    UInt32 route = (_isSpeakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
+- (void)setSpeakerEnabled:(BOOL)isSpeakerEnabled {
+    _speakerEnabled = isSpeakerEnabled;
+    UInt32 route = (_speakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
     AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
 }
 
@@ -176,6 +175,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     [self.connectionDelegate connection:connection didFailWithError:error];
+    [BMWAnalytics mixpanelTrackVOIPFailure:error];
 }
 
 @end
