@@ -28,7 +28,8 @@ var SendGrid = require('sendgrid').SendGrid;
 var kSendGridUser = "app12018585@heroku.com";
 var kSendGridKey = "xtce2l6u";
 //Update this upon app store approval.
-var downloadURL = "http://itunes.com/apps/callinapp"  
+// Currently a bit.ly link to testflight to track clicks
+var downloadURL = "http://bit.ly/10tTHWW"  
 
 var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
@@ -195,7 +196,7 @@ exports.smsAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.startTime);
+            var startTime = postBody.startTime;
             var messageType = postBody.messageType || "";
             var toPhoneNumber = postBody.toPhoneNumber || "";
 
@@ -257,7 +258,7 @@ exports.emailAlert = function(req, res) {
             var conferencePhoneNumber = postBody.phoneNumber || "";
             var conferenceCode = postBody.conferenceCode || "";
             var eventTitle = postBody.title || "";
-            var startTime = stringifyTimeObject(postBody.startTime);
+            var startTime = postBody.startTime;
             var messageType = postBody.messageType || "";
             var toEmail = postBody.toEmail; 
 
@@ -276,18 +277,17 @@ exports.emailAlert = function(req, res) {
 
             var sender, msgSubject, content;
             if(messageType == 'invite') {
-                sender = 'Invite@CallInapp.com';
-                msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
-                content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
-                    + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
-                    + "With code: " + conferenceCode + ".\n";
+                sender = 'do-not-reply@callinapp.com';
+                msgSubject = "Callin meeting: " + eventTitle + " at " + startTime;
+                content = initiator + " has invited you to join a conference call through Callin. To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"  
+                    + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
-                sender = 'Alert@CallInapp.com';
+                sender = 'do-not-reply@callinapp.com';
                 msgSubject = initiator + " is running late to your event: " + eventTitle; 
-                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
+                content = initiator 
                         + " is running late and will be joining the call as soon as possible.\n\n"
-                        + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
-                        + "With code: " + conferenceCode + ".\n";
+                        + "To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"
+                        + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
             }
 
             var email = new Email({
@@ -317,6 +317,151 @@ exports.emailAlert = function(req, res) {
         return res.send(400, err);
     }
 };
+
+/*
+API Call: "/2013-4-23/conference/joined" to notify the server
+that you have joined a conference call, primarily for VoIP calls
+[Post Body conferenceCode]: the conference code that the attendee joined
+[Post Body attendee]: the attendee info object of the person that joined.
+    This can include any information that is relevant, and may look like:
+        {
+            "displayName": "",
+            "phone": "15551234567",
+            "email": "bill@gmail.com"
+        }
+    The joined method will try to find the attendee in the database,
+    and if it can't, will add a new one to the call
+*/
+exports.joined = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        var conferenceCode = postBody.conferenceCode
+        if (conferenceCode) {
+            Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+                console.log("Searched for conference " + conferenceCode);
+                if(!err && conference) {
+                    attendee = postBody.attendee;
+                    console.log("Found conference");
+                    console.log(postBody);
+
+                    var searchCriteria = [];
+                    if (attendee.phone) {
+                        searchCriteria.push({'phone': attendee.phone});
+                    }
+                    if (attendee.displayName) {
+                        searchCriteria.push({"displayName": attendee.displayName});
+                    }
+                    if (attendee.email) {
+                        searchCriteria.push({"email": attendee.email});
+                    }
+
+                    // Change participant designated by "attendee.phone" or "attendee.email" or "attendee.displayName" status to 'active'
+                    // If participant doesn't exist, add new participant
+                    Participant.findOne({
+                                            'conferenceCode': conferenceCode,
+                                            $or: searchCriteria
+                                        }, 
+                                        function(err_p, participant) {
+                        if(!err_p && participant) {
+                            console.log("Found participant");
+                            participant.status = 'active';
+                            participant.save();
+                        } else {
+                            console.log("Didn't find participant");
+                            if (attendee.phone || attendee.email || attendee.displayName) {
+                                var participantObject = {phone: attendee.phone, 
+                                                        conferenceCode: conferenceCode, 
+                                                        displayName: attendee.displayName,
+                                                        email: attendee.email, 
+                                                        status: "active"};
+                                participant = new Participant(participantObject);
+                                participant.save();
+                            } 
+                        }
+                    });
+
+
+                    // Simple user tracking - # of conferences each phone number joins
+                    SimpleUser.findOne({'phone': attendee.phone}, function(err_s, simpleUser) {
+                        if(!err_s && simpleUser) {
+                            simpleUser.conferencesAttended.push({conferenceCode: conferenceCode});
+
+                            // Mixpanel increment conferencesJoined
+                            mixpanel.people.increment("" + attendee.phone, "conferencesJoined");
+                        } else if(!err_s) {
+                            simpleUser = new SimpleUser({phone: attendee.phone, conferencesAttended: [{conferenceCode: conferenceCode}]});
+
+                            // Mixpanel create user
+                            mixpanel.people.set("" + attendee.phone, {
+                                conferencesJoined: 1
+                            });
+                        }
+
+                        simpleUser.save();
+                    });
+
+
+                    // Mixpanel
+                    mixpanel.track("conference join", {
+                        conferenceCode: conferenceCode,
+                        phoneNumber: attendee.phone
+                    });
+
+                    var conferenceName = conference.id;
+                    return res.send("Success");
+                } else {
+                    return res.send("Failure - no conference");
+                }
+            });
+        }
+    }
+}
+
+exports.left = function(req, res) {
+    if(req.method == 'POST') {
+        var postBody = req.body;
+        var conferenceCode = postBody.conferenceCode
+        if (conferenceCode) {
+            Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {
+                console.log("Searched for conference " + conferenceCode);
+                if(!err && conference) {
+                    attendee = postBody.attendee;
+                    console.log("Found conference");
+                    console.log(postBody);
+
+                    // Change participant designated by "attendee.phone" or "attendee.email" or "attendee.displayName" status to 'active'
+                    // If participant doesn't exist, add new participant
+                    var searchCriteria = [];
+                    if (attendee.phone) {
+                        searchCriteria.push({'phone': attendee.phone});
+                    }
+                    if (attendee.displayName) {
+                        searchCriteria.push({"displayName": attendee.displayName});
+                    }
+                    if (attendee.email) {
+                        searchCriteria.push({"email": attendee.email});
+                    }
+
+                    Participant.findOne({
+                                            'conferenceCode': conferenceCode,
+                                            $or: searchCriteria
+                                        }, 
+                                        function(err_p, participant) {
+                        if(!err_p && participant) {
+                            console.log("Found participant");
+                            participant.status = 'inactive';
+                            participant.save();
+                        }
+                    });
+
+                    return res.send("Success");
+                } else {
+                    return res.send("Failure - no conference");
+                }
+            });
+        }
+    }
+}
 
 /*
 API Call: "/2013-04-23/conference/join" to join a conference
