@@ -278,12 +278,12 @@ exports.emailAlert = function(req, res) {
             var sender, msgSubject, content;
             if(messageType == 'invite') {
                 sender = 'do-not-reply@callinapp.com';
-                msgSubject = "Callin meeting: " + eventTitle + " at " + startTime;
+                msgSubject = "Invitation to Callin meeting: " + eventTitle + " at " + startTime;
                 content = initiator + " has invited you to join a conference call through Callin. To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"  
                     + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
                 sender = 'do-not-reply@callinapp.com';
-                msgSubject = initiator + " is running late to your event: " + eventTitle; 
+                msgSubject = initiator + " is running late to your Callin meeting: " + eventTitle; 
                 content = initiator 
                         + " is running late and will be joining the call as soon as possible.\n\n"
                         + "To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"
