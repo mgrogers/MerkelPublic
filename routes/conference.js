@@ -28,7 +28,8 @@ var SendGrid = require('sendgrid').SendGrid;
 var kSendGridUser = "app12018585@heroku.com";
 var kSendGridKey = "xtce2l6u";
 //Update this upon app store approval.
-var downloadURL = "http://itunes.com/apps/callinapp"  
+// Currently a bit.ly link to testflight to track clicks
+var downloadURL = "http://bit.ly/10tTHWW"  
 
 var conferenceSchema = new Schema({
     conferenceCode: {type: String, default: ""},
@@ -276,18 +277,17 @@ exports.emailAlert = function(req, res) {
 
             var sender, msgSubject, content;
             if(messageType == 'invite') {
-                sender = 'Invite@CallInapp.com';
-                msgSubject = "Call-in meeting: " + eventTitle + " at " + startTime;
-                content = initiator + " has invited you to join a conference call through CallinApp. To join, download Callin at: " + downloadURL + ".\n\n"  
-                    + "You may also dial-in: " + conferencePhoneNumber + ".\n\n" 
-                    + "With code: " + conferenceCode + ".\n";
+                sender = 'do-not-reply@callinapp.com';
+                msgSubject = "Callin meeting: " + eventTitle + " at " + startTime;
+                content = initiator + " has invited you to join a conference call through Callin. To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"  
+                    + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
             } else if (messageType == 'alert') {
-                sender = 'Alert@CallInapp.com';
+                sender = 'do-not-reply@callinapp.com';
                 msgSubject = initiator + " is running late to your event: " + eventTitle; 
-                content = "Sometimes life throws you curveballs, and it's how you respond that defines you. That's why you're receiving this email: to let you know that " + initiator 
+                content = initiator 
                         + " is running late and will be joining the call as soon as possible.\n\n"
-                        + "You may dial-in at: " + conferencePhoneNumber + ".\n\n" 
-                        + "With code: " + conferenceCode + ".\n";
+                        + "To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"
+                        + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
             }
 
             var email = new Email({
