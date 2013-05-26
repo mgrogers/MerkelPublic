@@ -9,6 +9,7 @@
 #import "BMWDayTableViewController.h"
 
 #import "BMWAPIClient.h"
+#import "BMWLoginViewController.h"
 #import "BMWDayDetailViewController.h"
 #import "BMWPhone.h"
 #import "BMWSlidingCell.h"
@@ -16,22 +17,22 @@
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
 
-@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate>
+@interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate, BMWLoginDelegate>
 
-
-@property (nonatomic, strong) NSArray *testData;
 @property (nonatomic, strong) NSArray *calendarEvents;
 @property (nonatomic, strong) NSArray *selectedPeople;
 @property (nonatomic, copy) NSString *phoneNumber;
+@property (nonatomic, strong) BMWLoginViewController *loginVC;
+@property (nonatomic, strong) QBFlatButton *callStatusButton;
 
 @end
 
 @implementation BMWDayTableViewController
 
 static NSString * const kBMWSlidingCellIdentifier = @"BMWSlidingCell";
-static NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
 static NSString * const kAlertMessageType = @"alert";
 static NSString * const kInviteMessageType = @"invite";
+static const NSInteger kTableCellRowHeight = 88;
 
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -41,29 +42,37 @@ static NSString * const kInviteMessageType = @"invite";
     return self;
 }
 
+#pragma mark - Lazy Instantiation Methods
 
-
-- (NSArray *)testData {
-    if (!_testData) {
-        _testData = @[@{@"title": @"Daily Scrum",
-                        @"start": @"10:30am",
-                        @"end": @"11:30am"},
-                      @{@"title": @"Lunch Break",
-                        @"start": @"11:45am",
-                        @"end": @"12:30pm"},];
+- (QBFlatButton *)callStatusButton {
+    if (!_callStatusButton) {
+        _callStatusButton = [QBFlatButton buttonWithType:UIButtonTypeCustom];
+        _callStatusButton.frame = CGRectMake(0.0, 0.0, 70.0, 30.0);
+        _callStatusButton.faceColor = [UIColor bmwGreenColor];
+        _callStatusButton.sideColor = [UIColor bmwGreenColor];
+        _callStatusButton.margin = 0.0;
+        _callStatusButton.radius = 2.0;
+        _callStatusButton.depth = 2.0;
+        _callStatusButton.titleLabel.font = [UIFont boldFontOfSize:12.0];
+        [_callStatusButton setTitle:@"Quick Call" forState:UIControlStateNormal];
     }
-    return _testData;
+    return _callStatusButton;
 }
+
+#pragma mark - UIViewController Methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Today";
+    self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.showsVerticalScrollIndicator = NO;
     [self.tableView registerClass:[BMWSlidingCell class] forCellReuseIdentifier:kBMWSlidingCellIdentifier];
     self.view.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.title = @"My Day";
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0.0, 0.0, 25.0, 19.0);
     button.backgroundColor = [UIColor clearColor];
+    [button addTarget:self action:@selector(menuButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundImage:[UIImage imageNamed:@"reveal_menu_icon_portrait.png"] forState:UIControlStateNormal];
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -81,11 +90,46 @@ static NSString * const kInviteMessageType = @"invite";
     self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (![PFUser currentUser]) {
+        [self presentLoginViewAnimated:NO];
+    } else {
+        [BMWAnalytics mixpanelTrackUser:[PFUser currentUser].username];
+    }
+    [self synchronizePhoneStatusUI];
+}
+
+- (void)presentLoginViewAnimated:(BOOL)animated {
+    self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
+    self.loginVC.loginDelegate = self;
+    [self presentViewController:self.loginVC animated:animated completion:NULL];
+}
+
+- (void)loginVCDidLogin:(BMWLoginViewController *)loginVC {
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.loginVC = nil;
+        [self.tableView reloadData];
+        [BMWAnalytics mixpanelTrackLoggedInUser:[PFUser currentUser].username];
+    }];
+}
+
 - (void)deviceStatusChanged:(NSNotification *)notification {
+    [self synchronizePhoneStatusUI];
+}
+
+- (void)synchronizePhoneStatusUI {
     if ([BMWPhone sharedPhone].status == BMWPhoneStatusReady) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quick Call" style:UIBarButtonItemStyleBordered target:self action:@selector(callButtonPressed)];
+        [self.callStatusButton setTitle:@"Quick Call" forState:UIControlStateNormal];
+        [self.callStatusButton removeTarget:self action:@selector(currentCallButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callStatusButton addTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.callStatusButton];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusConnected) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"End Call" style:UIBarButtonItemStyleDone target:self action:@selector(endCallButtonPressed)];
+//        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Current Call" style:UIBarButtonItemStyleDone target:self action:@selector(currentCallButtonPressed)];
+        [self.callStatusButton setTitle:@"In Call" forState:UIControlStateNormal];
+        [self.callStatusButton removeTarget:self action:@selector(callButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.callStatusButton addTarget:self action:@selector(currentCallButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     } else if ([BMWPhone sharedPhone].status == BMWPhoneStatusNotReady) {
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [spinner startAnimating];
@@ -93,7 +137,27 @@ static NSString * const kInviteMessageType = @"invite";
     }
 }
 
+- (void)menuButtonPressed {
+    PKRevealController *revealController = (PKRevealController *)self.navigationController.revealController;
+    [revealController showViewController:revealController.leftViewController];
+}
+
 - (void)callButtonPressed {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner startAnimating];
+    __weak UIActivityIndicatorView *wkSpinner = spinner;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [[BMWCalendarAccess sharedAccess] createQuickEventWithCompletion:^(EKEvent *event, NSString *conferenceCode) {
+        [wkSpinner stopAnimating];
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+//        [dayDetailVC startCall];
+        [dayDetailVC sendInviteMessageAnimated:NO];
+    }];
 //    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
 //
 //
@@ -105,17 +169,26 @@ static NSString * const kInviteMessageType = @"invite";
 //    picker.peoplePickerDelegate = self;
 //    [self presentViewController:picker animated:YES completion:nil];
 
-    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
-    
-    
+//    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
+}
+
+- (void)currentCallButtonPressed {
+    EKEvent *event = [BMWPhone sharedPhone].currentCallEvent;
+    NSString *conferenceCode = [BMWPhone sharedPhone].currentCallCode;
+    if (event && conferenceCode) {
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = conferenceCode;
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+    }
 }
 
 - (void)endCallButtonPressed {
     [[BMWPhone sharedPhone] disconnect];
     
-    
     // const CGFloat kTitleFontSize = 10.0;
-    
     // UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 30.0, 19.0)];
     // UILabel *title_text = [[UILabel alloc] init];
     // title_text.text = @"Create";
@@ -173,12 +246,7 @@ static NSString * const kInviteMessageType = @"invite";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = [tableView dequeueReusableCellWithIdentifier:kBMWSlidingCellIdentifier forIndexPath:indexPath];
-    /*
-    NSDictionary *item = self.testData[indexPath.row];
-    cell.textLabel.text = item[@"title"];
-    cell.startLabel.text = item[@"start"];
-    cell.endLabel.text = item[@"end"];
-     */
+
     EKEvent *event = [self eventForIndexPath:indexPath];
     cell.delegate = self;
     cell.index = indexPath.row;
@@ -193,13 +261,16 @@ static NSString * const kInviteMessageType = @"invite";
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BMWSlidingCell *cell = (BMWSlidingCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"Show Detail" sender:cell];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kTableCellRowHeight;
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSIndexPath *indexPath = nil;
@@ -210,14 +281,12 @@ static NSString * const kInviteMessageType = @"invite";
     
     if (indexPath) {
         if ([segue.identifier isEqualToString:@"Show Detail"]) {
-       
             EKEvent *event = [self eventForIndexPath:indexPath];
             NSString *eventTitle = event.title;
             NSString *conferenceCode = [self eventConferenceCodeForIndexPath:indexPath];
             NSString *phoneNumber = self.phoneNumber;
 
             if ([segue.destinationViewController respondsToSelector:@selector(setEventTitle:)]) {
-            
                 [segue.destinationViewController performSelector:@selector(setEventTitle:) withObject:eventTitle];
                 [segue.destinationViewController performSelector:@selector(setPhoneNumber:) withObject:phoneNumber];
                 [segue.destinationViewController performSelector:@selector(setConferenceCode:) withObject:conferenceCode];
@@ -248,11 +317,12 @@ static NSString * const kInviteMessageType = @"invite";
     [self updateTableViewCalendarEvents];
 }
 
-#pragma mark - UITableViewDataDelegate protocol methods
+#pragma mark - BMWSlidingCellDelegate protocol methods
 
 /* Start a conference call */
--(void)handleLeftSwipe:(id)cellItem {
+- (void)handleLeftSwipe:(id)cellItem {
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
+    [self.tableView beginUpdates];
     BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
     EKEvent *event = self.calendarEvents[index][@"event"];
     dayDetailVC.event = event;
@@ -261,39 +331,20 @@ static NSString * const kInviteMessageType = @"invite";
     dayDetailVC.phoneNumber = self.phoneNumber;
     [self.navigationController pushViewController:dayDetailVC animated:YES];
     [dayDetailVC.joinCallButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    [self.tableView endUpdates];
 }
 
 /* Send a late text message and email */
--(void)handleRightSwipe:(id)cellItem {
+- (void)handleRightSwipe:(id)cellItem {
     NSInteger index = ((BMWSlidingCell *)cellItem).index;
     [self.tableView beginUpdates];
-    
-    NSString *conferenceCode = self.calendarEvents[index][@"conferenceCode"];
-    NSString *phoneNumber = self.phoneNumber;
+    BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
     EKEvent *event = self.calendarEvents[index][@"event"];
-
-    [[BMWCalendarAccess sharedAccess] attendeesForEvent:event withCompletion:^(NSArray *attendees) {
-        
-        for (int i = 0; i < [attendees count]; i++) {
-            NSString *attendeePhone = [attendees[i] objectForKey:@"phone"];
- 
-            NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        event.title, @"title",
-                                        event.startDate, @"startTime",
-                                        phoneNumber, @"phoneNumber",
-                                        conferenceCode, @"conferenceCode",
-                                        attendeePhone, @"toPhoneNumber",
-                                        kAlertMessageType, @"messageType",
-                                        kTestSenderEmailAddress, @"initiator",nil];
-            
-            [[BMWAPIClient sharedClient] sendSMSMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Alert success with response %@", responseObject);
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error sending message", [error localizedDescription]);
-            }];
-        }
-    }];
-    
+    dayDetailVC.event = event;
+    dayDetailVC.eventTitle = event.title;
+    dayDetailVC.conferenceCode = self.calendarEvents[index][@"conferenceCode"];
+    dayDetailVC.phoneNumber = self.phoneNumber;
+    [dayDetailVC lateButtonPressed:dayDetailVC.lateButton];
     [self.tableView endUpdates];
 }
 

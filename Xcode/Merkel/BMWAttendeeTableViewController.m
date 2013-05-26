@@ -78,6 +78,9 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.textLabel.text = [self participantForRowAtIndexPath:indexPath].name;
+   
+    
+    cell.textLabel.font = [UIFont defaultFontOfSize:18]; //Change this value to adjust size
     return cell;
 }
 

@@ -1,17 +1,17 @@
+////
+////  BMWViewController.h
+////  Merkel
+////
+////  Created by Tim Shi on 2/9/13.
+////  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
+////
 //
-//  BMWViewController.h
-//  Merkel
+//// Main view controller on the iPhone. Provides login/logout functionality
+//// and account creation functionality.
 //
-//  Created by Tim Shi on 2/9/13.
-//  Copyright (c) 2013 BossMobileWunderkinder. All rights reserved.
+//#import <UIKit/UIKit.h>
+//#import "BMWManager.h"
 //
-
-// Main view controller on the iPhone. Provides login/logout functionality
-// and account creation functionality.
-
-#import <UIKit/UIKit.h>
-#import "BMWManager.h"
-
-@interface BMWViewController : GAITrackedViewController
-
-@end
+//@interface BMWViewController : GAITrackedViewController
+//
+//@end

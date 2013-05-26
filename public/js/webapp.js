@@ -29,6 +29,8 @@ CallIn.Conference = Backbone.Model.extend({
 
         this.on("begin:call", this.beginCall, this);
         this.on("end:call", this.endCall, this);
+        this.on("device:connect", this.deviceConnect, this);
+        this.on("device:disconnect", this.deviceDisconnect, this);
 
         this.attendeesPoller = Backbone.Poller.get(this.attendees, {
             delay: 2000
@@ -55,9 +57,55 @@ CallIn.Conference = Backbone.Model.extend({
         });
     },
 
+    deviceConnect: function() {
+        var attendeeName = $("#attendee-name").val();
+        var attendeePhone = $("#attendee-phone").val();
+        var attendeeEmail = $("#attendee-email").val();
+        var postData = {
+            conferenceCode: this.get("conferenceCode"),
+            attendee: {
+                displayName: attendeeName,
+                phone: attendeePhone,
+                email: attendeeEmail
+            }
+        };
+        if (attendeeName || attendeePhone || attendeeEmail) {
+            $.ajax({
+                type: "POST",
+                url: "/2013-04-23/conference/joined",
+                data: postData,
+                dataType: "json"
+            });
+        }
+    },
+
+    deviceDisconnect: function() {
+        var attendeeName = $("#attendee-name").val();
+        var attendeePhone = $("#attendee-phone").val();
+        var attendeeEmail = $("#attendee-email").val();
+        var postData = {
+            conferenceCode: this.get("conferenceCode"),
+            attendee: {
+                displayName: attendeeName,
+                phone: attendeePhone,
+                email: attendeeEmail
+            }
+        };
+        if (attendeeName || attendeePhone || attendeeEmail) {
+            $.ajax({
+                type: "POST",
+                url: "/2013-04-23/conference/left",
+                data: postData,
+                dataType: "json"
+            });
+        }
+    },
+
     endCall: function() {
-        this.connection.disconnect();
-        this.trigger("device:disconnect");
+        if (this.connection) {
+            this.connection.disconnect();
+            this.trigger("device:disconnect");
+        }
     }
 });
 
@@ -159,6 +207,11 @@ CallIn.AttendeeView = Backbone.View.extend({
         var template = _.template( $("#attendee-template").html(), data);
 
         this.$el.html( template );
+        if (this.model.get("status") == "active") {
+            this.$el.addClass("attendees-joined");
+        } else {
+            this.$el.removeClass("attendees-joined");
+        }
         return this;
     },
 

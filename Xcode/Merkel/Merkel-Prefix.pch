@@ -17,4 +17,9 @@
     #define NSLog(__FORMAT__, ...) TFLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
     #import "UIColor+BMW.h"
     #import "UIFont+BMW.h"
+    #import "NSString+Validator.h"
+    #import "BMWAnalytics.h"
+    #import <KGStatusBar/KGStatusBar.h>
+    #import "KGStatusBar+BMWNotifications.h"
+    #import "PKRevealController.h"
 #endif

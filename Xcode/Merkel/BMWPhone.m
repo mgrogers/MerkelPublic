@@ -13,18 +13,20 @@
 #import "TCDevice.h"
 
 #import <AudioToolbox/AudioToolbox.h>
+#import "Reachability.h"
 
 @interface BMWPhone () <TCDeviceDelegate, TCConnectionDelegate>
 
 @property (nonatomic, strong) TCDevice *device;
 @property (nonatomic, strong) TCConnection *connection;
-@property (nonatomic, weak) id <TCConnectionDelegate>connectionDelegate;
+@property (nonatomic, strong) Reachability *apiReachability;
 
 @end
 
 @implementation BMWPhone
 
-@synthesize isSpeakerEnabled = _isSpeakerEnabled;
+@synthesize speakerEnabled = _speakerEnabled;
+@synthesize muted = _muted;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
@@ -39,11 +41,13 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     return sharedPhone;
 }
 
--(id)init {
+- (id)init {
     if ( self = [super init] ) {
-        NSDictionary *params = @{@"clientId": ([PFUser currentUser].username) ? [PFUser currentUser].username : [NSNull null]};
-       
-        
+        [self configureReachability];
+        NSDictionary *params =
+            @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ?
+                                [[PFUser currentUser] objectForKey:@"phone"] :
+                                [NSNull null]};
         [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *capabilityToken = responseObject[@"capabilityToken"];
             self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
@@ -65,18 +69,53 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     return self;
 }
 
+- (void)configureReachability {
+    NSString *apiHost = [[[BMWAPIClient sharedClient] baseURL] host];
+    self.apiReachability = [Reachability reachabilityWithHostname:apiHost];
+    __block BOOL shouldHideNotificationView = NO;
+    self.apiReachability.reachableBlock = ^(Reachability *reach) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [KGStatusBar bmwShowNetworkConnectionAvailable];
+            shouldHideNotificationView = YES;
+            const double kDelayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kDelayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                if (shouldHideNotificationView) [KGStatusBar dismiss];
+            });
+        });
+    };
+    self.apiReachability.unreachableBlock = ^(Reachability *reach) {
+        shouldHideNotificationView = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [KGStatusBar bmwShowNetworkConnectionUnavailable];
+        });
+    };
+    [self.apiReachability startNotifier];
+}
+
 - (BOOL)isReady {
-    return self.device != nil;
+    return self.device != nil && self.apiReachability.isReachable;
 }
 
 - (BOOL)isSpeakerEnabled {
-    return _isSpeakerEnabled;
+    return _speakerEnabled;
 }
 
-- (void)setIsSpeakerEnabled:(BOOL)isSpeakerEnabled {
-    _isSpeakerEnabled = isSpeakerEnabled;
-    UInt32 route = (_isSpeakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
+- (void)setSpeakerEnabled:(BOOL)isSpeakerEnabled {
+    _speakerEnabled = isSpeakerEnabled;
+    UInt32 route = (_speakerEnabled) ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None;
     AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route);
+}
+
+- (BOOL)isMuted {
+    if (self.connection) {
+        return self.connection.muted;
+    }
+    return NO;
+}
+
+- (void)setMuted:(BOOL)muted {
+    self.connection.muted = muted;
 }
 
 - (BMWPhoneStatus)status {
@@ -129,6 +168,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
 - (void)callWithDelegate:(id<TCConnectionDelegate>)connectionDelegate
        andConferenceCode: (NSString*) conferenceCode {
+    [self disconnect];
     [self connectWithConferenceCode:conferenceCode delegate:connectionDelegate];
 }
 
@@ -176,6 +216,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     [self.connectionDelegate connection:connection didFailWithError:error];
+    [BMWAnalytics mixpanelTrackVOIPFailure:error];
 }
 
 @end
