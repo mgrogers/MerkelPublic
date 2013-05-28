@@ -249,73 +249,74 @@ API Call: "/2013-04-23/conference/emailAlert" to send an email for a conference 
 [Invitee POST data] example JSON POST can be found in test/fixtures/conference_invite.json
 */
 exports.emailAlert = function(req, res) {
-    if(req.method == 'POST') {
-        var postBody = req.body;
-        console.log(postBody);
-        if(postBody.conferenceCode && postBody.toEmail) {
+    return res.send(200, "Email API shut off");
+    // if(req.method == 'POST') {
+    //     var postBody = req.body;
+    //     console.log(postBody);
+    //     if(postBody.conferenceCode && postBody.toEmail) {
 
-            var initiator = postBody.initiator || "";
-            var conferencePhoneNumber = postBody.phoneNumber || "";
-            var conferenceCode = postBody.conferenceCode || "";
-            var eventTitle = postBody.title || "";
-            var startTime = postBody.startTime;
-            var messageType = postBody.messageType || "";
-            var toEmail = postBody.toEmail; 
+    //         var initiator = postBody.initiator || "";
+    //         var conferencePhoneNumber = postBody.phoneNumber || "";
+    //         var conferenceCode = postBody.conferenceCode || "";
+    //         var eventTitle = postBody.title || "";
+    //         var startTime = postBody.startTime;
+    //         var messageType = postBody.messageType || "";
+    //         var toEmail = postBody.toEmail; 
 
-            var user, key; 
-            if(!process.env.SENDGRID_USERNAME) {
-                user = kSendGridUser
-            } else {
-               user = process.env.SENDGRID_USERNAME;
-            }
-            if(!process.env.SENDGRID_PASSWORD) {
-                key = kSendGridKey;
-            } else {
-                key = process.env.SENDGRID_PASSWORD;
-            }
-            var sendgrid = new SendGrid(user, key);
+    //         var user, key; 
+    //         if(!process.env.SENDGRID_USERNAME) {
+    //             user = kSendGridUser
+    //         } else {
+    //            user = process.env.SENDGRID_USERNAME;
+    //         }
+    //         if(!process.env.SENDGRID_PASSWORD) {
+    //             key = kSendGridKey;
+    //         } else {
+    //             key = process.env.SENDGRID_PASSWORD;
+    //         }
+    //         var sendgrid = new SendGrid(user, key);
 
-            var sender, msgSubject, content;
-            if(messageType == 'invite') {
-                sender = 'do-not-reply@callinapp.com';
-                msgSubject = "Invitation to Callin meeting: " + eventTitle + " at " + startTime;
-                content = initiator + " has invited you to join a conference call through Callin. To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"  
-                    + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
-            } else if (messageType == 'alert') {
-                sender = 'do-not-reply@callinapp.com';
-                msgSubject = initiator + " is running late to your Callin meeting: " + eventTitle; 
-                content = initiator 
-                        + " is running late and will be joining the call as soon as possible.\n\n"
-                        + "To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"
-                        + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
-            }
+    //         var sender, msgSubject, content;
+    //         if(messageType == 'invite') {
+    //             sender = 'do-not-reply@callinapp.com';
+    //             msgSubject = "Invitation to Callin meeting: " + eventTitle + " at " + startTime;
+    //             content = initiator + " has invited you to join a conference call through Callin. To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"  
+    //                 + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
+    //         } else if (messageType == 'alert') {
+    //             sender = 'do-not-reply@callinapp.com';
+    //             msgSubject = initiator + " is running late to your Callin meeting: " + eventTitle; 
+    //             content = initiator 
+    //                     + " is running late and will be joining the call as soon as possible.\n\n"
+    //                     + "To join the call and use our premium conference call experience, download the iOS Callin app at: " + downloadURL + ".\n\n"
+    //                     + "You may also dial-in: " + conferencePhoneNumber + " with code: " + conferenceCode + ".\n";
+    //         }
 
-            var email = new Email({
-                to: toEmail,
-                from: sender,
-                replyto: initiator,
-                subject: msgSubject,
-                text: content
-            });
-            sendgrid.send(email, function(success, message) {
-                if(!success) {
-                    var response = {"meta": {"code": 404},
-                                 "message": "Invitation delivery failed. " + message};
-                    return res.send(404, response);
-                } else {
-                    var response = {"meta": {"code": 200},
-                                 "message": "Invite delivered to :" + toEmail};    
-                    return res.send(response);
-                }
-            });
-        } else {
-            var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
-            return res.send(400, err);
-        }
-    } else {
-        var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
-        return res.send(400, err);
-    }
+    //         var email = new Email({
+    //             to: toEmail,
+    //             from: sender,
+    //             replyto: initiator,
+    //             subject: msgSubject,
+    //             text: content
+    //         });
+    //         sendgrid.send(email, function(success, message) {
+    //             if(!success) {
+    //                 var response = {"meta": {"code": 404},
+    //                              "message": "Invitation delivery failed. " + message};
+    //                 return res.send(404, response);
+    //             } else {
+    //                 var response = {"meta": {"code": 200},
+    //                              "message": "Invite delivered to :" + toEmail};    
+    //                 return res.send(response);
+    //             }
+    //         });
+    //     } else {
+    //         var err = {"meta": {"code": 400}, "message": "Could not invite, did you POST the conferenceCode and array of invitees?"};
+    //         return res.send(400, err);
+    //     }
+    // } else {
+    //     var err = {"meta": {"code": 400}, "message": "This API is POST only, please POST your invitee data"};
+    //     return res.send(400, err);
+    // }
 };
 
 /*
