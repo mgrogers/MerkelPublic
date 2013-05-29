@@ -112,7 +112,6 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
                     [filteredEvents addObject:eventWithCode];
                     [self getAndSaveConferenceCodeForEvent:event completion:^(NSString *conferenceCode) {
                         eventWithCode[@"conferenceCode"] = conferenceCode;
-                        NSLog(@"Conference code: %@", conferenceCode);
                     }];
                 }
             }
@@ -161,62 +160,55 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     static NSString * const kBMWCalendarNote = @"Conference Added by CallInApp";
     static const NSInteger kBMWConferenceCodeLength = 10;
     [event refresh];
-    if ([self.processedEvents containsObject:event]) {
-        NSDictionary *eventDict = [self.processedEventDicts objectAtIndex:[self.processedEvents indexOfObject:event]];
-        completion(eventDict[@"conferenceCode"]);
-        return;
-    }
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
-    NSLog(@"%@", event.title);
-    NSLog(@"%@", event.notes);
     if (range.location == NSNotFound || (range.location == 0 && range.length == 0) || !notes) {
         NSLog(@"Code not found, creating new conference.");
-
+        if (!notes) notes = @"";
         [self attendeesForEvent:event withCompletion:^(NSArray *attendees) {
             [[BMWAPIClient sharedClient] createConferenceForCalendarEvent:event
                                                            attendeesArray:attendees
                                                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSString *conferenceCode = responseObject[@"conferenceCode"];
-                NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
-                event.notes = [notes stringByAppendingFormat:@"\n\n%@Dial-in: %@\nConference Code: %@", kBMWCalendarNote, dialin, conferenceCode];
-                NSError *error;
-                [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
-                if (error) {
-                    NSLog(@"Event save error: %@", [error localizedDescription]);
-                }
-                [self.processedEvents addObject:event];
-                [self.processedEventDicts addObject:@{@"event": event,
-                 @"conferenceCode": conferenceCode}];
-                
-//                if (responseObject[@"isNew"]) {
-//                    for (int i = 0; i < [attendees count]; i++) {
-//                        NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
-//                        NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
-//                          
-//                        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                                      event.title, @"title",
-//                                                      event.startDate, @"startTime",
-//                                                      [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
-//                                                      conferenceCode, @"conferenceCode",
-//                                                      attendeePhone, @"toPhoneNumber",
-//                                                      attendeeEmail, @"toEmail",
-//                                                      kInviteMessageType, @"messageType",
-//                                                      [PFUser currentUser].email, @"initiator",nil];
-//                          
-//                        [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                              NSLog(@"Email success with response %@", responseObject);
-//                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                              NSLog(@"Error sending email message. Attempting email. %@", [error localizedDescription]);
-//                        }];
-//                    }
-//                }
-                                                                
-                completion(conferenceCode);
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error creating conference: %@", [error localizedDescription]);
-                completion(@"");
-            }];
+                                                                      NSString *conferenceCode = responseObject[@"conferenceCode"];
+                                                                      if (responseObject[@"isNew"]) {
+                                                                          //                    for (int i = 0; i < [attendees count]; i++) {
+                                                                          //                        NSString *attendeePhone = [attendees[i] objectForKey:@"phone"] ? [attendees[i] objectForKey:@"phone"] : @"";
+                                                                          //                        NSString *attendeeEmail = [attendees[i] objectForKey:@"email"] ? [attendees[i] objectForKey:@"email"] : @"";
+                                                                          //
+                                                                          //                        NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                          //                                                      event.title, @"title",
+                                                                          //                                                      event.startDate, @"startTime",
+                                                                          //                                                      [BMWPhone sharedPhone].phoneNumber, @"phoneNumber",
+                                                                          //                                                      conferenceCode, @"conferenceCode",
+                                                                          //                                                      attendeePhone, @"toPhoneNumber",
+                                                                          //                                                      attendeeEmail, @"toEmail",
+                                                                          //                                                      kInviteMessageType, @"messageType",
+                                                                          //                                                      [PFUser currentUser].email, @"initiator",nil];
+                                                                          //
+                                                                          //                        [[BMWAPIClient sharedClient] sendEmailMessageWithParameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                                                          //                              NSLog(@"Email success with response %@", responseObject);
+                                                                          //                        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                                          //                              NSLog(@"Error sending email message. Attempting email. %@", [error localizedDescription]);
+                                                                          //                        }];
+                                                                          //                    }
+                                                                      }
+                                                                      
+                                                                      NSString *dialin = [NSString stringWithFormat:@"%@,,,%@#", [BMWPhone sharedPhone].phoneNumber, conferenceCode];
+                                                                      event.notes = [notes stringByAppendingFormat:@"\n\n%@\nDial-in: %@\nPhone Number: %@\nConference Code: %@", kBMWCalendarNote, dialin, [BMWPhone sharedPhone].phoneNumber, conferenceCode];
+                                                                      NSLog(@"%@", conferenceCode);
+                                                                      NSError *error;
+                                                                      [self.store saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
+                                                                      if (error) {
+                                                                          NSLog(@"Event save error: %@", [error localizedDescription]);
+                                                                      }
+                                                                      [self.processedEvents addObject:event];
+                                                                      [self.processedEventDicts insertObject:@{@"event": event, @"conferenceCode": conferenceCode}
+                                                                                                     atIndex:[self.processedEvents indexOfObject:event]];
+                                                                      completion(conferenceCode);
+                                                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                                      NSLog(@"Error creating conference: %@", [error localizedDescription]);
+                                                                      completion(@"");
+                                                                  }];
         }];
     } else {
         NSString *code = [event.notes substringFromIndex:event.notes.length - kBMWConferenceCodeLength];
@@ -224,8 +216,8 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
             code = @"";
         }
         [self.processedEvents addObject:event];
-        [self.processedEventDicts addObject:@{@"event": event,
-                                              @"conferenceCode": code}];
+        [self.processedEventDicts insertObject:@{@"event": event, @"conferenceCode": code}
+                                       atIndex:[self.processedEvents indexOfObject:event]];
         completion(code);
     }
 }
