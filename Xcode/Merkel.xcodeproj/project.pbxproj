@@ -69,6 +69,10 @@
 		4B77FE3B16C6F2AF00426018 /* MerkelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B77FE3A16C6F2AF00426018 /* MerkelTests.m */; };
 		4B7A855C17461E0D002DEFBC /* back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855A17461E0D002DEFBC /* back-arrow.png */; };
 		4B7A855D17461E0D002DEFBC /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */; };
+		4B7A8B891756178400D2B150 /* BMWWalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A8B881756178400D2B150 /* BMWWalkthroughViewController.m */; };
+		4B7A8B8D17561AC400D2B150 /* walkthrough-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A8B8A17561AC400D2B150 /* walkthrough-1.png */; };
+		4B7A8B8E17561AC400D2B150 /* walkthrough-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A8B8B17561AC400D2B150 /* walkthrough-2.png */; };
+		4B7A8B8F17561AC400D2B150 /* walkthrough-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A8B8C17561AC400D2B150 /* walkthrough-3.png */; };
 		4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8B324E174B18880046DE41 /* BMWAnalytics.m */; };
 		4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8B3251174B72580046DE41 /* KGStatusBar+BMWNotifications.m */; };
 		4BA3382D16D1942700A2CD24 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3382C16D1942700A2CD24 /* Parse.framework */; };
@@ -232,6 +236,11 @@
 		4B77FE3A16C6F2AF00426018 /* MerkelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MerkelTests.m; sourceTree = "<group>"; };
 		4B7A855A17461E0D002DEFBC /* back-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow.png"; path = "Resources/Images/back-arrow.png"; sourceTree = SOURCE_ROOT; };
 		4B7A855B17461E0D002DEFBC /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "Resources/Images/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		4B7A8B871756178400D2B150 /* BMWWalkthroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWWalkthroughViewController.h; sourceTree = "<group>"; };
+		4B7A8B881756178400D2B150 /* BMWWalkthroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWWalkthroughViewController.m; sourceTree = "<group>"; };
+		4B7A8B8A17561AC400D2B150 /* walkthrough-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "walkthrough-1.png"; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Screenshots/walkthrough-1.png"; sourceTree = "<group>"; };
+		4B7A8B8B17561AC400D2B150 /* walkthrough-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "walkthrough-2.png"; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Screenshots/walkthrough-2.png"; sourceTree = "<group>"; };
+		4B7A8B8C17561AC400D2B150 /* walkthrough-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "walkthrough-3.png"; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Screenshots/walkthrough-3.png"; sourceTree = "<group>"; };
 		4B8B324D174B18880046DE41 /* BMWAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAnalytics.h; sourceTree = "<group>"; };
 		4B8B324E174B18880046DE41 /* BMWAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAnalytics.m; sourceTree = "<group>"; };
 		4B8B3250174B72580046DE41 /* KGStatusBar+BMWNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KGStatusBar+BMWNotifications.h"; sourceTree = "<group>"; };
@@ -487,6 +496,8 @@
 				4B77FE2116C6F2AF00426018 /* MainStoryboard.storyboard */,
 				4B77FE1816C6F2AF00426018 /* BMWAppDelegate.h */,
 				4B77FE1916C6F2AF00426018 /* BMWAppDelegate.m */,
+				4B7A8B871756178400D2B150 /* BMWWalkthroughViewController.h */,
+				4B7A8B881756178400D2B150 /* BMWWalkthroughViewController.m */,
 				4BE14EBB174B83A9006C111A /* BMWMenuTableViewController.h */,
 				4BE14EBC174B83AA006C111A /* BMWMenuTableViewController.m */,
 				4B8B3250174B72580046DE41 /* KGStatusBar+BMWNotifications.h */,
@@ -533,6 +544,9 @@
 		4B77FE1016C6F2AF00426018 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4B7A8B8A17561AC400D2B150 /* walkthrough-1.png */,
+				4B7A8B8B17561AC400D2B150 /* walkthrough-2.png */,
+				4B7A8B8C17561AC400D2B150 /* walkthrough-3.png */,
 				4B47582317378158004434FD /* Sounds */,
 				4BBDFE8E171D3DE70083D4BC /* Fonts */,
 				4BBEF1A616D1B82F0080F6E5 /* Icons */,
@@ -769,6 +783,9 @@
 				4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */,
 				4B49EBF417462E3E004E538C /* speaker-disabled.png in Resources */,
 				4B49EBF517462E3E004E538C /* speaker-disabled@2x.png in Resources */,
+				4B7A8B8D17561AC400D2B150 /* walkthrough-1.png in Resources */,
+				4B7A8B8E17561AC400D2B150 /* walkthrough-2.png in Resources */,
+				4B7A8B8F17561AC400D2B150 /* walkthrough-3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,6 +883,7 @@
 				4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */,
 				4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */,
 				4BE14EBD174B83AA006C111A /* BMWMenuTableViewController.m in Sources */,
+				4B7A8B891756178400D2B150 /* BMWWalkthroughViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

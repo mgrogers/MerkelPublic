@@ -16,6 +16,8 @@
 #import <PKRevealController/PKRevealController.h>
 #import <Mixpanel/Mixpanel.h>
 
+#import "BMWWalkthroughViewController.h"
+
 @interface BMWAppDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -42,7 +44,9 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
     [self startExternalServices];
     self.revealController = (PKRevealController *)self.window.rootViewController;
     UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainNav"];
-    [self.revealController setFrontViewController:frontViewController];
+    BMWWalkthroughViewController *walkthroughVC = [[BMWWalkthroughViewController alloc] init];
+    [self.revealController setFrontViewController:walkthroughVC];
+//    [self.revealController setFrontViewController:frontViewController];
     UITableViewController *menuTVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuTVC"];
     [self.revealController setLeftViewController:menuTVC];
     [BMWAppearances setupAppearance];
