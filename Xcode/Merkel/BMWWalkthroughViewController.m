@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSInteger number_pages = self.pages.count;
+    NSInteger number_pages = self.pageControl.numberOfPages;
     
     NSMutableArray *pageControllers = [[NSMutableArray alloc] init];
     
@@ -52,7 +52,7 @@
     self.scrollView.scrollsToTop = NO;
     self.scrollView.delegate = self;
     
-    self.pageControl.numberOfPages = number_pages;
+//    self.pageControl.numberOfPages = number_pages;
     self.pageControl.currentPage = 0;
     
     // pages are created on demand
@@ -65,7 +65,7 @@
 
 - (void)loadScrollViewWithPage:(NSUInteger)page
 {
-    if (page >= self.pages.count)
+    if (page >= self.pageControl.numberOfPages)
         return;
     
     // replace the placeholder if necessary
@@ -88,7 +88,7 @@
         [self.scrollView addSubview:controller.view];
         [controller didMoveToParentViewController:self];
         
-        NSDictionary *numberItem = [self.pages objectAtIndex:page];
+     
         NSString *pageName = [NSString stringWithFormat:@"walkthrough-page-%d", page];
         
         controller.imageView.image = [UIImage imageNamed: pageName];                                      

@@ -16,6 +16,7 @@
 #import "BMWSlidingCellDelegate.h"
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
+#import "BMWWalkthroughViewController.h"
 
 @interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate, BMWLoginDelegate>
 
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) NSArray *selectedPeople;
 @property (nonatomic, copy) NSString *phoneNumber;
 @property (nonatomic, strong) BMWLoginViewController *loginVC;
+@property (nonatomic, strong) BMWWalkthroughViewController *walkthroughVC;
 @property (nonatomic, strong) QBFlatButton *callStatusButton;
 
 @end
@@ -93,6 +95,7 @@ static const NSInteger kTableCellRowHeight = 88;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (![PFUser currentUser]) {
+        [self presentWalkthroughViewAnimated:NO];
         [self presentLoginViewAnimated:NO];
     } else {
         [BMWAnalytics mixpanelTrackUser:[PFUser currentUser].username];
@@ -100,7 +103,10 @@ static const NSInteger kTableCellRowHeight = 88;
     [self synchronizePhoneStatusUI];
 }
 
-
+- (void)presentWalkthroughViewAnimated:(BOOL)animated {
+    self.walkthroughVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"walkthroughVC"];
+    [self presentViewController:self.walkthroughVC animated:animated completion:NULL];
+}
 
 - (void)presentLoginViewAnimated:(BOOL)animated {
     self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
