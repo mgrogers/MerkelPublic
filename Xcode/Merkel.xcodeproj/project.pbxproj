@@ -15,9 +15,9 @@
 		2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */; };
 		2B77BF3E1755D1C6002333ED /* BMWWalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B77BF3D1755D1C6002333ED /* BMWWalkthroughViewController.m */; };
 		2B77BF411755D688002333ED /* WalkthroughPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B77BF401755D688002333ED /* WalkthroughPageViewController.m */; };
-		2B77BF461755DF15002333ED /* walkthrough-page-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF431755DF15002333ED /* walkthrough-page-3.png */; };
-		2B77BF471755DF15002333ED /* walkthrough-page-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF441755DF15002333ED /* walkthrough-page-2.png */; };
-		2B77BF481755DF15002333ED /* walkthrough-page-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF451755DF15002333ED /* walkthrough-page-1.png */; };
+		2B77BF461755DF15002333ED /* walkthrough-page-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF431755DF15002333ED /* walkthrough-page-2.png */; };
+		2B77BF471755DF15002333ED /* walkthrough-page-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF441755DF15002333ED /* walkthrough-page-1.png */; };
+		2B77BF481755DF15002333ED /* walkthrough-page-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B77BF451755DF15002333ED /* walkthrough-page-0.png */; };
 		2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B2E69C4173A5E4300889482 /* BMWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */; };
@@ -177,9 +177,9 @@
 		2B77BF3D1755D1C6002333ED /* BMWWalkthroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWWalkthroughViewController.m; sourceTree = "<group>"; };
 		2B77BF3F1755D688002333ED /* WalkthroughPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughPageViewController.h; sourceTree = "<group>"; };
 		2B77BF401755D688002333ED /* WalkthroughPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughPageViewController.m; sourceTree = "<group>"; };
-		2B77BF431755DF15002333ED /* walkthrough-page-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-3.png"; sourceTree = "<group>"; };
-		2B77BF441755DF15002333ED /* walkthrough-page-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-2.png"; sourceTree = "<group>"; };
-		2B77BF451755DF15002333ED /* walkthrough-page-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-1.png"; sourceTree = "<group>"; };
+		2B77BF431755DF15002333ED /* walkthrough-page-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-2.png"; sourceTree = "<group>"; };
+		2B77BF441755DF15002333ED /* walkthrough-page-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-1.png"; sourceTree = "<group>"; };
+		2B77BF451755DF15002333ED /* walkthrough-page-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough-page-0.png"; sourceTree = "<group>"; };
 		2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCellDelegate.h; sourceTree = "<group>"; };
 		2BD4CB70172DF1C100687647 /* BMWAttendeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeTableViewController.h; sourceTree = "<group>"; };
 		2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeTableViewController.m; sourceTree = "<group>"; };
@@ -390,9 +390,9 @@
 		2B77BF421755DF01002333ED /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				2B77BF431755DF15002333ED /* walkthrough-page-3.png */,
-				2B77BF441755DF15002333ED /* walkthrough-page-2.png */,
-				2B77BF451755DF15002333ED /* walkthrough-page-1.png */,
+				2B77BF431755DF15002333ED /* walkthrough-page-2.png */,
+				2B77BF441755DF15002333ED /* walkthrough-page-1.png */,
+				2B77BF451755DF15002333ED /* walkthrough-page-0.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -796,9 +796,9 @@
 				4B49EBF117462D7D004E538C /* speaker@2x.png in Resources */,
 				4B49EBF417462E3E004E538C /* speaker-disabled.png in Resources */,
 				4B49EBF517462E3E004E538C /* speaker-disabled@2x.png in Resources */,
-				2B77BF461755DF15002333ED /* walkthrough-page-3.png in Resources */,
-				2B77BF471755DF15002333ED /* walkthrough-page-2.png in Resources */,
-				2B77BF481755DF15002333ED /* walkthrough-page-1.png in Resources */,
+				2B77BF461755DF15002333ED /* walkthrough-page-2.png in Resources */,
+				2B77BF471755DF15002333ED /* walkthrough-page-1.png in Resources */,
+				2B77BF481755DF15002333ED /* walkthrough-page-0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

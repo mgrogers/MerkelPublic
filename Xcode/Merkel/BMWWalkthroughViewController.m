@@ -20,15 +20,6 @@
 
 @implementation BMWWalkthroughViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,7 +27,7 @@
     
     NSMutableArray *pageControllers = [[NSMutableArray alloc] init];
     
-    for (NSUInteger i =0; i < number_pages; i++) {
+    for (NSUInteger i = 0; i < number_pages; i++) {
         [pageControllers addObject:[NSNull null]];
     }
     self.viewControllers = pageControllers;
@@ -51,17 +42,16 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.scrollsToTop = NO;
     self.scrollView.delegate = self;
-    
-//    self.pageControl.numberOfPages = number_pages;
     self.pageControl.currentPage = 0;
     
-    // pages are created on demand
-    // load the visible page
-    // load the page on either side to avoid flashes when the user starts scrolling
-    //
-    [self loadScrollViewWithPage:0];
-    [self loadScrollViewWithPage:1];
+
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];    
+    [self gotoPage:animated];
+}
+
 
 - (void)loadScrollViewWithPage:(NSUInteger)page
 {
@@ -72,7 +62,9 @@
     WalkthroughPageViewController *controller = [self.viewControllers objectAtIndex:page];
     if ((NSNull *)controller == [NSNull null])
     {
-        controller = [[WalkthroughPageViewController alloc] initWithPageNumber:page];
+
+        controller = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"WalkthroughImageVC"];
+        controller.pageNumber = page;
         [self.viewControllers replaceObjectAtIndex:page withObject:controller];
     }
     
@@ -84,16 +76,13 @@
         frame.origin.y = 0;
         controller.view.frame = frame;
         
+        NSString *pageName = [NSString stringWithFormat:@"walkthrough-page-%d.png", page];
+        controller.imageView.image = [UIImage imageNamed: pageName];
+        controller.pageNumberLabel.text = [NSString stringWithFormat:@"%d",page];
+        
         [self addChildViewController:controller];
         [self.scrollView addSubview:controller.view];
         [controller didMoveToParentViewController:self];
-        
-     
-        NSString *pageName = [NSString stringWithFormat:@"walkthrough-page-%d", page];
-        
-        controller.imageView.image = [UIImage imageNamed: pageName];                                      
-        
-//        controller.numberTitle.text = [numberItem valueForKey:kNameKey];
     }
 }
 
