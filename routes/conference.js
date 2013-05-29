@@ -469,6 +469,10 @@ API Call: "/2013-04-23/conference/join" to join a conference
 [Digits] conference code of conference to join
 */
 exports.join = function(req, res) {
+    if(req.query.demo) {
+        return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Say voice='woman' language='en-gb'>Thanks for downloading Call in! We're excited that you're here. Welcome to the best conference experience. </Say><Dial></Response>");
+    }
+
     if(req.query.Digits) {
         var conferenceCode = req.query.Digits;
         var fromPhoneNumber = req.query.From;
