@@ -1,0 +1,126 @@
+//
+//  BMWWalkthroughViewController.m
+//  Merkel
+//
+//  Created by Wesley Leung on 5/28/13.
+//  Copyright (c) 2013 BossMobileWunderkinds. All rights reserved.
+//
+
+#import "BMWWalkthroughViewController.h"
+#import "WalkthroughPageViewController.h"
+
+
+@interface BMWWalkthroughViewController ()
+
+@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) NSMutableArray *viewControllers;
+
+@end
+
+@implementation BMWWalkthroughViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    NSInteger number_pages = self.pages.count;
+    
+    NSMutableArray *pageControllers = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger i =0; i < number_pages; i++) {
+        [pageControllers addObject:[NSNull null]];
+    }
+    self.viewControllers = pageControllers;
+    
+    //make sure page is width of scroll view
+    
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.contentSize =
+    CGSizeMake(CGRectGetWidth(self.scrollView.frame) * number_pages, CGRectGetHeight(self.scrollView.frame));
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.scrollsToTop = NO;
+    self.scrollView.delegate = self;
+    
+    self.pageControl.numberOfPages = number_pages;
+    self.pageControl.currentPage = 0;
+    
+    // pages are created on demand
+    // load the visible page
+    // load the page on either side to avoid flashes when the user starts scrolling
+    //
+    [self loadScrollViewWithPage:0];
+    [self loadScrollViewWithPage:1];
+}
+
+- (IBAction)changePage:(id)sender {
+    [self gotoPage:YES];
+}
+
+
+
+
+- (void)loadScrollViewWithPage:(NSUInteger)page
+{
+    if (page >= self.pages.count)
+        return;
+    
+    // replace the placeholder if necessary
+    WalkthroughPageViewController *controller = [self.viewControllers objectAtIndex:page];
+    if ((NSNull *)controller == [NSNull null])
+    {
+        controller = [[WalkthroughPageViewController alloc] initWithPageNumber:page];
+        [self.viewControllers replaceObjectAtIndex:page withObject:controller];
+    }
+    
+    // add the controller's view to the scroll view
+    if (controller.view.superview == nil)
+    {
+        CGRect frame = self.scrollView.frame;
+        frame.origin.x = CGRectGetWidth(frame) * page;
+        frame.origin.y = 0;
+        controller.view.frame = frame;
+        
+        [self addChildViewController:controller];
+        [self.scrollView addSubview:controller.view];
+        [controller didMoveToParentViewController:self];
+        
+        NSDictionary *numberItem = [self.pages objectAtIndex:page];
+//        controller.numberImage.image = [UIImage imageNamed:[numberItem valueForKey:kImageKey]];
+//        controller.numberTitle.text = [numberItem valueForKey:kNameKey];
+    }
+}
+
+- (void)gotoPage:(BOOL)animated
+{
+    NSInteger page = self.pageControl.currentPage;
+    
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+    
+	// update the scroll view to the appropriate page
+    CGRect bounds = self.scrollView.bounds;
+    bounds.origin.x = CGRectGetWidth(bounds) * page;
+    bounds.origin.y = 0;
+    [self.scrollView scrollRectToVisible:bounds animated:animated];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

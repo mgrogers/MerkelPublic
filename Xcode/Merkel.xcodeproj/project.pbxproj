@@ -13,6 +13,8 @@
 		2B4ACF891727A5260011E557 /* BMWAddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */; };
 		2B4ACF8C1727A5F80011E557 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8A1727A5F80011E557 /* AddressBook.framework */; };
 		2B4ACF8D1727A5F80011E557 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */; };
+		2B77BF3E1755D1C6002333ED /* BMWWalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B77BF3D1755D1C6002333ED /* BMWWalkthroughViewController.m */; };
+		2B77BF411755D688002333ED /* WalkthroughPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B77BF401755D688002333ED /* WalkthroughPageViewController.m */; };
 		2BD4CB72172DF1C100687647 /* BMWAttendeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */; };
 		4AC90CFD98BE42DCB9F4514D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF2515D55FF42B095C2BE58 /* libPods.a */; };
 		4B2E69C4173A5E4300889482 /* BMWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */; };
@@ -168,6 +170,10 @@
 		2B4ACF881727A5260011E557 /* BMWAddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAddressBookViewController.m; sourceTree = "<group>"; };
 		2B4ACF8A1727A5F80011E557 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		2B4ACF8B1727A5F80011E557 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		2B77BF3C1755D1C6002333ED /* BMWWalkthroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWWalkthroughViewController.h; sourceTree = "<group>"; };
+		2B77BF3D1755D1C6002333ED /* BMWWalkthroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWWalkthroughViewController.m; sourceTree = "<group>"; };
+		2B77BF3F1755D688002333ED /* WalkthroughPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughPageViewController.h; sourceTree = "<group>"; };
+		2B77BF401755D688002333ED /* WalkthroughPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughPageViewController.m; sourceTree = "<group>"; };
 		2BB666A6171D3DB10006397B /* BMWSlidingCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMWSlidingCellDelegate.h; sourceTree = "<group>"; };
 		2BD4CB70172DF1C100687647 /* BMWAttendeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMWAttendeeTableViewController.h; sourceTree = "<group>"; };
 		2BD4CB71172DF1C100687647 /* BMWAttendeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMWAttendeeTableViewController.m; sourceTree = "<group>"; };
@@ -506,6 +512,10 @@
 				4B77FE2416C6F2AF00426018 /* BMWViewController.h */,
 				4B77FE2516C6F2AF00426018 /* BMWViewController.m */,
 				4B2E69C2173A5E4300889482 /* BMWLoginViewController.h */,
+				2B77BF3C1755D1C6002333ED /* BMWWalkthroughViewController.h */,
+				2B77BF3D1755D1C6002333ED /* BMWWalkthroughViewController.m */,
+				2B77BF3F1755D688002333ED /* WalkthroughPageViewController.h */,
+				2B77BF401755D688002333ED /* WalkthroughPageViewController.m */,
 				4B2E69C3173A5E4300889482 /* BMWLoginViewController.m */,
 				4BBEDA26171D4AD30016B00D /* BMWDayTableViewController.h */,
 				4BBEDA27171D4AD30016B00D /* BMWDayTableViewController.m */,
@@ -866,6 +876,8 @@
 				4B8B324F174B18880046DE41 /* BMWAnalytics.m in Sources */,
 				4B8B3252174B72590046DE41 /* KGStatusBar+BMWNotifications.m in Sources */,
 				4BE14EBD174B83AA006C111A /* BMWMenuTableViewController.m in Sources */,
+				2B77BF3E1755D1C6002333ED /* BMWWalkthroughViewController.m in Sources */,
+				2B77BF411755D688002333ED /* WalkthroughPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
