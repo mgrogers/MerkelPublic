@@ -47,7 +47,14 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
     [self.revealController setLeftViewController:menuTVC];
     [BMWAppearances setupAppearance];
     [[BMWCalendarAccess sharedAccess] authorizeCompletion:nil];
+    if (launchOptions[UIApplicationLaunchOptionsLocalNotificationKey]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDidReceiveIncomingConnectionNotification object:nil];
+    }
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDidReceiveIncomingConnectionNotification object:nil];
 }
 
 // Delayed start of external services to speed up app launch.

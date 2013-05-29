@@ -23,6 +23,7 @@ typedef void(^BMWCalendarAuthorizeCompletion)(BOOL granted, NSError *error);
 - (void)getTodaysEventsCompletion:(BMWCalendarEventCompletion)completion;
 - (void)attendeesForEvent:(EKEvent *)event withCompletion:(void (^)(NSArray *attendees))completion;
 - (void)createQuickEventWithCompletion:(void (^)(EKEvent *event, NSString *conferenceCode))completion;
+- (void)createIncomingCallEventWithCompletion:(void (^)(EKEvent *event))completion;
 
 @property (readonly) BOOL isAuthorized;
 
