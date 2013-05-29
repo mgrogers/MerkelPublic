@@ -193,6 +193,7 @@ static const NSInteger kTableCellRowHeight = 88;
 }
 
 - (void)handleIncomingCallNotification {
+    [self.navigationController popToViewController:self animated:YES];
     [UIActionSheet actionSheetWithTitle:@"Incoming Call"
                                 message:@"You have an incoming call."
                                 buttons:@[@"Accept"]

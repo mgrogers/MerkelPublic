@@ -219,6 +219,8 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 			[app cancelAllLocalNotifications];
 		}
 		notification.alertBody = @"Incoming Call from Callin";
+        notification.alertAction = @"Answer";
+        notification.soundName = UILocalNotificationDefaultSoundName;
 		[app presentLocalNotificationNow:notification];
 	} else {
         [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDidReceiveIncomingConnectionNotification object:self];
