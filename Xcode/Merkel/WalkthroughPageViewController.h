@@ -10,11 +10,7 @@
 
 @interface WalkthroughPageViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UILabel *pageNumberLabel;
-
-@property (nonatomic, strong) IBOutlet UILabel *numberTitle;
-
-@property (nonatomic, strong) IBOutlet UIImageView *numberImage;
+@property (nonatomic, strong) UIImageView *image;
 
 - (id)initWithPageNumber:(NSUInteger)page;
 
