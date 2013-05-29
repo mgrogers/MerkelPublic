@@ -16,6 +16,7 @@
 #import "BMWSlidingCellDelegate.h"
 #import "TCConnectionDelegate.h"
 #import "BMWAddressBookViewController.h"
+#import "UIActionSheet+MKBlockAdditions.h"
 
 @interface BMWDayTableViewController () <TCConnectionDelegate, ABPeoplePickerNavigationControllerDelegate, BMWSlidingCellDelegate, BMWLoginDelegate>
 
@@ -87,6 +88,10 @@ static const NSInteger kTableCellRowHeight = 88;
                                              selector:@selector(eventStoreChanged:)
                                                  name:EKEventStoreChangedNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleIncomingCallNotification)
+                                                 name:BMWPhoneDidReceiveIncomingConnectionNotification
+                                               object:nil];
     self.phoneNumber = [BMWPhone sharedPhone].phoneNumber;
 }
 
@@ -155,21 +160,8 @@ static const NSInteger kTableCellRowHeight = 88;
         dayDetailVC.conferenceCode = conferenceCode;
         dayDetailVC.phoneNumber = self.phoneNumber;
         [self.navigationController pushViewController:dayDetailVC animated:YES];
-//        [dayDetailVC startCall];
         [dayDetailVC sendInviteMessageAnimated:NO];
     }];
-//    BMWAddressBookViewController *abvc = [[BMWAddressBookViewController alloc] init];
-//
-//
-//    [self presentViewController:abvc animated:YES completion:nil];
-    
-//    ABPeoplePickerNavigationController *picker =
-//    [[ABPeoplePickerNavigationController alloc] init];
-//    
-//    picker.peoplePickerDelegate = self;
-//    [self presentViewController:picker animated:YES completion:nil];
-
-//    [[BMWPhone sharedPhone] quickCallWithDelegate:self];
 }
 
 - (void)currentCallButtonPressed {
@@ -187,32 +179,31 @@ static const NSInteger kTableCellRowHeight = 88;
 
 - (void)endCallButtonPressed {
     [[BMWPhone sharedPhone] disconnect];
-    
-    // const CGFloat kTitleFontSize = 10.0;
-    // UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 30.0, 19.0)];
-    // UILabel *title_text = [[UILabel alloc] init];
-    // title_text.text = @"Create";
-    
-    // [buttonItemView addSubview:title_text];
-//    
-//    UIButton *create_button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [create_button setBackgroundImage:[UIImage imageNamed:@"backbutton.png"] forState:UIControlStateNormal];
-//
-//    create_button.frame = CGRectMake(0.0, 0.0, 30.0, 19.0);
-//    [create_button setBackgroundColor:[UIColor clearColor]];
-//     
-//    [create_button setTitle:@"Create" forState:UIControlStateNormal];
-//    [create_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    
-//
-//    [create_button addTarget:self action:@selector(createButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    // UIBarButtonItem *cbarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonItemView];
-    
-    
-//    UIBarButtonItem *menuBarButtonCreate = [[UIBarButtonItem alloc] initWithCustomView:create_button];
-    // self.navigationItem.rightBarButtonItems = @[cbarButtonItem];
-    
+}
+
+- (void)joinIncomingCallButtonPressed {
+    [[BMWCalendarAccess sharedAccess] createIncomingCallEventWithCompletion:^(EKEvent *event) {
+        BMWDayDetailViewController *dayDetailVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"DayDetailVC"];
+        dayDetailVC.event = event;
+        dayDetailVC.eventTitle = event.title;
+        dayDetailVC.conferenceCode = @"";
+        dayDetailVC.phoneNumber = self.phoneNumber;
+        [self.navigationController pushViewController:dayDetailVC animated:YES];
+    }];
+}
+
+- (void)handleIncomingCallNotification {
+    [UIActionSheet actionSheetWithTitle:@"Incoming Call"
+                                message:@"You have an incoming call."
+                                buttons:@[@"Accept"]
+                             showInView:self.tableView
+                              onDismiss:^(int buttonIndex) {
+                                  [[BMWPhone sharedPhone] acceptIncomingConnection];
+                                  [self joinIncomingCallButtonPressed];
+                              }
+                               onCancel:^{
+                                   [[BMWPhone sharedPhone] ignoreIncomingConnection];
+                               }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

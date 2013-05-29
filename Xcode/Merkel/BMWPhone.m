@@ -29,6 +29,7 @@
 @synthesize muted = _muted;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
+NSString * const BMWPhoneDidReceiveIncomingConnectionNotification = @"BMWPhoneDidReceiveIncomingConnectionNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
 static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
@@ -183,14 +184,14 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     [[UIApplication sharedApplication] openURL:callURL];
 }
 
--(void)acceptIncomingConnection {
+- (void)acceptIncomingConnection {
 	//Accept the pending connection
 	[self.pendingIncomingConnection accept];
 	self.connection = self.pendingIncomingConnection;
 	self.pendingIncomingConnection = nil;
 }
 
--(void)ignoreIncomingConnection {
+- (void)ignoreIncomingConnection {
 	// Ignore the pending connection
 	// We don't release until after the delegate callback for connectionDidConnect:
 	[self.pendingIncomingConnection ignore];
@@ -203,8 +204,25 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 }
 
 - (void)device:(TCDevice *)device didReceiveIncomingConnection:(TCConnection *)connection {
+    if (self.pendingIncomingConnection || self.connection) {
+        // Ignore if we already have an incoming connection.
+        return;
+    }
     self.pendingIncomingConnection = connection;
 	self.pendingIncomingConnection.delegate = self;
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+		//App is not in the foreground, so send LocalNotification
+		UIApplication* app = [UIApplication sharedApplication];
+		UILocalNotification* notification = [[UILocalNotification alloc] init];
+		NSArray* oldNots = [app scheduledLocalNotifications];
+		if ([oldNots count] > 0) {
+			[app cancelAllLocalNotifications];
+		}
+		notification.alertBody = @"Incoming Call from Callin";
+		[app presentLocalNotificationNow:notification];
+	} else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDidReceiveIncomingConnectionNotification object:self];
+    }
 }
 
 - (void)device:(TCDevice *)device didReceivePresenceUpdate:(TCPresenceEvent *)presenceEvent {

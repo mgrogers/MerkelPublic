@@ -6,6 +6,7 @@ PODS:
   - PKRevealController (1.0b2)
   - Reachability (3.1.0)
   - TestFlightSDK (1.2.4)
+  - UIKitCategoryAdditions (0.0.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.1.0)
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - PKRevealController (~> 1.0b2)
   - Reachability (~> 3.1.0)
   - TestFlightSDK (~> 1.2.4.beta)
+  - UIKitCategoryAdditions (~> 0.0.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
@@ -24,5 +26,6 @@ SPEC CHECKSUMS:
   PKRevealController: 631e6a3db833a0c660203c2dba0963109549ec8a
   Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
   TestFlightSDK: 96d7400f844599dd02677bf8d34f8bdfe3f9b33c
+  UIKitCategoryAdditions: 393e65777c35ce92af6b32797d2e456c2df411ac
 
 COCOAPODS: 0.19.1
