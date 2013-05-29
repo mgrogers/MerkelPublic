@@ -42,7 +42,8 @@ var conferenceSchema = new Schema({
     startTime: {type: Date, default: ""},
     timeZone: {type: String, default: "America/Los_Angeles"},
     sms: {type: Boolean, default: false},
-    email: {type: Boolean, default: false} // 'active' or 'inactive'
+    email: {type: Boolean, default: false}, // 'active' or 'inactive'
+    notes: {type: String, default: ""}
 });
 
 var participantSchema = new Schema({
@@ -93,6 +94,10 @@ API Call: "/2013-04-23/conference/create" to generate a new conference, data for
 
 exports.create = function(req, res) {
     var postBody = req.body;
+
+    // Regex to detect valid phone number & conference codes, taken from http://stackoverflow.com/questions/123559/a-comprehensive-regex-for-phone-number-validation and modified
+    var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\\.?|ext\.?|extension|,,,|[Cc]ode:?|[Cc]onference code:?|[Cc]onference:?|[Cc]onference number:?|[Nn]umber:?)\s*(\d+))?#?");
+
     Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
@@ -100,6 +105,16 @@ exports.create = function(req, res) {
         } else {
             console.log(conference);
             if(!conference) {
+
+                // Detect existing conference with regex
+                if(postBody && postBody.notes) {
+                    var match = postBody.notes.match("/" + VALID_CONFERENCE_REGEX + "/g");
+                    if(match) { // Found existing conference
+                        // TODO: return existing conference
+                    }
+                }
+
+
                 Conference.find(function(err, conferences) {
                     var hash = 0;
                     if (!err) {
@@ -120,6 +135,7 @@ exports.create = function(req, res) {
                         conferenceObject.creationDate = postBody.creationDate || "";
                         conferenceObject.description = postBody.description || "";
                         conferenceObject.startTime = postBody.startTime || "";
+                        conferenceObject.notes = postBody.notes || "";
                         if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
                         else conferenceObject.sms = false;
                         if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
