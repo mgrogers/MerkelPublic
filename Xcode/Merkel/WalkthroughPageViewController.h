@@ -11,5 +11,6 @@
 @interface WalkthroughPageViewController : UIViewController
 
 - (id)initWithPageNumber:(NSUInteger)page;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end

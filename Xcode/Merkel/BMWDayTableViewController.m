@@ -100,6 +100,8 @@ static const NSInteger kTableCellRowHeight = 88;
     [self synchronizePhoneStatusUI];
 }
 
+
+
 - (void)presentLoginViewAnimated:(BOOL)animated {
     self.loginVC = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginVC"];
     self.loginVC.loginDelegate = self;

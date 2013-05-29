@@ -11,7 +11,7 @@
 @interface WalkthroughPageViewController () 
 
 @property (nonatomic) NSInteger pageNumber;
-@property (nonatomic, strong) UIImageView *imageView;
+
 
 @end
 
@@ -28,7 +28,7 @@
 
 - (void) loadImage {
     
-    NSString *pageName = [NSString stringWithFormat:@"walkthrough-page_%d", self.pageNumber];
+    NSString *pageName = [NSString stringWithFormat:@"walkthrough-page-%d", self.pageNumber];
     UIImage *image = [UIImage imageNamed:pageName];
     self.imageView.image = image;
 }

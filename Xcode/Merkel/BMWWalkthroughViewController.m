@@ -63,13 +63,6 @@
     [self loadScrollViewWithPage:1];
 }
 
-- (IBAction)changePage:(id)sender {
-    [self gotoPage:YES];
-}
-
-
-
-
 - (void)loadScrollViewWithPage:(NSUInteger)page
 {
     if (page >= self.pages.count)
@@ -96,9 +89,28 @@
         [controller didMoveToParentViewController:self];
         
         NSDictionary *numberItem = [self.pages objectAtIndex:page];
-//        controller.numberImage.image = [UIImage imageNamed:[numberItem valueForKey:kImageKey]];
+        NSString *pageName = [NSString stringWithFormat:@"walkthrough-page-%d", page];
+        
+        controller.imageView.image = [UIImage imageNamed: pageName];                                      
+        
 //        controller.numberTitle.text = [numberItem valueForKey:kNameKey];
     }
+}
+
+// at the end of scroll animation, reset the boolean used when scrolls originate from the UIPageControl
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // switch the indicator when more than 50% of the previous/next page is visible
+    CGFloat pageWidth = CGRectGetWidth(self.scrollView.frame);
+    NSUInteger page = floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    self.pageControl.currentPage = page;
+    
+    // load the visible page and the page on either side of it (to avoid flashes when the user starts scrolling)
+    [self loadScrollViewWithPage:page - 1];
+    [self loadScrollViewWithPage:page];
+    [self loadScrollViewWithPage:page + 1];
+    
+    // a possible optimization would be to unload the views+controllers which are no longer visible
 }
 
 - (void)gotoPage:(BOOL)animated
@@ -115,6 +127,11 @@
     bounds.origin.x = CGRectGetWidth(bounds) * page;
     bounds.origin.y = 0;
     [self.scrollView scrollRectToVisible:bounds animated:animated];
+}
+
+
+- (IBAction)changePage:(id)sender {
+    [self gotoPage:YES];
 }
 
 - (void)didReceiveMemoryWarning
