@@ -174,10 +174,19 @@ CallIn.ConferenceView = Backbone.View.extend({
     },
 
     deviceConnect: function() {
-        this.$el.find("#call-status").html('<a href="#" class="btn btn-large btn-error" id="hangup-button">Hang Up</a>');
+        this.$el.find("#call-status").html('<a href="#" class="btn btn-large btn-error" id="hangup-button">Hang Up</a>&nbsp;<a href="#" class="btn btn-large btn-primary" id="callout-button">Call Attendees</a>');
         var T = this;
         this.$el.find("#hangup-button").click(function(event) {
             T.hangup();
+        });
+        this.$el.find("#callout-button").click(function(event) {
+            $(this).addClass("disabled");
+            $(this).text("Called attendees");
+            $.ajax({
+                type: "GET",
+                url: "/2013-04-23/conference/callout?conferenceCode=" + T.model.get("conferenceCode"),
+                dataType: "json"
+            });
         });
     },
 
