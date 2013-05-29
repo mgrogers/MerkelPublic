@@ -8,7 +8,10 @@
 
 #import "WalkthroughPageViewController.h"
 
-@interface WalkthroughPageViewController ()
+@interface WalkthroughPageViewController () 
+
+@property (nonatomic) NSInteger pageNumber;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
@@ -23,10 +26,22 @@
     return self;
 }
 
+- (void) loadImage {
+    
+    NSString *pageName = [NSString stringWithFormat:@"walkthrough-page_%d", self.pageNumber];
+    UIImage *image = [UIImage imageNamed:pageName];
+    self.imageView.image = image;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self loadImage];
+}
+
+- (id)initWithPageNumber:(NSUInteger)page {
+    self.pageNumber = page;
+    return self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,5 +49,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end
