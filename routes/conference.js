@@ -591,10 +591,11 @@ API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCo
  */
 exports.twilio = function(req, res) {
     var conferenceCode = req.query.conferenceCode;
+    var from = req.query.From;
 
     // Generate TWiML to join conference
     if(conferenceCode) {
-        return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
+        return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode + "&From=" + from);
     } else {
         if(req.query.From) {
             return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
@@ -652,7 +653,7 @@ function triggerCallsToAttendees(conferenceCode) {
                     options = {
                         from: TWILIO_NUMBER,
                         to: participant.phone,
-                        url: BASE_URL + "/2013-04-23/conference/twilio?conferenceCode=" + conferenceCode,
+                        url: BASE_URL + "/2013-04-23/conference/twilio?conferenceCode=" + conferenceCode + "&From=" + participant.phone,
                         method: "GET"
                     }
                     console.log("Dialing out: " + options);
