@@ -163,11 +163,6 @@ NSString * const kTestSenderEmailAddress = @"wes.k.leung@gmail.com";
     NSString *notes = event.notes;
     NSRange range = [notes rangeOfString:kBMWCalendarNote];
     if (range.location == NSNotFound || (range.location == 0 && range.length == 0) || !notes) {
-//        if ([self.processedEvents containsObject:event]) {
-//            NSDictionary *eventDict = [self.processedEventDicts objectAtIndex:[self.processedEvents indexOfObject:event]];
-//            completion(eventDict[@"conferenceCode"]);
-//            return;
-//        }
         NSLog(@"Code not found, creating new conference.");
         if (!notes) notes = @"";
         [self attendeesForEvent:event withCompletion:^(NSArray *attendees) {
