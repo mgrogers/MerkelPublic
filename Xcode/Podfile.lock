@@ -19,6 +19,7 @@ DEPENDENCIES:
   - PKRevealController (~> 1.0b2)
   - PonyDebugger (~> 0.3.0)
   - Reachability (~> 3.1.0)
+  - SocketRocket (~> 0.2.0)
   - TestFlightSDK (~> 1.2.4.beta)
   - UIKitCategoryAdditions (~> 0.0.1)
 

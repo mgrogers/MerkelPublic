@@ -15,6 +15,7 @@
 #import <NewRelicAgent/NewRelicAgent.h>
 #import <PKRevealController/PKRevealController.h>
 #import <Mixpanel/Mixpanel.h>
+#import <PonyDebugger/PonyDebugger.h>
 
 @interface BMWAppDelegate () <CLLocationManagerDelegate>
 
@@ -64,6 +65,7 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
 //        [[IDLogger defaultLogger] addAppender:self];
         [TestFlight takeOff:kMerkelTestFlightId];
 #ifndef RELEASE
+        [self launchPonyDebugger];
         [GAI sharedInstance].debug = YES;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -75,6 +77,16 @@ static NSString * const kMerkelMixpanelId = @"47eb26b4488113bbb2118b83717c5956";
 //        [self startSignificantChangeUpdates];
         [BMWPhone sharedPhone];
     });
+}
+
+- (void)launchPonyDebugger {
+    static NSString * const kPonyDebuggerURL = @"ws://localhost:9000/device";
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger connectToURL:[NSURL URLWithString:kPonyDebuggerURL]];
+    [debugger enableCoreDataDebugging];
+    [debugger enableNetworkTrafficDebugging];
+    [debugger enableViewHierarchyDebugging];
+    [debugger forwardAllNetworkTraffic];
 }
 
 //- (void)appendLoggerEvent:(IDLoggerEvent *)event

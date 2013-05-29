@@ -7,5 +7,6 @@ pod 'Mixpanel', '~> 2.0.0'
 pod 'KGStatusBar', '~> 1.0'
 pod 'Reachability', '~> 3.1.0'
 pod 'UIKitCategoryAdditions', '~> 0.0.1'
+pod 'SocketRocket', '~> 0.2.0'
 pod 'PonyDebugger', '~> 0.3.0'
 
