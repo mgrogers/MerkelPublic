@@ -653,7 +653,8 @@ function triggerCallsToAttendees(conferenceCode) {
                         from: TWILIO_NUMBER,
                         to: participant.phone,
                         url: BASE_URL + "/2013-04-23/conference/twilio?conferenceCode=" + conferenceCode + "&From=" + participant.phone,
-                        method: "GET"
+                        method: "GET",
+                        if_machine: "Hangup"
                     }
                     console.log("Dialing out: " + options);
                     client.calls.create(options, function(err, call) {
