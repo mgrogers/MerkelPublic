@@ -95,6 +95,8 @@ API Call: "/2013-04-23/conference/create" to generate a new conference, data for
 
 exports.create = function(req, res) {
     var postBody = req.body;
+    console.log("title post object: " + postBody.title);
+    console.log("notes post object: " + postBody.notes);
 
     // Regex to detect valid phone number & conference codes, taken from http://stackoverflow.com/questions/123559/a-comprehensive-regex-for-phone-number-validation and modified
     var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\\.?|ext\.?|extension|,,,|[Cc]ode:?|[Cc]onference code:?|[Cc]onference:?|[Cc]onference number:?|[Nn]umber:?)\s*(\d+))?#?");
@@ -104,69 +106,85 @@ exports.create = function(req, res) {
             return res.send(400, {error: err,
                                           reqBody: req.body});
         } else {
-            console.log(conference);
+            console.log("conference " + conference);
             if(!conference) {
-
+                console.log("postbody " + postBody);
                 // Detect existing conference with regex
                 if(postBody && postBody.notes) {
                     var match = postBody.notes.match("/" + VALID_CONFERENCE_REGEX + "/g");
-                    console.log(match);
+                    console.log("match digits " + match);
                     if(match) { // Found existing conference
-                        return res.send(match);
+                        var conferenceObject = {conferenceCode: hash};
+                        return res.send(conferenceObject);
+                    } else {
+                        return res.send("no match");
                     }
+                } else {
+                    res.send(404, "No post body found");
                 }
 
 
-                // Conference.find(function(err, conferences) {
-                //     var hash = 0;
-                //     if (!err) {
-                //         var numConferences = conferences.length;
-                //         hash = hashids.encrypt(numConferences);
-                //     } else {
-                //         hash = hashids.encrypt(0);
-                //     }
+                Conference.find(function(err, conferences) {
+                    var hash = 0;
+                    if (!err) {
+                        if(postBody && postBody.notes) {
+                            var match = postBody.notes.match("/" + VALID_CONFERENCE_REGEX + "/g");
+                            console.log("match digits " + match);
+                            if(match) {
+                                hash = match;
+                            } else {
+                                var numConferences = conferences.length;
+                                hash = hashids.encrypt(numConferences);
+                            }   
+                        } else {
+                            var numConferences = conferences.length;
+                            hash = hashids.encrypt(numConferences);
+                        }
+                    } else {
+                        hash = hashids.encrypt(0);
+                    }
 
-                //     var conferenceObject = {};
-                //     var postBody = req.body;
+                    var conferenceObject = {};
+                    var postBody = req.body;
 
-                //     if (postBody) {
-                //         conferenceObject.conferenceCode = hash;
-                //         conferenceObject.status = "inactive";
-                //         conferenceObject.title = postBody.title || "";
-                //         conferenceObject.creatorId = postBody.initiator || "";
-                //         conferenceObject.creationDate = postBody.creationDate || "";
-                //         conferenceObject.description = postBody.description || "";
-                //         conferenceObject.startTime = postBody.startTime || "";
-                //         conferenceObject.notes = postBody.notes || "";
-                //         if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
-                //         else conferenceObject.sms = false;
-                //         if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
-                //         else conferenceObject.email = false;
-                //     } else {
-                //         conferenceObject = {conferenceCode: hash};
-                //     }
+                    if (postBody) {
+                        conferenceObject.conferenceCode = hash;
+                        conferenceObject.status = "inactive";
+                        conferenceObject.title = postBody.title || "";
+                        conferenceObject.creatorId = postBody.initiator || "";
+                        conferenceObject.creationDate = postBody.creationDate || "";
+                        conferenceObject.description = postBody.description || "";
+                        conferenceObject.startTime = postBody.startTime || "";
+                        conferenceObject.notes = postBody.notes || "";
+                        if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
+                        else conferenceObject.sms = false;
+                        if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
+                        else conferenceObject.email = false;
+                    } else {
+                        conferenceObject = {conferenceCode: hash};
+                    }
                     
-                //     // Mixpanel
-                //     mixpanel.track("conference create", {
-                //         conferenceCode: hash,
-                //         conferenceTitle: conferenceObject.title,
-                //         conferenceDescription: conferenceObject.description
-                //     });
+                    // Mixpanel
+                    mixpanel.track("conference create", {
+                        conferenceCode: hash,
+                        conferenceTitle: conferenceObject.title,
+                        conferenceDescription: conferenceObject.description
+                    });
 
-                //     var conference = new Conference(conferenceObject);
-                //     if (postBody.isQuickCall == 1) {
-                //         return res.send(conferenceObject);
-                //     } else {
-                //         conference.save(function(err) {
-                //             if (!err) {
-                //                 var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
-                //                 addParticipants(participantsObject);
-                //             }
-                //             conferenceObject.isNew = true;
-                //             return res.send(conferenceObject);
-                //         });  
-                //     } 
-                // });
+                    var conference = new Conference(conferenceObject);
+                    if (postBody.isQuickCall == 1) {
+                        return res.send(conferenceObject);
+                    } else {
+                        conference.save(function(err) {
+                            if (!err) {
+                                var participantsObject = {conferenceCode: conferenceObject.conferenceCode, participants: postBody.attendees}
+                                addParticipants(participantsObject);
+                            }
+                            conferenceObject.isNew = true;
+                            return res.send(conferenceObject);
+                        });  
+                    } 
+                });
             } else {
                 conference.isNew = false;
                 return res.send(conference);
