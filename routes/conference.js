@@ -33,6 +33,7 @@ var kSendGridKey = "xtce2l6u";
 var downloadURL = "http://bit.ly/10tTHWW"  
 
 var conferenceSchema = new Schema({
+    phoneNumber: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
@@ -92,61 +93,48 @@ exports.capability = function(req, res) {
 API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
-
 exports.create = function(req, res) {
     var postBody = req.body;
-    console.log("title post object: " + postBody.title);
-    console.log("notes post object: " + postBody.notes);
 
     // Regex to detect valid phone number & conference codes, taken from http://stackoverflow.com/questions/123559/a-comprehensive-regex-for-phone-number-validation and modified
-    var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\\.?|ext\.?|extension|,,,|[Cc]ode:?|[Cc]onference code:?|[Cc]onference:?|[Cc]onference number:?|[Nn]umber:?)\s*(\d+))?#?");
+    // var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\\.?|ext\.?|extension|,,,|[Cc]ode:?|[Cc]onference code:?|[Cc]onference:?|[Cc]onference number:?|[Nn]umber:?)\s*(\d+))?#?");
+    var VALID_CONFERENCE_REGEX = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌1)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌1|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/ig;
 
+    // var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?");
     Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
                                           reqBody: req.body});
         } else {
-            console.log("conference " + conference);
             if(!conference) {
-                console.log("postbody " + postBody);
-                // Detect existing conference with regex
-                if(postBody && postBody.notes) {
-                    var match = postBody.notes.match("/" + VALID_CONFERENCE_REGEX + "/g");
-                    console.log("match digits " + match);
-                    if(match) { // Found existing conference
-                        var conferenceObject = {conferenceCode: hash};
-                        return res.send(conferenceObject);
-                    } else {
-                        return res.send("no match");
-                    }
-                } else {
-                    res.send(404, "No post body found");
-                }
-
-
                 Conference.find(function(err, conferences) {
                     var hash = 0;
+                    var postBody = req.body;
+                    var conferenceObject = {};
                     if (!err) {
+                        console.log("postbody" + postBody);
+         
                         if(postBody && postBody.notes) {
-                            var match = postBody.notes.match("/" + VALID_CONFERENCE_REGEX + "/g");
-                            console.log("match digits " + match);
-                            if(match) {
-                                hash = match;
-                            } else {
-                                var numConferences = conferences.length;
-                                hash = hashids.encrypt(numConferences);
-                            }   
-                        } else {
-                            var numConferences = conferences.length;
+                            var baseString = postBody.notes;
+
+                            var phoneNumber = baseString.match(VALID_CONFERENCE_REGEX);
+
+                            if(phoneNumber) { // Found existing conference
+                                var remainingString = baseString.slice(baseString.search(VALID_CONFERENCE_REGEX) + phoneNumber[0].length);
+                                var code = remainingString.slice(0, remainingString.search("#"));
+                                hash = code.replace(/[^\d]/g, ""); 
+                                conferenceObject.phoneNumber = phoneNumber;
+                            }
+                        }
+                        var numConferences = conferences.length;
+                        if (hash == 0 ) {
                             hash = hashids.encrypt(numConferences);
                         }
                     } else {
                         hash = hashids.encrypt(0);
                     }
 
-                    var conferenceObject = {};
                     var postBody = req.body;
-
                     if (postBody) {
                         conferenceObject.conferenceCode = hash;
                         conferenceObject.status = "inactive";
@@ -192,6 +180,7 @@ exports.create = function(req, res) {
         }
     });
 };
+
 
 exports.phoneConfirmation = function(req, res) {
     if (req.method == 'POST') {
