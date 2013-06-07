@@ -96,11 +96,9 @@ API Call: "/2013-04-23/conference/create" to generate a new conference, data for
 exports.create = function(req, res) {
     var postBody = req.body;
 
-    // Regex to detect valid phone number & conference codes, taken from http://stackoverflow.com/questions/123559/a-comprehensive-regex-for-phone-number-validation and modified
-    // var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\\.?|ext\.?|extension|,,,|[Cc]ode:?|[Cc]onference code:?|[Cc]onference:?|[Cc]onference number:?|[Nn]umber:?)\s*(\d+))?#?");
+    // Regex to detect valid 10 digit phone numbers
     var VALID_CONFERENCE_REGEX = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌1)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌1|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/ig;
 
-    // var VALID_CONFERENCE_REGEX = escape("(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?");
     Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
