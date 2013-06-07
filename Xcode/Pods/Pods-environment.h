@@ -49,3 +49,9 @@
 #define COCOAPODS_VERSION_MINOR_TestFlightSDK 2
 #define COCOAPODS_VERSION_PATCH_TestFlightSDK 4
 
+// UIKitCategoryAdditions
+#define COCOAPODS_POD_AVAILABLE_UIKitCategoryAdditions
+#define COCOAPODS_VERSION_MAJOR_UIKitCategoryAdditions 0
+#define COCOAPODS_VERSION_MINOR_UIKitCategoryAdditions 0
+#define COCOAPODS_VERSION_PATCH_UIKitCategoryAdditions 1
+

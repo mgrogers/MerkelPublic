@@ -4,6 +4,7 @@ var TWIML_APP_ID = 'AP361c96431ce7485f8b27da32da715b7d';
 var TWILIO_NUMBER = '+16503535255'
 var MINIMUM_CONFERENCE_CODE_LENGTH = 10;
 var API_VERSION = '2013-04-23'
+var BASE_URL = "http://bossmobilewunderkinds.herokuapp.com"
 
 var twilio = require('twilio');
 var SendGrid = require('sendgrid').SendGrid;
@@ -534,6 +535,21 @@ exports.join = function(req, res) {
     }
 };
 
+/*
+API Call: "/2013-04-23/conference/callout" to have Twilio dial out to all attendees
+[conferenceCode] is the conference code to call the attendees of
+*/
+exports.callout = function(req, res) {
+    var conferenceCode = req.query.conferenceCode;
+    triggerCallsToAttendees(conferenceCode);
+    Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+        if(!err_p && participants) {
+            return res.send(JSON.stringify(participants));
+        } else {
+            return res.send({message: "Couldn't find the participants, some error occurred."});
+        }
+    });
+}
 
 /*
 API Call: "/2013-04-23/conference/number" to get a Twilio number
@@ -579,10 +595,11 @@ API Call: "/2013-04-23/conference/twilio" for Twilio to access. If [conferenceCo
  */
 exports.twilio = function(req, res) {
     var conferenceCode = req.query.conferenceCode;
+    var from = req.query.From;
 
     // Generate TWiML to join conference
     if(conferenceCode) {
-        return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode);
+        return res.redirect("/" + API_VERSION + "/conference/join?Digits=" + conferenceCode + "&From=" + from);
     } else {
         if(req.query.From) {
             return res.send("<?xml version='1.0' encoding='UTF-8'?><Response><Gather method='get' action='/" + API_VERSION + "/conference/join?From=" + req.query.From + "' timeout='20' finishOnKey='#'><Say voice='woman' language='en-gb'>Welcome to Call In. Please enter the conference code, followed by the pound key.</Say></Gather></Response>");
@@ -628,6 +645,33 @@ function addParticipants(participantsObject) {
         });
     }
 };
+
+function triggerCallsToAttendees(conferenceCode) {
+    Participant.find({'conferenceCode': conferenceCode}, function(err_p, participants) {
+        if(!err_p && participants) {
+            console.log("Found participants " + participants);
+            var client = require('twilio')(ACCOUNT_SID, AUTH_TOKEN);
+            for(var i = 0; i < participants.length; i++) {
+                var participant = participants[i];
+                if (participant.phone && participant.status == "inactive") {
+                    options = {
+                        from: TWILIO_NUMBER,
+                        to: participant.phone,
+                        url: BASE_URL + "/2013-04-23/conference/twilio?conferenceCode=" + conferenceCode + "&From=" + participant.phone,
+                        method: "GET"
+                    }
+                    console.log("Dialing out: " + options);
+                    client.calls.create(options, function(err, call) {
+                        console.log("Called out " + participant.phone);
+                    });
+                }
+                
+            }
+        } else {
+            return res.send({message: "Couldn't find the participants, some error occurred."});
+        }
+    });
+}
 
 function getConferenceObject(conferenceCode, callback) {
     Conference.findOne({'conferenceCode': conferenceCode}, function(err, conference) {

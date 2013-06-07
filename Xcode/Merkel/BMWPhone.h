@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const BMWPhoneDeviceStatusDidChangeNotification;
+extern NSString * const BMWPhoneDidReceiveIncomingConnectionNotification;
 
 typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
     BMWPhoneStatusNotReady,
@@ -27,6 +28,8 @@ typedef NS_ENUM(NSInteger, BMWPhoneStatus) {
        andConferenceCode: (NSString*) conferenceCode;
 - (void)disconnect;
 - (void)dialConferenceCode:(NSString *)conferenceCode;
+- (void)acceptIncomingConnection;
+- (void)ignoreIncomingConnection;
 
 @property (readonly) BOOL isReady;
 @property (nonatomic, getter = isSpeakerEnabled) BOOL speakerEnabled;

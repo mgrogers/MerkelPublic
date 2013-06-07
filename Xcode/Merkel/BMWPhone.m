@@ -18,7 +18,7 @@
 @interface BMWPhone () <TCDeviceDelegate, TCConnectionDelegate>
 
 @property (nonatomic, strong) TCDevice *device;
-@property (nonatomic, strong) TCConnection *connection;
+@property (nonatomic, strong) TCConnection *connection, *pendingIncomingConnection;
 @property (nonatomic, strong) Reachability *apiReachability;
 
 @end
@@ -29,6 +29,7 @@
 @synthesize muted = _muted;
 
 NSString * const BMWPhoneDeviceStatusDidChangeNotification = @"BMWPhoneDeviceStatusDidChangeNotification";
+NSString * const BMWPhoneDidReceiveIncomingConnectionNotification = @"BMWPhoneDidReceiveIncomingConnectionNotification";
 static NSString * const kBMWPhoneNumberKey = @"kBMWPhoneNumberKey";
 static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 
@@ -44,19 +45,7 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 - (id)init {
     if ( self = [super init] ) {
         [self configureReachability];
-        NSDictionary *params =
-            @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ?
-                                [[PFUser currentUser] objectForKey:@"phone"] :
-                                [NSNull null]};
-        [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *capabilityToken = responseObject[@"capabilityToken"];
-            self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
-            [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
-                                                                object:self
-                                                              userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error logging into Twilio: %@", [error localizedDescription]);
-        }];
+        [self refreshCapabilityToken];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *number = [defaults stringForKey:kBMWPhoneNumberKey];
         if (!number) {
@@ -67,6 +56,22 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
         }
     }
     return self;
+}
+
+- (void)refreshCapabilityToken {
+    NSDictionary *params =
+    @{@"clientId": ([[PFUser currentUser] objectForKey:@"phone"]) ?
+      [[PFUser currentUser] objectForKey:@"phone"] :
+          [NSNull null]};
+    [[BMWAPIClient sharedClient] getCapabilityTokenWithParameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *capabilityToken = responseObject[@"capabilityToken"];
+        self.device = [[TCDevice alloc] initWithCapabilityToken:capabilityToken delegate:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDeviceStatusDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{@"deviceStatus": [NSNumber numberWithInteger:self.status]}];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error logging into Twilio: %@", [error localizedDescription]);
+    }];
 }
 
 - (void)configureReachability {
@@ -179,6 +184,19 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
     [[UIApplication sharedApplication] openURL:callURL];
 }
 
+- (void)acceptIncomingConnection {
+	//Accept the pending connection
+	[self.pendingIncomingConnection accept];
+	self.connection = self.pendingIncomingConnection;
+	self.pendingIncomingConnection = nil;
+}
+
+- (void)ignoreIncomingConnection {
+	// Ignore the pending connection
+	// We don't release until after the delegate callback for connectionDidConnect:
+	[self.pendingIncomingConnection ignore];
+}
+
 #pragma mark - TCDeviceDelegate Methods
 
 - (void)device:(TCDevice *)device didStopListeningForIncomingConnections:(NSError *)error {
@@ -186,7 +204,27 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 }
 
 - (void)device:(TCDevice *)device didReceiveIncomingConnection:(TCConnection *)connection {
-    
+    if (self.pendingIncomingConnection || self.connection) {
+        // Ignore if we already have an incoming connection.
+        return;
+    }
+    self.pendingIncomingConnection = connection;
+	self.pendingIncomingConnection.delegate = self;
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+		//App is not in the foreground, so send LocalNotification
+		UIApplication* app = [UIApplication sharedApplication];
+		UILocalNotification* notification = [[UILocalNotification alloc] init];
+		NSArray* oldNots = [app scheduledLocalNotifications];
+		if ([oldNots count] > 0) {
+			[app cancelAllLocalNotifications];
+		}
+		notification.alertBody = @"Incoming Call from Callin";
+        notification.alertAction = @"Answer";
+        notification.soundName = UILocalNotificationDefaultSoundName;
+		[app presentLocalNotificationNow:notification];
+	} else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:BMWPhoneDidReceiveIncomingConnectionNotification object:self];
+    }
 }
 
 - (void)device:(TCDevice *)device didReceivePresenceUpdate:(TCPresenceEvent *)presenceEvent {
@@ -211,12 +249,16 @@ static NSString * const kBMWDefaultPhoneNumber = @"+16503535255";
 - (void)connectionDidDisconnect:(TCConnection *)connection {
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     [self.connectionDelegate connectionDidDisconnect:connection];
+    self.connection = nil;
+    self.pendingIncomingConnection = nil;
 }
 
 - (void)connection:(TCConnection *)connection didFailWithError:(NSError *)error {
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     [self.connectionDelegate connection:connection didFailWithError:error];
     [BMWAnalytics mixpanelTrackVOIPFailure:error];
+    self.connection = nil;
+    self.pendingIncomingConnection = nil;
 }
 
 @end
