@@ -47,6 +47,7 @@ app.get('/' + API_VERSION + '/conference/invite', conference.emailAlert);
 app.get('/' + API_VERSION + '/conference/join', conference.join);
 app.get('/' + API_VERSION + '/conference/number', conference.number);
 app.get('/' + API_VERSION + '/conference/twilio', conference.twilio);
+app.get('/' + API_VERSION + '/conference/callout', conference.callout)
 app.get('/' + API_VERSION + '/sms/send', sms.sendsms);
 
 // POST
