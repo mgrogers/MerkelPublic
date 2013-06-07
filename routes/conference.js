@@ -123,7 +123,7 @@ exports.create = function(req, res) {
                                 var remainingString = baseString.slice(baseString.search(VALID_CONFERENCE_REGEX) + phoneNumber[0].length);
                                 var code = remainingString.slice(0, remainingString.search("#"));
                                 hash = code.replace(/[^\d]/g, ""); 
-                                conferenceObject.phoneNumber = phoneNumber;
+                                conferenceObject.phoneNumber = phoneNumber[0];
                             }
                         }
                         var numConferences = conferences.length;
