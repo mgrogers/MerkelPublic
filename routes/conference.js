@@ -33,6 +33,7 @@ var kSendGridKey = "xtce2l6u";
 var downloadURL = "http://bit.ly/10tTHWW"  
 
 var conferenceSchema = new Schema({
+    phoneNumber: {type: String, default: ""},
     conferenceCode: {type: String, default: ""},
     eventId: {type: String, default: ""},
     creatorId: {type: String, default: ""},
@@ -43,7 +44,8 @@ var conferenceSchema = new Schema({
     startTime: {type: Date, default: ""},
     timeZone: {type: String, default: "America/Los_Angeles"},
     sms: {type: Boolean, default: false},
-    email: {type: Boolean, default: false} // 'active' or 'inactive'
+    email: {type: Boolean, default: false}, // 'active' or 'inactive'
+    notes: {type: String, default: ""}
 });
 
 var participantSchema = new Schema({
@@ -91,28 +93,46 @@ exports.capability = function(req, res) {
 API Call: "/2013-04-23/conference/create" to generate a new conference, data for new conference will in POST
 [Event POST data] example JSON POST can be found in test/fixtures/conference_create.json
 */
-
 exports.create = function(req, res) {
     var postBody = req.body;
+
+    // Regex to detect valid 10 digit phone numbers
+    var VALID_CONFERENCE_REGEX = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌1)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌1|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})/ig;
+
     Conference.findOne({'title': postBody.title, 'creatorId': postBody.initiator, 'creationDate': postBody.creationDate}, function(err, conference) {
         if(err) {
             return res.send(400, {error: err,
                                           reqBody: req.body});
         } else {
-            console.log(conference);
             if(!conference) {
                 Conference.find(function(err, conferences) {
                     var hash = 0;
+                    var postBody = req.body;
+                    var conferenceObject = {};
                     if (!err) {
+                        console.log("postbody" + postBody);
+         
+                        if(postBody && postBody.notes) {
+                            var baseString = postBody.notes;
+
+                            var phoneNumber = baseString.match(VALID_CONFERENCE_REGEX);
+
+                            if(phoneNumber) { // Found existing conference
+                                var remainingString = baseString.slice(baseString.search(VALID_CONFERENCE_REGEX) + phoneNumber[0].length);
+                                var code = remainingString.slice(0, remainingString.search("#"));
+                                hash = code.replace(/[^\d]/g, ""); 
+                                conferenceObject.phoneNumber = phoneNumber[0];
+                            }
+                        }
                         var numConferences = conferences.length;
-                        hash = hashids.encrypt(numConferences);
+                        if (hash == 0 ) {
+                            hash = hashids.encrypt(numConferences);
+                        }
                     } else {
                         hash = hashids.encrypt(0);
                     }
 
-                    var conferenceObject = {};
                     var postBody = req.body;
-
                     if (postBody) {
                         conferenceObject.conferenceCode = hash;
                         conferenceObject.status = "inactive";
@@ -121,6 +141,7 @@ exports.create = function(req, res) {
                         conferenceObject.creationDate = postBody.creationDate || "";
                         conferenceObject.description = postBody.description || "";
                         conferenceObject.startTime = postBody.startTime || "";
+                        conferenceObject.notes = postBody.notes || "";
                         if (postBody.inviteMethod) conferenceObject.sms = postBody.inviteMethod.sms;
                         else conferenceObject.sms = false;
                         if (postBody.inviteMethod) conferenceObject.email = postBody.inviteMethod.email;
@@ -157,6 +178,7 @@ exports.create = function(req, res) {
         }
     });
 };
+
 
 exports.phoneConfirmation = function(req, res) {
     if (req.method == 'POST') {
